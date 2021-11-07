@@ -3,22 +3,39 @@ Registrarse e iniciar sesión.
 */
 
 .login-buttons {
-  margin: 0.5em;
+  margin: 1em 0.5em;
   flex-basis: 100%;
-
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-around;
+  /* 
+  Si uno de los elementos crece en altura, los otros toman su tamaño.
+   */
+  align-items: stretch;
   /* transition: background-color 0.5s ease-out; */
-  transition: background-color 10s ease-out;
+  /* transition: background-color 10s ease-out; */
+  
+  /* 
+  transition: name duration timing-function delay iteration-count direction fill-mode play-state ;
+
+  transition: 3s ease-in 1s 2 reverse both paused slide-in;
+  */
+  /* transition: align-items 0.8s ease-out; */
   /* height: 100%; */
+
 }
 
 .login-buttons :first-child {
   margin-right: 0.5em;
 }
 
-.btn-info:focus {
+.login-buttons > * {
+  flex-basis: 40%;
+  /* transition: flex 0.8s ease-out; */
+  /* Transición para cuando la fuente cambia de tamaño. */
+  transition: font-size 0.2s ease-out;
+}
+
+.btn-info:active {
   background-color: var(--color-info-darked);
   transition: background-color 10s ease-out;
 }
@@ -28,8 +45,18 @@ Registrarse e iniciar sesión.
     margin: 0;
     /* Ocupar espacio sobrante sin hacer más pequeños elementos. */
     flex-basis: auto;
-    font-size: 0.8em;
     /* Ocupar espacio restante. */
     /* flex-grow: 1; */
+    justify-content: space-between;
+    font-size: 0.8em;
+  }
+  .login-buttons>* {
+    flex-basis: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .login-buttons {
+    font-size: 0.9em;
   }
 }

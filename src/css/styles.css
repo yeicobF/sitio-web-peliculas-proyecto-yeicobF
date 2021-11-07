@@ -2,10 +2,6 @@
 Todo el diseño se piensa para mobile-first. En las Media Queries están los estilos para las pantallas más grandes. 
 */
 
-.logo {
-  height: 1.5em;
-  width: auto;
-}
 
 /* ---------------------------- BARRA DE BÚSQUEDA --------------------------- */
 
@@ -59,9 +55,6 @@ Todo el diseño se piensa para mobile-first. En las Media Queries están los est
 /* ------------------------------ MEDIA QUERIES ----------------------------- */
 
 @media (min-width: 768px) {
-  .logo {
-    height: 2em;
-  }
   .search-container {
     display: inline-flex;
     flex-basis: auto;

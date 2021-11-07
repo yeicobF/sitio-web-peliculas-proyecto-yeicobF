@@ -7,8 +7,17 @@
   flex-grow: 1;
 }
 
+.logo {
+  height: 2em;
+  width: auto;
+  transition: height 0.3s ease-out;
+}
+
 
 @media (min-width: 768px) {
+  .navbar {
+    flex-wrap: nowrap;
+  }
   .navbar-collapse {
     padding-top: 0;
   }
@@ -19,5 +28,11 @@
 
   .search-container {
     flex-grow: 1;
+  }
+}
+
+@media (max-width: 576px) {
+  .logo {
+    height: 1.8em;
   }
 }
