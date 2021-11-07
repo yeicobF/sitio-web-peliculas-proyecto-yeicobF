@@ -21,7 +21,7 @@ Registrarse e iniciar sesión.
   */
   /* transition: align-items 0.8s ease-out; */
   /* height: 100%; */
-
+  font-weight: 600;
 }
 
 .login-buttons :first-child {
@@ -48,7 +48,7 @@ Registrarse e iniciar sesión.
     /* Ocupar espacio restante. */
     /* flex-grow: 1; */
     justify-content: space-between;
-    font-size: 0.8em;
+    font-size: 1em;
   }
   .login-buttons>* {
     flex-basis: auto;
@@ -57,6 +57,11 @@ Registrarse e iniciar sesión.
 
 @media (max-width: 576px) {
   .login-buttons {
-    font-size: 0.9em;
+    font-size: 1em;
+  }
+}
+@media (min-width: 576px) and (max-width: 767px) {
+  .login-buttons {
+    font-size: 0.8em;
   }
 }

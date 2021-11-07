@@ -17,6 +17,7 @@
 @media (min-width: 768px) {
   .navbar {
     flex-wrap: nowrap;
+    font-size: 1.2em;
   }
   .navbar-collapse {
     padding-top: 0;
@@ -24,6 +25,7 @@
 
   .navbar-nav {
     justify-content: stretch;
+    font-weight: 500;
   }
 
   .search-container {
@@ -33,6 +35,6 @@
 
 @media (max-width: 576px) {
   .logo {
-    height: 1.8em;
+    height: 2em;
   }
 }
