@@ -1,8 +1,10 @@
-* {
+*, *::before, *::after {
   font-family: 'Quicksand', sans-serif;
   /* Para fuente en móvil. */
   font-size: 14px;
   line-height: 1.5;
+  /* Transición para las fuentes cuando cambian de tamaño. */
+  transition: font-size 0.2s ease-out;
 }
 
 button,

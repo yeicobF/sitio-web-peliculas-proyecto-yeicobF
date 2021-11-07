@@ -11,13 +11,15 @@
 
   <!-- CSS -->
 
+  <!-- Framework que hicimos obtenido de la GitHub Page que publicamos. -->
   <link rel="stylesheet"
     href="https://fundamentos2122.github.io/framework-css-yeicobF/css/framework.css">
+
+  <!-- CSS Propios -->
   <link rel="stylesheet" href="css/config.css">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/modified-framework.css">
+  <link rel="stylesheet" href="css/components/components.css">
   <link rel="stylesheet" href="css/menu/menu.css">
-  <link rel="stylesheet" href="css/login-register.css">
+  <link rel="stylesheet" href="css/utilities/utilities.css">
 
   <!-- GOOGLE FONTS -->
 
@@ -60,6 +62,7 @@
       <img
         src="assets/iconscout/office-icon-pack-by-gunaldi-yunus/svg/film-1505229.svg"
         alt="Colección de películas" srcset="" sizes="" class="logo">
+      <!-- p.navbar__title -->
     </a>
     <!-- 
       Para la función de despliegue u ocultado del menú. 
@@ -69,7 +72,7 @@
       estemos en uno más grande, lo vamos a ocultar.
     -->
     <!-- button.navbar-toggle[type="button"] -->
-    <button class="navbar-toggle" type="button">
+    <button class="navbar-toggle btn btn-primary" type="button">
       X
     </button>
 
@@ -108,39 +111,39 @@
         </li>
         <li class="nav-item dropdown">
 
-            <a href="#" class="nav-link dropdown-toggle">
-              Géneros
-              <!-- <i class="submenu-indicator-tooltip">v</i> -->
-            </a>
+          <a href="#" class="nav-link dropdown-toggle">
+            Géneros
+            <!-- <i class="submenu-indicator-tooltip">v</i> -->
+          </a>
 
-            <!-- Dropdown menu desplegable de categorías. -->
-            <ul class="dropdown-menu">
-              <!-- 
+          <!-- Dropdown menu desplegable de categorías. -->
+          <ul class="dropdown-menu">
+            <!-- 
               El menú sale oculto por default, pero con la clase "show", la
               cual se agregará con Javascript, mostrará el menú con la
               propiedad "display: block;".
             -->
-              <li>
-                <a href="#" class="dropdown-item">
-                  Acción
-                </a>
-              </li>
-              <li>
-                <a href="#" class="dropdown-item">
-                  Terror
-                </a>
-              </li>
-              <li>
-                <a href="#" class="dropdown-item">
-                  Comedia
-                </a>
-              </li>
-              <li>
-                <a href="#" class="dropdown-item">
-                  Ver todos
-                </a>
-              </li>
-            </ul>
+            <li>
+              <a href="#" class="dropdown-item">
+                Acción
+              </a>
+            </li>
+            <li>
+              <a href="#" class="dropdown-item">
+                Terror
+              </a>
+            </li>
+            <li>
+              <a href="#" class="dropdown-item">
+                Comedia
+              </a>
+            </li>
+            <li>
+              <a href="#" class="dropdown-item">
+                Ver todos
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
