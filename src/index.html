@@ -74,7 +74,8 @@
     <div class="navbar-collapse">
       <!-- Barra de búsqueda. -->
       <form action="" method="get" class="search-container">
-        <button type="submit" title="search" id="search-button"><i>s</i></button>
+        <button type="submit" title="search"
+          id="search-button"><i>s</i></button>
         <input type="text" name="search-input" id="search-input"
           placeholder="Buscar...">
       </form>
@@ -93,32 +94,40 @@
           <a href="#" class="nav-link">Películas</a>
         </li>
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle">
-            Géneros
-          </a>
-          <!-- Dropdown menu desplegable de categorías. -->
-          <ul class="dropdown-menu">
-            <!-- 
+
+            <a href="#" class="nav-link dropdown-toggle">
+              Géneros
+              <!-- <i class="submenu-indicator-tooltip">v</i> -->
+            </a>
+
+            <!-- Dropdown menu desplegable de categorías. -->
+            <ul class="dropdown-menu">
+              <!-- 
               El menú sale oculto por default, pero con la clase "show", la
               cual se agregará con Javascript, mostrará el menú con la
               propiedad "display: block;".
             -->
-            <li>
-              <a href="#" class="dropdown-item">
-                Acción
-              </a>
-            </li>
-            <li>
-              <a href="#" class="dropdown-item">
-                Terror
-              </a>
-            </li>
-            <li>
-              <a href="#" class="dropdown-item">
-                Comedia
-              </a>
-            </li>
-          </ul>
+              <li>
+                <a href="#" class="dropdown-item">
+                  Acción
+                </a>
+              </li>
+              <li>
+                <a href="#" class="dropdown-item">
+                  Terror
+                </a>
+              </li>
+              <li>
+                <a href="#" class="dropdown-item">
+                  Comedia
+                </a>
+              </li>
+              <li>
+                <a href="#" class="dropdown-item">
+                  Ver todos
+                </a>
+              </li>
+            </ul>
         </li>
       </ul>
     </div>

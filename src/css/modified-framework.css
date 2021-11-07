@@ -6,6 +6,30 @@ Framework que hicimos en clase, pero modificado para el trabajo en específico.
   padding-top: 1em;
 }
 
+/* 
+Hacer flex para que los elementos internos se separen: link + tooltip. 
+*/
+a.nav-link.dropdown-toggle {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Agregar tooltip a los elementos que tengan dicha clase. */
+.dropdown-toggle::after {
+  /* Agregar el tooltip al elemento. */
+  content: "v";
+  /* Mostrar en la misma línea, no una nueva. */
+  display: inline-block;
+  /* margin-left: 0.5em; */
+  align-self: end;
+  margin-left: 0.5em;
+}
+
+/* Ponerle margen al tooltip.  */
+/* a.nav-link.dropdown-toggle > .submenu-indicator-tooltip {
+  margin-left: 0.5em;
+} */
+
 @media (min-width: 768px) {
   .navbar-collapse {
     padding-top: 0;

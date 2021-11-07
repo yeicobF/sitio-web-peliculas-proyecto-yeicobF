@@ -21,7 +21,7 @@ Todo el diseño se piensa para mobile-first. En las Media Queries están los est
   border-radius: 4px;
   background-color: var(--color-light-darked);
   transition: background-color 0.15s ease-out;
-  margin: 1em 2em;
+  margin: 0.5em;
   padding: 0.1em 0.5em;
 }
 
