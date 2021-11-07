@@ -7,10 +7,25 @@ Todo el diseño se piensa para mobile-first. En las Media Queries están los est
   width: auto;
 }
 
+/* ---------------------------- BARRA DE BÚSQUEDA --------------------------- */
+
+/* Contenedor de búsqueda. */
+.search-container {
+  display: flex;
+  /* Para la versión móvil. */
+  flex-basis: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
 /* ------------------------------ MEDIA QUERIES ----------------------------- */
 
-@media (min-width: 758px) {
+@media (min-width: 768px) {
   .logo {
     height: 2em;
+  }
+  .search-container {
+    display: inline-flex;
+    flex-basis: auto;
   }
 }

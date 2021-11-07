@@ -71,7 +71,15 @@
     </button>
 
     <div class="navbar-collapse">
-      <!-- Contenedor de elementos del menú. -->
+      <!-- Barra de búsqueda. -->
+      <form action="" method="get" class="search-container">
+        <button type="submit" title="search"><i></i></button>
+        <input type="text" name="search-input" id="search-input"
+          placeholder="Buscar...">
+      </form>
+
+
+      <!-- Contenedor de links del menú. -->
       <ul class="navbar-nav">
         <!-- Elementos individuales. -->
         <li class="nav-item">
@@ -80,9 +88,12 @@
           </a>
         </li>
 
+        <li class="nav-item">
+          <a href="#" class="nav-link">Películas</a>
+        </li>
         <li class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle">
-            Categorías
+            Géneros
           </a>
           <!-- Dropdown menu desplegable de categorías. -->
           <ul class="dropdown-menu">
@@ -93,19 +104,20 @@
             -->
             <li>
               <a href="#" class="dropdown-item">
-                Categoría 1
+                Acción
               </a>
             </li>
             <li>
               <a href="#" class="dropdown-item">
-                Categoría 2
+                Terror
+              </a>
+            </li>
+            <li>
+              <a href="#" class="dropdown-item">
+                Comedia
               </a>
             </li>
           </ul>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-link">Usuarios</a>
         </li>
       </ul>
     </div>
