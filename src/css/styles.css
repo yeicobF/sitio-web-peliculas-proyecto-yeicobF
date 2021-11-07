@@ -30,9 +30,7 @@ Todo el diseño se piensa para mobile-first. En las Media Queries están los est
   margin-right: 0.5em;
 }
 
-.login-buttons {
-  margin: 0 2em;
-}
+
 
 #search-button {
   width: fit-content;

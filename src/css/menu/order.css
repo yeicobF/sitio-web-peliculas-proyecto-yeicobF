@@ -33,7 +33,9 @@ Orden en que se mostrarán los elementos del menú. Esto porque el móvil van en
   }
 
   .navbar>.navbar-collapse {
-    order: 2;
+    /* Separar logo del menú. */
+    margin-left: 1.5em;
+    order: 1;
   }
 
   /* ----------------------------- NAVBAR COLLAPSE ---------------------------- */
@@ -44,6 +46,8 @@ Orden en que se mostrarán los elementos del menú. Esto porque el móvil van en
   
   .navbar-collapse>.search-container {
     order: 1;
+    /* Poner márgenes por los otros elementos a los lados. */
+    margin: 0 1em;
   }
   .navbar-collapse>.login-buttons {
     order: 2;

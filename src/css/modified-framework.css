@@ -2,9 +2,7 @@
 Framework que hicimos en clase, pero modificado para el trabajo en específico. 
 */
 
-.navbar-collapse {
-  padding-top: 1em;
-}
+
 
 /* 
 Hacer flex para que los elementos internos se separen: link + tooltip. 
@@ -23,6 +21,7 @@ a.nav-link.dropdown-toggle {
   /* margin-left: 0.5em; */
   align-self: end;
   margin-left: 0.5em;
+  font-weight: 900;
 }
 
 /* Ponerle margen al tooltip.  */
@@ -30,8 +29,4 @@ a.nav-link.dropdown-toggle {
   margin-left: 0.5em;
 } */
 
-@media (min-width: 768px) {
-  .navbar-collapse {
-    padding-top: 0;
-  }
-}
+

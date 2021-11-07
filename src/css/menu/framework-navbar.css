@@ -1,0 +1,23 @@
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+.navbar-collapse {
+  padding-top: 1em;
+  flex-grow: 1;
+}
+
+
+@media (min-width: 768px) {
+  .navbar-collapse {
+    padding-top: 0;
+  }
+
+  .navbar-nav {
+    justify-content: stretch;
+  }
+
+  .search-container {
+    flex-grow: 1;
+  }
+}
