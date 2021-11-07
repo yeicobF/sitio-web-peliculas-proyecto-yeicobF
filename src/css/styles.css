@@ -15,7 +15,47 @@ Todo el diseño se piensa para mobile-first. En las Media Queries están los est
   /* Para la versión móvil. */
   flex-basis: 100%;
   align-items: center;
+  justify-content: space-between;
+  height: fit-content;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--color-light-darked);
+  transition: background-color 0.15s ease-out;
+  margin: 1em 2em;
+  padding: 0.1em 0.5em;
+}
+
+/* Que el primer hijo del search tenga un margen derecho. */
+.search-container :first-child {
+  margin-right: 0.5em;
+}
+
+.login-buttons {
+  margin: 0 2em;
+}
+
+#search-button {
+  width: fit-content;
+  height: auto;
+  padding: 0.2em;
+  display: flex;
+  align-items: center;
   justify-content: center;
+}
+
+#search-input {
+  width: 100%;
+}
+
+.search-container *,
+.search-container *:active {
+  background-color: transparent;
+  border-width: 0;
+}
+
+/* Si hay focus en elementos hijos. */
+.search-container:focus-within {
+  background-color: white;
 }
 
 /* ------------------------------ MEDIA QUERIES ----------------------------- */
@@ -27,5 +67,7 @@ Todo el diseño se piensa para mobile-first. En las Media Queries están los est
   .search-container {
     display: inline-flex;
     flex-basis: auto;
+    /* padding: 0; */
+    margin: 0;
   }
 }
