@@ -1,0 +1,18 @@
+/* Aquí obtendremos todo del menú. */
+@import url("order.css");
+
+@media (min-width: 768px) {
+  .navbar > .navbar-collapse {
+    /* width: auto;
+    max-width: 100%; */
+    /* Tomar espacio restante del navbar. */
+    flex-grow: 1;
+  }
+  /* 
+  No hacer flex-wrap para que el collapse tome el espacio restante. 
+  Creo que ya no es necesario con el flex-grow en el otro contenedor.
+  */
+  /* .navbar {
+    flex-wrap: nowrap;
+  } */
+}

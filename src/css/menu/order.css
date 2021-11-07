@@ -1,0 +1,51 @@
+/* 
+Orden en que se mostrarán los elementos del menú. Esto porque el móvil van en orden distinto a pantallas grandes.
+*/
+
+/* ------------------------------ VERSIÓN MÓVIL ----------------------------- */
+
+/* ----------------------------- NAVBAR GENERAL ----------------------------- */
+
+.navbar>.navbar-brand {
+  order: 0;
+}
+
+
+/* ----------------------------- NAVBAR COLLAPSE ---------------------------- */
+.navbar-collapse>.search-container {
+  order: 0;
+}
+
+.navbar-collapse > .login-buttons {
+  order: 1;
+}
+
+.navbar-collapse > .navbar-bar {
+  order: 2;
+}
+
+/* -------------------- PANTALLAS GRANDES CAMBIA EL ORDEN ------------------- */
+
+@media (min-width: 768px) {
+  /* ----------------------------- NAVBAR GENERAL ----------------------------- */
+.navbar>.navbar-brand {
+    order: 0;
+  }
+
+  .navbar>.navbar-collapse {
+    order: 2;
+  }
+
+  /* ----------------------------- NAVBAR COLLAPSE ---------------------------- */
+  
+  .navbar-collapse>.navbar-bar {
+    order: 0;
+  }
+  
+  .navbar-collapse>.search-container {
+    order: 1;
+  }
+  .navbar-collapse>.login-buttons {
+    order: 2;
+  }
+}
