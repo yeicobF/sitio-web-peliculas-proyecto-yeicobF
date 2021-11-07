@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- favicon -->
+  <link rel="shortcut icon" href="assets/ico/iconscout/film.ico"
+    type="image/x-icon">
+
+  <!-- CSS -->
+
+  <link rel="stylesheet"
+    href="https://fundamentos2122.github.io/framework-css-yeicobF/css/framework.css">
+  <link rel="stylesheet" href="css/config.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- GOOGLE FONTS -->
+
+  <!-- Quicksand -->
+  <!-- font-family: 'Quicksand', sans-serif; -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Roboto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- Single Day -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap"
+    rel="stylesheet">
+
+  <!-- Scripts -->
+  <script defer
+    src="https://fundamentos2122.github.io/framework-css-yeicobF/js/framework.js">
+  </script>
+  <title>Colección de películas | Inicio</title>
+</head>
+
+<body>
+  <!-- 
+    Un nav, que podrías ser un div, pero ayuda en cuanto a la metadata, 
+    indicando que se trata de una navbar.
+  -->
+  <nav class="navbar">
+    <a href="#" class="navbar-brand">
+      <!-- https://developer.mozilla.org/es/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images -->
+      <img
+        src="assets/iconscout/office-icon-pack-by-gunaldi-yunus/svg/film-1505229.svg"
+        alt="Colección de películas" srcset="" sizes="" class="logo">
+    </a>
+    <!-- 
+      Para la función de despliegue u ocultado del menú. 
+      Esto es para el diseño responsivo, que cuando se cambie de tamaño se ocupe o no.
+
+      Solo se va a mostrar cuando estemos en un dispositivo móvil, y cuando 
+      estemos en uno más grande, lo vamos a ocultar.
+    -->
+    <!-- button.navbar-toggle[type="button"] -->
+    <button class="navbar-toggle" type="button">
+      X
+    </button>
+
+    <div class="navbar-collapse">
+      <!-- Contenedor de elementos del menú. -->
+      <ul class="navbar-nav">
+        <!-- Elementos individuales. -->
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            Inicio
+          </a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle">
+            Categorías
+          </a>
+          <!-- Dropdown menu desplegable de categorías. -->
+          <ul class="dropdown-menu">
+            <!-- 
+              El menú sale oculto por default, pero con la clase "show", la
+              cual se agregará con Javascript, mostrará el menú con la
+              propiedad "display: block;".
+            -->
+            <li>
+              <a href="#" class="dropdown-item">
+                Categoría 1
+              </a>
+            </li>
+            <li>
+              <a href="#" class="dropdown-item">
+                Categoría 2
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">Usuarios</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</body>
+
+</html>

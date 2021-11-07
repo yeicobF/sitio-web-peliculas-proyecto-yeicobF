@@ -1,0 +1,16 @@
+/** 
+Todo el diseño se piensa para mobile-first. En las Media Queries están los estilos para las pantallas más grandes. 
+*/
+
+.logo {
+  height: 1.5em;
+  width: auto;
+}
+
+/* ------------------------------ MEDIA QUERIES ----------------------------- */
+
+@media (min-width: 758px) {
+  .logo {
+    height: 2em;
+  }
+}
