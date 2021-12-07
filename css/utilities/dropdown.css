@@ -14,8 +14,17 @@ a.nav-link.dropdown-toggle {
 
 /* Agregar tooltip a los elementos que tengan dicha clase. */
 .dropdown-toggle::after {
-  /* Agregar el tooltip al elemento. */
+  /* 
+  No logré hacer que funcionara bien FontAwesome aquí, por lo que mejor manejaré
+  con el ícono y clases. 
+  */
   content: "v";
+
+  /* Que la fuente sea Font Awesome, ya que habrá un ícono de ahí. */
+  /* font-family: "Font Awesome Kit"; */
+  /* Agregar el tooltip al elemento. */
+  /* content: "\f0d7"; */
+
   /* Mostrar en la misma línea, no una nueva. */
   display: inline-block;
   /* margin-left: 0.5em; */
