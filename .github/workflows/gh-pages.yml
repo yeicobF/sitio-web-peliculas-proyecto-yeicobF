@@ -1,0 +1,62 @@
+name: Deploy GitHub Pages desde main
+
+on:
+  # Que el workflow se active en un push o pull request en la "main" branch.
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  # Permite ejecutar el workflow manualmente desde la pestaña de "Actions" en
+  # GitHub.
+  # workflow_dispatch:
+    # Solo quiero que se pueda ejecutar manualmente en main.
+    # - Lo intenté, pero no se pudo. Sigue habiendo posibilidad de ejcutar el
+    # workflow desde cualquier branch, y eso no es lo que quiero.
+    # branches:
+    #   - main
+
+jobs:
+  # https://docs.github.com/en/actions/learn-github-actionsworkflow-syntax-for-github-actions#jobsjob_id
+  # jobs.<job_id> <- Puede ser cualquier nombre mientras sea único.
+  deploy:
+    name: Despliegue de la página en GitHub Pages
+    # https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#jobs
+    # Hay que especificar un "runner environment" en donde se ejecutará el
+    # "job". Este entra en los límites del "workflow usage", ya que hay límites
+    # de uso y costes por uso.
+    #
+    # https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration
+    runs-on: ubuntu-20.04
+
+    # Concurrencia para que si hubiese más de una tarea en el workflow, se
+    # ejecuten secuencialmente y solo se pueda ejecutar una tarea hasta que
+    # termine la anterior.
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      # https://github.com/actions/checkout
+      # Indicamos que utilizamos esta versión de la action.
+      # Esta action permite hacer un check-out del repositorio para que el
+      # workflow pueda acceder al mismo.
+      - uses: actions/checkout@v2
+
+      # Nombre del workflow. Este se muestra en la página de actions del
+      # repositorio.
+      - name: Deploy GitHub Page
+        # https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#jobsjob_idstepsuses
+        # Indicar la versión que utilizamos de la versión. De lo contrario, esto
+        # podría romper los workflows o provocar comportamientos inesperados
+        # cuando el propietario de la `action` haga una actualización.
+        uses: peaceiris/actions-gh-pages@v3.7.3
+        with:
+          # https://docs.github.com/en/actions/security-guides/automatic-token-authentication
+          # Token único generado automáticamente.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Publicar contenido de ./src/
+          publish_dir: ./src
+          # Nombre de la rama en donde publicaremos la GitHub Page.
+          publish_branch: gh-pages # default: gh-pages
