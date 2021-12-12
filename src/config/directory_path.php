@@ -9,25 +9,14 @@ class DirectoryPath
 {
   // Variables no estáticas, ya que, si lo hacemos así, nos da error por no ser
   // constantes.
-  public $localhost = "http://localhost:8012/";
-  public $project_folder_dir;
-  public $src_folder_url;
-  public $assets_url;
-  public $ico_url;
-  public $img_url;
-  public $views_url;
-  public $models_url;
-  public $controllers_url;
-
-  public function __construct()
-  {
-    $this->project_folder_dir = "{$this->localhost}fdw-2021-2022-a/proyecto-yeicobF/";
-    $this->src_folder_url = "{$this->project_folder_dir}src/";
-    $this->assets_url = "{$this->src_folder_url}assets/";
-    $this->ico_url = "{$this->assets_url}ico/";
-    $this->img_url = "{$this->assets_url}img/";
-    $this->views_url = "{$this->src_folder_url}views/";
-    $this->models_url = "{$this->src_folder_url}models/";
-    $this->controllers_url = "{$this->src_folder_url}controllers/";
-  }
+  const LOCALHOST = "http://localhost:8012/";
+  const PROJECT_FOLDER_DIR = self::LOCALHOST . "fdw-2021-2022-a/proyecto-yeicobF/";
+  const SRC_FOLDER_URL = self::PROJECT_FOLDER_DIR . "src/";
+  const ASSETS_URL = self::SRC_FOLDER_URL . "assets/";
+  const ICO_URL = self::ASSETS_URL . "ico/";
+  const IMG_URL = self::ASSETS_URL . "img/";
+  const VIEWS_URL = self::SRC_FOLDER_URL . "views/";
+  const LAYOUTS_URL = self::VIEWS_URL . "layouts/";
+  const MODELS_URL = self::SRC_FOLDER_URL . "models/";
+  const CONTROLLERS_URL = self::SRC_FOLDER_URL . "controllers/";
 }
