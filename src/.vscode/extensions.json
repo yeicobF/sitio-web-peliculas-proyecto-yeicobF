@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "bmewburn.vscode-intelephense-client",
+    "neilbrayfield.php-docblocker",
+    "cvergne.vscode-php-getters-setters-cv",
+    "cweijan.vscode-database-client2",
+    "formulahendry.vscode-mysql",
+    "dahong.theme-bear",
+    "felixfbecker.php-debug",
+    "tomasvergara.vscode-fontawesome-gallery",
+    "ms-edgedevtools.vscode-edge-devtools"
+  ]
+}

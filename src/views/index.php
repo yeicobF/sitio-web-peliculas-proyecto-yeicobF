@@ -18,10 +18,17 @@ $baseHtmlHead = new BaseHtmlHead(
 
   <!-- CSS -->
   <!-- CSS Propios -->
-  <link rel="stylesheet" href="css/config.css">
-  <link rel="stylesheet" href="css/components/components.css">
-  <link rel="stylesheet" href="css/menu/menu.css">
-  <link rel="stylesheet" href="css/utilities/utilities.css">
+  <link rel="stylesheet" href="../css/config.css">
+  <link rel="stylesheet" href="../css/components/components.css">
+  <link rel="stylesheet" href="../css/menu/menu.css">
+  <link rel="stylesheet" href="../css/utilities/utilities.css">
+  <link rel="stylesheet" href="../css/transformations/rotate.css">
+
+  <!-- SCRIPTS -->
+  <script defer type="module">
+    import { activateToggleRotate180 } from "../js/toggle/toggle-rotate.js";
+    activateToggleRotate180(".navbar-nav", ".rotate.fa-angle-down");
+  </script>
   <?php
   echo $baseHtmlHead->getTitle();
   ?>

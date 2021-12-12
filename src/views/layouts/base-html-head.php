@@ -112,7 +112,7 @@ class BaseHtmlHead
   /**
    * Obtener título del HTML.
    *
-   * @return String
+   * @return string
    */
   public function getTitle()
   {

@@ -1,0 +1,36 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"cssvar.files": [
+			"./../src/views/css/config.css",
+			"https://fundamentos2122.github.io/framework-css-yeicobF/css/config.css"
+		],
+		"cssvar.extensions": [
+			"css"
+		],
+		"workbench.colorCustomizations": {
+			"activityBar.activeBackground": "#8c5617",
+			"activityBar.activeBorder": "#093722",
+			"activityBar.background": "#8c5617",
+			"activityBar.foreground": "#e7e7e7",
+			"activityBar.inactiveForeground": "#e7e7e799",
+			"activityBarBadge.background": "#093722",
+			"activityBarBadge.foreground": "#e7e7e7",
+			"sash.hoverBorder": "#8c5617",
+			"statusBar.background": "#603b10",
+			"statusBar.foreground": "#e7e7e7",
+			"statusBarItem.hoverBackground": "#8c5617",
+			"statusBarItem.remoteBackground": "#603b10",
+			"statusBarItem.remoteForeground": "#e7e7e7",
+			"titleBar.activeBackground": "#603b10",
+			"titleBar.activeForeground": "#e7e7e7",
+			"titleBar.inactiveBackground": "#603b1099",
+			"titleBar.inactiveForeground": "#e7e7e799"
+		},
+		"peacock.color": "#603b10"
+	}
+}
