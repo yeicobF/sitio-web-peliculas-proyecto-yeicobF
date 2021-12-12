@@ -4,7 +4,7 @@ $dir = new DirectoryPath();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
@@ -120,7 +120,8 @@ $dir = new DirectoryPath();
         <li class="nav-item dropdown">
 
           <a href="#" class="nav-link dropdown-toggle">
-            Géneros
+            <p>Géneros</p>
+            <i class="fas fa-angle-down   "></i>
             <!-- <i class="submenu-indicator-tooltip">v</i> -->
           </a>
 
