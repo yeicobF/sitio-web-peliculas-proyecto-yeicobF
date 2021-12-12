@@ -11,6 +11,7 @@ a.nav-link.dropdown-toggle {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5em;
 }
 
 /* Agregar tooltip a los elementos que tengan dicha clase. */
