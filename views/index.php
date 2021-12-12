@@ -5,6 +5,7 @@ $baseHtmlHead = new BaseHtmlHead(
   _includeOwnFramework: true,
   _includeFontAwesome: true
 );
+// var_dump($_SERVER);
 ?>
 
 <!DOCTYPE html>
