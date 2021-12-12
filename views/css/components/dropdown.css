@@ -10,10 +10,11 @@ Hacer flex para que los elementos internos se separen: link + tooltip.
 a.nav-link.dropdown-toggle {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 /* Agregar tooltip a los elementos que tengan dicha clase. */
-.dropdown-toggle::after {
+.old-dropdown-toggle::after {
   /* 
   No logré hacer que funcionara bien FontAwesome aquí, por lo que mejor manejaré
   con el ícono y clases. 

@@ -61,7 +61,7 @@ Registrarse e iniciar sesión.
   }
 }
 @media (min-width: 576px) and (max-width: 767px) {
-  .login-buttons {
+  /* .login-buttons {
     font-size: 0.8em;
-  }
+  } */
 }
