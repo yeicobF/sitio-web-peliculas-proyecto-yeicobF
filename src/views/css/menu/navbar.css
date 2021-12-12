@@ -13,6 +13,12 @@
   transition: height 0.3s ease-out;
 }
 
+/* Página actual en el navbar. */
+.navbar__current-page {
+  font-weight: 800;
+  color: var(--color-primary-darked);
+  text-decoration: underline;
+}
 
 @media (min-width: 768px) {
   .navbar {

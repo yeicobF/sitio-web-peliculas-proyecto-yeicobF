@@ -5,6 +5,41 @@
 // Ya que, si incluyo a este archivo desde otro con una estructura diferente de
 // archivos, el include lo haría relativamente al archivo que llama y no a este.
 include_once __DIR__ . "/" . "../../config/directory_path.php";
+
+// Archivo de la página actual (el padre por decirlo de alguna manera, no este
+// como con __DIR__).
+$current_active_page_filename = $_SERVER["SCRIPT_FILENAME"];
+
+// Clase de CSS para indicar en el navbar que nos encontramos en una página.
+$css_current_page = " navbar__current-page";
+
+// Nombres de archivos que son páginas para poner clase de página activa.
+$inicio = "views/index.php";
+$peliculas = "views/peliculas/";
+$generos = "views/generos/";
+
+// Si nos encontramos en una página, agregarle la clase de CSS que lo indica.
+$add_css_current_page = [
+  // strrpos: Última ocurrencia de una cadena en otra.
+  // str_ends_with(): La cadena termina de esa manera.
+  // str_contains(): Una cadena contiene una subcadena.
+  "inicio" => str_contains($current_active_page_filename, $inicio)
+    ? $css_current_page
+    : "",
+  // Peliculas y géneros pueden tener otros subelementos. Con que contenga la
+  // cadena está bien, no tiene que terminar con ella.
+  "peliculas" => str_contains($current_active_page_filename, $peliculas)
+    ? $css_current_page
+    : "",
+  "generos" => str_contains($current_active_page_filename, $generos)
+    ? $css_current_page
+    : ""
+];
+
+// var_dump($add_css_current_page);
+
+// Obtener nombre de archivo actual sin su extensión.
+// $current_file_name = basename(__DIR__, ".php");
 ?>
 
 <!-- 
@@ -54,19 +89,21 @@ include_once __DIR__ . "/" . "../../config/directory_path.php";
     <ul class="navbar-nav">
       <!-- Elementos individuales. -->
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="#" class="nav-link<?php echo $add_css_current_page["inicio"]; ?>">
           Inicio
         </a>
       </li>
 
       <li class="nav-item">
-        <a href="#" class="nav-link">Películas</a>
+        <a href="#" class="nav-link<?php echo $add_css_current_page["peliculas"]; ?>">
+          Películas
+        </a>
       </li>
       <li class="nav-item dropdown">
 
-        <a href="#" class="nav-link dropdown-toggle">
+        <a href="#" class="nav-link dropdown-toggle<?php echo $add_css_current_page["generos"]; ?>">
           <p>Géneros</p>
-          <i class="fas fa-angle-down   "></i>
+          <i class="fas fa-angle-down"></i>
           <!-- <i class="submenu-indicator-tooltip">v</i> -->
         </a>
 

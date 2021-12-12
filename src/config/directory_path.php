@@ -9,6 +9,11 @@ class DirectoryPath
 {
   // Variables no estáticas, ya que, si lo hacemos así, nos da error por no ser
   // constantes.
+  //
+  // $_SERVER["HTTP_HOST"]: Obtiene el host (localhost:8012), pero no lo puedo
+  // asignar a una constante. Serviría en este caso si la clase la pudiera
+  // instanciar y utilizar variables e clase, pero por el momento no lo
+  // requiero.
   const LOCALHOST = "http://localhost:8012/";
   const PROJECT_FOLDER_DIR = self::LOCALHOST . "fdw-2021-2022-a/proyecto-yeicobF/";
   const SRC_FOLDER_URL = self::PROJECT_FOLDER_DIR . "src/";

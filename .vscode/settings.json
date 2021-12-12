@@ -14,12 +14,10 @@
    * workspace aunque este esté dentro, no mostrará las variables.
    */
   "cssvar.files": [
-    "css/config.css",
+    "./../src/views/css/config.css",
     "https://fundamentos2122.github.io/framework-css-yeicobF/css/config.css"
   ],
-  "cssvar.extensions": [
-    "css"
-  ],
+  "cssvar.extensions": ["css"],
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#8c5617",
     "activityBar.activeBorder": "#093722",
