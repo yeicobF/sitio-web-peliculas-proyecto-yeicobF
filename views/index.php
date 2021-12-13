@@ -1,5 +1,7 @@
 <?php
+include_once __DIR__ . "/" . "../config/directory-path.php";
 include_once "../views/layouts/base-html-head.php";
+
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Inicio",
   _includeOwnFramework: true,
@@ -23,10 +25,14 @@ $baseHtmlHead = new BaseHtmlHead(
   <link rel="stylesheet" href="../css/menu/menu.css">
   <link rel="stylesheet" href="../css/utilities/utilities.css">
   <link rel="stylesheet" href="../css/transformations/rotate.css">
+  <link rel="stylesheet" href="../css/movies/movies.css">
 
   <!-- SCRIPTS -->
   <script defer type="module">
-    import { activateToggleRotate180 } from "../js/toggle/toggle-rotate.js";
+    import {
+      activateToggleRotate180
+    } from "../js/toggle/toggle-rotate.js";
+
     // Activamos la rotación de los elementos del navbar con la clase rotate.
     activateToggleRotate180(".navbar-nav .nav-link", ".rotate");
   </script>
@@ -40,18 +46,39 @@ $baseHtmlHead = new BaseHtmlHead(
   include "../views/layouts/navbar.php";
   ?>
 
-  <div class="container-fluid container-xl">
+  <div class="container-fluid container-lg">
     <div class="row">
-      
+
       <!-- Contenedor de películas. -->
       <div class="movies-container border border-primary col-12 col-sm-8">
-        <h1>Películas</h1>
+        <h2>Películas</h2>
+        <div class="row movies__row border border-secondary">
+          <!-- Póster de películas. -->
+          <div class="movie-poster border border-secondary col-3 col-sm-4">
+            <img src="<?php echo DirectoryPath::ASSETS_URL; ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home" class="movie-poster__img">
+          </div>
+          <!-- Póster de películas. -->
+          <div class="movie-poster border border-secondary col-3 col-sm-4">
+            <img src="<?php echo DirectoryPath::ASSETS_URL; ?>img/movie-posters/friday-the-13th/1.jpg" alt="Spiderman: No Way Home" class="movie-poster__img">
+
+          </div>
+          <!-- Póster de películas. -->
+          <div class="movie-poster border border-secondary col-3 col-sm-4">
+            <img src="<?php echo DirectoryPath::ASSETS_URL; ?>img/movie-posters/friday-the-13th/1.jpg" alt="Spiderman: No Way Home" class="movie-poster__img">
+
+          </div>
+          <!-- Póster de películas. -->
+          <div class="movie-poster border border-secondary col-3 col-sm-4">
+            <img src="<?php echo DirectoryPath::ASSETS_URL; ?>img/movie-posters/avengers-endgame/1.jpg" alt="Spiderman: No Way Home" class="movie-poster__img">
+
+          </div>
+        </div>
       </div>
       <!-- Mejores películas. Es un sidebar. -->
       <div class="best-movies-container border border-primary col-12 col-sm-4">
-        <!-- <h1>Mejores Películas</h1> -->
+        <h2>Mejores Películas</h2>
       </div>
-    </div>  
+    </div>
   </div>
 
   <footer>
