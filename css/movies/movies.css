@@ -1,6 +1,8 @@
 .movies-container,
 .movies-container * {
   /* font-family: 'Noto Sans', sans-serif; */
+  /* Que se pueda romper la línea para que no ocurra overflow con el heading. */
+  line-break: anywhere;
 }
 
 .movies-container__title,
@@ -12,6 +14,7 @@
 }
 
 /* -------------------------------------------------------------------------- */
+/* ------------------------------- BEST MOVIES ------------------------------ */
 
 .best-movies-container {
   width: 100%;
@@ -35,6 +38,38 @@
   text-align: center;
 }
 
+.best-movies-container .movie-poster {
+  flex-direction: row;
+}
+
+.best-movies-container .movie-poster__year {
+  bottom: 1.1em;
+  right: 2.1em;
+}
+
+.best-movies__details-list {
+  list-style: none;
+  margin: 0;
+  height: 100%;
+  padding: 0;
+  text-align: left;
+  font-size: .8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 1em;
+  /* gap: 0.3em; */
+}
+.best-movies__details-list .movie-poster__title {
+  text-align: left;
+  padding: 0;
+}
+
+.best-movies__details-list li,
+.best-movies__details-list li *
+{
+  /* font-size: 0.85rem; */
+}
 /* -------------------------------------------------------------------------- */
 
 .movies__row {
@@ -47,6 +82,7 @@
   display: flex;
   flex-direction: column;
   padding: .75em;
+  /* width: 100%; */
   font-size: .8em;
   font-family: 'Noto Sans', sans-serif;
   position: relative;
@@ -79,7 +115,7 @@
 
 .movie-poster__title {
   font-family: 'Noto Sans', sans-serif;
-  font-size: 1em;
+  /* font-size: 1em; */
   text-align: center;
   font-weight: 600;
   padding-top: 0.4em;
@@ -92,7 +128,7 @@
   right: 1.2em;
   padding: 0.05em 0.5em;
   width: min-content;
-  font-size: 0.9em;
+  font-size: 1em;
   font-weight: 700;
   background-color: var(--color-primary);
   border-radius: 0.65rem;
@@ -106,7 +142,24 @@
   }
   .movie-poster__year {
     font-size: 1.2em;
-    bottom: 1em;
-    right: 1em;
+  }
+  .best-movies-container .movie-poster__year {
+    bottom: .5em;
+    right: 1.5em;
+  }
+  .best-movies__details-list .movie-poster__title {
+    font-size: 1.7em;
+  }
+
+  .best-movies__details-list {
+    gap: 1em;
+    padding: 0;
+    justify-content: flex-start;
+  }
+
+  .best-movies__details-list li
+  /* .best-movies__details-list li *  */
+  {
+    font-size: 1.5em;
   }
 }
