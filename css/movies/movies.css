@@ -1,6 +1,41 @@
-.movies-container {
-  /* font-family: 'Roboto', sans-serif; */
+.movies-container,
+.movies-container * {
+  /* font-family: 'Noto Sans', sans-serif; */
 }
+
+.movies-container__title,
+.best-movies-container__title {
+  margin: 0;
+  padding: 0.5em;
+  /* height: 3em; */
+  font-weight: 700;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.best-movies-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+
+
+.best-movies-container__title {
+  font-size: 1em;
+  margin: 1em 0;
+  max-width: 20em;
+  padding: 0.7em 0.5em;
+  width: 100%;
+  background-color: var(--color-primary-darked);
+  border-radius: 0.5rem;
+  color: white;
+  text-align: center;
+}
+
+/* -------------------------------------------------------------------------- */
 
 .movies__row {
   display: flex;
@@ -44,7 +79,7 @@
 
 .movie-poster__title {
   font-family: 'Noto Sans', sans-serif;
-  font-size: 0.9em;
+  font-size: 1em;
   text-align: center;
   font-weight: 600;
   padding-top: 0.4em;
@@ -61,4 +96,17 @@
   font-weight: 700;
   background-color: var(--color-primary);
   border-radius: 0.65rem;
+}
+
+/* ------------------------------ MEDIA QUERIES ----------------------------- */
+
+@media (max-width: 576px) {
+  .best-movies-container__title {
+
+  }
+  .movie-poster__year {
+    font-size: 1.2em;
+    bottom: 1em;
+    right: 1em;
+  }
 }
