@@ -1,4 +1,6 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   font-family: 'Quicksand', sans-serif;
   /* Para fuente en móvil. */
   /* font-size: 14px; */
@@ -8,7 +10,21 @@
 }
 
 :root {
-  --color-own-primary: #603b10;
+  /* --color-own-primary: #603b10; */
+  /*
+  Colores generados en coolors.co: 
+  https://coolors.co/e3d7ff-afa2ff-f8f9fa-0d6efd-17a2b8-c97c5d-0c0f0a-d7263d-870058-23022e 
+  */
+  --color-dark-purple: #23022E;
+  --color-lavender-blue: #e3d7ff;
+  --color-maximum-blue-purple: #AFA2FF;
+  --color-cultured: #F8F9FA;
+  --color-blue-crayola: #0D6EFD;
+  --color-pacific-blue: #17a2b8;
+  --color-copper-crayola: #c97c5d;
+  --color-rich-black-fogra-39: #0c0f0a;
+  --color-crimson: #d7263d;
+  --color-pansy-purple: #870058;
 }
 
 p,
