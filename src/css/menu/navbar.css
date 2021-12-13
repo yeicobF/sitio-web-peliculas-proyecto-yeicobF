@@ -19,11 +19,21 @@
   color: var(--color-primary-darked);
   text-decoration: underline;
 }
+@media (min-width: 768px) and (max-width: 900px) {
+  .navbar,
+  .navbar * {
+    font-size: 0.8rem;
+  }
+}
 
 @media (min-width: 768px) {
   .navbar {
     flex-wrap: nowrap;
-    font-size: 1.2em;
+    /* font-size: 1.2rem; */
+  }
+  .navbar,
+  .navbar * {
+    font-size: .9rem;
   }
   .navbar-collapse {
     padding-top: 0;

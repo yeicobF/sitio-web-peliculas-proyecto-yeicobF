@@ -5,8 +5,11 @@ Registrarse e iniciar sesión.
 .login-buttons {
   margin: 1em 0.5em;
   flex-basis: 100%;
+  gap: 0.5em;
   display: flex;
+  min-width: fit-content;
   justify-content: space-around;
+
   /* 
   Si uno de los elementos crece en altura, los otros toman su tamaño.
    */
@@ -25,11 +28,13 @@ Registrarse e iniciar sesión.
 }
 
 .login-buttons :first-child {
-  margin-right: 0.5em;
+  /* margin-right: 0.5em; */
 }
 
 .login-buttons > * {
   flex-basis: 40%;
+  font-weight: 600;
+
   /* transition: flex 0.8s ease-out; */
   /* Transición para cuando la fuente cambia de tamaño. */
   transition: font-size 0.2s ease-out;
@@ -40,6 +45,12 @@ Registrarse e iniciar sesión.
   transition: background-color 10s ease-out;
 }
 
+@media (min-width: 768px) and (max-width: 900px) {
+  .login-buttons {
+    font-size: 0.9em;
+  }
+}
+
 @media (min-width: 768px) {
   .login-buttons {
     margin: 0;
@@ -48,7 +59,7 @@ Registrarse e iniciar sesión.
     /* Ocupar espacio restante. */
     /* flex-grow: 1; */
     justify-content: space-between;
-    font-size: 1em;
+    /* font-size: 1em; */
   }
   .login-buttons>* {
     flex-basis: auto;
