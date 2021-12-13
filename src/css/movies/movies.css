@@ -1,0 +1,28 @@
+.movies__row {
+  display: flex;
+  flex-wrap: wrap;
+  /* gap: 0.5em; */
+}
+
+.movie-poster {
+  display: flex;
+  flex-direction: row;
+  padding: .75em;
+  }
+
+.movie-poster__title {
+  
+}
+
+.movie-poster__img {
+  /* height: 100%; */
+  max-height: 20em;
+  aspect-ratio: 2 / 3;
+  width: 100%;
+  /* aspect-ratio: 16 / 9; */
+  /* left:  0; */
+  object-fit: cover;
+  /* object-position: top; */
+  object-position: center 100%;
+  /* right: 0; */
+}

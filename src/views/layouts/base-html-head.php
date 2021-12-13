@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . "/../../config/directory_path.php";
+include_once __DIR__ . "/../../config/directory-path.php";
 
 /**
  * Obtener la base que viene en el head del HTML en general y no ponerla de

@@ -4,7 +4,7 @@
 //
 // Ya que, si incluyo a este archivo desde otro con una estructura diferente de
 // archivos, el include lo haría relativamente al archivo que llama y no a este.
-include_once __DIR__ . "/" . "../../config/directory_path.php";
+include_once __DIR__ . "/" . "../../config/directory-path.php";
 
 // Archivo de la página actual (el padre por decirlo de alguna manera, no este
 // como con __DIR__).
