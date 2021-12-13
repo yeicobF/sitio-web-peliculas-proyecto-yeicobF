@@ -12,26 +12,44 @@
   display: flex;
   flex-direction: column;
   padding: .75em;
-  font-family: 'Roboto', sans-serif;
-  }
-
-.movie-poster__title {
-  font-family: 'Roboto', sans-serif;
   font-size: .8em;
-  text-align: center;
-  font-weight: 600;
-  padding-top: 0.5em;
+  font-family: 'Roboto', sans-serif;
+  position: relative;
 }
+
+
 
 .movie-poster__img {
   /* height: 100%; */
-  max-height: 20em;
+  border-radius: .9em;
+  /* max-height: 10em; */
   aspect-ratio: 2 / 3;
   width: 100%;
   /* aspect-ratio: 16 / 9; */
   /* left:  0; */
-  object-fit: contain;
+  object-fit: cover;
   object-position: top;
   /* object-position: center 100%; */
   /* right: 0; */
+}
+
+.movie-poster__title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
+  text-align: center;
+  font-weight: 600;
+  padding-top: 0.4em;
+}
+
+.movie-poster__year {
+  color: white;
+  position: absolute;
+  top: 1.5em;
+  right: 1.5em;
+  padding: 0.05em 0.5em;
+  width: min-content;
+  font-size: 0.9em;
+  font-weight: 700;
+  background-color: var(--color-primary);
+  border-radius: 0.65rem;
 }
