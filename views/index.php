@@ -26,6 +26,7 @@ $baseHtmlHead = new BaseHtmlHead(
   <link rel="stylesheet" href="../css/utilities/utilities.css">
   <link rel="stylesheet" href="../css/transformations/rotate.css">
   <link rel="stylesheet" href="../css/movies/movies.css">
+  <link rel="stylesheet" href="../css/footer/footer.css">
 
   <!-- SCRIPTS -->
   <script defer type="module">
@@ -50,9 +51,9 @@ $baseHtmlHead = new BaseHtmlHead(
     <div class="row">
 
       <!-- Contenedor de películas. -->
-      <div class="movies-container border border-primary col-12 col-sm-8">
+      <main class="movies-container border border-primary col-12 col-sm-8">
         <h2 class="movies-container__title">Películas</h2>
-        <div class="row border border-secondary">
+        <section class="row border border-secondary">
           <!-- Póster de películas. -->
           <figure class="movie-poster border border-secondary col-6 col-sm-4">
             <!-- 
@@ -112,10 +113,10 @@ $baseHtmlHead = new BaseHtmlHead(
             <figcaption class="movie-poster__title">Spiderman: No Way Home</figcaption>
           </figure>
 
-        </div>
-      </div>
+        </section>
+      </main>
       <!-- Mejores películas. Es un sidebar. -->
-      <div class="best-movies-container border border-primary col-12 col-sm-4">
+      <aside class="best-movies-container border border-primary col-12 col-sm-4">
         <h2 class="best-movies-container__title">Mejores Películas</h2>
         <!-- Póster de películas. -->
         <figure class="row movie-poster border border-secondary col-12">
@@ -132,7 +133,7 @@ $baseHtmlHead = new BaseHtmlHead(
           <figcaption class="col-6">
             <ul class="best-movies__details-list">
               <li class="movie-poster__title">Spiderman: No Way Home</li>
-              <li>4.5/5</li>
+              <li><data value="4.5">4.5/5</data></li>
               <li><time datetime="PT2H28M">2h 38m</time></li>
             </ul>
           </figcaption>
@@ -151,7 +152,7 @@ $baseHtmlHead = new BaseHtmlHead(
           <figcaption class="col-6">
             <ul class="best-movies__details-list">
               <li class="movie-poster__title">Friday the 13th</li>
-              <li>4/5</li>
+              <li><data value="4">4/5</data></li>
               <li><time datetime="PT2H35M">1h 35m</time></li>
             </ul>
           </figcaption>
@@ -171,7 +172,7 @@ $baseHtmlHead = new BaseHtmlHead(
           <figcaption class="col-6">
             <ul class="best-movies__details-list">
               <li class="movie-poster__title">Spiderman: No Way Home</li>
-              <li>4.5/5</li>
+              <li><data value="4.5">4.5/5</data></li>
               <li><time datetime="PT2H28M">2h 38m</time></li>
             </ul>
           </figcaption>
@@ -190,18 +191,18 @@ $baseHtmlHead = new BaseHtmlHead(
           <figcaption class="col-6">
             <ul class="best-movies__details-list">
               <li class="movie-poster__title">Friday the 13th</li>
-              <li>4/5</li>
+              <li><data value="4">4/5</data></li>
               <li><time datetime="PT2H35M">1h 35m</time></li>
             </ul>
           </figcaption>
         </figure>
-      </div>
+      </aside>
     </div>
   </div>
 
-  <footer>
-
-  </footer>
+  <?php
+  include "../views/layouts/footer.php";
+  ?>
 </body>
 
 </html>
