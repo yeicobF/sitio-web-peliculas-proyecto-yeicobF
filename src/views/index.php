@@ -51,7 +51,7 @@ $baseHtmlHead = new BaseHtmlHead(
 
       <!-- Contenedor de películas. -->
       <div class="movies-container border border-primary col-12 col-sm-8">
-        <h2>Películas</h2>
+        <h2 class="movies-container__title">Películas</h2>
         <div class="row movies__row border border-secondary">
           <!-- Póster de películas. -->
           <div class="movie-poster border border-secondary col-6 col-sm-4">
@@ -127,7 +127,7 @@ $baseHtmlHead = new BaseHtmlHead(
       </div>
       <!-- Mejores películas. Es un sidebar. -->
       <div class="best-movies-container border border-primary col-12 col-sm-4">
-        <h2>Mejores Películas</h2>
+        <h2 class="best-movies-container__title">Mejores Películas</h2>
       </div>
     </div>
   </div>
