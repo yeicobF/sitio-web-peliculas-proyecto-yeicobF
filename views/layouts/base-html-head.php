@@ -9,7 +9,7 @@ include_once __DIR__ . "/../../config/directory-path.php";
  */
 class BaseHtmlHead
 {
-  private $pageName = "Colección de películas | ";
+  private $pageName = " | Colección de películas";
   private $includeOwnFramework = true;
   private $includeFontAwesome = true;
 
@@ -68,6 +68,14 @@ class BaseHtmlHead
     <link rel='preconnect' href='https://fonts.googleapis.com'>
     <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
     <link href='https://fonts.googleapis.com/css2?family=Single+Day&display=swap' rel='stylesheet'>
+
+    <!-- Noto Sans -->
+    <!-- https://fonts.google.com/noto/specimen/Noto+Sans -->
+    <!-- font-family: 'Noto Sans', sans-serif; -->
+
+    <link rel='preconnect' href='https://fonts.googleapis.com'>
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+    <link href='https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap' rel='stylesheet'>
   ";
 
   public function __construct(
@@ -75,7 +83,7 @@ class BaseHtmlHead
     $_includeOwnFramework = true,
     $_includeFontAwesome = true
   ) {
-    $this->pageName .= $_pageName;
+    $this->pageName = $_pageName . $this->pageName;
     $this->includeOwnFramework = $_includeOwnFramework;
     $this->includeFontAwesome = $_includeFontAwesome;
   }
