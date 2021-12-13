@@ -7,6 +7,10 @@
   transition: font-size 0.2s ease-out;
 }
 
+:root {
+  --color-own-primary: #603b10;
+}
+
 p {
   margin: 0;
 }

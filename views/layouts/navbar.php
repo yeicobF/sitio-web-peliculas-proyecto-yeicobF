@@ -89,21 +89,21 @@ $add_css_current_page = [
     <ul class="navbar-nav">
       <!-- Elementos individuales. -->
       <li class="nav-item">
-        <a href="#" class="nav-link<?php echo $add_css_current_page["inicio"]; ?>">
+        <a href="#" id="nav-inicio" class="nav-link<?php echo $add_css_current_page["inicio"]; ?>">
           Inicio
         </a>
       </li>
 
       <li class="nav-item">
-        <a href="#" class="nav-link<?php echo $add_css_current_page["peliculas"]; ?>">
+        <a href="#" id="nav-peliculas" class="nav-link<?php echo $add_css_current_page["peliculas"]; ?>">
           Películas
         </a>
       </li>
       <li class="nav-item dropdown">
 
-        <a href="#" class="nav-link dropdown-toggle<?php echo $add_css_current_page["generos"]; ?>">
+        <a href="#" id="nav-generos" class="nav-link dropdown-toggle<?php echo $add_css_current_page["generos"]; ?>">
           <p>Géneros</p>
-          <i class="fas fa-angle-down"></i>
+          <i class="rotate fas fa-angle-down"></i>
           <!-- <i class="submenu-indicator-tooltip">v</i> -->
         </a>
 

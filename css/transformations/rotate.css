@@ -1,0 +1,8 @@
+.rotate {
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Clase para rotar 180 grados. */
+.rotate-180 {
+  transform: rotate(-180deg);
+}
