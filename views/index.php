@@ -54,21 +54,22 @@ $baseHtmlHead = new BaseHtmlHead(
         <h2>Películas</h2>
         <div class="row movies__row border border-secondary">
           <!-- Póster de películas. -->
-          <div class="movie-poster border border-secondary col-3 col-sm-4">
+          <figure class="movie-poster border border-secondary col-6 col-sm-4">
             <img src="<?php echo DirectoryPath::ASSETS_URL; ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home" class="movie-poster__img">
-          </div>
+            <figcaption class="movie-poster__title">Spiderman: No Way Home</figcaption>
+          </figure>
           <!-- Póster de películas. -->
-          <div class="movie-poster border border-secondary col-3 col-sm-4">
+          <div class="movie-poster border border-secondary col-6 col-sm-4">
             <img src="<?php echo DirectoryPath::ASSETS_URL; ?>img/movie-posters/friday-the-13th/1.jpg" alt="Spiderman: No Way Home" class="movie-poster__img">
 
           </div>
           <!-- Póster de películas. -->
-          <div class="movie-poster border border-secondary col-3 col-sm-4">
+          <div class="movie-poster border border-secondary col-6 col-sm-4">
             <img src="<?php echo DirectoryPath::ASSETS_URL; ?>img/movie-posters/friday-the-13th/1.jpg" alt="Spiderman: No Way Home" class="movie-poster__img">
 
           </div>
           <!-- Póster de películas. -->
-          <div class="movie-poster border border-secondary col-3 col-sm-4">
+          <div class="movie-poster border border-secondary col-6 col-sm-4">
             <img src="<?php echo DirectoryPath::ASSETS_URL; ?>img/movie-posters/avengers-endgame/1.jpg" alt="Spiderman: No Way Home" class="movie-poster__img">
 
           </div>

@@ -11,8 +11,10 @@
   --color-own-primary: #603b10;
 }
 
-p {
+p,
+figure {
   margin: 0;
+  padding: 0;
 }
 
 button,
