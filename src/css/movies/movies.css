@@ -2,7 +2,9 @@
 .movies-container * {
   /* font-family: 'Noto Sans', sans-serif; */
   /* Que se pueda romper la línea para que no ocurra overflow con el heading. */
-  line-break: anywhere;
+  /* line-break: strict; */
+  overflow-wrap: break-word;
+  /* white-space: pre-wrap; */
 }
 
 .movies-container__title,
@@ -127,7 +129,7 @@
   bottom: 1.2em;
   right: 1.2em;
   padding: 0.05em 0.5em;
-  width: min-content;
+  /* width: min-content; */
   font-size: 1em;
   font-weight: 700;
   background-color: var(--color-primary);
