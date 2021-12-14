@@ -18,9 +18,9 @@
   --color-dark-purple: #23022E;
   --color-lavender-blue: #e3d7ff;
   --color-maximum-blue-purple: #AFA2FF;
-  --color-cultured: #F8F9FA;
-  --color-blue-crayola: #0D6EFD;
-  --color-pacific-blue: #17a2b8;
+  /* --color-cultured: #F8F9FA; */
+  /* --color-blue-crayola: #0D6EFD; */
+  /* --color-pacific-blue: #17a2b8; */
   --color-copper-crayola: #c97c5d;
   --color-rich-black-fogra-39: #0c0f0a;
   --color-crimson: #d7263d;
@@ -37,6 +37,10 @@ button,
 input {
   border-width: 0;
   outline: none;
+}
+
+body {
+  /* background-color: #F1E0F5; */
 }
 
 @media (min-width: 768px) {

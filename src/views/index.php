@@ -1,6 +1,10 @@
 <?php
-include_once __DIR__ . "/" . "../config/directory-path.php";
-include_once "../views/layouts/base-html-head.php";
+// Obtener la raíz del proyecto en el disco duro y no en el URL como en __DIR__.
+// https://stackoverflow.com/questions/13369529/full-url-not-working-with-php-include
+$path = "{$_SERVER["DOCUMENT_ROOT"]}/" . "fdw-2021-2022-a/proyecto-yeicobF/";
+
+include_once $path . "src/config/directory-path.php";
+include_once $path . DirectoryPath::LAYOUTS_URL . "base-html-head.php";
 
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Inicio",
@@ -29,14 +33,7 @@ $baseHtmlHead = new BaseHtmlHead(
   <link rel="stylesheet" href="../css/footer/footer.css">
 
   <!-- SCRIPTS -->
-  <script defer type="module">
-    import {
-      activateToggleRotate180
-    } from "../js/toggle/toggle-rotate.js";
-
-    // Activamos la rotación de los elementos del navbar con la clase rotate.
-    activateToggleRotate180(".navbar-nav .nav-link", ".rotate");
-  </script>
+  <script defer src="<?php echo DirectoryPath::SRC_FOLDER_URL . "js/navbar.js"; ?>" type="module"></script>
   <?php
   echo $baseHtmlHead->getTitle();
   ?>

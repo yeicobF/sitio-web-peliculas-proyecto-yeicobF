@@ -15,8 +15,14 @@ class DirectoryPath
   // instanciar y utilizar variables e clase, pero por el momento no lo
   // requiero.
   const LOCALHOST = "http://localhost:8012/";
-  const PROJECT_FOLDER_DIR = self::LOCALHOST . "fdw-2021-2022-a/proyecto-yeicobF/";
-  const SRC_FOLDER_URL = self::PROJECT_FOLDER_DIR . "src/";
+  const CONFIG_URL = __DIR__;
+  
+  const BARE_PROJECT_FOLDER_DIR = "fdw-2021-2022-a/proyecto-yeicobF/";
+  const PROJECT_FOLDER_DIR = self::LOCALHOST . self::BARE_PROJECT_FOLDER_DIR;
+  
+  // const SRC_FOLDER_URL = self::BARE_PROJECT_FOLDER_DIR . "src/";
+
+  const SRC_FOLDER_URL = "src/";
   const ASSETS_URL = self::SRC_FOLDER_URL . "assets/";
   const ICO_URL = self::ASSETS_URL . "ico/";
   const IMG_URL = self::ASSETS_URL . "img/";
