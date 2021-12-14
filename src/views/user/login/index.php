@@ -36,6 +36,7 @@ $baseHtmlHead = new BaseHtmlHead(
   <link rel="stylesheet" href="<?php echo $src_folder; ?>css/config.css">
   <link rel="stylesheet" href="<?php echo $src_folder; ?>css/components/components.css">
   <link rel="stylesheet" href="<?php echo $src_folder; ?>css/utilities/utilities.css">
+  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/form/form.css">
   <link rel="stylesheet" href="<?php echo $src_folder; ?>css/login-register/login-register.css">
 
   <?php
@@ -44,32 +45,27 @@ $baseHtmlHead = new BaseHtmlHead(
 </head>
 
 <body class="body-container container-sm container-fluid">
-
   <header class="page-info">
     <a class="page-info__logo" rel="noopener noreferrer" href="<?php echo $views_folder; ?>index.php">
       <img class="" src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::PAGE_LOGO); ?>" alt="Colección de películas" srcset="">
     </a>
     <h1 class="page-info__title">Colección de películas</h1>
   </header>
-  <form autocomplete="off" action="" method="get" class="login-register__container">
-    <!-- Hay que definir el método a utilizar con un input hidden. -->
+  <form autocomplete="off" action="" method="get" class="form__container">
     <input type="hidden" name="_method" value="POST">
-
-    <section class="login-register__input__container">
-      <input autocomplete="off" type="text" name="username" id="username" placeholder="Ingresa un nombre de usuario">
-      <i class="login-register__input__icon fas fa-user-alt"></i>
+    
+    <section class="form__input__container">
+      <input autocomplete="off" type="text" name="username" id="username" placeholder="Correo electrónico o usuario">
+      <i class="form__input__icon fas fa-user-alt"></i>
     </section>
-    <section class="login-register__input__container">
+    <section class="form__input__container">
       <input type="password" name="password" id="password" placeholder="Contraseña">
-      <i class="login-register__input__icon fas fa-eye-slash"></i>
+      <i class="form__input__icon fas fa-eye-slash"></i>
     </section>
-    <section class="login-register__input__container login-register__birthday">
-      <input type="date" name="fecha-nacimiento" id="fecha-nacimiento">
-    </section>
-    <input type="submit" class="btn login-register__button" id="register-form-button" value="Registrarse">
+    <input type="submit" class="btn form__button" id="login-form-button" value="Iniciar sesión">
   </form>
-  <a href="<?php echo $views_folder; ?>login/index.php" class="login-register__link">
-    Iniciar sesión
+  <a href="<?php echo $views_folder; ?>user/registro/index.php" class="form__link">
+    Regístrate
   </a>
 
 </html>
