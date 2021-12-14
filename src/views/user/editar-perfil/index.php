@@ -79,7 +79,7 @@ $baseHtmlHead = new BaseHtmlHead(
         </hgroup>
         <section>
           <label for="upload-picture">Foto de perfil</label>
-          <input class="edit-profile__picture__input" type="file" name="upload-picture" class="form-control">
+          <input class="form__input__picture" type="file" name="upload-picture" class="form-control">
         </section>
         <section class="">
           <label for="username">Nombre de usuario</label>
