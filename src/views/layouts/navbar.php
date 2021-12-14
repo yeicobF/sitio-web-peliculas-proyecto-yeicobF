@@ -4,7 +4,20 @@
 //
 // Ya que, si incluyo a este archivo desde otro con una estructura diferente de
 // archivos, el include lo haría relativamente al archivo que llama y no a este.
-include_once __DIR__ . "/" . "../../config/directory-path.php";
+// include_once __DIR__ . "/" . "../../config/directory-path.php";
+
+/* -------------------------------------------------------------------------- */
+
+// Obtener la raíz del proyecto en el disco duro y no en el URL como en __DIR__.
+// https://stackoverflow.com/questions/13369529/full-url-not-working-with-php-include
+$path = "{$_SERVER["DOCUMENT_ROOT"]}/";
+
+include_once $path
+  . "fdw-2021-2022-a/proyecto-yeicobF/"
+  . "src/config/directory-path.php";
+
+/* -------------------------------------------------------------------------- */
+/* ----------------------- ARCHIVO ACTUAL Y CLASES CSS ---------------------- */
 
 // Archivo de la página actual (el padre por decirlo de alguna manera, no este
 // como con __DIR__).
@@ -36,6 +49,16 @@ $add_css_current_page = [
     : ""
 ];
 
+/* ------------------------- ENLACE PARA CADA PÁGINA ------------------------ */
+$views_url = DirectoryPath::getPathWithLocalhost(DirectoryPath::VIEWS);
+$url_page = [
+  "inicio" => $views_url . "index.php",
+  "peliculas" => $views_url . "peliculas/index.php",
+  "generos" => $views_url . "generos/index.php",
+  "login" => $views_url . "login/index.php",
+  "registro" => $views_url . "registro/index.php",
+]
+
 // var_dump($add_css_current_page);
 
 // Obtener nombre de archivo actual sin su extensión.
@@ -47,7 +70,7 @@ $add_css_current_page = [
     indicando que se trata de una navbar.
   -->
 <nav class="navbar">
-  <a href="#" class="navbar-brand">
+  <a rel="noopener noreferrer" href="<?php echo $url_page["inicio"]; ?>" class="navbar-brand">
     <!-- https://developer.mozilla.org/es/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images -->
     <img src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS); ?>/iconscout/office-icon-pack-by-gunaldi-yunus/svg/film-1505229.svg" alt="Colección de películas" srcset="" sizes="" class="logo">
     <!-- p.navbar__title -->
@@ -74,34 +97,34 @@ $add_css_current_page = [
     </form>
 
     <!-- Inicio de sesión. -->
-    <div class="login-buttons">
+    <form class="login-buttons">
       <!-- button.btn.btn-light#login-button -->
-      <button type="button" class="btn btn-light" id="login-button">
+      <a rel="noopener noreferrer" href="<?php echo $url_page["login"]; ?>" class="btn btn-light" id="login-button">
         Iniciar sesión
-      </button>
+      </a>
       <!-- button.btn.btn-info#register-button{Registrarse} -->
-      <button class="btn btn-info" id="register-button">
+      <a rel="noopener noreferrer" href="<?php echo $url_page["registro"]; ?>" class="btn btn-info" id="register-button">
         Registrarse
-      </button>
-    </div>
+      </a>
+    </form>
 
     <!-- Contenedor de links del menú. -->
     <ul class="navbar-nav">
       <!-- Elementos individuales. -->
       <li class="nav-item">
-        <a href="#" id="nav-inicio" class="nav-link<?php echo $add_css_current_page["inicio"]; ?>">
+        <a rel="noopener noreferrer" href="<?php echo $url_page["inicio"]; ?>" id="nav-inicio" class="nav-link<?php echo $add_css_current_page["inicio"]; ?>">
           Inicio
         </a>
       </li>
 
       <li class="nav-item">
-        <a href="#" id="nav-peliculas" class="nav-link<?php echo $add_css_current_page["peliculas"]; ?>">
+        <a rel="noopener noreferrer" href="<?php echo $url_page["peliculas"]; ?>" id="nav-peliculas" class="nav-link<?php echo $add_css_current_page["peliculas"]; ?>">
           Películas
         </a>
       </li>
       <li class="nav-item dropdown">
 
-        <a href="#" id="nav-generos" class="nav-link dropdown-toggle<?php echo $add_css_current_page["generos"]; ?>">
+        <a rel="noopener noreferrer" href="#" id="nav-generos" class="nav-link dropdown-toggle<?php echo $add_css_current_page["generos"]; ?>">
           <p>Géneros</p>
           <i class="rotate fas fa-angle-down"></i>
           <!-- <i class="submenu-indicator-tooltip">v</i> -->
@@ -115,22 +138,22 @@ $add_css_current_page = [
               propiedad "display: block;".
             -->
           <li>
-            <a href="#" class="dropdown-item">
+            <a rel="noopener noreferrer" href="<?php echo $url_page["generos"]; ?>?genero=acción" class="dropdown-item">
               Acción
             </a>
           </li>
           <li>
-            <a href="#" class="dropdown-item">
+            <a rel="noopener noreferrer" href="<?php echo $url_page["generos"]; ?>?genero=terror" class="dropdown-item">
               Terror
             </a>
           </li>
           <li>
-            <a href="#" class="dropdown-item">
+            <a rel="noopener noreferrer" href="<?php echo $url_page["generos"]; ?>?genero=comedia" class="dropdown-item">
               Comedia
             </a>
           </li>
           <li>
-            <a href="#" class="dropdown-item">
+            <a rel="noopener noreferrer" href="<?php echo $url_page["generos"]; ?>" class="dropdown-item">
               Ver todos
             </a>
           </li>
