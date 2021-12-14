@@ -153,7 +153,7 @@ $url_page = [
             </a>
           </li>
           <li>
-            <a rel="noopener noreferrer" href="<?php echo $url_page["generos"]; ?>" class="dropdown-item">
+            <a rel="noopener noreferrer" href="<?php echo $url_page["generos"]; ?>?genero=todos" class="dropdown-item">
               Ver todos
             </a>
           </li>
