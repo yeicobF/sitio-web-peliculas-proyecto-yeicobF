@@ -22,6 +22,7 @@ class DirectoryPath
   const SRC = self::BARE_PROJECT_FOLDER_DIR . "src/";
   const CONFIG = self::SRC . "config/";
   const ASSETS = self::SRC . "assets/";
+  const PAGE_LOGO = self::ASSETS . "/iconscout/office-icon-pack-by-gunaldi-yunus/svg/film-1505229.svg";
   const MODELS = self::SRC . "models/";
   const CONTROLLERS = self::SRC . "controllers/";
   const VIEWS = self::SRC . "views/";

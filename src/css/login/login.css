@@ -1,0 +1,107 @@
+.body-container {
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 3em 2em;
+  background-color: var(--color-light);
+  gap: 1.4em;
+  max-width: 576px;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.page-info {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  align-items: center;
+}
+
+.page-info__logo {
+  display: flex;
+}
+
+.page-info__title {
+  font-size: 1.6em;
+  /* 11 caracteres máximo por línea ("colección de"). */
+  max-width: 11ch;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  /* flex: 2; */
+}
+
+.login__container {
+  display: flex;
+  /* flex-basis: 100%; */
+  /* flex: 1; */
+  width: 100%;
+  flex-direction: column;
+  gap: .6em;
+}
+
+.login__input__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5em;
+  padding: .5em;
+  border-radius: .3em;
+  border: solid 1px var(--color-lavender-blue);
+  box-sizing: border-box;
+}
+
+.login__input__container,
+.login__input__container input {
+  background-color: white;
+}
+
+.login__input__container:focus-within {
+  outline: solid 2px var(--color-dark-purple);
+
+}
+
+.login__input__container input {
+  width: 100%;
+}
+
+/* Que el ícono y el password estén al mismo nivel. */
+input[type="password"] ~ .login__input__icon {
+  cursor: pointer;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.login__button {
+  font-weight: 600;
+  color: white;
+  background-color: var(--color-pansy-purple);
+}
+
+/* -------------------------------------------------------------------------- */
+
+.link__login-registro {
+  /* text-decoration: none; */
+  color: var(--color-pansy-purple);
+  font-size: .9em;
+}
+
+/* -------------------------------------------------------------------------- */
+
+@media (min-width: 576px) {
+  .page-info__title {
+    font-size: 2em;
+    max-width: 6em;
+  }
+}
+
+@media (max-width: 360px) {
+  .page-info {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+  }
+  .page-info__title {
+    text-align: center;
+  }
+}
