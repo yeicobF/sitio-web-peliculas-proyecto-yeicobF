@@ -1,5 +1,7 @@
 <?php
-include_once __DIR__ . "/../../config/directory-path.php";
+$path = "{$_SERVER["DOCUMENT_ROOT"]}/" . "fdw-2021-2022-a/proyecto-yeicobF/";
+
+include_once $path . "src/config/directory-path.php";
 
 /**
  * Obtener la base que viene en el head del HTML en general y no ponerla de
@@ -12,6 +14,8 @@ class BaseHtmlHead
   private $pageName = " | Colección de películas";
   private $includeOwnFramework = true;
   private $includeFontAwesome = true;
+  private $path;
+
 
   /* ------------------------------ CONSTANTES ------------------------------ */
 
@@ -86,6 +90,10 @@ class BaseHtmlHead
     $this->pageName = $_pageName . $this->pageName;
     $this->includeOwnFramework = $_includeOwnFramework;
     $this->includeFontAwesome = $_includeFontAwesome;
+    $this->path = "{$_SERVER["DOCUMENT_ROOT"]}/" . "fdw-2021-2022-a/proyecto-yeicobF/";
+    echo $this-> path . DirectoryPath::ICO_URL . "iconscout/film.ico";
+    echo "\n";
+    echo "C:/xampp/htdocs/fdw-2021-2022-a/proyecto-yeicobF/src/assets/ico/iconscout/film.ico";
   }
   public function getHtmlBaseHead()
   {
@@ -94,7 +102,7 @@ class BaseHtmlHead
       <meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <meta name='viewport' content='width=device-width, initial-scale=1.0'>
       <!-- favicon -->
-      <link rel='shortcut icon' href='" . DirectoryPath::ICO_URL . "iconscout/film.ico' type='image/x-icon'>
+      <link rel='shortcut icon' href='" . $this->path . DirectoryPath::ICO_URL . "iconscout/film.ico' type='image/x-icon'>
     ";
 
     $htmlBaseHead .= ($this->includeOwnFramework
