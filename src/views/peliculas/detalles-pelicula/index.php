@@ -127,7 +127,7 @@ $baseHtmlHead = new BaseHtmlHead(
         <!-- Comentarios ya publicados. -->
         <article class="comments__posted">
           <figure class="comments__details">
-            <img src="<?php echo $img_folder; ?>../avatar/1.jpg" alt="Username" class="comments__details__logo">
+            <img src="<?php echo $img_folder; ?>../avatar/1.jpg" alt="Username" class="circle-avatar">
             <figcaption class="comments__details__info">
               <h3 class="comments__details__title">Username Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic ad numquam natus quaerat maiores vitae voluptatem. Voluptates perspiciatis sequi delectus, illum adipisci earum modi, error, ad totam eos praesentium hic?</h3>
               <time class="comments__details__time-ago" datetime="PT3H">Hace 3 horas</time>
@@ -152,7 +152,7 @@ $baseHtmlHead = new BaseHtmlHead(
         <!-- Comentarios ya publicados. -->
         <article class="comments__posted">
           <figure class="comments__details">
-            <img src="<?php echo $img_folder; ?>../avatar/1.jpg" alt="Username" class="comments__details__logo">
+            <img src="<?php echo $img_folder; ?>../avatar/1.jpg" alt="Username" class="circle-avatar">
             <figcaption class="comments__details__info">
               <h3 class="comments__details__title">Username Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic ad numquam natus quaerat maiores vitae voluptatem. Voluptates perspiciatis sequi delectus, illum adipisci earum modi, error, ad totam eos praesentium hic?</h3>
               <time class="comments__details__time-ago" datetime="PT3H">Hace 3 horas</time>
