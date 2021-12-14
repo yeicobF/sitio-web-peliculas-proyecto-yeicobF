@@ -42,6 +42,7 @@ $baseHtmlHead = new BaseHtmlHead(
   <link rel="stylesheet" href="<?php echo $src_folder; ?>css/movies/movie-details.css">
   <link rel="stylesheet" href="<?php echo $src_folder; ?>css/footer/footer.css">
   <link rel="stylesheet" href="<?php echo $src_folder; ?>css/form/form.css">
+  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/form/add-movie.css">
 
   <!-- SCRIPTS -->
   <script defer src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::SRC) . "js/navbar.js"; ?>" type="module"></script>
@@ -57,43 +58,83 @@ $baseHtmlHead = new BaseHtmlHead(
   include $path . DirectoryPath::LAYOUTS . "navbar.php";
   ?>
 
-  <div class="fill-height-flex container-fluid container-lg">
+  <div class="fill-height-flex container-fluid container-xl">
     <form class="form__container row" action="" method="POST">
+      <h1 class="col-12 form__movie__title">Agregar película</h1>
+
       <input type="hidden" name="_method" value="POST">
 
       <section class="col-12">
         <label for="spanish-movie-name">Nombre en español</label>
         <div class="form__input__container">
-          <input autocomplete="off" type="text" name="spanish-movie-name" id="username" placeholder="Ingresa el nombre en español">
+          <input autocomplete="off" type="text" name="spanish-movie-name" placeholder="Ingresa el nombre en español">
           <i class="form__input__icon fas fa-film"></i>
         </div>
       </section>
-      <section class="col-12 col-lg-4">
-        <label for="original-movie-name">Directores</label>
+      <section class="col-12">
+        <label for="original-movie-name">Nombre original</label>
         <div class="form__input__container">
-          <input autocomplete="off" type="text" name="original-movie-name" id="username" placeholder="Ingresa el nombre en español">
+          <input autocomplete="off" type="text" name="original-movie-name" placeholder="Ingresa el nombre original">
           <i class="form__input__icon fas fa-film"></i>
         </div>
       </section>
-      
-      <section class="col-12 col-lg-4">
-        <label for="original-movie-name">Actores</label>
-        <div class="form__input__container">
-          <input autocomplete="off" type="text" name="original-movie-name" id="username" placeholder="Ingresa el nombre en español">
-          <i class="form__input__icon fas fa-film"></i>
-        </div>
-      </section>
-      <section class="col-12 col-lg-4">
-        <label for="original-movie-name">Géneros</label>
-        <div class="form__input__container">
-          <input autocomplete="off" type="text" name="original-movie-name" id="username" placeholder="Ingresa el nombre en español">
-          <i class="form__input__icon fas fa-film"></i>
-        </div>
-      </section>
+      <div class="row form__movie__cast">
 
-      <section class="col-6 col-sm-4">
-        <label for="upload-picture">Póster</label>
-        <input class="form__input__picture" type="file" name="upload-picture" class="form-control">
+        <section class="col-12 col-lg-4">
+          <label for="directors">Directores</label>
+          <div class="form__input__container">
+            <input autocomplete="off" type="text" name="directors" placeholder="Ingresa el nombre en español">
+            <i class="form__input__icon fas fa-film"></i>
+          </div>
+        </section>
+
+        <section class="col-12 col-lg-4">
+          <label for="actors">Actores</label>
+          <div class="form__input__container">
+            <input autocomplete="off" type="text" name="actors" placeholder="Ingresa el nombre en español">
+            <i class="form__input__icon fas fa-film"></i>
+          </div>
+        </section>
+        <section class="col-12 col-lg-4">
+          <label for="genres">Géneros</label>
+          <div class="form__input__container">
+            <input autocomplete="off" type="text" name="genres" placeholder="Ingresa el nombre en español">
+            <i class="form__input__icon fas fa-film"></i>
+          </div>
+        </section>
+      </div>
+      <div class="form__movie__details row">
+
+        <section class="col-12 col-md-3">
+          <label for="upload-picture">Póster</label>
+          <input class="form__input__picture" type="file" name="upload-picture" class="form-control">
+        </section>
+        <section class="col-12 col-sm-4 col-md-3">
+          <label for="year">Año</label>
+          <div class="form__input__container">
+            <input autocomplete="off" type="text" name="year" placeholder="Año">
+            <i class="form__input__icon fas fa-film"></i>
+          </div>
+        </section>
+        <section class="col-12 col-sm-4 col-md-3">
+          <label for="running-time">Duración</label>
+          <div class="form__input__container">
+            <input autocomplete="off" type="text" name="running-time" placeholder="Duración">
+            <i class="form__input__icon fas fa-film"></i>
+          </div>
+        </section>
+        <section class="col-12 col-sm-4 col-md-3">
+          <label for="age-rating">Clasificación de edad</label>
+          <div class="form__input__container">
+            <input autocomplete="off" type="text" name="age-rating" placeholder="Clasificación de edad">
+            <i class="form__input__icon fas fa-film"></i>
+          </div>
+        </section>
+      </div>
+      <section class="col-12">
+        <label for="synopsis">Sinopsis</label>
+        <textarea class="form__text-input" name="synopsis" id="" cols="" rows=""></textarea>
+
       </section>
     </form>
   </div>

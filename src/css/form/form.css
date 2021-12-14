@@ -3,6 +3,7 @@
   /* flex-basis: 100%; */
   /* flex: 1; */
   width: 100%;
+  align-self: center;
   flex-direction: column;
   gap: .6em;
 }
