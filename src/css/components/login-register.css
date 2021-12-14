@@ -34,7 +34,9 @@ Registrarse e iniciar sesión.
 .login-buttons > * {
   flex-basis: 40%;
   font-weight: 600;
-
+  align-items: center;
+  display: flex;
+  justify-content: center;
   /* transition: flex 0.8s ease-out; */
   /* Transición para cuando la fuente cambia de tamaño. */
   transition: font-size 0.2s ease-out;
