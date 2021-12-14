@@ -23,9 +23,20 @@
 }
 .movie-details__info {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  column-gap: .3em;
+  position: relative;
   /* max-width: 60%; */
 }
+
+.movie-details__info > * {
+  background-color: var(--color-pansy-purple);
+  color: white;
+  font-weight: 400;
+  padding: 0 .3em;
+  border-radius: .2em;
+}
+
 .movie-details__synopsis {
   overflow-y: auto;
   height: 8em;
