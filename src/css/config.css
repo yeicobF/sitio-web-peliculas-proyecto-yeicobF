@@ -54,6 +54,12 @@ body {
   /* height: 100%; */
 }
 
+/* body :is(h1, h2, h3, h4, h5, h6),
+body :is(.h1, .h2, .h3, .h4, .h5, .h6) {
+  margin: 0;
+  padding: 0;
+} */
+
 .body-container {
   /* flex: 1; */
   display: flex;

@@ -1,0 +1,15 @@
+.comments__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.comments__form textarea {
+  width: 100%;
+  resize: none;
+  overflow: auto;
+  padding: .4em;
+}
+
+/* .comments__form button {
+  background-color: var(--color-info);
+} */
