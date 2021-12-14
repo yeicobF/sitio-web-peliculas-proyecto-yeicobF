@@ -1,0 +1,47 @@
+.form__container {
+  display: flex;
+  /* flex-basis: 100%; */
+  /* flex: 1; */
+  width: 100%;
+  flex-direction: column;
+  gap: .6em;
+}
+
+.form__input__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5em;
+  padding: .5em;
+  border-radius: .3em;
+  border: solid 1px var(--color-lavender-blue);
+  box-sizing: border-box;
+}
+
+.form__input__container,
+.form__input__container input {
+  background-color: white;
+}
+
+.form__input__container:focus-within {
+  outline: solid 2px var(--color-dark-purple);
+
+}
+
+.form__input__container input {
+  width: 100%;
+}
+
+/* Que el ícono y el password estén al mismo nivel. */
+input:not([type="text"]) ~ .form__input__icon {
+  cursor: pointer;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.form__button {
+  font-weight: 600;
+  color: white;
+  background-color: var(--color-pansy-purple);
+  /* border-radius: .3em; */
+}

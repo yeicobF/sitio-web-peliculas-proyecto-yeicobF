@@ -51,15 +51,19 @@ $add_css_current_page = [
 
 /* ------------------------- ENLACE PARA CADA PÁGINA ------------------------ */
 $views_url = DirectoryPath::getPathWithLocalhost(DirectoryPath::VIEWS);
+$user_url = "{$views_url}user/";
 $url_page = [
   "inicio" => $views_url . "index.php",
   "peliculas" => $views_url . "peliculas/index.php",
   "generos" => $views_url . "generos/index.php",
-  "login" => $views_url . "login/index.php",
-  "registro" => $views_url . "registro/index.php",
-]
+  "login" => $user_url . "login/index.php",
+  "registro" => $user_url . "registro/index.php",
+];
 
-// var_dump($add_css_current_page);
+// var_dump($user_url);
+// var_dump($url_page);
+// var_dump($url_page["login"]);
+// var_dump($url_page["registro"]);
 
 // Obtener nombre de archivo actual sin su extensión.
 // $current_file_name = basename(__DIR__, ".php");
