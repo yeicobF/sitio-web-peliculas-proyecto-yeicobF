@@ -90,10 +90,7 @@ class BaseHtmlHead
     $this->pageName = $_pageName . $this->pageName;
     $this->includeOwnFramework = $_includeOwnFramework;
     $this->includeFontAwesome = $_includeFontAwesome;
-    $this->path = "{$_SERVER["DOCUMENT_ROOT"]}/" . "fdw-2021-2022-a/proyecto-yeicobF/";
-    echo $this-> path . DirectoryPath::ICO_URL . "iconscout/film.ico";
-    echo "\n";
-    echo "C:/xampp/htdocs/fdw-2021-2022-a/proyecto-yeicobF/src/assets/ico/iconscout/film.ico";
+    $this->path = "{$_SERVER["DOCUMENT_ROOT"]}/" . DirectoryPath::BARE_PROJECT_FOLDER_DIR;
   }
   public function getHtmlBaseHead()
   {
@@ -102,23 +99,27 @@ class BaseHtmlHead
       <meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <meta name='viewport' content='width=device-width, initial-scale=1.0'>
       <!-- favicon -->
-      <link rel='shortcut icon' href='" . $this->path . DirectoryPath::ICO_URL . "iconscout/film.ico' type='image/x-icon'>
+      <link 
+        rel='shortcut icon' 
+        href='" . DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS) . "ico/iconscout/film.ico' 
+        type='image/x-icon'
+      >
     ";
 
-    $htmlBaseHead .= ($this->includeOwnFramework
+    $htmlBaseHead .=
+      $this->includeOwnFramework
       ? self::OWN_FRAMEWORK["css"]
-      : ""
-    );
+      : "";
 
-    $htmlBaseHead .= ($this->includeOwnFramework
+    $htmlBaseHead .=
+      $this->includeOwnFramework
       ? self::OWN_FRAMEWORK["js"]
-      : ""
-    );
+      : "";
 
-    $htmlBaseHead .= ($this->includeFontAwesome
+    $htmlBaseHead .=
+      $this->includeFontAwesome
       ? self::FONT_AWESOME
-      : ""
-    );
+      : "";
 
     $htmlBaseHead .= self::GOOGLE_FONTS;
 
