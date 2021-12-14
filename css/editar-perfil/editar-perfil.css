@@ -2,7 +2,7 @@
 }
 
 .edit-profile__title,
-.edit-profile__picture__input {
+.form__input__picture {
   text-align: center;
   /* flex-grow: inherit; */
   /* width: min-content; */
@@ -20,25 +20,7 @@
   /* padding: 0; */
 }
 
-input[type="file"].edit-profile__picture__input {
-  background-color: var(--color-pansy-purple);
-  color: white;
-  max-width: 100%;
-  width: 100%;
-  font-size: 0.8em;
-  display: flex;
-  overflow: visible;
-  flex-wrap: wrap;
-  white-space: break-spaces;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  /* cursor: pointer; */
-}
 
-input[type="file"]#file-upload-button.edit-profile__picture__input {
-  cursor: pointer;
-}
 
 .edit-profile__figure {
   gap: 0.5em;
@@ -104,18 +86,8 @@ input[type="file"]#file-upload-button.edit-profile__picture__input {
 
 /* -------------------------------------------------------------------------- */
 
-.form__buttons {
-  display: flex;
-  justify-content: right;
-  gap: 1em;
-}
 
-.form__button[title="Guardar cambios"] {
-  background-color: var(--color-success);
-}
-.form__button[title="Cancelar"] {
-  background-color: var(--color-danger);
-}
+
 
 /* -------------------------------------------------------------------------- */
 
