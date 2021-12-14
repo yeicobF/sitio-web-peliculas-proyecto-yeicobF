@@ -39,12 +39,30 @@ input {
   outline: none;
 }
 
+html {
+  height: 100%;
+  /* overflow: auto; */
+}
+
 body {
+  min-height: 100%;
+  /* overflow: auto; */
   /* background-color: #F1E0F5; */
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* justify-content: space-between; */
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-between; */
   /* height: 100%; */
+}
+
+.body-container {
+  /* flex: 1; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.fill-height-flex {
+  flex: 1;
 }
 
 @media (min-width: 768px) {

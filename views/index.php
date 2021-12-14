@@ -58,11 +58,11 @@ $baseHtmlHead = new BaseHtmlHead(
     <div class="row">
 
       <!-- Contenedor de películas. -->
-      <main class="movies-container border border-primary col-12 col-sm-8">
+      <main class="movies-container col-12 col-sm-8">
         <h2 class="movies-container__title">Películas</h2>
-        <section class="row border border-secondary">
+        <section class="row">
           <!-- Póster de películas. -->
-          <figure class="movie-poster border border-secondary col-6 col-sm-4">
+          <figure class="movie-poster   col-6 col-sm-4">
             <!-- 
               Contenedor para que el año tenga posición relativa al póster y 
               no a todo el contenedor. 
@@ -77,7 +77,7 @@ $baseHtmlHead = new BaseHtmlHead(
           </figure>
 
           <!-- Póster de películas. -->
-          <figure class="movie-poster border border-secondary col-6 col-sm-4">
+          <figure class="movie-poster   col-6 col-sm-4">
             <div class="movie-poster__year-image">
               <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
                 <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS); ?>img/movie-posters/friday-the-13th/1.jpg" alt="Friday the 13th">
@@ -88,7 +88,7 @@ $baseHtmlHead = new BaseHtmlHead(
           </figure>
 
           <!-- Póster de películas. -->
-          <figure class="movie-poster border border-secondary col-6 col-sm-4">
+          <figure class="movie-poster   col-6 col-sm-4">
             <div class="movie-poster__year-image">
               <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
                 <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS); ?>img/movie-posters/avengers-endgame/1.jpg" alt="Avengers: Endgame">
@@ -99,7 +99,7 @@ $baseHtmlHead = new BaseHtmlHead(
           </figure>
 
           <!-- Póster de películas. -->
-          <figure class="movie-poster border border-secondary col-6 col-sm-4">
+          <figure class="movie-poster   col-6 col-sm-4">
             <div class="movie-poster__year-image">
               <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
                 <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS); ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
@@ -110,7 +110,7 @@ $baseHtmlHead = new BaseHtmlHead(
           </figure>
 
           <!-- Póster de películas. -->
-          <figure class="movie-poster border border-secondary col-6 col-sm-4">
+          <figure class="movie-poster   col-6 col-sm-4">
             <div class="movie-poster__year-image">
               <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
                 <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS); ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
@@ -123,10 +123,10 @@ $baseHtmlHead = new BaseHtmlHead(
         </section>
       </main>
       <!-- Mejores películas. Es un sidebar. -->
-      <aside class="best-movies-container border border-primary col-12 col-sm-4">
+      <aside class="best-movies-container   col-12 col-sm-4">
         <h2 class="best-movies-container__title">Mejores Películas</h2>
         <!-- Póster de películas. -->
-        <figure class="row movie-poster border border-secondary col-12">
+        <figure class="row movie-poster   col-12">
           <!--
             Contenedor para que el año tenga posición relativa al póster y
             no a todo el contenedor.
@@ -145,7 +145,7 @@ $baseHtmlHead = new BaseHtmlHead(
             </ul>
           </figcaption>
         </figure>
-        <figure class="row movie-poster border border-secondary col-12">
+        <figure class="row movie-poster   col-12">
           <!--
             Contenedor para que el año tenga posición relativa al póster y
             no a todo el contenedor.
@@ -165,7 +165,7 @@ $baseHtmlHead = new BaseHtmlHead(
           </figcaption>
         </figure>
         <!-- Póster de películas. -->
-        <figure class="row movie-poster border border-secondary col-12">
+        <figure class="row movie-poster   col-12">
           <!--
             Contenedor para que el año tenga posición relativa al póster y
             no a todo el contenedor.
@@ -184,7 +184,7 @@ $baseHtmlHead = new BaseHtmlHead(
             </ul>
           </figcaption>
         </figure>
-        <figure class="row movie-poster border border-secondary col-12">
+        <figure class="row movie-poster   col-12">
           <!--
             Contenedor para que el año tenga posición relativa al póster y
             no a todo el contenedor.
