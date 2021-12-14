@@ -69,6 +69,8 @@ body :is(.h1, .h2, .h3, .h4, .h5, .h6) {
 
 .fill-height-flex {
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (min-width: 768px) {

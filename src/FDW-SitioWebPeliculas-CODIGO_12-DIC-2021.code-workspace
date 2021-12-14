@@ -6,7 +6,7 @@
 	],
 	"settings": {
 		"cssvar.files": [
-			"views/css/config.css",
+			"css/config.css",
 			"https://fundamentos2122.github.io/framework-css-yeicobF/css/config.css"
 		],
 		"cssvar.extensions": [

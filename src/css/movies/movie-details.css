@@ -104,4 +104,8 @@
   .movie-details__info {
     justify-content: center;
   }
+
+  .fill-height-flex {
+    gap: 3em;
+  }
 }

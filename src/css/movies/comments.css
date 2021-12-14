@@ -1,6 +1,21 @@
+.comments__container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+  padding-bottom: 1em;
+}
+
+.comments__container *:not(h2) {
+    font-family: 'Noto Sans', sans-serif;
+
+}
+
+/* ------------------------------- FORMULARIO ------------------------------- */
+
 .comments__form {
   display: flex;
   flex-direction: column;
+  /* gap: .2em; */
 }
 
 .comments__form textarea {
@@ -8,8 +23,96 @@
   resize: none;
   overflow: auto;
   padding: .4em;
+  border: solid 1px var(--color-info);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 /* .comments__form button {
   background-color: var(--color-info);
 } */
+
+/* ------------------------------- PUBLICADOS ------------------------------- */
+
+.comments__posted {
+  display: flex;
+  flex-direction: column;
+  padding: .5em;
+  border-radius: 20px;
+  border: solid 1px var(--color-lavender-blue);
+  row-gap: .8em;
+  flex-wrap: wrap;
+}
+
+.comments__text {
+  font-size: .8em;
+}
+
+.comments__details {
+  display: flex;
+  flex-direction: row;
+  max-width: 100%;
+  column-gap: 1em;
+  /* flex-basis: 100%; */
+}
+
+.comments__details__logo {
+  /* aspect-ratio: 1 / 1; */
+  object-position: top;
+  object-fit: cover;
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 50%;
+}
+
+.comments__details__info {
+  /* max-height: 2.5em; */
+  display: flex;
+  overflow: hidden;
+  flex: auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* max-width: 100%; */
+  flex-direction: column;
+}
+
+.comments__details__info,
+.comments__details__info * {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.comments__details__title {
+  margin: 0;
+  padding: 0;
+  font-size: 1.1em;
+}
+
+.comments__details__time-ago {
+  font-size: .65em;
+}
+
+.comments__interaction {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  font-size: .9em;
+  font-weight: 500;
+  align-items: baseline;
+}
+
+.comments__interaction__button.selected {
+  color: var(--color-pansy-purple);
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.comments__interaction button {
+  background-color: transparent;
+}
+
+@media (min-width: 768px) {
+  .comments__posted {
+    padding: 1em;
+  }
+}
