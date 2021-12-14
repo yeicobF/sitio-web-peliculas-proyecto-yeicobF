@@ -30,7 +30,7 @@
   /* flex: 2; */
 }
 
-.login__container {
+.login-register__container {
   display: flex;
   /* flex-basis: 100%; */
   /* flex: 1; */
@@ -39,7 +39,7 @@
   gap: .6em;
 }
 
-.login__input__container {
+.login-register__input__container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -50,36 +50,42 @@
   box-sizing: border-box;
 }
 
-.login__input__container,
-.login__input__container input {
+.login-register__input__container,
+.login-register__input__container input {
   background-color: white;
 }
 
-.login__input__container:focus-within {
+.login-register__input__container:focus-within {
   outline: solid 2px var(--color-dark-purple);
 
 }
 
-.login__input__container input {
+.login-register__input__container input {
   width: 100%;
 }
 
 /* Que el ícono y el password estén al mismo nivel. */
-input[type="password"] ~ .login__input__icon {
+input:not([type="text"]) ~ .login-register__input__icon {
   cursor: pointer;
 }
 
 /* -------------------------------------------------------------------------- */
 
-.login__button {
+.login-register__button {
   font-weight: 600;
   color: white;
+}
+
+#register-form-button {
+  background-color: var(--color-crimson);
+}
+#login-form-button {
   background-color: var(--color-pansy-purple);
 }
 
 /* -------------------------------------------------------------------------- */
 
-.link__login-registro {
+.login-register__link {
   /* text-decoration: none; */
   color: var(--color-pansy-purple);
   font-size: .9em;

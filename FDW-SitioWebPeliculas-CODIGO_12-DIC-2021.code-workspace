@@ -35,7 +35,9 @@
 	},
 	"extensions": {
 		"recommendations": [
-			"stylelint.vscode-stylelint"
+			"stylelint.vscode-stylelint",
+			"zignd.html-css-class-completion",
+			"pranaygp.vscode-css-peek"
 		]
 	}
 }
