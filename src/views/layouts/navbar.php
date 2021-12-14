@@ -49,7 +49,7 @@ $add_css_current_page = [
 <nav class="navbar">
   <a href="#" class="navbar-brand">
     <!-- https://developer.mozilla.org/es/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images -->
-    <img src="<?php echo DirectoryPath::ASSETS_URL; ?>/iconscout/office-icon-pack-by-gunaldi-yunus/svg/film-1505229.svg" alt="Colección de películas" srcset="" sizes="" class="logo">
+    <img src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS); ?>/iconscout/office-icon-pack-by-gunaldi-yunus/svg/film-1505229.svg" alt="Colección de películas" srcset="" sizes="" class="logo">
     <!-- p.navbar__title -->
   </a>
   <!-- 

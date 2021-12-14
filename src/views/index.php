@@ -1,10 +1,15 @@
 <?php
 // Obtener la raíz del proyecto en el disco duro y no en el URL como en __DIR__.
 // https://stackoverflow.com/questions/13369529/full-url-not-working-with-php-include
-$path = "{$_SERVER["DOCUMENT_ROOT"]}/" . "fdw-2021-2022-a/proyecto-yeicobF/";
+$path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
-include_once $path . "src/config/directory-path.php";
-include_once $path . DirectoryPath::LAYOUTS_URL . "base-html-head.php";
+include_once $path
+  . "fdw-2021-2022-a/proyecto-yeicobF/"
+  . "src/config/directory-path.php";
+
+include_once $path
+  . DirectoryPath::VIEWS
+  . "layouts/base-html-head.php";
 
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Inicio",
@@ -33,7 +38,8 @@ $baseHtmlHead = new BaseHtmlHead(
   <link rel="stylesheet" href="../css/footer/footer.css">
 
   <!-- SCRIPTS -->
-  <script defer src="<?php echo DirectoryPath::SRC_FOLDER_URL . "js/navbar.js"; ?>" type="module"></script>
+  <script defer src="<?php echo $path . DirectoryPath::SRC . "js/navbar.js"; ?>" type="module"></script>
+
   <?php
   echo $baseHtmlHead->getTitle();
   ?>
@@ -58,8 +64,8 @@ $baseHtmlHead = new BaseHtmlHead(
               no a todo el contenedor. 
             -->
             <div class="movie-poster__year-image">
-              <a href="<?php echo DirectoryPath::VIEWS_URL; ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
-                <img class="movie-poster__img" src="<?php echo DirectoryPath::IMG_URL; ?>movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
+              <a href="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::VIEWS); ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
+                <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS); ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
               </a>
               <time datetime="2021" class="movie-poster__year">2021</time>
             </div>
@@ -69,8 +75,8 @@ $baseHtmlHead = new BaseHtmlHead(
           <!-- Póster de películas. -->
           <figure class="movie-poster border border-secondary col-6 col-sm-4">
             <div class="movie-poster__year-image">
-              <a href="<?php echo DirectoryPath::VIEWS_URL; ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
-                <img class="movie-poster__img" src="<?php echo DirectoryPath::IMG_URL; ?>movie-posters/friday-the-13th/1.jpg" alt="Friday the 13th">
+              <a href="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::VIEWS); ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
+                <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS); ?>img/movie-posters/friday-the-13th/1.jpg" alt="Friday the 13th">
               </a>
               <time datetime="2021" class="movie-poster__year">1980</time>
             </div>
@@ -80,8 +86,8 @@ $baseHtmlHead = new BaseHtmlHead(
           <!-- Póster de películas. -->
           <figure class="movie-poster border border-secondary col-6 col-sm-4">
             <div class="movie-poster__year-image">
-              <a href="<?php echo DirectoryPath::VIEWS_URL; ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
-                <img class="movie-poster__img" src="<?php echo DirectoryPath::IMG_URL; ?>movie-posters/avengers-endgame/1.jpg" alt="Avengers: Endgame">
+              <a href="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::VIEWS); ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
+                <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS); ?>img/movie-posters/avengers-endgame/1.jpg" alt="Avengers: Endgame">
               </a>
               <time datetime="2021" class="movie-poster__year">2019</time>
             </div>
@@ -91,8 +97,8 @@ $baseHtmlHead = new BaseHtmlHead(
           <!-- Póster de películas. -->
           <figure class="movie-poster border border-secondary col-6 col-sm-4">
             <div class="movie-poster__year-image">
-              <a href="<?php echo DirectoryPath::VIEWS_URL; ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
-                <img class="movie-poster__img" src="<?php echo DirectoryPath::IMG_URL; ?>movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
+              <a href="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::VIEWS); ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
+                <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS); ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
               </a>
               <time datetime="2021" class="movie-poster__year">2021</time>
             </div>
@@ -102,8 +108,8 @@ $baseHtmlHead = new BaseHtmlHead(
           <!-- Póster de películas. -->
           <figure class="movie-poster border border-secondary col-6 col-sm-4">
             <div class="movie-poster__year-image">
-              <a href="<?php echo DirectoryPath::VIEWS_URL; ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
-                <img class="movie-poster__img" src="<?php echo DirectoryPath::IMG_URL; ?>movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
+              <a href="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::VIEWS); ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
+                <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS); ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
               </a>
               <time datetime="2021" class="movie-poster__year">2021</time>
             </div>
@@ -122,8 +128,8 @@ $baseHtmlHead = new BaseHtmlHead(
             no a todo el contenedor.
           -->
           <div class="movie-poster__year-image col-6">
-            <a href="<?php echo DirectoryPath::VIEWS_URL; ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
-              <img class="movie-poster__img" src="<?php echo DirectoryPath::IMG_URL; ?>movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
+            <a href="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::VIEWS); ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
+              <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS); ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
             </a>
             <time datetime="2021" class="movie-poster__year">2021</time>
           </div>
@@ -141,8 +147,8 @@ $baseHtmlHead = new BaseHtmlHead(
             no a todo el contenedor.
           -->
           <div class="movie-poster__year-image col-6">
-            <a href="<?php echo DirectoryPath::VIEWS_URL; ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
-              <img class="movie-poster__img" src="<?php echo DirectoryPath::IMG_URL; ?>movie-posters/friday-the-13th/1.jpg" alt="Friday the 13th">
+            <a href="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::VIEWS); ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
+              <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS); ?>img/movie-posters/friday-the-13th/1.jpg" alt="Friday the 13th">
             </a>
             <time datetime="2021" class="movie-poster__year">1980</time>
           </div>
@@ -161,8 +167,8 @@ $baseHtmlHead = new BaseHtmlHead(
             no a todo el contenedor.
           -->
           <div class="movie-poster__year-image col-6">
-            <a href="<?php echo DirectoryPath::VIEWS_URL; ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
-              <img class="movie-poster__img" src="<?php echo DirectoryPath::IMG_URL; ?>movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
+            <a href="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::VIEWS); ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
+              <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS); ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
             </a>
             <time datetime="2021" class="movie-poster__year">2021</time>
           </div>
@@ -180,8 +186,8 @@ $baseHtmlHead = new BaseHtmlHead(
             no a todo el contenedor.
           -->
           <div class="movie-poster__year-image col-6">
-            <a href="<?php echo DirectoryPath::VIEWS_URL; ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
-              <img class="movie-poster__img" src="<?php echo DirectoryPath::IMG_URL; ?>movie-posters/friday-the-13th/1.jpg" alt="Friday the 13th">
+            <a href="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::VIEWS); ?>peliculas/detalles-pelicula.php?id=id_pelicula" class="">
+              <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS); ?>img/movie-posters/friday-the-13th/1.jpg" alt="Friday the 13th">
             </a>
             <time datetime="2021" class="movie-poster__year">1980</time>
           </div>

@@ -1,8 +1,15 @@
 <?php
 $path = "{$_SERVER["DOCUMENT_ROOT"]}/" . "fdw-2021-2022-a/proyecto-yeicobF/";
 
-include_once $path . "src/config/directory-path.php";
-include_once $path . DirectoryPath::LAYOUTS_URL . "base-html-head.php";
+$path = "{$_SERVER["DOCUMENT_ROOT"]}/";
+
+include_once $path
+  . "fdw-2021-2022-a/proyecto-yeicobF/"
+  . "src/config/directory-path.php";
+
+include_once $path
+  . DirectoryPath::VIEWS
+  . "layouts/base-html-head.php";
 
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Detalles de película",
@@ -30,7 +37,8 @@ $baseHtmlHead = new BaseHtmlHead(
   <link rel="stylesheet" href="../css/footer/footer.css">
 
   <!-- SCRIPTS -->
-  <script defer src="<?php echo $path . DirectoryPath::SRC_FOLDER_URL . "js/navbar.js"; ?>" type="module"></script>
+  <script defer src="<?php echo $path . DirectoryPath::SRC . "js/navbar.js"; ?>" type="module"></script>
+
 
   <?php
   echo $baseHtmlHead->getTitle();
@@ -39,10 +47,10 @@ $baseHtmlHead = new BaseHtmlHead(
 
 <body>
   <?php
-  include $path . DirectoryPath::LAYOUTS_URL . "navbar.php";
+  // include $path . DirectoryPath::LAYOUTS_URL . "navbar.php";
   ?>
   <?php
-  include $path . DirectoryPath::LAYOUTS_URL . "footer.php";
+  // include $path . DirectoryPath::LAYOUTS_URL . "footer.php";
   ?>
 </body>
 
