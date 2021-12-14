@@ -45,3 +45,46 @@ input:not([type="text"]) ~ .form__input__icon {
   background-color: var(--color-pansy-purple);
   /* border-radius: .3em; */
 }
+
+.form__input__picture {
+  text-align: center;
+  /* flex-grow: inherit; */
+  /* width: min-content; */
+  font-size: 1.5em;
+  font-family: "Noto Sans", sans-serif;
+  padding: 0.3em;
+  /* color: white; */
+  border-radius: 0.2em;
+}
+input[type="file"].form__input__picture {
+  background-color: var(--color-pansy-purple);
+  color: white;
+  max-width: 100%;
+  width: 100%;
+  font-size: 0.8em;
+  display: flex;
+  overflow: visible;
+  flex-wrap: wrap;
+  white-space: break-spaces;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  /* cursor: pointer; */
+}
+
+input[type="file"]#file-upload-button.form__input__picture {
+  cursor: pointer;
+}
+
+.form__buttons {
+  display: flex;
+  justify-content: right;
+  gap: 1em;
+}
+
+.form__button[title="Guardar cambios"] {
+  background-color: var(--color-success);
+}
+.form__button[title="Cancelar"] {
+  background-color: var(--color-danger);
+}

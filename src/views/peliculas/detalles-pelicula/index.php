@@ -42,6 +42,7 @@ $baseHtmlHead = new BaseHtmlHead(
   <link rel="stylesheet" href="<?php echo $src_folder; ?>css/movies/movie-details.css">
   <link rel="stylesheet" href="<?php echo $src_folder; ?>css/movies/comments.css">
   <link rel="stylesheet" href="<?php echo $src_folder; ?>css/footer/footer.css">
+  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/form/form.css">
 
   <!-- SCRIPTS -->
   <script defer src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::SRC) . "js/navbar.js"; ?>" type="module"></script>
