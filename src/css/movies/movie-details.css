@@ -20,6 +20,7 @@
   /* border-radius: 18.3px; */
   display: flex;
   object-fit: contain;
+
 }
 .movie-details__info {
   display: flex;

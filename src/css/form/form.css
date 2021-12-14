@@ -42,4 +42,6 @@ input:not([type="text"]) ~ .form__input__icon {
 .form__button {
   font-weight: 600;
   color: white;
+  background-color: var(--color-pansy-purple);
+  /* border-radius: .3em; */
 }

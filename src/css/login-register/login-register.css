@@ -1,9 +1,9 @@
 .body-container {
-  align-items: center;
-  justify-content: space-evenly;
   padding: 3em 2em;
   background-color: var(--color-light);
   gap: 1.4em;
+  justify-content: space-evenly;
+  align-items: center;
   max-width: 576px;
 }
 

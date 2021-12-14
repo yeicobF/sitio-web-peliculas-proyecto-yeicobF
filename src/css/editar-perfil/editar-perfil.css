@@ -1,0 +1,165 @@
+.edit-profile {
+}
+
+.edit-profile__title,
+.edit-profile__picture__input {
+  text-align: center;
+  /* flex-grow: inherit; */
+  /* width: min-content; */
+  font-size: 1.5em;
+  font-family: "Noto Sans", sans-serif;
+  padding: 0.3em;
+  /* color: white; */
+  border-radius: 0.2em;
+}
+
+.edit-profile__title {
+  background-color: var(--color-lavender-blue);
+  color: var(--color-dark-purple);
+  margin: 0;
+  /* padding: 0; */
+}
+
+input[type="file"].edit-profile__picture__input {
+  background-color: var(--color-pansy-purple);
+  color: white;
+  max-width: 100%;
+  width: 100%;
+  font-size: 0.8em;
+  display: flex;
+  overflow: visible;
+  flex-wrap: wrap;
+  white-space: break-spaces;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  /* cursor: pointer; */
+}
+
+input[type="file"]#file-upload-button.edit-profile__picture__input {
+  cursor: pointer;
+}
+
+.edit-profile__figure {
+  gap: 0.5em;
+  display: flex;
+  flex-direction: column;
+  /* gap: .2em; */
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.edit-profile__picture {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 100%;
+}
+
+.edit-profile__figure .circle-avatar {
+  width: 100%;
+  height: auto;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.edit-profile__form {
+  display: flex;
+  gap: 0.7em;
+  flex-direction: column;
+}
+
+.edit-profile__form hgroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+  margin: 1em 0;
+}
+
+.edit-profile__form h1,
+.edit-profile__form h2 {
+  margin: 0;
+  padding: 0;
+}
+
+.edit-profile__form
+  > section
+  label[for="new-password"]
+  + .form__input__container {
+  border: solid 1px var(--color-pansy-purple);
+}
+
+.edit-profile__form
+  > section
+  label[for="new-password"]
+  + .form__input__container
+  input,
+.edit-profile__form
+  > section
+  label[for="new-password"]
+  + .form__input__container {
+  background-color: var(--color-warning-clear);
+}
+
+/* -------------------------------------------------------------------------- */
+
+.form__buttons {
+  display: flex;
+  justify-content: right;
+  gap: 1em;
+}
+
+.form__button[title="Guardar cambios"] {
+  background-color: var(--color-success);
+}
+.form__button[title="Cancelar"] {
+  background-color: var(--color-danger);
+}
+
+/* -------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .form__buttons {
+    justify-content: center;
+  }
+  .edit-profile__title {
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 576px) {
+  .edit-profile__form hgroup {
+    margin: 1em 0 0.5em;
+  }
+
+  .edit-profile__title {
+    font-size: 1.3em;
+  }
+
+  .edit-profile__form h1 {
+    font-size: 1.4em;
+  }
+
+  .edit-profile__form h2 {
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+
+  .edit-profile__figure {
+    /* flex-direction: row-reverse; */
+    align-items: center;
+    gap: 0.5em;
+  }
+
+  .edit-profile__figure .circle-avatar {
+    max-width: 50%;
+  }
+
+  .edit-profile__figure .circle-avatar,
+  .edit-profile__title {
+    /* max-width: 60%; */
+    /* flex: 1; */
+    /* flex-basis: 50%; */
+  }
+}

@@ -55,15 +55,11 @@
   column-gap: 1em;
   /* flex-basis: 100%; */
 }
-
-.comments__details__logo {
-  /* aspect-ratio: 1 / 1; */
-  object-position: top;
-  object-fit: cover;
+.comments__details .circle-avatar {
   width: 2.5em;
   height: 2.5em;
-  border-radius: 50%;
 }
+
 
 .comments__details__info {
   /* max-height: 2.5em; */
