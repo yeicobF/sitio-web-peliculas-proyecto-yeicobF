@@ -8,6 +8,10 @@
   gap: .6em;
 }
 
+.form__container label {
+  font-weight: 600;
+}
+
 .form__input__container {
   display: flex;
   justify-content: space-between;
@@ -83,9 +87,26 @@ input[type="file"]#file-upload-button.form__input__picture {
   gap: 1em;
 }
 
+.form__text-input {
+  width: 100%;
+  resize: none;
+  overflow: auto;
+  padding: .4em;
+  border: solid 1px var(--color-pansy-purple);
+  border-radius: .5em;
+  min-height: 5em;
+  background-color: var(--color-light);
+}
+
 .form__button[title="Guardar cambios"] {
   background-color: var(--color-success);
 }
 .form__button[title="Cancelar"] {
   background-color: var(--color-danger);
+}
+
+@media (max-width: 768px) {
+  .form__buttons {
+    justify-content: center;
+  }
 }
