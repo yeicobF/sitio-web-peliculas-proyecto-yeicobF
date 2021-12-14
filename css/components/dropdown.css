@@ -7,11 +7,12 @@ Framework que hicimos en clase, pero modificado para el trabajo en específico.
 /* 
 Hacer flex para que los elementos internos se separen: link + tooltip. 
 */
-a.nav-link.dropdown-toggle {
+.nav-link.dropdown-toggle {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 0.5em;
+  cursor: pointer;
 }
 
 /* Agregar tooltip a los elementos que tengan dicha clase. */

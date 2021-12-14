@@ -26,7 +26,7 @@ export function activateToggleRotate180(mainSelector, elementToToggle) {
       // Obtener elementos para voltear.
       const elementsToToggle = mainElement.querySelectorAll(elementToToggle);
 
-      console.log(elementsToToggle);
+      // console.log(elementsToToggle);
 
       // A cada uno de los elementos que coincidan para hacer toggle.
       elementsToToggle.forEach((element) =>

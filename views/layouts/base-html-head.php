@@ -1,7 +1,7 @@
 <?php
-$path = "{$_SERVER["DOCUMENT_ROOT"]}/" . "fdw-2021-2022-a/proyecto-yeicobF/";
+$path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
-include_once $path . "src/config/directory-path.php";
+include_once $path . "fdw-2021-2022-a/proyecto-yeicobF/src/config/directory-path.php";
 
 /**
  * Obtener la base que viene en el head del HTML en general y no ponerla de
