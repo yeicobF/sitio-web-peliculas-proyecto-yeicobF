@@ -23,9 +23,22 @@
 }
 .movie-details__info {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: .3em;
+  flex-wrap: wrap;
+  align-items: self-start;
+  position: relative;
   /* max-width: 60%; */
 }
+
+.movie-details__info > * {
+  background-color: var(--color-pansy-purple);
+  color: white;
+  font-weight: 400;
+  padding: 0 .3em;
+  border-radius: .2em;
+}
+
 .movie-details__synopsis {
   overflow-y: auto;
   height: 8em;
@@ -79,4 +92,16 @@
 /* Agregar un punto y coma después de cada elemento. */
 .movie-details__cast__member::after {
   content: ";";
+}
+
+@media (max-width: 768px) {
+  .movie-details__cast__type {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 576px) {
+  .movie-details__info {
+    justify-content: center;
+  }
 }
