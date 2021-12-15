@@ -36,6 +36,78 @@ encuentra en el siguiente enlace:
 
 - [Maquetación en Figma de FDW [6SEM]](https://www.figma.com/file/gKba72jKVkr2P3BkLNTXH9/MOVIES-WEBSITE-FDW-PROYECTO-6SEM-MAYO-2021?node-id=0%3A1 "Maquetación en Figma de FDW [6SEM]")
 
+## Funcionalidades por rol
+
+La lista de pantallas que están disponibles son las siguientes:
+
+- Administrador
+  - Agregar película
+- Usuario registrado
+  - Comentar película
+  - Dar like a comentarios
+  - Calificar película
+  - Inicio de sesión
+- Generales
+  - Ver lista de películas
+  - Ver detalles de película
+  - Registro
+
+## Pantallas
+
+- Administrador
+  - Agregar película
+  - Eliminar película
+- Usuario registrado
+  - Editar perfil
+- Usuario general
+  - Inicio
+  - Registro
+  - Login
+  - Detalles de película
+
+## Diseño de la base de datos
+
+Hice un diseño más complejo del que tuve que implementar, ya que, hubiese
+aumentado la complejidad de la página por las tablas de actor, director y
+género, ya que, hubiese tenido que implementar tablas intermedias, además de la
+lógica necesaria.
+
+### Diagrama Entidad-Relación
+
+![Diagrama Entidad-Relación (más complejo de lo que implementé)](DOCUMENTOS/Diagrama-EntidadRelacion/FDW_EntidadRelacion_09-DIC-2021.svg "Diagrama Entidad-Relación (más complejo de lo que implementé)")
+
+### BD creada en MySQL
+
+En la tabla de películas, en lugar de utilizar tablas intermedias para los
+actores, directores y géneros, lo guardé como cadena para no aumentar la
+complejidad del sitio.
+
+#### ENUM para el rol
+
+El tipo de dato ENUM permite ingresar valores definidos en la creación de la
+tabla y pesa menos bytes que si se almacenara como VARCHAR. Esto se puede
+encontraren la documentación oficial de MySQL:
+
+["MySQL 8.0 Reference Manual / ... / The ENUM Type / 11.3.5 The ENUM Type"](https://dev.mysql.com/doc/refman/8.0/en/enum.html "MySQL 8.0 Reference Manual  /  ...  /  The ENUM Type / 11.3.5 The ENUM Type")
+
+#### Tablas creadas manualmente con llaves foráneas
+
+[https://dev.mysql.com/doc/refman/8.0/en/ansi-diff-foreign-keys.html](https://dev.mysql.com/doc/refman/8.0/en/ansi-diff-foreign-keys.html
+""https://dev.mysql.com/doc/refman/8.0/en/ansi-diff-foreign-keys.html")
+
+- comentario_pelicula
+
+  ```sql
+  ```
+
+#### Screenshots
+
+![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/1 "Creación BD de MySQL con phpMyAdmin")
+![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/1 "Creación BD de MySQL con phpMyAdmin")
+![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/1 "Creación BD de MySQL con phpMyAdmin")
+![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/1 "Creación BD de MySQL con phpMyAdmin")
+![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/1 "Creación BD de MySQL con phpMyAdmin")
+
 ## FUENTES CONSULTADAS
 
 A continuación se encontrará una lista con algunas de las fuentes (las que
