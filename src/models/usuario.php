@@ -39,14 +39,14 @@ class Usuario extends Model
    * @param int $id
    * @return array Arreglo asociativo para representar como JSON en JavaScript.
    */
-  public static function getUsuarioById($id)
+  public static function getById($id)
   {
     // Obtenemos el resultado de la ejecución del query.
-    $query = parent::getById("usuario", $id);
+    $query = parent::getEveryField("usuario", id: $id);
 
     // Obtenemos el elemento, que sería 1 porque no se puede repetir ID.
     $row = $query->fetch(PDO::FETCH_ASSOC);
-    
+
     $usuario = new Usuario(
       $row["id"],
       $row["nombres"],

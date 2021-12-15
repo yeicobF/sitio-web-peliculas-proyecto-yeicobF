@@ -1,10 +1,10 @@
 <?php
 
-abstract class Model
+class Model
 {
   // Protegida. Solo los children pueden acceder a esta propiedad.
   protected static $db_connection;
-  public function __construct()
+  protected function __construct()
   {
     require_once "DB.php";
 
@@ -17,28 +17,33 @@ abstract class Model
   }
 
   /**
-   * Obtener un elemento por su ID en la tabla especificada.
-   */
-
-  /**
-   * Undocumented function
+   * Obtener todos los campos de un query.
    *
-   * @param string $table
-   * @param int $id
+   * @param string $table Tabla de la cual se obtendrán los datos.
+   * @param string $id ID opcional. Si no es especificado, se obtendrán todos
+   * los de la tabla especificada.
    * @return PDOStatement
    */
-  public static function getById($table, $id)
+  protected static function getEveryField($table, $id = "")
   {
     // Inicializamos para que se pueda utilizar la función y se devuelva el tipo
     // del objeto que se espera en un inicio.
     $query = new PDOStatement();
     try {
-      $query = self::$db_connection->prepare(
+      $query_string =
         "SELECT *
-        FROM {$table}
-        WHERE id = :id"
+        FROM {$table}";
+
+      // Agregar ID si fue especificado.
+      if (empty($id)) {
+        $query_string .= " WHERE id = :id";
+        $query->bindParam(":id", $id, PDO::PARAM_INT);
+      }
+
+      $query = self::$db_connection->prepare(
+        $query_string
       );
-      $query->bindParam(":id", $id, PDO::PARAM_INT);
+
       $query->execute();
     } catch (PDOException $e) {
       error_log("Error en la query - {$e}");
