@@ -60,6 +60,71 @@ class Usuario extends Model
     $usuario->returnJSON();
   }
 
+  /**
+   * Un usuario se encuentra en la base de datos o no.
+   *
+   * @param string $username
+   * @param string $password
+   * @return bool
+   */
+  public static function foundUsuario($username, $password)
+  {
+    try {
+      $query = parent::$db_connection->prepare(
+        "SELECT *
+        FROM usuario
+        WHERE 
+          username = :username
+          AND password = :password
+        "
+      );
+
+      $query->bindParam(":username", $username, PDO::PARAM_STR);
+      $query->bindParam(":password", $password, PDO::PARAM_STR);
+      $query->execute();
+
+      // Si la rowCount == 0, no se encontraron resultados.
+      return $query->rowCount();
+    } catch (PDOException $e) {
+      error_log("Error de conexión - {$e}", 0);
+      exit();
+    }
+  }
+
+  /**
+   * Obtener todos los elementos, que, en este caso, son usuarios.
+   * 
+   * Devuelve un arreglo con cada uno de los elementos que se encontró.
+   *
+   * @return array Arreglo asociativo con los elementos encontrados.
+   */
+  public static function getEveryElement()
+  {
+    // Obtenemos el resultado de la ejecución del query.
+    $query = parent::getEveryField("usuario");
+
+    // Arreglo con todos los elementos de la tabla.
+    $elements = [];
+
+    // Obtenemos el elemento, que sería 1 porque no se puede repetir ID.
+    while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+      // Agregamos el elemento actual al arreglo.
+      array_push(
+        $elements,
+        new Usuario(
+          $row["id"],
+          $row["nombres"],
+          $row["apellidos"],
+          $row["username"],
+          $row["password"],
+          $row["rol"]
+        )
+      );
+
+      // Regresamos los elementos.
+      return $elements;
+    }
+  }
 
   /* -------------------------------------------------------------------------- */
   public function returnJson()
