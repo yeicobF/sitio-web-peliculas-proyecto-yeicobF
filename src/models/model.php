@@ -2,7 +2,7 @@
 
 class Model
 {
-  // Protegida. Solo los children pueden acceder a esta propiedad.
+  // Protegattributea. Solo los children pueden acceder a esta propiedad.
   protected static $db_connection;
   protected function __construct()
   {
@@ -20,11 +20,11 @@ class Model
    * Obtener todos los campos de un query.
    *
    * @param string $table Tabla de la cual se obtendrán los datos.
-   * @param string $id ID opcional. Si no es especificado, se obtendrán todos
-   * los de la tabla especificada.
+   * @param string $attribute Si no es especificado, se obtendrán todos los de
+   * la tabla especificada.
    * @return PDOStatement
    */
-  protected static function getEveryField($table, $id = "")
+  protected static function getEveryField($table, $attribute = "")
   {
     // Inicializamos para que se pueda utilizar la función y se devuelva el tipo
     // del objeto que se espera en un inicio.
@@ -34,10 +34,10 @@ class Model
         "SELECT *
         FROM {$table}";
 
-      // Agregar ID si fue especificado.
-      if (empty($id)) {
-        $query_string .= " WHERE id = :id";
-        $query->bindParam(":id", $id, PDO::PARAM_INT);
+      // Agregar attribute si fue especificado.
+      if (empty($attribute)) {
+        $query_string .= " WHERE attribute = :attribute";
+        $query->bindParam(":attribute", $attribute, PDO::PARAM_INT);
       }
 
       $query = self::$db_connection->prepare(

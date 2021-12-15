@@ -46,7 +46,7 @@ class Usuario extends Model
    * @param string $_foto_perfil
    * @return bool Se insertó o no el elemento.
    */
-  public function insertNew(
+  public static function insertNew(
     $_nombres,
     $_apellidos,
     $_username,
@@ -76,7 +76,122 @@ class Usuario extends Model
 
     $query->execute();
 
-    return $query->rowCount();
+    // Si no hay filas, devolver false, indicando que no se hizo la inserción.
+    return $query->rowCount() == 0 ? false : true;
+  }
+
+  /**
+   * Revisar si el username se encuentra en la BD, ya que debe ser único.
+   *
+   * https://stackoverflow.com/a/4254003/13562806
+   * 
+   * @param string $username
+   * @return boolean
+   */
+  public static function usernameExists(string $username): bool
+  {
+    // Esta opción devolverá 0 o 1 resultados. Esto ayudará a ver si existe o
+    // no.
+    $query = parent::$db_connection->prepare(
+      "SELECT COUNT(1)
+      FROM usuario
+      WHERE username = :username;
+    "
+    );
+
+    $query->bindParam(":username", $username, PDO::PARAM_STR);
+    $query->execute();
+
+    // Si no hay filas, devolver false, indicando que no se hizo la inserción.
+    return $query->rowCount() == 0 ? false : true;
+  }
+
+  public static function updateUsuario(
+    string $_id,
+    string $_nombres = "",
+    string $_apellidos = "",
+    string $_username = "",
+    string $_password = "",
+    string $_foto_perfil = ""
+  ): bool {
+    // Volver si ya existe el nombre de usuario.
+    if (self::usernameExists($_username)) {
+      return false;
+    }
+
+    // Si los campos están vacíos, no agregarlos a la query.
+    $query_params = [
+      // ", nombres = :nombres"
+      "nombres" => $_nombres,
+      "apellidos" => $_apellidos,
+      "username" => $_username,
+      "password" => $_password,
+      "foto_perfil" => $_foto_perfil,
+    ];
+
+    // Si ningún parámetro está especificado, regresar.
+    // Recorrido, y si se encuentra que todos los elementos no tienen contenido,
+    // regresar false.
+    // 
+    // La validación debería estar en el frontend, pero ya la agregué.
+    $empty_params = 0;
+    foreach ($query_params as $param) {
+      if ($param === '' || $param === null) {
+        $empty_params++;
+      }
+    }
+
+    if ($empty_params === count($query_params)) {
+      // No se enviaron elementos
+      return false;
+    }
+    /* -------------------------------------------------------------------------- */
+
+
+    // Armamos una string dependiendo de los elementos a modificar.
+    $query_string = "UPDATE usuario
+      SET ";
+
+    // Parámetros existentes para hacer el bindParam.
+    $existent_parameters = [];
+
+    // Agregamos los valores a cambiar.
+    // Asignamos si el parámetro no se envió vacío.
+    foreach ($query_params as $param_name => $param_value) {
+      // Si es envío texto, agregar el parámetro a la query.
+      if (!empty($param_value)) {
+        // ", nombres = :nombres"
+        $query_string .= ", {$param_name} = :{$param_name}";
+        array_push($existent_parameters, $param_name);
+      }
+    }
+
+    // Indicar última parte del query.
+    $query_string .= " 
+      WHERE id = :id
+    ";
+
+    /* -------------------------------------------------------------------------- */
+
+    $query = parent::$db_connection->prepare($query_string);
+
+    // Hacer bindParam.
+    $query->bindParam(":id", $_id, PDO::PARAM_INT);
+    foreach ($existent_parameters as $param_name) {
+      $query->bindParam(
+        ":{$param_name}",
+        // El nombre del parámetro lo mandamos al arreglo asociativo del inicio.
+        $query_params[$param_name],
+        PDO::PARAM_STR
+      );
+    }
+
+    $query->execute();
+    // Si no hay filas, devolver false, indicando que no se hizo la inserción.
+    return $query->rowCount() == 0 ? false : true;
+  }
+  public static function deleteUsuario()
+  {
   }
 
   /**
@@ -88,7 +203,7 @@ class Usuario extends Model
   public static function getById($id)
   {
     // Obtenemos el resultado de la ejecución del query.
-    $query = parent::getEveryField("usuario", id: $id);
+    $query = parent::getEveryField("usuario", attribute: $id);
 
     // Obtenemos el elemento, que sería 1 porque no se puede repetir ID.
     $row = $query->fetch(PDO::FETCH_ASSOC);
@@ -131,8 +246,8 @@ class Usuario extends Model
       $query->bindParam(":password", $password, PDO::PARAM_STR);
       $query->execute();
 
-      // Si la rowCount == 0, no se encontraron resultados.
-      return $query->rowCount();
+      // Si no hay filas, devolver false, indicando que no se hizo la inserción.
+      return $query->rowCount() == 0 ? false : true;
     } catch (PDOException $e) {
       error_log("Error de conexión - {$e}", 0);
       exit();
