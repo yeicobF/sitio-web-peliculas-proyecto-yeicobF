@@ -10,9 +10,9 @@ class Usuario extends Model
   private $_username;
   private $_password;
   private $_rol;
+  private $_foto_perfil;
 
   public function __construct(
-    $db_connection,
     $_id,
     $_nombres,
     $_apellidos,
@@ -20,135 +20,46 @@ class Usuario extends Model
     $_password,
     $_rol
   ) {
-    parent::__construct($db_connection);
+    parent::__construct();
 
-    $this->setId($_id);
-    $this->setNombres($_nombres);
-    $this->setApellidos($_apellidos);
-    $this->setUsername($_username);
-    $this->setPassword($_password);
-    $this->setRol($_rol);
+    $this->$_id = $_id;
+    $this->$_nombres = $_nombres;
+    $this->$_apellidos = $_apellidos;
+    $this->$_username = $_username;
+    $this->$_password = $_password;
+    $this->$_rol = $_rol;
   }
 
-  /**
-   * Get the value of _id
-   */
-  public function getId()
-  {
-    return $this->_id;
-  }
+  /* --------------------------------- QUERIES --------------------------------
+  */
 
   /**
-   * Set the value of _id
+   * Obtener un usuario por su ID mediante una query.
    *
-   * @return  self
+   * @param int $id
+   * @return array Arreglo asociativo para representar como JSON en JavaScript.
    */
-  public function setId($_id)
+  public static function getUsuarioById($id)
   {
-    $this->_id = $_id;
+    // Obtenemos el resultado de la ejecución del query.
+    $query = parent::getById("usuario", $id);
 
-    return $this;
+    // Obtenemos el elemento, que sería 1 porque no se puede repetir ID.
+    $row = $query->fetch(PDO::FETCH_ASSOC);
+    
+    $usuario = new Usuario(
+      $row["id"],
+      $row["nombres"],
+      $row["apellidos"],
+      $row["username"],
+      $row["password"],
+      $row["rol"]
+    );
+
+    // Regresamos objeto como JSON para obtenerlo en JS mediante AJAX.
+    $usuario->returnJSON();
   }
 
-  /**
-   * Get the value of _nombres
-   */
-  public function getNombres()
-  {
-    return $this->_nombres;
-  }
-
-  /**
-   * Set the value of _nombres
-   *
-   * @return  self
-   */
-  public function setNombres($_nombres)
-  {
-    $this->_nombres = $_nombres;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of _apellidos
-   */
-  public function getApellidos()
-  {
-    return $this->_apellidos;
-  }
-
-  /**
-   * Set the value of _apellidos
-   *
-   * @return  self
-   */
-  public function setApellidos($_apellidos)
-  {
-    $this->_apellidos = $_apellidos;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of _username
-   */
-  public function getUsername()
-  {
-    return $this->_username;
-  }
-
-  /**
-   * Set the value of _username
-   *
-   * @return  self
-   */
-  public function setUsername($_username)
-  {
-    $this->_username = $_username;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of _password
-   */
-  public function getPassword()
-  {
-    return $this->_password;
-  }
-
-  /**
-   * Set the value of _password
-   *
-   * @return  self
-   */
-  public function setPassword($_password)
-  {
-    $this->_password = $_password;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of _rol
-   */
-  public function getRol()
-  {
-    return $this->_rol;
-  }
-
-  /**
-   * Set the value of _rol
-   *
-   * @return  self
-   */
-  public function setRol($_rol)
-  {
-    $this->_rol = $_rol;
-
-    return $this;
-  }
 
   /* -------------------------------------------------------------------------- */
   public function returnJson()
@@ -156,12 +67,12 @@ class Usuario extends Model
     // Declaramos arreglo. Es un arreglo asociativo. 
     // Sigue siendo un objeto, por lo que, hay que transformarlo a JSON.
     $usuario = array();
-    $usuario["id"] = $this->getId();
-    $usuario["nombres"] = $this->getNombres();
-    $usuario["apellidos"] = $this->getApellidos();
-    $usuario["username"] = $this->getUsername();
-    $usuario["password"] = $this->getPassword();
-    $usuario["rol"] = $this->getRol();
+    $usuario["id"] = $this->_id;
+    $usuario["nombres"] = $this->_nombres;
+    $usuario["apellidos"] = $this->_apellidos;
+    $usuario["username"] = $this->_username;
+    $usuario["password"] = $this->_password;
+    $usuario["rol"] = $this->_rol;
     /**
      * Convertimos a JSON. Recibe un objeto y lo hace cadena. 
      *
