@@ -1,0 +1,26 @@
+
+
+.form__movie__cast {
+  display: flex;
+  flex-direction: row;
+  /* gap: 1em; */
+  padding-top: 0; 
+  padding-bottom: 0; 
+}
+
+.form__movie__title {
+  text-align: center;
+}
+
+.form__movie__details {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  row-gap: .5em;
+}
+
+.form__movie__details * {
+  font-size: .95em;
+}
+
+
