@@ -31,7 +31,8 @@
 			"titleBar.inactiveBackground": "#603b1099",
 			"titleBar.inactiveForeground": "#e7e7e799"
 		},
-		"peacock.color": "#603b10"
+		"peacock.color": "#603b10",
+		"svg.preview.background": "custom"
 	},
 	"extensions": {
 		"recommendations": [

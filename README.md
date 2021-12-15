@@ -18,6 +18,19 @@ proyecto se encuentra en el siguiente repositorio:
 
 - [Propuesta inicial del proyecto / Películas](DOCUMENTOS/FDW_PropuestaInicialProyecto_Martes-24-AGOSTO-2021.pdf "Propuesta inicial del proyecto / Películas")
 
+- [FDW: PROYECTO DEL SEMESTRE - SITIO WEB DE INFORMACIÓN DE PELÍCULAS](#fdw-proyecto-del-semestre---sitio-web-de-información-de-películas)
+  - [CRONOGRAMA DE HITOS](#cronograma-de-hitos)
+  - [MAQUETACIÓN](#maquetación)
+  - [Funcionalidades por rol](#funcionalidades-por-rol)
+  - [Pantallas](#pantallas)
+  - [Diseño de la base de datos](#diseño-de-la-base-de-datos)
+    - [Diagrama Entidad-Relación](#diagrama-entidad-relación)
+    - [BD creada en MySQL](#bd-creada-en-mysql)
+      - [ENUM para el rol](#enum-para-el-rol)
+      - [Tablas creadas manualmente con llaves foráneas](#tablas-creadas-manualmente-con-llaves-foráneas)
+      - [Screenshots](#screenshots)
+  - [FUENTES CONSULTADAS](#fuentes-consultadas)
+
 ## CRONOGRAMA DE HITOS
 
 En esta sección se encontrarán los hitos importantes a lo largo del desarrollo
@@ -74,6 +87,9 @@ lógica necesaria.
 
 ### Diagrama Entidad-Relación
 
+El diagrama lo hice con la aplicación StarUML en su versión gratuita. Lo que
+impide es los diagramas se puedan exportar sin la marca de agua.
+
 ![Diagrama Entidad-Relación (más complejo de lo que implementé)](DOCUMENTOS/Diagrama-EntidadRelacion/FDW_EntidadRelacion_09-DIC-2021.svg "Diagrama Entidad-Relación (más complejo de lo que implementé)")
 
 ### BD creada en MySQL
@@ -92,21 +108,56 @@ encontraren la documentación oficial de MySQL:
 
 #### Tablas creadas manualmente con llaves foráneas
 
-[https://dev.mysql.com/doc/refman/8.0/en/ansi-diff-foreign-keys.html](https://dev.mysql.com/doc/refman/8.0/en/ansi-diff-foreign-keys.html
-""https://dev.mysql.com/doc/refman/8.0/en/ansi-diff-foreign-keys.html")
+[https://dev.mysql.com/doc/refman/8.0/en/ansi-diff-foreign-keys.html](https://dev.mysql.com/doc/refman/8.0/en/ansi-diff-foreign-keys.html "https://dev.mysql.com/doc/refman/8.0/en/ansi-diff-foreign-keys.html")
 
 - comentario_pelicula
 
   ```sql
+  USE `fdw_dic_2021_proyecto_final`;
+  CREATE TABLE `comentario_pelicula`(
+    id INT NOT NULL AUTO_INCREMENT,
+    pelicula_id INT NOT NULL,
+    usuario_id INT NOT NULL,
+    comentario VARCHAR(256) NOT NULL,
+    fecha DATE NOT NULL,
+    hora TIME NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (pelicula_id) REFERENCES pelicula(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+  );
+  ```
+
+- like_comentario
+
+  ```sql
+  CREATE TABLE `fdw_dic_2021_proyecto_final`.`like_comentario`(
+    comentario_pelicula_id INT NOT NULL,
+    usuario_id INT NOT NULL,
+    FOREIGN KEY (comentario_pelicula_id) REFERENCES comentario_pelicula(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+  );
+  ```
+
+- calificacion_usuario_pelicula
+
+  ```sql
+  CREATE TABLE `fdw_dic_2021_proyecto_final`.`calificacion_usuario_pelicula`(
+    pelicula_id INT NOT NULL,
+    usuario_id INT NOT NULL,
+    numero_estrellas FLOAT NOT NULL,
+    FOREIGN KEY (pelicula_id) REFERENCES pelicula(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+  );
   ```
 
 #### Screenshots
 
-![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/1 "Creación BD de MySQL con phpMyAdmin")
-![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/1 "Creación BD de MySQL con phpMyAdmin")
-![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/1 "Creación BD de MySQL con phpMyAdmin")
-![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/1 "Creación BD de MySQL con phpMyAdmin")
-![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/1 "Creación BD de MySQL con phpMyAdmin")
+![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/1.png "Creación BD de MySQL con phpMyAdmin")
+![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/2.png "Creación BD de MySQL con phpMyAdmin")
+![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/3.png "Creación BD de MySQL con phpMyAdmin")
+![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/4.png "Creación BD de MySQL con phpMyAdmin")
+![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/5.png "Creación BD de MySQL con phpMyAdmin")
+![Creación BD de MySQL con phpMyAdmin](SCREENSHOTS/Creacion-BD-phpMyAdmin/6.png "Creación BD de MySQL con phpMyAdmin")
 
 ## FUENTES CONSULTADAS
 
