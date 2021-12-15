@@ -18,7 +18,8 @@ class Usuario extends Model
     $_apellidos,
     $_username,
     $_password,
-    $_rol
+    $_rol,
+    $_foto_perfil = ""
   ) {
     parent::__construct();
 
@@ -28,10 +29,55 @@ class Usuario extends Model
     $this->$_username = $_username;
     $this->$_password = $_password;
     $this->$_rol = $_rol;
+    $this->$_foto_perfil = $_foto_perfil;
   }
 
   /* --------------------------------- QUERIES --------------------------------
   */
+
+  /**
+   * Inserción de un nuevo elemento.
+   *
+   * @param string $_nombres
+   * @param string $_apellidos
+   * @param string $_username
+   * @param string $_password
+   * @param string $_rol
+   * @param string $_foto_perfil
+   * @return bool Se insertó o no el elemento.
+   */
+  public function insertNew(
+    $_nombres,
+    $_apellidos,
+    $_username,
+    $_password,
+    $_rol,
+    $_foto_perfil = ""
+  ) {
+    $query = parent::$db_connection->prepare(
+      "INSERT INTO usuario 
+      VALUES(
+        NULL, 
+        :nombres
+        :apellidos
+        :username
+        :password
+        :rol
+        :foto_perfil
+      )"
+    );
+
+    $query->bindParam(":nombres", $_nombres, PDO::PARAM_STR);
+    $query->bindParam(":apellidos", $_apellidos, PDO::PARAM_STR);
+    $query->bindParam(":username", $_username, PDO::PARAM_STR);
+    $query->bindParam(":password", $_password, PDO::PARAM_STR);
+    $query->bindParam(":rol", $_rol, PDO::PARAM_STR);
+    $query->bindParam(":foto_perfil", $_foto_perfil, PDO::PARAM_STR);
+
+    $query->execute();
+
+    return $query->rowCount();
+  }
 
   /**
    * Obtener un usuario por su ID mediante una query.
@@ -53,7 +99,9 @@ class Usuario extends Model
       $row["apellidos"],
       $row["username"],
       $row["password"],
-      $row["rol"]
+      $row["rol"],
+      $row["foto_perfil"],
+
     );
 
     // Regresamos objeto como JSON para obtenerlo en JS mediante AJAX.
@@ -117,7 +165,8 @@ class Usuario extends Model
           $row["apellidos"],
           $row["username"],
           $row["password"],
-          $row["rol"]
+          $row["rol"],
+          $row["foto_perfil"]
         )
       );
 
@@ -138,6 +187,7 @@ class Usuario extends Model
     $usuario["username"] = $this->_username;
     $usuario["password"] = $this->_password;
     $usuario["rol"] = $this->_rol;
+    $usuario["foto_perfil"] = $this->_foto_perfil;
     /**
      * Convertimos a JSON. Recibe un objeto y lo hace cadena. 
      *
