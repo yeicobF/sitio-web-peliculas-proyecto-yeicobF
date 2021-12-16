@@ -11,6 +11,7 @@ class Usuario extends Model
   private $_password;
   private $_rol;
   private $_foto_perfil;
+  const TABLE_NAME = "usuario";
 
   public function __construct(
     $_id,
@@ -80,31 +81,7 @@ class Usuario extends Model
     return $query->rowCount() == 0 ? false : true;
   }
 
-  /**
-   * Revisar si el username se encuentra en la BD, ya que debe ser único.
-   *
-   * https://stackoverflow.com/a/4254003/13562806
-   * 
-   * @param string $username
-   * @return boolean
-   */
-  public static function usernameExists(string $username): bool
-  {
-    // Esta opción devolverá 0 o 1 resultados. Esto ayudará a ver si existe o
-    // no.
-    $query = parent::$db_connection->prepare(
-      "SELECT COUNT(1)
-      FROM usuario
-      WHERE username = :username;
-    "
-    );
 
-    $query->bindParam(":username", $username, PDO::PARAM_STR);
-    $query->execute();
-
-    // Si no hay filas, devolver false, indicando que no se hizo la inserción.
-    return $query->rowCount() == 0 ? false : true;
-  }
 
   public static function updateUsuario(
     string $_id,
@@ -115,7 +92,7 @@ class Usuario extends Model
     string $_foto_perfil = ""
   ): bool {
     // Volver si ya existe el nombre de usuario.
-    if (self::usernameExists($_username)) {
+    if (parent::attributeExists(self::TABLE_NAME, "username", $_username)) {
       return false;
     }
 
@@ -203,7 +180,11 @@ class Usuario extends Model
   public static function getById($id)
   {
     // Obtenemos el resultado de la ejecución del query.
-    $query = parent::getEveryField("usuario", attribute: $id);
+    $query = parent::getEveryField(
+      "usuario",
+      attributeName: "id",
+      attributeValue: $id
+    );
 
     // Obtenemos el elemento, que sería 1 porque no se puede repetir ID.
     $row = $query->fetch(PDO::FETCH_ASSOC);
