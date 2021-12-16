@@ -11,6 +11,10 @@ include_once $path
   . DirectoryPath::VIEWS
   . "layouts/base-html-head.php";
 
+include_once $path
+  . DirectoryPath::SRC
+  . "logs/error-reporting.php";
+
 $src_folder = DirectoryPath::getPathWithLocalhost(DirectoryPath::SRC);
 $views_folder = DirectoryPath::getPathWithLocalhost(DirectoryPath::VIEWS);
 
@@ -19,7 +23,9 @@ $baseHtmlHead = new BaseHtmlHead(
   _includeOwnFramework: true,
   _includeFontAwesome: true
 );
-// var_dump($_SERVER);
+
+// error_log("prueba log");
+
 ?>
 
 <!DOCTYPE html>
