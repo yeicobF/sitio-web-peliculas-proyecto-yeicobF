@@ -14,21 +14,21 @@ class Usuario extends Model
   const TABLE_NAME = "usuario";
 
   public function __construct(
-    $_id,
-    $_nombres,
-    $_apellidos,
-    $_username,
-    $_password,
-    $_rol,
-    $_foto_perfil = ""
+    $id,
+    $nombres,
+    $apellidos,
+    $username,
+    $password,
+    $rol,
+    $foto_perfil = ""
   ) {
-    $this->$_id = $_id;
-    $this->$_nombres = $_nombres;
-    $this->$_apellidos = $_apellidos;
-    $this->$_username = $_username;
-    $this->$_password = $_password;
-    $this->$_rol = $_rol;
-    $this->$_foto_perfil = $_foto_perfil;
+    $this->_id = $id;
+    $this->_nombres = $nombres;
+    $this->_apellidos = $apellidos;
+    $this->_username = $username;
+    $this->_password = $password;
+    $this->_rol = $rol;
+    $this->_foto_perfil = $foto_perfil;
   }
 
   /* --------------------------------- QUERIES --------------------------------
@@ -250,21 +250,22 @@ class Usuario extends Model
 
     while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
       // var_dump($row);
-
+      $current_user = new Usuario(
+        $row["id"],
+        $row["nombres"],
+        $row["apellidos"],
+        $row["username"],
+        $row["password"],
+        $row["rol"],
+        $row["foto_perfil"]
+      );
       // Agregamos el elemento actual al arreglo.
       array_push(
         $elements,
-        new Usuario(
-          $row["id"],
-          $row["nombres"],
-          $row["apellidos"],
-          $row["username"],
-          $row["password"],
-          $row["rol"],
-          $row["foto_perfil"]
-        )
+        $current_user
       );
-      var_dump($elements);
+      echo "<pre>" . var_export($current_user, true) . "</pre>";
+      echo "<pre>" . var_export($elements, true) . "</pre>";
       // Regresamos los elementos.
     }
     return $elements;
