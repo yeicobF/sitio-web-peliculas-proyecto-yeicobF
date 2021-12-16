@@ -11,6 +11,7 @@
     "ms-edgedevtools.vscode-edge-devtools",
     "stylelint.vscode-stylelint",
     "zignd.html-css-class-completion",
-    "pranaygp.vscode-css-peek"
+    "pranaygp.vscode-css-peek",
+    "emilast.logfilehighlighter"
   ]
 }
