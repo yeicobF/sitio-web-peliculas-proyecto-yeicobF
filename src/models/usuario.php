@@ -4,13 +4,13 @@ include_once "model.php";
 
 class Usuario extends Model
 {
-  private $_id;
-  private $_nombres;
-  private $_apellidos;
-  private $_username;
-  private $_password;
-  private $_rol;
-  private $_foto_perfil;
+  public $_id;
+  public $_nombres;
+  public $_apellidos;
+  public $_username;
+  public $_password;
+  public $_rol;
+  public $_foto_perfil;
   const TABLE_NAME = "usuario";
 
   public function __construct(
@@ -22,8 +22,6 @@ class Usuario extends Model
     $_rol,
     $_foto_perfil = ""
   ) {
-    parent::__construct();
-
     $this->$_id = $_id;
     $this->$_nombres = $_nombres;
     $this->$_apellidos = $_apellidos;
@@ -245,13 +243,14 @@ class Usuario extends Model
   public static function getEveryElement()
   {
     // Obtenemos el resultado de la ejecución del query.
-    $query = parent::getEveryField("usuario");
+    $query = parent::getEveryField(self::TABLE_NAME);
 
     // Arreglo con todos los elementos de la tabla.
     $elements = [];
 
-    // Obtenemos el elemento, que sería 1 porque no se puede repetir ID.
     while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+      // var_dump($row);
+
       // Agregamos el elemento actual al arreglo.
       array_push(
         $elements,
@@ -265,10 +264,10 @@ class Usuario extends Model
           $row["foto_perfil"]
         )
       );
-
+      var_dump($elements);
       // Regresamos los elementos.
-      return $elements;
     }
+    return $elements;
   }
 
   /* -------------------------------------------------------------------------- */
