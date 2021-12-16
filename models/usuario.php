@@ -11,7 +11,16 @@ class Usuario extends Model
   public $_password;
   public $_rol;
   public $_foto_perfil;
+
   const TABLE_NAME = "usuario";
+  // Roles de usuario con su índice respecto al ENUM que se definió en la BD.
+  // Los índices del ENUM comienzan desde 1, ya que el enum 0 está reservado
+  // para los errores, tal como se indica en la documentación:
+  // https://dev.mysql.com/doc/refman/8.0/en/enum.html#:~:text=The%20index%20value%20of%20the%20empty%20string%20error%20value%20is%200.%20This%20means%20that%20you%20can%20use%20the%20following%20SELECT%20statement%20to%20find%20rows%20into%20which%20invalid%20ENUM%20values%20were%20assigned
+  const ROLES_ENUM_INDEX = [
+    "administrador" => 1,
+    "normal" => 2,
+  ];
 
   public function __construct(
     $id,
@@ -51,32 +60,41 @@ class Usuario extends Model
     $_username,
     $_password,
     $_rol,
-    $_foto_perfil = ""
+    $_foto_perfil = NULL
   ) {
-    $query = parent::$db_connection->prepare(
-      "INSERT INTO usuario 
-      VALUES(
-        NULL, 
-        :nombres
-        :apellidos
-        :username
-        :password
-        :rol
-        :foto_perfil
+
+    try {
+      $query = parent::$db_connection->prepare(
+        "INSERT INTO `usuario` (id, nombres, apellidos, username, password, rol, foto_perfil)
+        VALUES(
+          NULL, 
+          :nombres,
+          :apellidos,
+          :username,
+          :password,
+          :rol,
+          :foto_perfil
       )"
-    );
+      );
 
-    $query->bindParam(":nombres", $_nombres, PDO::PARAM_STR);
-    $query->bindParam(":apellidos", $_apellidos, PDO::PARAM_STR);
-    $query->bindParam(":username", $_username, PDO::PARAM_STR);
-    $query->bindParam(":password", $_password, PDO::PARAM_STR);
-    $query->bindParam(":rol", $_rol, PDO::PARAM_STR);
-    $query->bindParam(":foto_perfil", $_foto_perfil, PDO::PARAM_STR);
+      $query->bindParam(":nombres", $_nombres, PDO::PARAM_STR);
+      $query->bindParam(":apellidos", $_apellidos, PDO::PARAM_STR);
+      $query->bindParam(":username", $_username, PDO::PARAM_STR);
+      $query->bindParam(":password", $_password, PDO::PARAM_STR);
+      $query->bindParam(":rol", $_rol, PDO::PARAM_INT);
+      $query->bindParam(":foto_perfil", $_foto_perfil, PDO::PARAM_STR);
 
-    $query->execute();
+      echo $query->debugDumpParams();
+      $query->execute();
 
-    // Si no hay filas, devolver false, indicando que no se hizo la inserción.
-    return $query->rowCount() == 0 ? false : true;
+
+      // Si no hay filas, devolver false, indicando que no se hizo la inserción.
+      return $query->rowCount() == 0 ? false : true;
+    } catch (PDOException $e) {
+      error_log("Error en la query - {$e}");
+      exit();
+    }
+    return false;
   }
 
 
@@ -264,8 +282,7 @@ class Usuario extends Model
         $elements,
         $current_user
       );
-      echo "<pre>" . var_export($current_user, true) . "</pre>";
-      echo "<pre>" . var_export($elements, true) . "</pre>";
+      // echo "<pre>" . var_export($elements, true) . "</pre>";
       // Regresamos los elementos.
     }
     return $elements;

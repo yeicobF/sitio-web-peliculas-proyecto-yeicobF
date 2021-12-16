@@ -4,6 +4,7 @@ class Model
 {
   // Protegattributea. Solo los children pueden acceder a esta propiedad.
   protected static $db_connection;
+
   public static function initDbConnection()
   {
     require_once "DB.php";
