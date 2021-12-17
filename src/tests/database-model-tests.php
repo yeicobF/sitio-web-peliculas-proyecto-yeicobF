@@ -31,3 +31,10 @@ Model::initDbConnection();
 //     echo "{$key}: {$value}, ";
 //   }
 // }
+
+/* -------------------------------------------------------------------------- */
+/* --------------------------- EXISTE UN REGISTRO. -------------------------- */
+echo var_dump(Model::attributeExists(Usuario::TABLE_NAME, "username", "jacob_ff", Usuario::PDO_PARAMS)) . "<br>";
+echo var_dump(Model::attributeExists(Usuario::TABLE_NAME, "username", "inventado_no_existente", Usuario::PDO_PARAMS)) . "<br>";
+echo var_dump(Model::attributeExists(Usuario::TABLE_NAME, "nombres", "F Javier", Usuario::PDO_PARAMS)) . "<br>";
+echo var_dump(Model::attributeExists(Usuario::TABLE_NAME, "nombres", "F Javiersss", Usuario::PDO_PARAMS)) . "<br>";

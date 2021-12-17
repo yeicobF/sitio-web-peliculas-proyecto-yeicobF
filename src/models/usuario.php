@@ -98,7 +98,12 @@ class Usuario extends Model
     string $_foto_perfil = ""
   ): bool {
     // Volver si ya existe el nombre de usuario.
-    if (parent::attributeExists(self::TABLE_NAME, "username", $_username)) {
+    if (parent::attributeExists(
+      self::TABLE_NAME,
+      "username",
+      $_username,
+      self::PDO_PARAMS
+    )) {
       return false;
     }
 
