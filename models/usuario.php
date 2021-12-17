@@ -84,7 +84,7 @@ class Usuario extends Model
       "rol" => $rol,
       "foto_perfil" => $foto_perfil,
     ];
-    return parent::insertNew(self::TABLE_NAME, $param_values, self::PDO_PARAMS);
+    return parent::insertRecord(self::TABLE_NAME, $param_values, self::PDO_PARAMS);
   }
 
 
@@ -98,7 +98,7 @@ class Usuario extends Model
     string $_foto_perfil = ""
   ): bool {
     // Volver si ya existe el nombre de usuario.
-    if (parent::attributeExists(
+    if (parent::recordExists(
       self::TABLE_NAME,
       "username",
       $_username,
@@ -191,7 +191,7 @@ class Usuario extends Model
   public static function getById($id)
   {
     // Obtenemos el resultado de la ejecución del query.
-    $query = parent::getEveryField(
+    $query = parent::getEveryRecord(
       "usuario",
       attributeName: "id",
       attributeValue: $id
@@ -256,7 +256,7 @@ class Usuario extends Model
   public static function getEveryElement()
   {
     // Obtenemos el resultado de la ejecución del query.
-    $query = parent::getEveryField(self::TABLE_NAME);
+    $query = parent::getEveryRecord(self::TABLE_NAME);
 
     // Arreglo con todos los elementos de la tabla.
     $elements = [];
