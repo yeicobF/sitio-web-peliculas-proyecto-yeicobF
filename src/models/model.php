@@ -97,18 +97,32 @@ class Model
 
     // Modificar atributos si es que hay que utilizar el LIKE.
     if (isset($use_like) && !empty($use_like)) {
-      // Si se estableció el like, agregarlo en lugar del `=`.
-      $equal = "LIKE";
-      // Agregar símbolo al inicio, al final o en los 2 lados dependiendo de los
-      // valores. Siento que se puede escribir de otra manera para no redundar,
-      // pero no sé cómo. Tal vez podría ser con un loop.
-      $attr =
-        ($use_like["beggining"] ? "%" : "")
-        . $attr
-        . ($use_like["ending"] ? "%" : "");
+
+      // Si los 2 son false, no cambiar la query, ya que no requiere el LIKE.
+      if ($use_like["beggining"] || $use_like["ending"]) {
+        // Si se estableció el like, agregarlo en lugar del `=`.
+        $equal = "LIKE";
+        // Agregar símbolo al inicio, al final o en los 2 lados dependiendo de los
+        // valores. Siento que se puede escribir de otra manera para no redundar,
+        // pero no sé cómo. Tal vez podría ser con un loop.
+        // 
+        // Para utilizar el LIKE hay que hacer uso del CONCAT().
+        // Aquí se especifica el por qué:
+        // https://stackoverflow.com/a/7357296/13562806
+        // Técnicamente por la preparación del query y SQL injection.
+        $attr =
+          "CONCAT("
+          . ($use_like["beggining"] ? "'%', " : "")
+          . $attr
+          . ($use_like["ending"] ? ", '%'" : "")
+          . ")";
+      }
     }
 
     $query .= " WHERE {$where_clause} {$equal} {$attr}";
+
+    echo "<br><br>" . $query . "<br><br>";
+
     return $query;
   }
 

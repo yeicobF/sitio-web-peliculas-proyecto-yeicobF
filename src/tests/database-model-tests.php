@@ -97,7 +97,7 @@ echo "SELECT LIKE true false" . var_dump(Model::getRecordLike(
   Usuario::TABLE_NAME,
   array(
     "name" => "nombres",
-    "value" => "ja"
+    "value" => "Ja"
   ),
   [
     "beggining" => true,
@@ -110,7 +110,7 @@ echo "SELECT LIKE false false" . var_dump(Model::getRecordLike(
   Usuario::TABLE_NAME,
   array(
     "name" => "nombres",
-    "value" => "ja"
+    "value" => "F Javier"
   ),
   [
     "beggining" => false,
