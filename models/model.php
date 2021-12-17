@@ -3,7 +3,7 @@
 class Model
 {
   // Protegattributea. Solo los children pueden acceder a esta propiedad.
-  protected static $db_connection;
+  public static $db_connection;
 
   public static function initDbConnection()
   {
@@ -155,7 +155,7 @@ class Model
     foreach ($param_values as $name => $value) {
       $pdo_params[":{$name}"] = $value;
     }
-    var_dump($pdo_params);
+    // var_dump($pdo_params);
     return $pdo_params;
   }
 
@@ -180,7 +180,7 @@ class Model
       );
       $param_names_and_values = self::bindEveryParamToArray($param_values);
 
-      echo $query->debugDumpParams();
+      // echo $query->debugDumpParams();
 
       // Con un mapa podemos ejecutar la query sin utilizar la función bindParam
       // por cada parámetro. La desventaja es que no se puede pasar el tipo de
@@ -197,5 +197,78 @@ class Model
       exit();
     }
     return false;
+  }
+
+  /* -------------------------- ACTUALIZACIÓN (PUT) ------------------------- */
+  public static function createUpdateQuery(
+    string $table,
+    array $attribute_names,
+    string $where_clause
+  ): string {
+    $query = "UPDATE {$table} SET ";
+
+    for ($i = 0; $i < count($attribute_names); $i++) {
+      $query .= "{$attribute_names[$i]} = :{$attribute_names[$i]}";
+      $query .=
+        ($i === count($attribute_names) - 1)
+        ? " "
+        : ", ";
+    }
+
+    $query .= "WHERE {$where_clause} = :{$where_clause}";
+
+    return $query;
+  }
+
+  /**
+   * Actualizar un registro de la BD.
+   * 
+   * Si no se actualizó nada del registro, devuelve true aunque haya encontrado
+   * un registro.
+   *
+   * @param string $table
+   * @param array $param_values Array con nombre y valor.
+   * @param array $where_clause Where en donde se actualizará.
+   * @param array $pdo_params
+   * @return boolean Se actualizó o no.
+   */
+  public static function updateElement(
+    string $table,
+    array $param_values,
+    array $where_clause,
+    array $pdo_params
+  ): bool {
+    if (!self::attributeExists(
+      $table,
+      $where_clause["name"],
+      $where_clause["value"],
+      $pdo_params
+    )) {
+      return false;
+    }
+    try {
+      $update_query = self::createUpdateQuery(
+        $table,
+        array_keys($param_values),
+        $where_clause["name"]
+      );
+
+      // echo $update_query . "<br>";
+
+      $query = self::$db_connection->prepare($update_query);
+
+      // Agregamos el nombre del where y su valor, ya que también forman parte
+      // de los parámetros.
+      $param_values[$where_clause["name"]] = $where_clause["value"];
+
+      // echo var_dump($param_values) . "<br>";
+
+      $query->execute(self::bindEveryParamToArray($param_values));
+
+      return $query->rowCount() > 0;
+    } catch (PDOException $e) {
+      error_log("Error en la query - {$e}");
+      exit();
+    }
   }
 }

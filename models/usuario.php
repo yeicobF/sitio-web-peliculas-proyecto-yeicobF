@@ -16,7 +16,7 @@ class Usuario extends Model
    * Tipo de los parámetros para cuando se utilicen en PDO.
    */
   const PDO_PARAMS = [
-    "id" => PDO::PARAM_NULL,
+    "id" => PDO::PARAM_INT,
     "nombres" => PDO::PARAM_STR,
     "apellidos" => PDO::PARAM_STR,
     "username" => PDO::PARAM_STR,
