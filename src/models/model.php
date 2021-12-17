@@ -37,23 +37,28 @@ class Model
   public static function attributeExists(
     string $table,
     string $attributeName,
-    string $attributeValue
+    string $attributeValue,
+    array $pdo_params
   ): bool {
     try {
       // Esta opción devolverá 0 o 1 resultados. Esto ayudará a ver si existe o
       // no.
       $query = self::$db_connection->prepare(
         "SELECT COUNT(1)
-      FROM {$table}
-      WHERE {$attributeName} = :attributeValue;
-    "
+          FROM {$table}
+          WHERE {$attributeName} = :attributeValue;
+        "
       );
 
-      $query->bindParam(":attributeValue", $attributeValue, PDO::PARAM_STR);
+      $query->bindParam(
+        ":attributeValue",
+        $attributeValue,
+        $pdo_params[$attributeName]
+      );
       $query->execute();
 
-      // Si no hay filas, devolver false, indicando que no se hizo la inserción.
-      return $query->rowCount() == 0 ? false : true;
+      // Si no hay filas, devolver false, indicando que no hay coincidencias.
+      return $query->fetch(PDO::FETCH_ASSOC)["COUNT(1)"] > 0;
     } catch (PDOException $e) {
       error_log("Error en la query - {$e}");
       exit();
@@ -163,8 +168,11 @@ class Model
    * atributo en la tabla y su valor.
    * @return boolean Se realizó la inserción o no.
    */
-  public static function insertNew($table, array $param_values, array $pdo_params): bool
-  {
+  public static function insertNew(
+    $table,
+    array $param_values,
+    array $pdo_params
+  ): bool {
     try {
 
       $query = self::$db_connection->prepare(
