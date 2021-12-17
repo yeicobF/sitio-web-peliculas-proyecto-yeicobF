@@ -103,4 +103,91 @@ class Model
     // indicando los datos que requerimos.
     return $query;
   }
+
+  public static function createInsertQuery(
+    string $table,
+    array $attributes
+  ): string {
+    $query = "INSERT INTO `{$table}` (";
+
+    // Recorrer los nombres de atributos para seguir con la query.
+    for ($i = 0; $i < count($attributes); $i++) {
+      $query .= $attributes[$i];
+      // Si se encuentra en el último valor, no agregar coma, agregar el
+      // paréntesis de cierre y agregar "VALUES".
+      $query .=
+        ($i === count($attributes) - 1)
+        ? ") VALUES ("
+        : ", ";
+    }
+
+    // Ahora, agregar los atributos en el formato de PDO.
+    for ($i = 0; $i < count($attributes); $i++) {
+      $query .= ":" . $attributes[$i];
+      // Si se encuentra en el último valor, no agregar coma, agregar el
+      // paréntesis de cierre y agregar "VALUES".
+      $query .=
+        ($i === count($attributes) - 1)
+        ? ")"
+        : ", ";
+    }
+    // var_dump($query);
+    return $query;
+  }
+
+  /**
+   * PDO::bindParam() en cada parámetro de forma automática.
+   *
+   * Creamos un array mapeado en donde guardamos el nombre del parámetro y su
+   * valor. Esto luego lo podemos enviar por parámetro en el método
+   * PDO::execute().
+   */
+  public static function bindEveryParamToArray(
+    $param_values,
+  ): array {
+    $pdo_params = [];
+
+    foreach ($param_values as $name => $value) {
+      $pdo_params[":{$name}"] = $value;
+    }
+    var_dump($pdo_params);
+    return $pdo_params;
+  }
+
+  /**
+   * Insertar nuevos valores en la tabla especificada.
+   *
+   * @param string $table Tabla a la que insertar.
+   * @param array $param_values Nombre de los atributos y su valor.
+   * @param array $pdo_params Arreglo asociativo que contiene el nombre del
+   * atributo en la tabla y su valor.
+   * @return boolean Se realizó la inserción o no.
+   */
+  public static function insertNew($table, array $param_values, array $pdo_params): bool
+  {
+    try {
+
+      $query = self::$db_connection->prepare(
+        self::createInsertQuery($table, array_keys($param_values))
+      );
+      $param_names_and_values = self::bindEveryParamToArray($param_values);
+
+      echo $query->debugDumpParams();
+
+      // Con un mapa podemos ejecutar la query sin utilizar la función bindParam
+      // por cada parámetro. La desventaja es que no se puede pasar el tipo de
+      // dato como con bindParam, pero es más "sencillo". Intenté hacer los
+      // bindParam de forma manual, pero me daba errores, por lo que, al menos
+      // por el momento, dejaré así.
+      $query->execute($param_names_and_values);
+
+
+      // Si no hay filas, devolver false, indicando que no se hizo la inserción.
+      return $query->rowCount() == 0 ? false : true;
+    } catch (PDOException $e) {
+      error_log("Error en la query - {$e}");
+      exit();
+    }
+    return false;
+  }
 }

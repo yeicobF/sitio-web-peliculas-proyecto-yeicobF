@@ -8,22 +8,26 @@ Model::initDbConnection();
 
 // var_dump(Usuario::getEveryElement());
 
-Usuario::insertNew(
-  "F Jav",
-  "Esquivel",
-  "esquivel_test_1",
-  "contra",
-  Usuario::ROLES_ENUM_INDEX["normal"],
-);
+/* -------------------------------- INSERCIÓN ------------------------------- */
 
-$foundUsers = Usuario::getEveryElement();
+// Usuario::insertNewUsuario(
+//   nombres: "Jacob F",
+//   apellidos: "F",
+//   username: "jacob_ff",
+//   password: "contrase",
+//   rol: Usuario::ROLES_ENUM_INDEX["normal"],
+// );
 
+/* ----------------------------------- GET ---------------------------------- */
+
+// $foundUsers = Usuario::getEveryElement();
+// 
 
 
 # code...
-foreach ($foundUsers as $user) {
-  echo "User: {$user->_nombres}\n";
-  foreach ($user as $key => $value) {
-    echo "{$key}: {$value}, ";
-  }
-}
+// foreach ($foundUsers as $user) {
+//   echo "User: {$user->_nombres}\n";
+//   foreach ($user as $key => $value) {
+//     echo "{$key}: {$value}, ";
+//   }
+// }
