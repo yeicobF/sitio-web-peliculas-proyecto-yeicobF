@@ -12,6 +12,19 @@ class Usuario extends Model
   public $_rol;
   public $_foto_perfil;
 
+  /**
+   * Tipo de los parámetros para cuando se utilicen en PDO.
+   */
+  const PDO_PARAMS = [
+    "id" => PDO::PARAM_NULL,
+    "nombres" => PDO::PARAM_STR,
+    "apellidos" => PDO::PARAM_STR,
+    "username" => PDO::PARAM_STR,
+    "password" => PDO::PARAM_STR,
+    "rol" => PDO::PARAM_INT,
+    "foto_perfil" => PDO::PARAM_STR,
+  ];
+
   const TABLE_NAME = "usuario";
   // Roles de usuario con su índice respecto al ENUM que se definió en la BD.
   // Los índices del ENUM comienzan desde 1, ya que el enum 0 está reservado
@@ -54,47 +67,24 @@ class Usuario extends Model
    * @param string $_foto_perfil
    * @return bool Se insertó o no el elemento.
    */
-  public static function insertNew(
-    $_nombres,
-    $_apellidos,
-    $_username,
-    $_password,
-    $_rol,
-    $_foto_perfil = NULL
-  ) {
-
-    try {
-      $query = parent::$db_connection->prepare(
-        "INSERT INTO `usuario` (id, nombres, apellidos, username, password, rol, foto_perfil)
-        VALUES(
-          NULL, 
-          :nombres,
-          :apellidos,
-          :username,
-          :password,
-          :rol,
-          :foto_perfil
-      )"
-      );
-
-      $query->bindParam(":nombres", $_nombres, PDO::PARAM_STR);
-      $query->bindParam(":apellidos", $_apellidos, PDO::PARAM_STR);
-      $query->bindParam(":username", $_username, PDO::PARAM_STR);
-      $query->bindParam(":password", $_password, PDO::PARAM_STR);
-      $query->bindParam(":rol", $_rol, PDO::PARAM_INT);
-      $query->bindParam(":foto_perfil", $_foto_perfil, PDO::PARAM_STR);
-
-      echo $query->debugDumpParams();
-      $query->execute();
-
-
-      // Si no hay filas, devolver false, indicando que no se hizo la inserción.
-      return $query->rowCount() == 0 ? false : true;
-    } catch (PDOException $e) {
-      error_log("Error en la query - {$e}");
-      exit();
-    }
-    return false;
+  public static function insertNewUsuario(
+    string $nombres,
+    string $apellidos,
+    string $username,
+    string $password,
+    int $rol,
+    string $foto_perfil = NULL
+  ): bool {
+    $param_values = [
+      "id" => NULL,
+      "nombres" => $nombres,
+      "apellidos" => $apellidos,
+      "username" => $username,
+      "password" => $password,
+      "rol" => $rol,
+      "foto_perfil" => $foto_perfil,
+    ];
+    return parent::insertNew(self::TABLE_NAME, $param_values, self::PDO_PARAMS);
   }
 
 
