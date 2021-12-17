@@ -49,7 +49,7 @@ $param_values = [
 ];
 $where_clause = [
   "name" => "id",
-  "value" => "10",
+  "value" => "11",
 ];
 
 // echo "Update: "
@@ -61,9 +61,19 @@ $where_clause = [
 //   . var_dump(Model::deleteRecord(Usuario::TABLE_NAME, $where_clause, Usuario::PDO_PARAMS))
 //   . "<br>";
 
-var_dump(Model::getEveryRecord(
+/* -------------------------------- NUEVO GET ------------------------------- */
+// echo var_dump(Model::getEveryRecord(Usuario::TABLE_NAME)) . "<br><br>";
+echo var_dump(Model::getRecord(
   Usuario::TABLE_NAME,
-  $where_clause["name"],
-  11,
+  $where_clause,
   Usuario::PDO_PARAMS
-));
+)) . "<br><br>";
+
+echo var_dump(Model::getRecord(
+  Usuario::TABLE_NAME,
+  array(
+    "name" => "nombres",
+    "value" => "F Javier"
+  ),
+  Usuario::PDO_PARAMS
+)) . "<br><br>";

@@ -92,18 +92,35 @@ class Model
   }
 
   /**
+   * Obtener arreglo asociativo con los resultados de un query.
+   *
+   * @param PDOStatement $pdo_statement
+   * @return array
+   */
+  public static function getFetchedRecords(PDOStatement $pdo_statement): array
+  {
+    $records = [];
+
+    while ($row = $pdo_statement->fetch(PDO::FETCH_ASSOC)) {
+      array_push($records, $row);
+    }
+
+    return $records;
+  }
+
+  /**
    * Obtener registro o registros, ya que se puede obtener más de uno.
    *
    * @param string $table
    * @param array $where_clause
    * @param array $pdo_params
-   * @return array Aquí se encuentran los resultados. Se regresa el
+   * @return (array | null) Aquí se encuentran los resultados. Se regresa el
    * arreglo con los valores.
    */
   public static function getRecord(
     string $table,
     array $where_clause,
-    array $pdo_params
+    ?array $pdo_params
   ): array {
     try {
       $query_select = self::createSelectQuery(
@@ -120,47 +137,37 @@ class Model
       );
       $query->execute();
 
-      $records = [];
-      while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-        array_push($records, $row);
-      }
-
-      return $records;
+      return self::getFetchedRecords($query);
     } catch (PDOException $e) {
       error_log("Error en la query - {$e}");
       exit();
     }
-    return null;
   }
 
   /**
    * Obtener todos los campos de un query.
    *
-   * @param string $table Tabla de la cual se obtendrán los datos.
-   * @return PDOStatement
+   * @param string $table
+   * @return array | null Arreglo con los registros obtenidos. Este arreglo
+   * puede ser null si no se obtuvo nada.
    */
-  public static function getEveryRecord($table)
+  public static function getEveryRecord(string $table): array | null
   {
     // Inicializamos para que se pueda utilizar la función y se devuelva el tipo
     // del objeto que se espera en un inicio.
     $query = self::$db_connection;
     try {
-      $query_string =
-        "SELECT *
-        FROM {$table}";
-
+      $query_string = self::createSelectQuery($table);
       $query = self::$db_connection->prepare(
         $query_string
       );
-
       $query->execute();
+
+      return self::getFetchedRecords($query);
     } catch (PDOException $e) {
       error_log("Error en la query - {$e}");
       exit();
     }
-    // Regresamos el resultado de la query. Toca manualmente hacer el fetch
-    // indicando los datos que requerimos.
-    return $query;
   }
 
   public static function createInsertQuery(
