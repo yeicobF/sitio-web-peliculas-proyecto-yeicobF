@@ -2,7 +2,6 @@
 
 class Model
 {
-  // Protegattributea. Solo los children pueden acceder a esta propiedad.
   public static $db_connection;
 
   public static function initDbConnection()
@@ -17,12 +16,8 @@ class Model
     }
   }
 
-  /**
-   * 
-   * 
-   * @param string $username
-   * @return boolean
-   */
+  /* ----------------------------- GET (SELECT) ----------------------------- */
+
 
   /**
    * Revisar si el atributo se encuentra en la BD.
@@ -70,30 +65,89 @@ class Model
   }
 
   /**
+   * Crear query de `SELECT`.
+   * 
+   * Si no se le envían los otros 2 parámetros, no se le agrega el `WHERE`.
+   *
+   * @param string $table
+   * @param array|null $where_clause
+   * @param array|null $pdo_params
+   * @return string
+   */
+  public static function createSelectQuery(
+    string $table,
+    string $where_clause = null,
+    array $pdo_params = null
+  ) {
+    $query = "SELECT * FROM {$table}";
+
+    if (
+      isset($where_clause) && !empty($where_clause)
+      && isset($pdo_params) && !empty($pdo_params)
+    ) {
+      $query .= " WHERE {$where_clause} = :{$where_clause}";
+    }
+
+    return $query;
+  }
+
+  /**
+   * Obtener registro o registros, ya que se puede obtener más de uno.
+   *
+   * @param string $table
+   * @param array $where_clause
+   * @param array $pdo_params
+   * @return array Aquí se encuentran los resultados. Se regresa el
+   * arreglo con los valores.
+   */
+  public static function getRecord(
+    string $table,
+    array $where_clause,
+    array $pdo_params
+  ): array {
+    try {
+      $query_select = self::createSelectQuery(
+        $table,
+        $where_clause["name"],
+        $pdo_params
+      );
+
+      $query = self::$db_connection->prepare($query_select);
+      $query->bindParam(
+        ":{$where_clause["name"]}",
+        $where_clause["value"],
+        $pdo_params[$where_clause["name"]]
+      );
+      $query->execute();
+
+      $records = [];
+      while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+        array_push($records, $row);
+      }
+
+      return $records;
+    } catch (PDOException $e) {
+      error_log("Error en la query - {$e}");
+      exit();
+    }
+    return null;
+  }
+
+  /**
    * Obtener todos los campos de un query.
    *
    * @param string $table Tabla de la cual se obtendrán los datos.
-   * @param string $attributeName Nombre del atributo o columna que se quiere
-   * obtener.
-   * @param string $attributeValue Si no es especificado, se obtendrán todos los
-   * de la tabla especificada.
    * @return PDOStatement
    */
-  protected static function getEveryRecord($table, $attributeName = "", $attributeValue = "")
+  public static function getEveryRecord($table)
   {
     // Inicializamos para que se pueda utilizar la función y se devuelva el tipo
     // del objeto que se espera en un inicio.
-    $query = new PDOStatement();
+    $query = self::$db_connection;
     try {
       $query_string =
         "SELECT *
         FROM {$table}";
-
-      // Agregar attribute si fue especificado.
-      if (!empty($attributeName && !empty($attributeValue))) {
-        $query_string .= " WHERE {$attributeName} = :attribute";
-        $query->bindParam(":attribute", $attributeValue, PDO::PARAM_INT);
-      }
 
       $query = self::$db_connection->prepare(
         $query_string
