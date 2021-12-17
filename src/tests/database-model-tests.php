@@ -8,16 +8,20 @@ Model::initDbConnection();
 
 // var_dump(Usuario::getEveryElement());
 
-Usuario::insertNewUsuario(
-  nombres: "Jacob F",
-  apellidos: "F",
-  username: "jacob_ff",
-  password: "contrase",
-  rol: Usuario::ROLES_ENUM_INDEX["normal"],
-);
+/* -------------------------------- INSERCIÓN ------------------------------- */
 
-$foundUsers = Usuario::getEveryElement();
+// Usuario::insertNewUsuario(
+//   nombres: "Jacob F",
+//   apellidos: "F",
+//   username: "jacob_ff",
+//   password: "contrase",
+//   rol: Usuario::ROLES_ENUM_INDEX["normal"],
+// );
 
+/* ----------------------------------- GET ---------------------------------- */
+
+// $foundUsers = Usuario::getEveryElement();
+// 
 
 
 # code...

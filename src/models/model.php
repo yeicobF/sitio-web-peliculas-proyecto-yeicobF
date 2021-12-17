@@ -138,19 +138,20 @@ class Model
   /**
    * PDO::bindParam() en cada parámetro de forma automática.
    *
-   * Hacemos bindParam dependiendo de los valores que se reciban para no hacerlo de forma manual.
+   * Creamos un array mapeado en donde guardamos el nombre del parámetro y su
+   * valor. Esto luego lo podemos enviar por parámetro en el método
+   * PDO::execute().
    */
-  public static function bindEveryParam(
-    PDOStatement $pdo_statement,
+  public static function bindEveryParamToArray(
     $param_values,
-    $pdo_params
-  ): PDOStatement {
-    foreach ($param_values as $attr_name => $value) {
-      echo ":{$attr_name} = $value, type = $pdo_params[$attr_name]<br>";
-      $pdo_statement->bindParam(":{$attr_name}", $value, $pdo_params[$attr_name]);
-    }
+  ): array {
+    $pdo_params = [];
 
-    return $pdo_statement;
+    foreach ($param_values as $name => $value) {
+      $pdo_params[":{$name}"] = $value;
+    }
+    var_dump($pdo_params);
+    return $pdo_params;
   }
 
   /**
@@ -169,10 +170,16 @@ class Model
       $query = self::$db_connection->prepare(
         self::createInsertQuery($table, array_keys($param_values))
       );
-      $query = self::bindEveryParam($query, $param_values, $pdo_params);
+      $param_names_and_values = self::bindEveryParamToArray($param_values);
 
       echo $query->debugDumpParams();
-      $query->execute();
+
+      // Con un mapa podemos ejecutar la query sin utilizar la función bindParam
+      // por cada parámetro. La desventaja es que no se puede pasar el tipo de
+      // dato como con bindParam, pero es más "sencillo". Intenté hacer los
+      // bindParam de forma manual, pero me daba errores, por lo que, al menos
+      // por el momento, dejaré así.
+      $query->execute($param_names_and_values);
 
 
       // Si no hay filas, devolver false, indicando que no se hizo la inserción.
