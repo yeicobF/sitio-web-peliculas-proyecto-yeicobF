@@ -1,5 +1,7 @@
 # FDW: PROYECTO DEL SEMESTRE - SITIO WEB DE INFORMACIÓN DE PELÍCULAS
 
+[![wakatime](https://wakatime.com/badge/user/f530d0b3-bc24-4950-bbff-22005567ed42/project/0bbc5c34-41c4-4f26-8b53-9e71c21f7c96.svg)](https://wakatime.com/badge/user/f530d0b3-bc24-4950-bbff-22005567ed42/project/0bbc5c34-41c4-4f26-8b53-9e71c21f7c96)
+
 En este repositorio voy a estar trabajando con mi proyecto del semestre de la
 materia de Fundamentos de Desarrollo Web de 7SEM, la cual estoy recursando.
 
