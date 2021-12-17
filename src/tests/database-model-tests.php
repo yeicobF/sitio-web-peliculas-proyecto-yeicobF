@@ -10,13 +10,13 @@ Model::initDbConnection();
 
 /* -------------------------------- INSERCIÓN ------------------------------- */
 
-// Usuario::insertNewUsuario(
-//   nombres: "Jacob F",
-//   apellidos: "F",
-//   username: "jacob_ff",
-//   password: "contrase",
-//   rol: Usuario::ROLES_ENUM_INDEX["normal"],
-// );
+Usuario::insertNewUsuario(
+  nombres: "Jacob F",
+  apellidos: "F",
+  username: "jacob_ff",
+  password: "contrase",
+  rol: Usuario::ROLES_ENUM_INDEX["normal"],
+);
 
 /* ----------------------------------- GET ---------------------------------- */
 
@@ -52,4 +52,11 @@ $where_clause = [
   "value" => "10",
 ];
 
-echo "Update: " . var_dump(Model::updateElement(Usuario::TABLE_NAME, $param_values, $where_clause, Usuario::PDO_PARAMS)) . "Update: ". "<br>";
+echo "Update: "
+  . var_dump(Model::updateRecord(Usuario::TABLE_NAME, $param_values, $where_clause, Usuario::PDO_PARAMS))
+  . "Update: "
+  . "<br>";
+
+echo "DeleteRecord: "
+  . var_dump(Model::deleteRecord(Usuario::TABLE_NAME, $where_clause, Usuario::PDO_PARAMS))
+  . "<br>";
