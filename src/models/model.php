@@ -34,7 +34,7 @@ class Model
    * @param string $attributeValue Valor del atributo.
    * @return boolean
    */
-  public static function attributeExists(
+  public static function recordExists(
     string $table,
     string $attributeName,
     string $attributeValue,
@@ -79,7 +79,7 @@ class Model
    * de la tabla especificada.
    * @return PDOStatement
    */
-  protected static function getEveryField($table, $attributeName = "", $attributeValue = "")
+  protected static function getEveryRecord($table, $attributeName = "", $attributeValue = "")
   {
     // Inicializamos para que se pueda utilizar la función y se devuelva el tipo
     // del objeto que se espera en un inicio.
@@ -168,7 +168,7 @@ class Model
    * atributo en la tabla y su valor.
    * @return boolean Se realizó la inserción o no.
    */
-  public static function insertNew(
+  public static function insertRecord(
     $table,
     array $param_values,
     array $pdo_params
@@ -232,13 +232,13 @@ class Model
    * @param array $pdo_params
    * @return boolean Se actualizó o no.
    */
-  public static function updateElement(
+  public static function updateRecord(
     string $table,
     array $param_values,
     array $where_clause,
     array $pdo_params
   ): bool {
-    if (!self::attributeExists(
+    if (!self::recordExists(
       $table,
       $where_clause["name"],
       $where_clause["value"],
@@ -270,5 +270,42 @@ class Model
       error_log("Error en la query - {$e}");
       exit();
     }
+  }
+
+  /* ------------------------- ELIMINACIÓN (DELETE) ------------------------- */
+
+  public static function createDeleteQuery(
+    $table,
+    $where_clause,
+  ) {
+    $query =
+      "DELETE FROM {$table} 
+      WHERE {$where_clause} = :{$where_clause}";
+
+    return $query;
+  }
+  /**
+   * Eliminar un registro.
+   *
+   * @param string $table
+   * @param array $where_clause ["name"], ["value"].
+   * @param array $pdo_params
+   * @return bool
+   */
+  public static function deleteRecord(
+    string $table,
+    array $where_clause,
+    array $pdo_params
+  ): bool {
+    $delete_query = self::createDeleteQuery($table, $where_clause["name"]);
+    $query = self::$db_connection->prepare($delete_query);
+    $query->bindParam(
+      ":{$where_clause["name"]}",
+      $where_clause["value"],
+      $pdo_params[$where_clause["name"]]
+    );
+    $query->execute();
+
+    return $query->rowCount() > 0;
   }
 }
