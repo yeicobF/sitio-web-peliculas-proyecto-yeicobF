@@ -10,13 +10,13 @@ Model::initDbConnection();
 
 /* -------------------------------- INSERCIÓN ------------------------------- */
 
-Usuario::insertNewUsuario(
-  nombres: "Jacob F",
-  apellidos: "F",
-  username: "jacob_ff",
-  password: "contrase",
-  rol: Usuario::ROLES_ENUM_INDEX["normal"],
-);
+// Usuario::insertNewUsuario(
+//   nombres: "Jacob F",
+//   apellidos: "F",
+//   username: "jacob_ff",
+//   password: "contrase",
+//   rol: Usuario::ROLES_ENUM_INDEX["normal"],
+// );
 
 /* ----------------------------------- GET ---------------------------------- */
 
@@ -49,14 +49,31 @@ $param_values = [
 ];
 $where_clause = [
   "name" => "id",
-  "value" => "10",
+  "value" => "11",
 ];
 
-echo "Update: "
-  . var_dump(Model::updateRecord(Usuario::TABLE_NAME, $param_values, $where_clause, Usuario::PDO_PARAMS))
-  . "Update: "
-  . "<br>";
+// echo "Update: "
+//   . var_dump(Model::updateRecord(Usuario::TABLE_NAME, $param_values, $where_clause, Usuario::PDO_PARAMS))
+//   . "Update: "
+//   . "<br>";
+// 
+// echo "DeleteRecord: "
+//   . var_dump(Model::deleteRecord(Usuario::TABLE_NAME, $where_clause, Usuario::PDO_PARAMS))
+//   . "<br>";
 
-echo "DeleteRecord: "
-  . var_dump(Model::deleteRecord(Usuario::TABLE_NAME, $where_clause, Usuario::PDO_PARAMS))
-  . "<br>";
+/* -------------------------------- NUEVO GET ------------------------------- */
+// echo var_dump(Model::getEveryRecord(Usuario::TABLE_NAME)) . "<br><br>";
+echo var_dump(Model::getRecord(
+  Usuario::TABLE_NAME,
+  $where_clause,
+  Usuario::PDO_PARAMS
+)) . "<br><br>";
+
+echo var_dump(Model::getRecord(
+  Usuario::TABLE_NAME,
+  array(
+    "name" => "nombres",
+    "value" => "F Javier"
+  ),
+  Usuario::PDO_PARAMS
+)) . "<br><br>";
