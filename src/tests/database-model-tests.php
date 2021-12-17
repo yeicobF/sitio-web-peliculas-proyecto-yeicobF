@@ -63,17 +63,58 @@ $where_clause = [
 
 /* -------------------------------- NUEVO GET ------------------------------- */
 // echo var_dump(Model::getEveryRecord(Usuario::TABLE_NAME)) . "<br><br>";
-echo var_dump(Model::getRecord(
-  Usuario::TABLE_NAME,
-  $where_clause,
-  Usuario::PDO_PARAMS
-)) . "<br><br>";
+// echo var_dump(Model::getRecord(
+//   Usuario::TABLE_NAME,
+//   $where_clause,
+//   Usuario::PDO_PARAMS
+// )) . "<br><br>";
+// 
+// echo var_dump(Model::getRecord(
+//   Usuario::TABLE_NAME,
+//   array(
+//     "name" => "nombres",
+//     "value" => "F Javier"
+//   ),
+//   Usuario::PDO_PARAMS
+// )) . "<br><br>";
 
-echo var_dump(Model::getRecord(
+$use_like = [
+  "beggining" => true,
+  "ending" => true,
+];
+
+echo "SELECT LIKE true true" . var_dump(Model::getRecordLike(
   Usuario::TABLE_NAME,
   array(
     "name" => "nombres",
-    "value" => "F Javier"
+    "value" => "ja"
   ),
+  $use_like,
+  Usuario::PDO_PARAMS
+)) . "<br><br>";
+
+echo "SELECT LIKE true false" . var_dump(Model::getRecordLike(
+  Usuario::TABLE_NAME,
+  array(
+    "name" => "nombres",
+    "value" => "ja"
+  ),
+  [
+    "beggining" => true,
+    "ending" => false,
+  ],
+  Usuario::PDO_PARAMS
+)) . "<br><br>";
+
+echo "SELECT LIKE false false" . var_dump(Model::getRecordLike(
+  Usuario::TABLE_NAME,
+  array(
+    "name" => "nombres",
+    "value" => "ja"
+  ),
+  [
+    "beggining" => false,
+    "ending" => false,
+  ],
   Usuario::PDO_PARAMS
 )) . "<br><br>";

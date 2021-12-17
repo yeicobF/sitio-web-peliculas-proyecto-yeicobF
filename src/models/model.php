@@ -66,28 +66,49 @@ class Model
 
   /**
    * Crear query de `SELECT`.
-   * 
+   *
    * Si no se le envían los otros 2 parámetros, no se le agrega el `WHERE`.
    *
    * @param string $table
    * @param array|null $where_clause
+   * @param array use_like Indicar si se usará el mecanismo like o no. Esto solo
+   * se puede utilizar cuando se hace uso del `WHERE`. Es un arreglo que indica
+   * en qué posición se encontrará el modificador.
    * @param array|null $pdo_params
    * @return string
    */
   public static function createSelectQuery(
     string $table,
     string $where_clause = null,
+    array $use_like = null,
     array $pdo_params = null
-  ) {
+  ): string {
     $query = "SELECT * FROM {$table}";
 
+    // Early return si no están establecidas dichas variables.
     if (
-      isset($where_clause) && !empty($where_clause)
-      && isset($pdo_params) && !empty($pdo_params)
+      !isset($where_clause) && empty($where_clause)
+      && !isset($pdo_params) && empty($pdo_params)
     ) {
-      $query .= " WHERE {$where_clause} = :{$where_clause}";
+      return $query;
+    }
+    $attr = ":{$where_clause}";
+    $equal = "=";
+
+    // Modificar atributos si es que hay que utilizar el LIKE.
+    if (isset($use_like) && !empty($use_like)) {
+      // Si se estableció el like, agregarlo en lugar del `=`.
+      $equal = "LIKE";
+      // Agregar símbolo al inicio, al final o en los 2 lados dependiendo de los
+      // valores. Siento que se puede escribir de otra manera para no redundar,
+      // pero no sé cómo. Tal vez podría ser con un loop.
+      $attr =
+        ($use_like["beggining"] ? "%" : "")
+        . $attr
+        . ($use_like["ending"] ? "%" : "");
     }
 
+    $query .= " WHERE {$where_clause} {$equal} {$attr}";
     return $query;
   }
 
@@ -126,6 +147,44 @@ class Model
       $query_select = self::createSelectQuery(
         $table,
         $where_clause["name"],
+        null,
+        $pdo_params
+      );
+
+      $query = self::$db_connection->prepare($query_select);
+      $query->bindParam(
+        ":{$where_clause["name"]}",
+        $where_clause["value"],
+        $pdo_params[$where_clause["name"]]
+      );
+      $query->execute();
+
+      return self::getFetchedRecords($query);
+    } catch (PDOException $e) {
+      error_log("Error en la query - {$e}");
+      exit();
+    }
+  }
+
+  /**
+   * Obtener un registro que contenga la cadena inicial busqué coincidencias ya
+   * siendo que sean igual a la cadena o que comiencen con ese valor.
+   * 
+   * Se hace uso del símbolo `%` al final para la búsqueda.
+   *
+   * @return array
+   */
+  public static function getRecordLike(
+    string $table,
+    array $where_clause,
+    array $use_like,
+    array $pdo_params
+  ): array {
+    try {
+      $query_select = self::createSelectQuery(
+        $table,
+        $where_clause["name"],
+        $use_like,
         $pdo_params
       );
 
