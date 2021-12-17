@@ -83,7 +83,7 @@ $use_like = [
   "ending" => true,
 ];
 
-echo "SELECT LIKE true true" . var_dump(Model::getRecordLike(
+echo "SELECT LIKE %ja% true true" . var_dump(Model::getRecordLike(
   Usuario::TABLE_NAME,
   array(
     "name" => "nombres",
@@ -93,11 +93,23 @@ echo "SELECT LIKE true true" . var_dump(Model::getRecordLike(
   Usuario::PDO_PARAMS
 )) . "<br><br>";
 
-echo "SELECT LIKE true false" . var_dump(Model::getRecordLike(
+echo "SELECT LIKE Ja% false true" . var_dump(Model::getRecordLike(
   Usuario::TABLE_NAME,
   array(
     "name" => "nombres",
     "value" => "Ja"
+  ),
+  [
+    "beggining" => false,
+    "ending" => true,
+  ],
+  Usuario::PDO_PARAMS
+)) . "<br><br>";
+echo "SELECT LIKE %vier true false" . var_dump(Model::getRecordLike(
+  Usuario::TABLE_NAME,
+  array(
+    "name" => "nombres",
+    "value" => "vier"
   ),
   [
     "beggining" => true,
@@ -106,7 +118,7 @@ echo "SELECT LIKE true false" . var_dump(Model::getRecordLike(
   Usuario::PDO_PARAMS
 )) . "<br><br>";
 
-echo "SELECT LIKE false false" . var_dump(Model::getRecordLike(
+echo "SELECT LIKE F Javier false false" . var_dump(Model::getRecordLike(
   Usuario::TABLE_NAME,
   array(
     "name" => "nombres",
