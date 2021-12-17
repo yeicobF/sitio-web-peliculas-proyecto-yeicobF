@@ -34,7 +34,22 @@ Model::initDbConnection();
 
 /* -------------------------------------------------------------------------- */
 /* --------------------------- EXISTE UN REGISTRO. -------------------------- */
-echo var_dump(Model::attributeExists(Usuario::TABLE_NAME, "username", "jacob_ff", Usuario::PDO_PARAMS)) . "<br>";
-echo var_dump(Model::attributeExists(Usuario::TABLE_NAME, "username", "inventado_no_existente", Usuario::PDO_PARAMS)) . "<br>";
-echo var_dump(Model::attributeExists(Usuario::TABLE_NAME, "nombres", "F Javier", Usuario::PDO_PARAMS)) . "<br>";
-echo var_dump(Model::attributeExists(Usuario::TABLE_NAME, "nombres", "F Javiersss", Usuario::PDO_PARAMS)) . "<br>";
+// echo var_dump(Model::attributeExists(Usuario::TABLE_NAME, "username", "jacob_ff", Usuario::PDO_PARAMS)) . "<br>";
+// echo var_dump(Model::attributeExists(Usuario::TABLE_NAME, "username", "inventado_no_existente", Usuario::PDO_PARAMS)) . "<br>";
+// echo var_dump(Model::attributeExists(Usuario::TABLE_NAME, "nombres", "F Javier", Usuario::PDO_PARAMS)) . "<br>";
+// echo var_dump(Model::attributeExists(Usuario::TABLE_NAME, "nombres", "F Javiersss", Usuario::PDO_PARAMS)) . "<br>";
+
+/* ------------------------------ ACTUALIZACIÓN ----------------------------- */
+$param_values = [
+  "nombres" => "Jacob Gonzalo",
+  "apellidos" => "González",
+  "username" => "nuevo_username_2",
+  "password" => "holanuevas",
+  "rol" => Usuario::ROLES_ENUM_INDEX["administrador"],
+];
+$where_clause = [
+  "name" => "id",
+  "value" => "10",
+];
+
+echo "Update: " . var_dump(Model::updateElement(Usuario::TABLE_NAME, $param_values, $where_clause, Usuario::PDO_PARAMS)) . "Update: ". "<br>";
