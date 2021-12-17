@@ -4,13 +4,13 @@ include_once "model.php";
 
 class Usuario extends Model
 {
-  public $_id;
-  public $_nombres;
-  public $_apellidos;
-  public $_username;
-  public $_password;
-  public $_rol;
-  public $_foto_perfil;
+  public ?int $_id;
+  public string $_nombres;
+  public string $_apellidos;
+  public string $_username;
+  public string $_password;
+  public int $_rol;
+  public ?string $_foto_perfil;
 
   /**
    * Tipo de los parámetros para cuando se utilicen en PDO.
@@ -36,13 +36,14 @@ class Usuario extends Model
   ];
 
   public function __construct(
-    $id,
-    $nombres,
-    $apellidos,
-    $username,
-    $password,
-    $rol,
-    $foto_perfil = ""
+    string $nombres,
+    string $apellidos,
+    string $username,
+    string $password,
+    int $rol,
+    // Parámetros opcionales solo es posible ponerlos al final.
+    ?int  $id = null,
+    ?string $foto_perfil = null
   ) {
     $this->_id = $id;
     $this->_nombres = $nombres;
@@ -51,6 +52,24 @@ class Usuario extends Model
     $this->_password = $password;
     $this->_rol = $rol;
     $this->_foto_perfil = $foto_perfil;
+  }
+
+  /**
+   * Obtener arreglo con el nombre y valor de cada atributo del objeto.
+   *
+   * @return array Array asociativo con parámetro y valor.
+   */
+  public function getParamValues(): array
+  {
+    return [
+      "id" => NULL,
+      "nombres" => $this->_nombres,
+      "apellidos" => $this->_apellidos,
+      "username" => $this->_username,
+      "password" => $this->_password,
+      "rol" => $this->_rol,
+      "foto_perfil" => $this->_foto_perfil,
+    ];
   }
 
   /* --------------------------------- QUERIES --------------------------------
@@ -67,116 +86,39 @@ class Usuario extends Model
    * @param string $_foto_perfil
    * @return bool Se insertó o no el elemento.
    */
-  public static function insertNewUsuario(
-    string $nombres,
-    string $apellidos,
-    string $username,
-    string $password,
-    int $rol,
-    string $foto_perfil = NULL
-  ): bool {
-    $param_values = [
-      "id" => NULL,
-      "nombres" => $nombres,
-      "apellidos" => $apellidos,
-      "username" => $username,
-      "password" => $password,
-      "rol" => $rol,
-      "foto_perfil" => $foto_perfil,
-    ];
-    return parent::insertRecord(self::TABLE_NAME, $param_values, self::PDO_PARAMS);
+  public function insertUsuario(): bool
+  {
+    return parent::insertRecord(
+      self::TABLE_NAME,
+      $this->getParamValues(),
+      self::PDO_PARAMS
+    );
   }
 
-
-
-  public static function updateUsuario(
-    string $_id,
-    string $_nombres = "",
-    string $_apellidos = "",
-    string $_username = "",
-    string $_password = "",
-    string $_foto_perfil = ""
-  ): bool {
-    // Volver si ya existe el nombre de usuario.
-    if (parent::recordExists(
-      self::TABLE_NAME,
-      "username",
-      $_username,
-      self::PDO_PARAMS
-    )) {
-      return false;
-    }
-
-    // Si los campos están vacíos, no agregarlos a la query.
-    $query_params = [
-      // ", nombres = :nombres"
-      "nombres" => $_nombres,
-      "apellidos" => $_apellidos,
-      "username" => $_username,
-      "password" => $_password,
-      "foto_perfil" => $_foto_perfil,
-    ];
-
-    // Si ningún parámetro está especificado, regresar.
-    // Recorrido, y si se encuentra que todos los elementos no tienen contenido,
-    // regresar false.
-    // 
-    // La validación debería estar en el frontend, pero ya la agregué.
-    $empty_params = 0;
-    foreach ($query_params as $param) {
-      if ($param === '' || $param === null) {
-        $empty_params++;
-      }
-    }
-
-    if ($empty_params === count($query_params)) {
-      // No se enviaron elementos
-      return false;
-    }
-    /* -------------------------------------------------------------------------- */
-
-
-    // Armamos una string dependiendo de los elementos a modificar.
-    $query_string = "UPDATE usuario
-      SET ";
-
-    // Parámetros existentes para hacer el bindParam.
-    $existent_parameters = [];
-
-    // Agregamos los valores a cambiar.
-    // Asignamos si el parámetro no se envió vacío.
-    foreach ($query_params as $param_name => $param_value) {
-      // Si es envío texto, agregar el parámetro a la query.
-      if (!empty($param_value)) {
-        // ", nombres = :nombres"
-        $query_string .= ", {$param_name} = :{$param_name}";
-        array_push($existent_parameters, $param_name);
-      }
-    }
-
-    // Indicar última parte del query.
-    $query_string .= " 
-      WHERE id = :id
-    ";
-
-    /* -------------------------------------------------------------------------- */
-
-    $query = parent::$db_connection->prepare($query_string);
-
-    // Hacer bindParam.
-    $query->bindParam(":id", $_id, PDO::PARAM_INT);
-    foreach ($existent_parameters as $param_name) {
-      $query->bindParam(
-        ":{$param_name}",
-        // El nombre del parámetro lo mandamos al arreglo asociativo del inicio.
-        $query_params[$param_name],
-        PDO::PARAM_STR
-      );
-    }
-
-    $query->execute();
-    // Si no hay filas, devolver false, indicando que no se hizo la inserción.
-    return $query->rowCount() == 0 ? false : true;
+  /**
+   * Actualizar un usuario.
+   * 
+   * Esta función se llama desde una instancia con el ID del usuario a
+   * actualizar, pero con sus nuevos datos.
+   *
+   * @return boolean Se actualizó o no.
+   */
+  public function updateUsuario(): bool
+  {
+    $param_values = $this->getParamValues();
+    // Quitar el ID de los parámetros, ya que no lo actualizaremos y solo lo
+    // utilizaremos en el WHERE.
+    unset($param_values["id"]);
+    // Solo permitir actualizar el usuario por su ID.
+    return parent::updateRecord(
+      table: self::TABLE_NAME,
+      param_values: $param_values,
+      where_clause: [
+        "name" => "id",
+        "value" => $this->_id,
+      ],
+      pdo_params: self::PDO_PARAMS
+    );
   }
   public static function deleteUsuario()
   {
@@ -188,32 +130,32 @@ class Usuario extends Model
    * @param int $id
    * @return array Arreglo asociativo para representar como JSON en JavaScript.
    */
-  public static function getById($id)
-  {
-    // Obtenemos el resultado de la ejecución del query.
-    $query = parent::getEveryRecord(
-      "usuario",
-      attributeName: "id",
-      attributeValue: $id
-    );
-
-    // Obtenemos el elemento, que sería 1 porque no se puede repetir ID.
-    $row = $query->fetch(PDO::FETCH_ASSOC);
-
-    $usuario = new Usuario(
-      $row["id"],
-      $row["nombres"],
-      $row["apellidos"],
-      $row["username"],
-      $row["password"],
-      $row["rol"],
-      $row["foto_perfil"],
-
-    );
-
-    // Regresamos objeto como JSON para obtenerlo en JS mediante AJAX.
-    $usuario->returnJSON();
-  }
+  //   public static function getById($id)
+  //   {
+  //     // Obtenemos el resultado de la ejecución del query.
+  //     $query = parent::getEveryRecord(
+  //       "usuario",
+  //       attributeName: "id",
+  //       attributeValue: $id
+  //     );
+  // 
+  //     // Obtenemos el elemento, que sería 1 porque no se puede repetir ID.
+  //     $row = $query->fetch(PDO::FETCH_ASSOC);
+  // 
+  //     $usuario = new Usuario(
+  //       $row["id"],
+  //       $row["nombres"],
+  //       $row["apellidos"],
+  //       $row["username"],
+  //       $row["password"],
+  //       $row["rol"],
+  //       $row["foto_perfil"],
+  // 
+  //     );
+  // 
+  //     // Regresamos objeto como JSON para obtenerlo en JS mediante AJAX.
+  //     $usuario->returnJSON();
+  //   }
 
   /**
    * Un usuario se encuentra en la base de datos o no.
@@ -253,35 +195,35 @@ class Usuario extends Model
    *
    * @return array Arreglo asociativo con los elementos encontrados.
    */
-  public static function getEveryElement()
-  {
-    // Obtenemos el resultado de la ejecución del query.
-    $query = parent::getEveryRecord(self::TABLE_NAME);
-
-    // Arreglo con todos los elementos de la tabla.
-    $elements = [];
-
-    while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-      // var_dump($row);
-      $current_user = new Usuario(
-        $row["id"],
-        $row["nombres"],
-        $row["apellidos"],
-        $row["username"],
-        $row["password"],
-        $row["rol"],
-        $row["foto_perfil"]
-      );
-      // Agregamos el elemento actual al arreglo.
-      array_push(
-        $elements,
-        $current_user
-      );
-      // echo "<pre>" . var_export($elements, true) . "</pre>";
-      // Regresamos los elementos.
-    }
-    return $elements;
-  }
+  //   public static function getEveryElement()
+  //   {
+  //     // Obtenemos el resultado de la ejecución del query.
+  //     $query = parent::getEveryRecord(self::TABLE_NAME);
+  // 
+  //     // Arreglo con todos los elementos de la tabla.
+  //     $elements = [];
+  // 
+  //     while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+  //       // var_dump($row);
+  //       $current_user = new Usuario(
+  //         $row["id"],
+  //         $row["nombres"],
+  //         $row["apellidos"],
+  //         $row["username"],
+  //         $row["password"],
+  //         $row["rol"],
+  //         $row["foto_perfil"]
+  //       );
+  //       // Agregamos el elemento actual al arreglo.
+  //       array_push(
+  //         $elements,
+  //         $current_user
+  //       );
+  //       // echo "<pre>" . var_export($elements, true) . "</pre>";
+  //       // Regresamos los elementos.
+  //     }
+  //     return $elements;
+  //   }
 
   /* -------------------------------------------------------------------------- */
   public function returnJson()
