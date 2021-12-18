@@ -2,8 +2,34 @@
 
 class Model
 {
+  /**
+   * Conexión con la base de datos. Se basa en el patrón de diseño `Singleton`.
+   *
+   * @var PDO
+   */
   public static $db_connection;
 
+  /**
+   * Posibles errores de la BD. Esto ayudaría a la gestión de los mismos para
+   * poder ser más específico al momento de tratarlos.
+   */
+  const OPERATION_INFO = [
+    0 => "Operación NO exitosa",
+    1 => "Operación exitosa",
+    2 => "Intento de inserción o actualización con un campo único ya existente",
+    3 => "Campo no existente",
+    4 => "Error con la conexión de la base de datos",
+    5 => "Error con la query",
+  ];
+
+  /**
+   * Inicializar conexión con la BD. 
+   *
+   * Esto se hace antes de utilizar todo lo que tenga que ver con Modelos y sus
+   * derivados.
+   *
+   * @return void
+   */
   public static function initDbConnection()
   {
     require_once "DB.php";
@@ -16,8 +42,7 @@ class Model
     }
   }
 
-  /* ----------------------------- GET (SELECT) ----------------------------- */
-
+  /* ------------------ REVISIÓN DE EXISTENCIA DE REGISTROS ----------------- */
 
   /**
    * Revisar si el atributo se encuentra en la BD.
@@ -25,35 +50,42 @@ class Model
    * https://stackoverflow.com/a/4254003/13562806
    * 
    * @param string $table Nombre de la tabla.
-   * @param string $attributeName Nombre del atributo.
-   * @param string $attributeValue Valor del atributo.
+   * @param string $attribute_name Nombre del atributo.
+   * @param int | string $attribute_value Valor del atributo.
    * @return boolean
    */
   public static function recordExists(
     string $table,
-    string $attributeName,
-    string $attributeValue,
+    string $attribute_name,
+    int | string $attribute_value,
     array $pdo_params
   ): bool {
     try {
       // Esta opción devolverá 0 o 1 resultados. Esto ayudará a ver si existe o
       // no.
       $query = self::$db_connection->prepare(
-        "SELECT COUNT(1)
+        "SELECT *
           FROM {$table}
-          WHERE {$attributeName} = :attributeValue;
+          WHERE {$attribute_name} = :attribute_value;
         "
       );
 
       $query->bindParam(
-        ":attributeValue",
-        $attributeValue,
-        $pdo_params[$attributeName]
+        ":attribute_value",
+        $attribute_value,
+        $pdo_params[$attribute_name]
       );
       $query->execute();
 
       // Si no hay filas, devolver false, indicando que no hay coincidencias.
-      return $query->fetch(PDO::FETCH_ASSOC)["COUNT(1)"] > 0;
+      // fetch devuelve false si no encuentra registros. Si encuentra registros,
+      // devuelve un array, por lo que no puedo hacer una comprobación directa
+      // true o false, pero lo puedo hacer con ternarios.
+      //
+      // Si hago una comprobación directa se devolverá el arreglo completo.
+      $result = $query->fetch(PDO::FETCH_ASSOC);
+      if (gettype($result) === "array" && count($result) > 0) return true;
+      return false;
     } catch (PDOException $e) {
       error_log("Error en la query - {$e}");
       exit();
@@ -63,6 +95,38 @@ class Model
     // regreso false.
     return false;
   }
+
+  /**
+   * Revisar que registros únicos existan en la tabla.
+   *
+   * @param string $table
+   * @param array $unique_attributes Valores únicos en arreglo asociativo:
+   * nombre de atributo => valor.
+   * @param array $pdo_params
+   * @return boolean
+   */
+  public static function uniqueRecordsExists(
+    string $table,
+    array $param_values,
+    array $unique_attributes,
+    array $pdo_params
+  ): bool {
+    // Recorrer los elementos y revisar. Si alguno existe, ya devolvemos true.
+    foreach ($unique_attributes as $attribute_name) {
+      if (self::recordExists(
+        $table,
+        $attribute_name,
+        $param_values[$attribute_name],
+        $pdo_params
+      )) return true;
+    }
+
+    // Si no se encontró ningún elemento, regresar false.
+    return false;
+  }
+
+  /* ----------------------------- GET (SELECT) ----------------------------- */
+
 
   /**
    * Crear query de `SELECT`.
@@ -299,14 +363,29 @@ class Model
    * @param array $param_values Nombre de los atributos y su valor.
    * @param array $pdo_params Arreglo asociativo que contiene el nombre del
    * atributo en la tabla y su valor.
-   * @return boolean Se realizó la inserción o no.
+   * @param array $unique_attributes Arreglo asociativo que contiene los nombres
+   * de los atributos únicos. Esto ayudará a revisar si los registros ya son
+   * existentes o no.
+   * @return int Un resultado de si se hizo la inserción o no.
    */
   public static function insertRecord(
     $table,
     array $param_values,
-    array $pdo_params
-  ): bool {
+    array $pdo_params,
+    array $unique_attributes,
+  ): int {
     try {
+      // Si se intenta insertar valores con algún campo único ya existente,
+      // indicarlo.
+      if (self::uniqueRecordsExists(
+        $table,
+        $param_values,
+        $unique_attributes,
+        $pdo_params
+      )) {
+        // self::OPERATION_INFO[2];
+        return 2;
+      }
 
       $query = self::$db_connection->prepare(
         self::createInsertQuery($table, array_keys($param_values))
@@ -324,7 +403,7 @@ class Model
 
 
       // Si no hay filas, devolver false, indicando que no se hizo la inserción.
-      return $query->rowCount() == 0 ? false : true;
+      return $query->rowCount() > 0;
     } catch (PDOException $e) {
       error_log("Error en la query - {$e}");
       exit();
@@ -369,15 +448,28 @@ class Model
     string $table,
     array $param_values,
     array $where_clause,
+    array $unique_attributes,
     array $pdo_params
-  ): bool {
+  ): int {
     if (!self::recordExists(
       $table,
       $where_clause["name"],
       $where_clause["value"],
       $pdo_params
     )) {
-      return false;
+      // Campo por actualizar no existente.
+      return 3;
+    }
+    // Si se intenta insertar valores con algún campo único ya existente,
+    // indicarlo.
+    if (self::uniqueRecordsExists(
+      $table,
+      $param_values,
+      $unique_attributes,
+      $pdo_params
+    )) {
+      // self::OPERATION_INFO[2];
+      return 2;
     }
     try {
       $update_query = self::createUpdateQuery(
