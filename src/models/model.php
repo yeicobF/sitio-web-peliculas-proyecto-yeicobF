@@ -105,7 +105,7 @@ class Model
    * @param array $pdo_params
    * @return boolean
    */
-  public static function uniqueRecordsExists(
+  public static function uniqueRecordsExist(
     string $table,
     array $param_values,
     array $unique_attributes,
@@ -184,7 +184,7 @@ class Model
 
     $query .= " WHERE {$where_clause} {$equal} {$attr}";
 
-    echo "<br><br>" . $query . "<br><br>";
+    // echo "<br><br>" . $query . "<br><br>";
 
     return $query;
   }
@@ -222,10 +222,9 @@ class Model
   ): array {
     try {
       $query_select = self::createSelectQuery(
-        $table,
-        $where_clause["name"],
-        null,
-        $pdo_params
+        table: $table,
+        where_clause: $where_clause["name"],
+        pdo_params: $pdo_params
       );
 
       $query = self::$db_connection->prepare($query_select);
@@ -377,7 +376,7 @@ class Model
     try {
       // Si se intenta insertar valores con algún campo único ya existente,
       // indicarlo.
-      if (self::uniqueRecordsExists(
+      if (self::uniqueRecordsExist(
         $table,
         $param_values,
         $unique_attributes,
@@ -462,7 +461,7 @@ class Model
     }
     // Si se intenta insertar valores con algún campo único ya existente,
     // indicarlo.
-    if (self::uniqueRecordsExists(
+    if (self::uniqueRecordsExist(
       $table,
       $param_values,
       $unique_attributes,

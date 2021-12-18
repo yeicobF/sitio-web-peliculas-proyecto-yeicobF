@@ -124,7 +124,7 @@ class Usuario extends Model
    *
    * @return boolean Se actualizó o no.
    */
-  public function updateUsuario(): int
+  public function updateInfo(): int
   {
     $param_values = $this->getParamValues();
     // Quitar el ID de los parámetros, ya que no lo actualizaremos y solo lo
@@ -142,8 +142,16 @@ class Usuario extends Model
       pdo_params: self::PDO_PARAMS
     );
   }
-  public static function deleteUsuario()
+  public function delete(): bool
   {
+    return parent::deleteRecord(
+      table: self::TABLE_NAME,
+      where_clause: [
+        "name" => "id",
+        "value" => $this->_id
+      ],
+      pdo_params: self::PDO_PARAMS
+    );
   }
 
   /**
@@ -198,8 +206,8 @@ class Usuario extends Model
         "
       );
 
-      $query->bindParam(":username", $username, PDO::PARAM_STR);
-      $query->bindParam(":password", $password, PDO::PARAM_STR);
+      $query->bindParam(":username", $username, self::PDO_PARAMS["username"]);
+      $query->bindParam(":password", $password, self::PDO_PARAMS["password"]);
       $query->execute();
 
       // Si no hay filas, devolver false, indicando que no se hizo la inserción.
