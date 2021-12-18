@@ -9,7 +9,9 @@
             "name": "Listen for Xdebug",
             "type": "php",
             "request": "launch",
-            "port": 8012
+            "port": 9003,
+            "cwd": "${fileDirname}",
+            // "runtimeExecutable": "C:/xampp/php/php.exe"
         },
         {
             "name": "Launch currently open script",
@@ -17,7 +19,7 @@
             "request": "launch",
             "program": "${file}",
             "cwd": "${fileDirname}",
-            "port": 8012,
+            "port": 9003,
             "runtimeArgs": [
                 "-dxdebug.start_with_request=yes"
             ],
@@ -38,7 +40,7 @@
             ],
             "program": "",
             "cwd": "${workspaceRoot}",
-            "port": 8012,
+            "port": 9003,
             "serverReadyAction": {
                 "pattern": "Development Server \\(http://localhost:([0-9]+)\\) started",
                 "uriFormat": "http://localhost:%s",
