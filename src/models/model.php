@@ -16,8 +16,7 @@ class Model
     }
   }
 
-  /* ----------------------------- GET (SELECT) ----------------------------- */
-
+  /* ------------------ REVISIÓN DE EXISTENCIA DE REGISTROS ----------------- */
 
   /**
    * Revisar si el atributo se encuentra en la BD.
@@ -25,14 +24,14 @@ class Model
    * https://stackoverflow.com/a/4254003/13562806
    * 
    * @param string $table Nombre de la tabla.
-   * @param string $attributeName Nombre del atributo.
-   * @param string $attributeValue Valor del atributo.
+   * @param string $attribute_name Nombre del atributo.
+   * @param string $attribute_value Valor del atributo.
    * @return boolean
    */
   public static function recordExists(
     string $table,
-    string $attributeName,
-    string $attributeValue,
+    string $attribute_name,
+    string $attribute_value,
     array $pdo_params
   ): bool {
     try {
@@ -41,14 +40,14 @@ class Model
       $query = self::$db_connection->prepare(
         "SELECT COUNT(1)
           FROM {$table}
-          WHERE {$attributeName} = :attributeValue;
+          WHERE {$attribute_name} = :attribute_value;
         "
       );
 
       $query->bindParam(
-        ":attributeValue",
-        $attributeValue,
-        $pdo_params[$attributeName]
+        ":attribute_value",
+        $attribute_value,
+        $pdo_params[$attribute_name]
       );
       $query->execute();
 
@@ -63,6 +62,37 @@ class Model
     // regreso false.
     return false;
   }
+
+  /**
+   * Revisar que registros únicos existan en la tabla.
+   *
+   * @param string $table
+   * @param array $unique_attributes Valores únicos en arreglo asociativo:
+   * nombre de atributo => valor.
+   * @param array $pdo_params
+   * @return boolean
+   */
+  public static function uniqueRecordsExists(
+    string $table,
+    array $unique_attributes,
+    array $pdo_params
+  ): bool {
+    // Recorrer los elementos y revisar. Si alguno existe, ya devolvemos true.
+    foreach ($unique_attributes as $attribute_name => $value) {
+      if (self::recordExists(
+        $table,
+        $attribute_name,
+        $value,
+        $pdo_params
+      )) return true;
+    }
+
+    // Si no se encontró ningún elemento, regresar false.
+    return false;
+  }
+
+  /* ----------------------------- GET (SELECT) ----------------------------- */
+
 
   /**
    * Crear query de `SELECT`.
