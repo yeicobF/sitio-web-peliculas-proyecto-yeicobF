@@ -82,7 +82,7 @@ class Usuario extends Model
   public function getParamValues(): array
   {
     return [
-      "id" => NULL,
+      "id" => $this->_id,
       "nombres" => $this->_nombres,
       "apellidos" => $this->_apellidos,
       "username" => $this->_username,
@@ -106,7 +106,7 @@ class Usuario extends Model
    * @param string $_foto_perfil
    * @return bool Se insertó o no el elemento.
    */
-  public function insertUsuario(): bool
+  public function insertUsuario(): int
   {
     return parent::insertRecord(
       self::TABLE_NAME,
@@ -124,7 +124,7 @@ class Usuario extends Model
    *
    * @return boolean Se actualizó o no.
    */
-  public function updateUsuario(): bool
+  public function updateUsuario(): int
   {
     $param_values = $this->getParamValues();
     // Quitar el ID de los parámetros, ya que no lo actualizaremos y solo lo
@@ -138,6 +138,7 @@ class Usuario extends Model
         "name" => "id",
         "value" => $this->_id,
       ],
+      unique_attributes: self::UNIQUE_ATTRIBUTES,
       pdo_params: self::PDO_PARAMS
     );
   }

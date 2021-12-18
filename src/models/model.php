@@ -14,11 +14,12 @@ class Model
    * poder ser más específico al momento de tratarlos.
    */
   const OPERATION_INFO = [
-    0 => "Operación exitosa",
-    1 => "Intento de inserción o actualización con un campo único ya existente",
-    2 => "Campo no existente",
-    3 => "Error con la conexión de la base de datos",
-    4 => "Error con la query",
+    0 => "Operación NO exitosa",
+    1 => "Operación exitosa",
+    2 => "Intento de inserción o actualización con un campo único ya existente",
+    3 => "Campo no existente",
+    4 => "Error con la conexión de la base de datos",
+    5 => "Error con la query",
   ];
 
   /**
@@ -63,7 +64,7 @@ class Model
       // Esta opción devolverá 0 o 1 resultados. Esto ayudará a ver si existe o
       // no.
       $query = self::$db_connection->prepare(
-        "SELECT COUNT(1)
+        "SELECT *
           FROM {$table}
           WHERE {$attribute_name} = :attribute_value;
         "
@@ -77,7 +78,14 @@ class Model
       $query->execute();
 
       // Si no hay filas, devolver false, indicando que no hay coincidencias.
-      return $query->fetch(PDO::FETCH_ASSOC)["COUNT(1)"] > 0;
+      // fetch devuelve false si no encuentra registros. Si encuentra registros,
+      // devuelve un array, por lo que no puedo hacer una comprobación directa
+      // true o false, pero lo puedo hacer con ternarios.
+      //
+      // Si hago una comprobación directa se devolverá el arreglo completo.
+      $result = $query->fetch(PDO::FETCH_ASSOC);
+      if (gettype($result) === "array" && count($result) > 0) return true;
+      return false;
     } catch (PDOException $e) {
       error_log("Error en la query - {$e}");
       exit();
@@ -375,8 +383,8 @@ class Model
         $unique_attributes,
         $pdo_params
       )) {
-        // self::OPERATION_INFO[1];
-        return 1;
+        // self::OPERATION_INFO[2];
+        return 2;
       }
 
       $query = self::$db_connection->prepare(
@@ -395,7 +403,7 @@ class Model
 
 
       // Si no hay filas, devolver false, indicando que no se hizo la inserción.
-      return $query->rowCount() == 0 ? false : true;
+      return $query->rowCount() > 0;
     } catch (PDOException $e) {
       error_log("Error en la query - {$e}");
       exit();
@@ -440,15 +448,28 @@ class Model
     string $table,
     array $param_values,
     array $where_clause,
+    array $unique_attributes,
     array $pdo_params
-  ): bool {
+  ): int {
     if (!self::recordExists(
       $table,
       $where_clause["name"],
       $where_clause["value"],
       $pdo_params
     )) {
-      return false;
+      // Campo por actualizar no existente.
+      return 3;
+    }
+    // Si se intenta insertar valores con algún campo único ya existente,
+    // indicarlo.
+    if (self::uniqueRecordsExists(
+      $table,
+      $param_values,
+      $unique_attributes,
+      $pdo_params
+    )) {
+      // self::OPERATION_INFO[2];
+      return 2;
     }
     try {
       $update_query = self::createUpdateQuery(
