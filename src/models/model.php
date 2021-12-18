@@ -233,7 +233,7 @@ class Model
         $where_clause["value"],
         $pdo_params[$where_clause["name"]]
       );
-      $query->execute();
+      $query->execute(); 
 
       return self::getFetchedRecords($query);
     } catch (PDOException $e) {

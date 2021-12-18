@@ -49,23 +49,52 @@ Model::initDbConnection();
 
 /* --------------------------------- DELETE --------------------------------- */
 
-$usuario_db = Model::getRecord(
-  table: Usuario::TABLE_NAME,
-  where_clause: [
-    "name" => "id",
-    "value" => "12"
-  ],
-  pdo_params: Usuario::PDO_PARAMS
-)[0];
+// $usuario_db = Model::getRecord(
+//   table: Usuario::TABLE_NAME,
+//   where_clause: [
+//     "name" => "id",
+//     "value" => "12"
+//   ],
+//   pdo_params: Usuario::PDO_PARAMS
+// );
+// var_dump($usuario_db);
+
+// $usuario = new Usuario(
+//   nombres: $usuario_db["nombres"],
+//   apellidos: $usuario_db["apellidos"],
+//   username: $usuario_db["username"],
+//   password: $usuario_db["password"],
+//   rol: Usuario::ROLES_ENUM_INDEX[$usuario_db["rol"]],
+//   id: $usuario_db["id"],
+//   foto_perfil: $usuario_db["foto_perfil"]
+// );
+// 
+// if (!empty($usuario)) {
+//   $usuario->delete();
+// }
+// 
+
+/* -------------------------------------------------------------------------- */
 
 $usuario = new Usuario(
-  nombres: $usuario_db["nombres"],
-  apellidos: $usuario_db["apellidos"],
-  username: $usuario_db["username"],
-  password: $usuario_db["password"],
-  rol: Usuario::ROLES_ENUM_INDEX[$usuario_db["rol"]],
-  id: $usuario_db["id"],
-  foto_perfil: $usuario_db["foto_perfil"]
+  "Avelardo",
+  "Juárez",
+  "abel_juarez",
+  "abelito",
+  "normal"
 );
 
-$usuario->delete();
+var_dump($usuario);
+echo "<br><br>";
+
+$usuario->setRol(3);
+var_dump($usuario);
+echo "<br><br>";
+
+$usuario->setRol("normals");
+var_dump($usuario);
+echo "<br><br>";
+
+$usuario->setRol("administrador");
+var_dump($usuario);
+
