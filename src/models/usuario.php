@@ -30,6 +30,26 @@ class Usuario extends Model
   // Los índices del ENUM comienzan desde 1, ya que el enum 0 está reservado
   // para los errores, tal como se indica en la documentación:
   // https://dev.mysql.com/doc/refman/8.0/en/enum.html#:~:text=The%20index%20value%20of%20the%20empty%20string%20error%20value%20is%200.%20This%20means%20that%20you%20can%20use%20the%20following%20SELECT%20statement%20to%20find%20rows%20into%20which%20invalid%20ENUM%20values%20were%20assigned
+
+  /**
+   * Llave primaria.
+   */
+  const PRIMARY_KEY = "id";
+
+  /**
+   * Atributos únicos de la tabla Usuario sin incluir las llaves primarias o
+   * foráneas.
+   */
+  const UNIQUE_ATTRIBUTES = [
+    "username"
+  ];
+
+  /**
+   * Valor del índice de cada uno del los roles, dado a que están almacenados
+   * como un `ENUM` con 2 posibles valores. 
+   *
+   * En los `ENUM` el índice 0 guarda los valores que se ingresaron como `NULL`.
+   */
   const ROLES_ENUM_INDEX = [
     "administrador" => 1,
     "normal" => 2,
@@ -91,7 +111,8 @@ class Usuario extends Model
     return parent::insertRecord(
       self::TABLE_NAME,
       $this->getParamValues(),
-      self::PDO_PARAMS
+      self::PDO_PARAMS,
+      self::UNIQUE_ATTRIBUTES
     );
   }
 

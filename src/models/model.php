@@ -2,8 +2,33 @@
 
 class Model
 {
+  /**
+   * Conexión con la base de datos. Se basa en el patrón de diseño `Singleton`.
+   *
+   * @var PDO
+   */
   public static $db_connection;
 
+  /**
+   * Posibles errores de la BD. Esto ayudaría a la gestión de los mismos para
+   * poder ser más específico al momento de tratarlos.
+   */
+  const OPERATION_INFO = [
+    0 => "Operación exitosa",
+    1 => "Intento de inserción o actualización con un campo único ya existente",
+    2 => "Campo no existente",
+    3 => "Error con la conexión de la base de datos",
+    4 => "Error con la query",
+  ];
+
+  /**
+   * Inicializar conexión con la BD. 
+   *
+   * Esto se hace antes de utilizar todo lo que tenga que ver con Modelos y sus
+   * derivados.
+   *
+   * @return void
+   */
   public static function initDbConnection()
   {
     require_once "DB.php";
@@ -25,13 +50,13 @@ class Model
    * 
    * @param string $table Nombre de la tabla.
    * @param string $attribute_name Nombre del atributo.
-   * @param string $attribute_value Valor del atributo.
+   * @param int | string $attribute_value Valor del atributo.
    * @return boolean
    */
   public static function recordExists(
     string $table,
     string $attribute_name,
-    string $attribute_value,
+    int | string $attribute_value,
     array $pdo_params
   ): bool {
     try {
@@ -74,15 +99,16 @@ class Model
    */
   public static function uniqueRecordsExists(
     string $table,
+    array $param_values,
     array $unique_attributes,
     array $pdo_params
   ): bool {
     // Recorrer los elementos y revisar. Si alguno existe, ya devolvemos true.
-    foreach ($unique_attributes as $attribute_name => $value) {
+    foreach ($unique_attributes as $attribute_name) {
       if (self::recordExists(
         $table,
         $attribute_name,
-        $value,
+        $param_values[$attribute_name],
         $pdo_params
       )) return true;
     }
@@ -329,14 +355,29 @@ class Model
    * @param array $param_values Nombre de los atributos y su valor.
    * @param array $pdo_params Arreglo asociativo que contiene el nombre del
    * atributo en la tabla y su valor.
-   * @return boolean Se realizó la inserción o no.
+   * @param array $unique_attributes Arreglo asociativo que contiene los nombres
+   * de los atributos únicos. Esto ayudará a revisar si los registros ya son
+   * existentes o no.
+   * @return int Un resultado de si se hizo la inserción o no.
    */
   public static function insertRecord(
     $table,
     array $param_values,
-    array $pdo_params
-  ): bool {
+    array $pdo_params,
+    array $unique_attributes,
+  ): int {
     try {
+      // Si se intenta insertar valores con algún campo único ya existente,
+      // indicarlo.
+      if (self::uniqueRecordsExists(
+        $table,
+        $param_values,
+        $unique_attributes,
+        $pdo_params
+      )) {
+        // self::OPERATION_INFO[1];
+        return 1;
+      }
 
       $query = self::$db_connection->prepare(
         self::createInsertQuery($table, array_keys($param_values))
