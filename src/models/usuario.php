@@ -224,13 +224,14 @@ class Usuario extends Model
   //   }
 
   /**
-   * Un usuario se encuentra en la base de datos o no.
+   * Los datos de inicio de sesión son correctos o no.
    *
    * @param string $username
    * @param string $password
-   * @return bool
+   * @return bool | array False si no es correcta y devuelve el arreglo con los datos si es
+   * correcta.
    */
-  public static function foundUsuario($username, $password)
+  public static function isLoginDataCorrect($username, $password)
   {
     try {
       $query = parent::$db_connection->prepare(
@@ -247,7 +248,11 @@ class Usuario extends Model
       $query->execute();
 
       // Si no hay filas, devolver false, indicando que no se hizo la inserción.
-      return $query->rowCount() == 0 ? false : true;
+      if ($query->rowCount() == 0) return false;
+
+      // Si hubo resultado, obtener arreglo asociativo con los datos del
+      // usuario.
+      return $query->fetch(pdo::FETCH_ASSOC);
     } catch (PDOException $e) {
       error_log("Error de conexión - {$e}", 0);
       exit();

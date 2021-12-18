@@ -75,26 +75,29 @@ Model::initDbConnection();
 // 
 
 /* -------------------------------------------------------------------------- */
+/* --------------------------------- setRol --------------------------------- */
 
-$usuario = new Usuario(
-  "Avelardo",
-  "Juárez",
-  "abel_juarez",
-  "abelito",
-  "normal"
-);
+// $usuario = new Usuario(
+//   "Avelardo",
+//   "Juárez",
+//   "abel_juarez",
+//   "abelito",
+//   "normal"
+// );
+// 
+// var_dump($usuario);
+// echo "<br><br>";
+// 
+// $usuario->setRol(3);
+// var_dump($usuario);
+// echo "<br><br>";
+// 
+// $usuario->setRol("normals");
+// var_dump($usuario);
+// echo "<br><br>";
+// 
+// $usuario->setRol("administrador");
+// var_dump($usuario);
 
-var_dump($usuario);
-echo "<br><br>";
-
-$usuario->setRol(3);
-var_dump($usuario);
-echo "<br><br>";
-
-$usuario->setRol("normals");
-var_dump($usuario);
-echo "<br><br>";
-
-$usuario->setRol("administrador");
-var_dump($usuario);
-
+/* -------------------------------------------------------------------------- */
+Usuario::isLoginDataCorrect("abel_juarez", "abelito");
