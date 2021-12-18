@@ -9,7 +9,7 @@ class Usuario extends Model
   public string $_apellidos;
   public string $_username;
   public string $_password;
-  public int $_rol;
+  private int $_rol;
   public ?string $_foto_perfil;
 
   /**
@@ -55,12 +55,13 @@ class Usuario extends Model
     "normal" => 2,
   ];
 
+
   public function __construct(
     string $nombres,
     string $apellidos,
     string $username,
     string $password,
-    int $rol,
+    string | int $rol,
     // Parámetros opcionales solo es posible ponerlos al final.
     ?int  $id = null,
     ?string $foto_perfil = null
@@ -70,8 +71,43 @@ class Usuario extends Model
     $this->_apellidos = $apellidos;
     $this->_username = $username;
     $this->_password = $password;
-    $this->_rol = $rol;
     $this->_foto_perfil = $foto_perfil;
+    $this->setRol($rol);
+  }
+
+  /**
+   * Establecer el rol.
+   *
+   * Este puede ser pasado como int o string, por eso es el setter.
+   * 
+   * Si se envía un valor no válido, lo guardaremos como índice 0.
+   *
+   * @param int | string $rol Los posibles valores son: 1, 2 o "administrador",
+   * "normal".
+   * @return void
+   */
+  public function setRol(int | string $rol): void
+  {
+    // El rol puede ser ingresado como número (1, 2) o como cadena. Si es una
+    // cadena, entonces hay que utilizar la constante de los roles.
+    // 
+    // Revisamos que el rol se encuentre entre los posibles (que exista).
+    if (
+      gettype($rol) === "string"
+      && array_key_exists($rol, self::ROLES_ENUM_INDEX)
+    ) {
+      $this->_rol = self::ROLES_ENUM_INDEX[$rol];
+      return;
+    }
+    // Revisamos que el número de rol exista entre los posibles.
+    if (in_array($rol, self::ROLES_ENUM_INDEX, true)) {
+      // El rol es un número directamente.
+      $this->_rol = $rol;
+      return;
+    }
+    // Si no entró en ninguna de las anteriores condiciones, asignar un 0 al 
+    // rol, indicando que no existe el rol dado.
+    $this->_rol = 0;
   }
 
   /**
@@ -124,7 +160,7 @@ class Usuario extends Model
    *
    * @return boolean Se actualizó o no.
    */
-  public function updateUsuario(): int
+  public function updateInfo(): int
   {
     $param_values = $this->getParamValues();
     // Quitar el ID de los parámetros, ya que no lo actualizaremos y solo lo
@@ -142,8 +178,16 @@ class Usuario extends Model
       pdo_params: self::PDO_PARAMS
     );
   }
-  public static function deleteUsuario()
+  public function delete(): bool
   {
+    return parent::deleteRecord(
+      table: self::TABLE_NAME,
+      where_clause: [
+        "name" => "id",
+        "value" => $this->_id
+      ],
+      pdo_params: self::PDO_PARAMS
+    );
   }
 
   /**
@@ -198,8 +242,8 @@ class Usuario extends Model
         "
       );
 
-      $query->bindParam(":username", $username, PDO::PARAM_STR);
-      $query->bindParam(":password", $password, PDO::PARAM_STR);
+      $query->bindParam(":username", $username, self::PDO_PARAMS["username"]);
+      $query->bindParam(":password", $password, self::PDO_PARAMS["password"]);
       $query->execute();
 
       // Si no hay filas, devolver false, indicando que no se hizo la inserción.
