@@ -8,3 +8,21 @@ Stack trace:
 #0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(16): App->__construct()
 #1 {main}
   thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 77
+[19-Dec-2021 08:46:15 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[19-Dec-2021 09:05:48 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[19-Dec-2021 09:05:48 Europe/Berlin] Login::__construct() -> Inicio de Login.
+[19-Dec-2021 09:05:48 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined method Login::loadModel() in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:81
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(16): App->__construct()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 81
+[19-Dec-2021 09:51:43 Europe/Berlin] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 185
+[19-Dec-2021 09:52:14 Europe/Berlin] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 185
+[19-Dec-2021 09:52:25 Europe/Berlin] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 185
+[19-Dec-2021 09:53:44 Europe/Berlin] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 185
+[19-Dec-2021 09:53:54 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[19-Dec-2021 09:54:16 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined method Login::loadModel() in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:133
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 133

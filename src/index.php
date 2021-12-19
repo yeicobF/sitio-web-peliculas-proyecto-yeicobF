@@ -14,6 +14,7 @@ require_once "libs/app.php";
 // Que automáticamente se ejecute el constructor y se empiecen a hacer las
 // validaciones.
 $app = new App();
+$app->start();
 
 //Redireccionar a la página principal
 // header("Location: views/");
