@@ -106,6 +106,10 @@ class App
      * qué método del controlador hay que ejecutar.
      */
     $this->url = explode("/", $this->url);
+
+    // Establecemos la ruta inicial de los controladores respecto a la ruta del
+    // archivo.
+    $this->file_controller = __DIR__ . "/../controllers/";
   }
 
   /**
@@ -124,41 +128,41 @@ class App
     if (empty($this->url[0])) {
       error_log("APP::__construct() -> No hay controlador especificado.");
       // Archivo del controlador.
-      $file_controller = "controllers/login.php";
+      $this->file_controller .= "login.php";
       // Requerir controlador.
-      require_once $file_controller;
+      require_once $this->file_controller;
       // Crear instancia del controlador.
-      $controller = new Login();
+      $this->controller = new Login();
       // Cargar modelo del controlador.
-      $controller->loadModel("login");
+      $this->controller->loadModel("login");
       // Renderizar la vista.
-      $controller->render();
+      $this->controller->render();
       // Indicar que no hubo controlador.
       return false;
     }
     // Como sí hay elementos en el URL, redirigir al controlador pertinente.
-    $file_controller = "controllers/{$this->url[0]}.php";
+    $this->file_controller .= "{$this->url[0]}.php";
 
     // Si no existe el archivo, salir o algo. Esto ayuda a hacer un early
     // return.
-    if (file_exists($file_controller)) {
+    if (file_exists($this->file_controller)) {
       // No existe el archivo, manda error.
     }
 
     // Si existe el controlador, llamarlo.
-    require_once $file_controller;
+    require_once $this->file_controller;
     // NO todos los controladores requieren de un modelo.
-    $controller = new $this->url[0];
+    $this->controller = new $this->url[0];
     // Cargar modelo.
-    $controller->loadModel($this->url[0]);
+    $this->controller->loadModel($this->url[0]);
 
     // Early return si no existe el método en el URL.
     if (!isset($this->url[1])) {
       // Error, no existe el método a cargar. Se carga método por default.
-      $controller->render();
+      $this->controller->render();
     }
     // Error: No existe el método del URL.
-    if (!method_exists($controller, $this->url[1])) {
+    if (!method_exists($this->controller, $this->url[1])) {
       // Error: No existe el método del URL.
     }
 
@@ -182,7 +186,7 @@ class App
       // No hay parámetros, por lo que, llamamos al metodo de forma
       // dinámica.
       // Que cargue un controlador sin parámetros.
-      $this->controller{$url[1]}();
+      $this->controller[$url[1]]();
     }
 
     /** 
@@ -205,6 +209,6 @@ class App
 
     // Ahora, pasamos al controlador el método y sus parámetros. No importa
     // el número de parámetros que tengamos, ya que es un solo argumento.
-    $this->controller{$url[1]}($params);
+    $this->controller[$url[1]]($params);
   }
 }

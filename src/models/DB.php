@@ -16,6 +16,7 @@ class DBConnection
    */
   private static $connection;
   private const DB_NAME = "fdw_dic_2021_proyecto_final";
+  
 
   /** 
    * Método para regresar el elemento de la conexión si es que ya está creado.

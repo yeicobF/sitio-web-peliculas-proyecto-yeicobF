@@ -70,6 +70,6 @@ class DirectoryPath
    */
   public static function getPathWithLocalhost($pathConstant)
   {
-    return self::LOCALHOST . $pathConstant;
+    return LOCALHOST_URL . $pathConstant;
   }
 }
