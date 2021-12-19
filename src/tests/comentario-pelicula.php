@@ -31,7 +31,7 @@ $usuario = new Usuario(
   "Avelardo",
   "Juárez",
   "abel_juarez",
-  "abelito",
+  "abelito",  
   Usuario::ROLES_ENUM_INDEX["normal"],
 );
 
@@ -43,7 +43,7 @@ $comentario = new ComentarioPelicula(
   // https://dev.mysql.com/doc/refman/8.0/en/datetime.html#:~:text=MySQL%20retrieves%20and%20displays%20DATE,%3Amm%3Ass%20%27%20format.
   // 'YYYY-MM-DD' -> The supported range is '1000-01-01' to '9999-12-31'.
   // Constantes para el formato: https://www.php.net/manual/es/datetime.constants.php
-  fecha: date("Y-m-d"),
+  fecha: Model::getCurrentDate(),
   /**
    * https://dev.mysql.com/doc/refman/8.0/en/time.html96 
    *
@@ -54,7 +54,7 @@ $comentario = new ComentarioPelicula(
    * less than 24 hours), but also elapsed time or a time interval between two
    * events (which may be much greater than 24 hours, or even negative).
    */
-  hora: date("H:i:s"),
+  hora: Model::getCurrentTime(),
 );
 
 echo var_dump(Model::OPERATION_INFO[$comentario->insertComentarioPelicula()]) . "<br><br>";
