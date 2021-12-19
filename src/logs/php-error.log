@@ -26,3 +26,122 @@ Stack trace:
 #0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
 #1 {main}
   thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 133
+[19-Dec-2021 20:55:46 Europe/Berlin] PHP Warning:  require_once(../libs/app.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php on line 12
+[19-Dec-2021 20:55:46 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required '../libs/app.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php:12
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php on line 12
+[19-Dec-2021 20:56:46 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[19-Dec-2021 20:56:46 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined method Login::loadModel() in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:137
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 137
+[19-Dec-2021 21:02:37 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:02:37 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:02:38 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:02:38 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:02:38 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:02:38 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:02:55 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:02:55 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:02:55 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:02:55 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:02:55 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:02:55 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:03:02 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:03:02 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:03:02 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:03:02 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:03:02 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:03:02 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:03:37 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:03:37 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:03:37 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:03:37 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:03:37 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:03:37 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:04:26 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:04:26 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:10:35 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:10:35 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:10:36 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:10:36 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:10:42 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:10:42 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:10:42 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:10:42 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:19:26 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:19:26 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/css.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
