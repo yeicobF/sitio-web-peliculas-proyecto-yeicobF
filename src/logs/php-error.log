@@ -145,3 +145,21 @@ Stack trace:
 #0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
 #1 {main}
   thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 21:38:22 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[19-Dec-2021 21:38:34 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined method Login::loadModel() in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:137
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 137
+[19-Dec-2021 22:21:18 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/hola.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 22:21:21 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/hola.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 22:21:35 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/hola.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[19-Dec-2021 22:21:36 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/hola.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
