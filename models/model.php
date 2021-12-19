@@ -42,6 +42,49 @@ class Model
     }
   }
 
+  /* -------------------------- OBTENCIÓN DE FECHA -------------------------- */
+
+  /**
+   * Obtener la hora actual en el formato de la BD.
+   *
+   * @param string $timeZone Zona horaria en la cual se basa la obtención.
+   * https://www.php.net/manual/es/function.date.php#116914
+   * https://www.php.net/manual/es/timezones.america.php
+   * @return string
+   */
+  public static function getCurrentTime(string $defaultTimeZone): string
+  {
+    if (date_default_timezone_get() != $defaultTimeZone) {
+      date_default_timezone_set($defaultTimeZone);
+    }
+    return date("H:i:s");
+  }
+
+  /**
+   * Obtener la fecha actual en el formato de la Base de Datos.
+   *
+   * ---
+   * 'YYYY-MM-DD' -> The supported range is '1000-01-01' to '9999-12-31'.
+   * https://dev.mysql.com/doc/refman/8.0/en/datetime.html#:~:text=MySQL%20retrieves%20
+   *
+   * ---
+   *
+   * Constantes para el formato:
+   * https://www.php.net/manual/es/datetime.constants.php
+   *
+   * @param string $timeZone Zona horaria en la cual se basa la obtención.
+   * https://www.php.net/manual/es/function.date.php#116914
+   * https://www.php.net/manual/es/timezones.america.php
+   * @return string
+   */
+  public static function getCurrentDate(string $defaultTimeZone): string
+  {
+    if (date_default_timezone_get() != $defaultTimeZone) {
+      date_default_timezone_set($defaultTimeZone);
+    }
+    return date("Y-m-d");
+  }
+
   /* ------------------ REVISIÓN DE EXISTENCIA DE REGISTROS ----------------- */
 
   /**
@@ -233,7 +276,7 @@ class Model
         $where_clause["value"],
         $pdo_params[$where_clause["name"]]
       );
-      $query->execute(); 
+      $query->execute();
 
       return self::getFetchedRecords($query);
     } catch (PDOException $e) {
