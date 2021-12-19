@@ -8,6 +8,7 @@ class Model
    * @var PDO
    */
   public static $db_connection;
+  const DEFAULT_TIME_ZONE = 'America/Mexico_City';
 
   /**
    * Posibles errores de la BD. Esto ayudaría a la gestión de los mismos para
@@ -52,8 +53,9 @@ class Model
    * https://www.php.net/manual/es/timezones.america.php
    * @return string
    */
-  public static function getCurrentTime(string $defaultTimeZone): string
-  {
+  public static function getCurrentTime(
+    string $defaultTimeZone = self::DEFAULT_TIME_ZONE
+  ): string {
     if (date_default_timezone_get() != $defaultTimeZone) {
       date_default_timezone_set($defaultTimeZone);
     }
@@ -77,8 +79,9 @@ class Model
    * https://www.php.net/manual/es/timezones.america.php
    * @return string
    */
-  public static function getCurrentDate(string $defaultTimeZone): string
-  {
+  public static function getCurrentDate(
+    string $defaultTimeZone = self::DEFAULT_TIME_ZONE
+  ): string {
     if (date_default_timezone_get() != $defaultTimeZone) {
       date_default_timezone_set($defaultTimeZone);
     }

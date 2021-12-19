@@ -5,16 +5,21 @@ $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 include_once $path
   . "fdw-2021-2022-a/proyecto-yeicobF/"
   . "src/config/directory-path.php";
+include_once $path
+  . "fdw-2021-2022-a/proyecto-yeicobF/"
+  . "src/config/config.php";
 
 include_once $path
-  . DirectoryPath::LAYOUTS
+  . LAYOUTS
   . "base-html-head.php";
 
-$src_folder = DirectoryPath::getPathWithLocalhost(DirectoryPath::SRC);
-$views_folder = DirectoryPath::getPathWithLocalhost(DirectoryPath::VIEWS);
+$src_folder = DirectoryPath::getPathWithLocalhost(SRC);
+$views_folder = DirectoryPath::getPathWithLocalhost(VIEWS);
 $img_folder =
-  DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS)
+  DirectoryPath::getPathWithLocalhost(ASSETS)
   . "img/";
+
+$css_folder = DirectoryPath::getPathWithLocalhost(CSS);
 
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Editar perfil",
@@ -33,22 +38,22 @@ $baseHtmlHead = new BaseHtmlHead(
 
   <!-- CSS -->
   <!-- CSS Propios -->
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/config.css">
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/components/components.css">
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/menu/menu.css">
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/utilities/utilities.css">
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/transformations/rotate.css">
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/movies/movies.css">
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/movies/movie-details.css">
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/movies/comments.css">
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/footer/footer.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>config.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>components/components.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>menu/menu.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>utilities/utilities.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>transformations/rotate.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>movies/movies.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>movies/movie-details.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>movies/comments.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>footer/footer.css">
 
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/form/form.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>form/form.css">
 
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/editar-perfil/editar-perfil.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>editar-perfil/editar-perfil.css">
 
   <!-- SCRIPTS -->
-  <script defer src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::SRC) . "js/navbar.js"; ?>" type="module"></script>
+  <script defer src="<?php echo DirectoryPath::getPathWithLocalhost(SRC) . "js/navbar.js"; ?>" type="module"></script>
 
 
   <?php
@@ -58,7 +63,7 @@ $baseHtmlHead = new BaseHtmlHead(
 
 <body class="body-container">
   <?php
-  include $path . DirectoryPath::LAYOUTS . "navbar.php";
+  include $path . LAYOUTS . "navbar.php";
   ?>
   <div class="fill-height-flex container-lg container-fluid">
     <div class="row edit-profile">
@@ -120,7 +125,7 @@ $baseHtmlHead = new BaseHtmlHead(
   </div>
 
   <?php
-  include $path . DirectoryPath::LAYOUTS . "footer.php";
+  include $path . LAYOUTS . "footer.php";
   ?>
 </body>
 

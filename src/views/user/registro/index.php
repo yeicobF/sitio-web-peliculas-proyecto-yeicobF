@@ -5,16 +5,20 @@ $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 include_once $path
   . "fdw-2021-2022-a/proyecto-yeicobF/"
   . "src/config/directory-path.php";
+include_once $path
+  . "fdw-2021-2022-a/proyecto-yeicobF/"
+  . "src/config/config.php";
 
 include_once $path
-  . DirectoryPath::LAYOUTS
+  . LAYOUTS
   . "base-html-head.php";
 
-$src_folder = DirectoryPath::getPathWithLocalhost(DirectoryPath::SRC);
-$views_folder = DirectoryPath::getPathWithLocalhost(DirectoryPath::VIEWS);
+$css_folder = DirectoryPath::getPathWithLocalhost(SRC);
+$views_folder = DirectoryPath::getPathWithLocalhost(VIEWS);
 $img_folder =
-  DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS)
+  DirectoryPath::getPathWithLocalhost(ASSETS)
   . "img/";
+$css_folder = DirectoryPath::getPathWithLocalhost(CSS);
 
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Iniciar sesión",
@@ -33,11 +37,11 @@ $baseHtmlHead = new BaseHtmlHead(
 
   <!-- CSS -->
   <!-- CSS Propios -->
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/config.css">
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/components/components.css">
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/utilities/utilities.css">
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/form/form.css">
-  <link rel="stylesheet" href="<?php echo $src_folder; ?>css/login-register/login-register.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>config.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>components/components.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>utilities/utilities.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>form/form.css">
+  <link rel="stylesheet" href="<?php echo $css_folder; ?>login-register/login-register.css">
 
   <?php
   echo $baseHtmlHead->getTitle();
@@ -48,7 +52,7 @@ $baseHtmlHead = new BaseHtmlHead(
 
   <header class="page-info">
     <a class="page-info__logo" rel="noopener noreferrer" href="<?php echo $views_folder; ?>index.php">
-      <img class="" src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::PAGE_LOGO); ?>" alt="Colección de películas" srcset="">
+      <img class="" src="<?php echo DirectoryPath::getPathWithLocalhost(PAGE_LOGO); ?>" alt="Colección de películas" srcset="">
     </a>
     <h1 class="page-info__title">Colección de películas</h1>
   </header>

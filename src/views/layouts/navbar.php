@@ -50,7 +50,7 @@ $add_css_current_page = [
 ];
 
 /* ------------------------- ENLACE PARA CADA PÁGINA ------------------------ */
-$views_url = DirectoryPath::getPathWithLocalhost(DirectoryPath::VIEWS);
+$views_url = DirectoryPath::getPathWithLocalhost(VIEWS);
 $user_url = "{$views_url}user/";
 $url_page = [
   "inicio" => $views_url . "index.php",
@@ -76,7 +76,7 @@ $url_page = [
 <nav class="navbar">
   <a rel="noopener noreferrer" href="<?php echo $url_page["inicio"]; ?>" class="navbar-brand">
     <!-- https://developer.mozilla.org/es/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images -->
-    <img src="<?php echo DirectoryPath::getPathWithLocalhost(DirectoryPath::PAGE_LOGO); ?>" alt="Colección de películas" srcset="" sizes="" class="logo">
+    <img src="<?php echo DirectoryPath::getPathWithLocalhost(PAGE_LOGO); ?>" alt="Colección de películas" srcset="" sizes="" class="logo">
     <!-- p.navbar__title -->
   </a>
   <!-- 

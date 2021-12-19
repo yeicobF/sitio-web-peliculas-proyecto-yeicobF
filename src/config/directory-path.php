@@ -14,20 +14,20 @@ class DirectoryPath
   // asignar a una constante. Serviría en este caso si la clase la pudiera
   // instanciar y utilizar variables e clase, pero por el momento no lo
   // requiero.
-  const LOCALHOST = "http://localhost:8012/";
-  const BARE_PROJECT_FOLDER_DIR = "fdw-2021-2022-a/proyecto-yeicobF/";
+  // const LOCALHOST = "http://localhost:8012/";
+  // const BARE_PROJECT_FOLDER_DIR = "fdw-2021-2022-a/proyecto-yeicobF/";
 
   /* ----------------- LOS DIRECTORIOS SON SIN EL LOCALHOST. ---------------- */
 
-  const SRC = self::BARE_PROJECT_FOLDER_DIR . "src/";
-  const CONFIG = self::SRC . "config/";
-  const ASSETS = self::SRC . "assets/";
-  const PAGE_LOGO = self::ASSETS . "/iconscout/office-icon-pack-by-gunaldi-yunus/svg/film-1505229.svg";
-  const MODELS = self::SRC . "models/";
-  const CONTROLLERS = self::SRC . "controllers/";
-  const VIEWS = self::SRC . "views/";
-  const LAYOUTS = self::VIEWS . "layouts/";
-  const COMPONENTS = self::VIEWS . "components/";
+  // const SRC = self::BARE_PROJECT_FOLDER_DIR . "src/";
+  // const CONFIG = self::SRC . "config/";
+  // const ASSETS = self::SRC . "assets/";
+  // const PAGE_LOGO = self::ASSETS . "/iconscout/office-icon-pack-by-gunaldi-yunus/svg/film-1505229.svg";
+  // const MODELS = self::SRC . "models/";
+  // const CONTROLLERS = self::SRC . "controllers/";
+  // const VIEWS = self::SRC . "views/";
+  // const LAYOUTS = self::VIEWS . "layouts/";
+  // const COMPONENTS = self::VIEWS . "components/";
   /**
    * Directorio desde el directorio del proyecto sin incluir el localhost. Esto
    * es más que nada útil en los casos en donde utilizamos include, ya que, no
@@ -70,6 +70,6 @@ class DirectoryPath
    */
   public static function getPathWithLocalhost($pathConstant)
   {
-    return self::LOCALHOST . $pathConstant;
+    return LOCALHOST_URL . $pathConstant;
   }
 }

@@ -1,7 +1,10 @@
 <?php
 $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
+
+
 include_once $path . "fdw-2021-2022-a/proyecto-yeicobF/src/config/directory-path.php";
+include_once $path . "fdw-2021-2022-a/proyecto-yeicobF/src/config/config.php";
 
 /**
  * Obtener la base que viene en el head del HTML en general y no ponerla de
@@ -90,7 +93,7 @@ class BaseHtmlHead
     $this->pageName = $_pageName . $this->pageName;
     $this->includeOwnFramework = $_includeOwnFramework;
     $this->includeFontAwesome = $_includeFontAwesome;
-    $this->path = "{$_SERVER["DOCUMENT_ROOT"]}/" . DirectoryPath::BARE_PROJECT_FOLDER_DIR;
+    $this->path = "{$_SERVER["DOCUMENT_ROOT"]}/" . BARE_PROJECT_FOLDER_DIR;
   }
   public function getHtmlBaseHead()
   {
@@ -101,7 +104,7 @@ class BaseHtmlHead
       <!-- favicon -->
       <link 
         rel='shortcut icon' 
-        href='" . DirectoryPath::getPathWithLocalhost(DirectoryPath::ASSETS) . "ico/iconscout/film.ico' 
+        href='" . DirectoryPath::getPathWithLocalhost(ASSETS) . "ico/iconscout/film.ico' 
         type='image/x-icon'
       >
     ";
