@@ -12,6 +12,8 @@ class Usuario extends Model
   private int $_rol;
   public ?string $_foto_perfil;
 
+  const TABLE_NAME = "usuario";
+  
   /**
    * Tipo de los parámetros para cuando se utilicen en PDO.
    */
@@ -25,7 +27,6 @@ class Usuario extends Model
     "foto_perfil" => PDO::PARAM_STR,
   ];
 
-  const TABLE_NAME = "usuario";
   // Roles de usuario con su índice respecto al ENUM que se definió en la BD.
   // Los índices del ENUM comienzan desde 1, ya que el enum 0 está reservado
   // para los errores, tal como se indica en la documentación:
@@ -133,14 +134,6 @@ class Usuario extends Model
 
   /**
    * Inserción de un nuevo elemento.
-   *
-   * @param string $_nombres
-   * @param string $_apellidos
-   * @param string $_username
-   * @param string $_password
-   * @param string $_rol
-   * @param string $_foto_perfil
-   * @return bool Se insertó o no el elemento.
    */
   public function insertUsuario(): int
   {
@@ -191,47 +184,17 @@ class Usuario extends Model
   }
 
   /**
-   * Obtener un usuario por su ID mediante una query.
-   *
-   * @param int $id
-   * @return array Arreglo asociativo para representar como JSON en JavaScript.
-   */
-  //   public static function getById($id)
-  //   {
-  //     // Obtenemos el resultado de la ejecución del query.
-  //     $query = parent::getEveryRecord(
-  //       "usuario",
-  //       attributeName: "id",
-  //       attributeValue: $id
-  //     );
-  // 
-  //     // Obtenemos el elemento, que sería 1 porque no se puede repetir ID.
-  //     $row = $query->fetch(PDO::FETCH_ASSOC);
-  // 
-  //     $usuario = new Usuario(
-  //       $row["id"],
-  //       $row["nombres"],
-  //       $row["apellidos"],
-  //       $row["username"],
-  //       $row["password"],
-  //       $row["rol"],
-  //       $row["foto_perfil"],
-  // 
-  //     );
-  // 
-  //     // Regresamos objeto como JSON para obtenerlo en JS mediante AJAX.
-  //     $usuario->returnJSON();
-  //   }
-
-  /**
-   * Un usuario se encuentra en la base de datos o no.
+   * Los datos de inicio de sesión son correctos o no.
    *
    * @param string $username
    * @param string $password
-   * @return bool
+   * @return bool | array False si no es correcta y devuelve el arreglo con los datos si es
+   * correcta.
    */
-  public static function foundUsuario($username, $password)
-  {
+  public static function isLoginDataCorrect(
+    string $username,
+    string $password
+  ): bool | array {
     try {
       $query = parent::$db_connection->prepare(
         "SELECT *
@@ -247,49 +210,16 @@ class Usuario extends Model
       $query->execute();
 
       // Si no hay filas, devolver false, indicando que no se hizo la inserción.
-      return $query->rowCount() == 0 ? false : true;
+      if ($query->rowCount() == 0) return false;
+
+      // Si hubo resultado, obtener arreglo asociativo con los datos del
+      // usuario.
+      return $query->fetch(pdo::FETCH_ASSOC);
     } catch (PDOException $e) {
       error_log("Error de conexión - {$e}", 0);
       exit();
     }
   }
-
-  /**
-   * Obtener todos los elementos, que, en este caso, son usuarios.
-   * 
-   * Devuelve un arreglo con cada uno de los elementos que se encontró.
-   *
-   * @return array Arreglo asociativo con los elementos encontrados.
-   */
-  //   public static function getEveryElement()
-  //   {
-  //     // Obtenemos el resultado de la ejecución del query.
-  //     $query = parent::getEveryRecord(self::TABLE_NAME);
-  // 
-  //     // Arreglo con todos los elementos de la tabla.
-  //     $elements = [];
-  // 
-  //     while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-  //       // var_dump($row);
-  //       $current_user = new Usuario(
-  //         $row["id"],
-  //         $row["nombres"],
-  //         $row["apellidos"],
-  //         $row["username"],
-  //         $row["password"],
-  //         $row["rol"],
-  //         $row["foto_perfil"]
-  //       );
-  //       // Agregamos el elemento actual al arreglo.
-  //       array_push(
-  //         $elements,
-  //         $current_user
-  //       );
-  //       // echo "<pre>" . var_export($elements, true) . "</pre>";
-  //       // Regresamos los elementos.
-  //     }
-  //     return $elements;
-  //   }
 
   /* -------------------------------------------------------------------------- */
   public function returnJson()
