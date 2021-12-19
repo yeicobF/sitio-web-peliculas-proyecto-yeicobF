@@ -31,7 +31,7 @@ $usuario = new Usuario(
   "Avelardo",
   "Juárez",
   "abel_juarez",
-  "abelito",  
+  "abelito",
   Usuario::ROLES_ENUM_INDEX["normal"],
 );
 
