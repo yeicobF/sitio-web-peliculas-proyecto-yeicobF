@@ -21,4 +21,5 @@ $pelicula = new Pelicula(
 echo var_dump($pelicula) . "<br><br>";
 echo var_dump($pelicula->getParamValues()) . "<br><br>";
 echo var_dump($pelicula->returnJson()) . "<br><br>";
-echo var_dump(Model::OPERATION_INFO[$pelicula->insertPelicula()]) . "<br><br>";
+// echo var_dump(Model::OPERATION_INFO[$pelicula->insertPelicula()]) . "<br><br>";
+

@@ -134,14 +134,6 @@ class Usuario extends Model
 
   /**
    * Inserción de un nuevo elemento.
-   *
-   * @param string $_nombres
-   * @param string $_apellidos
-   * @param string $_username
-   * @param string $_password
-   * @param string $_rol
-   * @param string $_foto_perfil
-   * @return bool Se insertó o no el elemento.
    */
   public function insertUsuario(): int
   {
