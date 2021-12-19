@@ -1,3 +1,10 @@
 [15-Dec-2021 11:16:21 Europe/Berlin] hola en index, prueba propio log
 [15-Dec-2021 11:16:51 Europe/Berlin] hola en index, prueba propio log
 [15-Dec-2021 11:18:32 Europe/Berlin] hola en index, prueba propio log
+[19-Dec-2021 08:41:21 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[19-Dec-2021 08:41:21 Europe/Berlin] PHP Warning:  require_once(controllers/login.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 77
+[19-Dec-2021 08:41:21 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'controllers/login.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:77
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(16): App->__construct()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 77

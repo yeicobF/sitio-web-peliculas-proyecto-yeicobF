@@ -8,5 +8,12 @@ ini_set("error_log", __DIR__ . "/logs/php-error.log");
 
 // error_log("hola en index, prueba propio log");
 
+// Utilizar la clase App para el ruteo.
+require_once "libs/app.php";
+
+// Que automáticamente se ejecute el constructor y se empiecen a hacer las
+// validaciones.
+$app = new App();
+
 //Redireccionar a la página principal
-header("Location: views/");
+// header("Location: views/");
