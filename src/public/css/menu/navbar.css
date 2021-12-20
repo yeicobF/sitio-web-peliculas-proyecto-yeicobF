@@ -22,7 +22,7 @@
 @media (min-width: 768px) and (max-width: 900px) {
   .navbar,
   .navbar * {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -33,7 +33,7 @@
   }
   .navbar,
   .navbar * {
-    font-size: .9rem;
+    /* font-size: .9rem; */
   }
   .navbar-collapse {
     padding-top: 0;
