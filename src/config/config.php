@@ -19,6 +19,7 @@ define("BARE_PROJECT_FOLDER_DIR", "fdw-2021-2022-a/proyecto-yeicobF/");
 /* ----------------------------------- SRC ---------------------------------- */
 define("SRC", BARE_PROJECT_FOLDER_DIR . "src/");
 define("CONFIG", SRC . "config/");
+define("LIBS", SRC . "libs/");
 define("PUBLIC_FOLDER", SRC . "public/");
 
 /* ------------------------------ CONTENIDO SRC ----------------------------- */
