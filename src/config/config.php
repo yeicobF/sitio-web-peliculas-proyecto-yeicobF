@@ -43,3 +43,28 @@ define("ASSETS", PUBLIC_FOLDER . "assets/");
 
 define("PAGE_LOGO_ORIGINAL_PATH", ASSETS . "/iconscout/office-icon-pack-by-gunaldi-yunus/svg/film-1505229.svg");
 define("PAGE_LOGO", ASSETS . "/page-logo/film-1505229.svg");
+
+/* --------------------- VARIABLES RESPECTO AL LOCALHOST -------------------- */
+
+require_once DOCUMENT_ROOT . CONFIG . "directory-path.php";
+
+/**
+ * Arreglo asociativo con cada directorio incluyendo el localhost al inicio.
+ */
+define(
+  "FOLDERS_URL_WITH_LOCALHOST",
+  [
+    "views" => DirectoryPath::getPathWithLocalhost(VIEWS),
+    "src" => DirectoryPath::getPathWithLocalhost(VIEWS),
+    "page_logo" => DirectoryPath::getPathWithLocalhost(PAGE_LOGO),
+    "css" => DirectoryPath::getPathWithLocalhost(CSS),
+    "js" => DirectoryPath::getPathWithLocalhost(JS),
+    "libs" => DirectoryPath::getPathWithLocalhost(LIBS),
+    "public" => DirectoryPath::getPathWithLocalhost(PUBLIC_FOLDER),
+    "models" => DirectoryPath::getPathWithLocalhost(MODELS),
+    "controllers" => DirectoryPath::getPathWithLocalhost(CONTROLLERS),
+    "layouts" => DirectoryPath::getPathWithLocalhost(LAYOUTS),
+    "components" => DirectoryPath::getPathWithLocalhost(COMPONENTS),
+
+  ]
+);

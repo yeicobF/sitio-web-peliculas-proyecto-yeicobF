@@ -14,7 +14,7 @@ $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
 include_once $path
   . "fdw-2021-2022-a/proyecto-yeicobF/"
-  . "src/config/directory-path.php";
+  . "src/config/config.php";
 
 /* -------------------------------------------------------------------------- */
 /* ----------------------- ARCHIVO ACTUAL Y CLASES CSS ---------------------- */
@@ -27,7 +27,7 @@ $current_active_page_filename = $_SERVER["SCRIPT_FILENAME"];
 $css_current_page = " navbar__current-page";
 
 // Nombres de archivos que son páginas para poner clase de página activa.
-$inicio = "views/inicio/index.php";
+$inicio = "views/index.php";
 $peliculas = "views/peliculas/";
 $generos = "views/generos/";
 
@@ -50,7 +50,7 @@ $add_css_current_page = [
 ];
 
 /* ------------------------- ENLACE PARA CADA PÁGINA ------------------------ */
-$views_url = DirectoryPath::getPathWithLocalhost(VIEWS);
+
 $user_url = "{$views_url}user/";
 $url_page = [
   "inicio" => $views_url . "inicio/index.php",

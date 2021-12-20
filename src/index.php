@@ -18,8 +18,8 @@ require_once __DIR__ . "/config/config.php";
 
 // Que automáticamente se ejecute el constructor y se empiecen a hacer las
 // validaciones.
-$app = new App();
-$app->start();
+// $app = new App();
+// $app->start();
 
 //Redireccionar a la página principal
-// header("Location: views/");
+header("Location: views/index.php");

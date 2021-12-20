@@ -153,6 +153,7 @@ class Model
    */
   public static function uniqueRecordsExist(
     string $table,
+    array $param_values,
     array $unique_attributes,
     array $pdo_params
   ): bool {
@@ -161,7 +162,7 @@ class Model
       if (self::recordExists(
         $table,
         $attribute_name,
-        $unique_attributes[$attribute_name],
+        $param_values[$attribute_name],
         $pdo_params
       )) return true;
     }
@@ -508,6 +509,7 @@ class Model
     // indicarlo.
     if (self::uniqueRecordsExist(
       $table,
+      $param_values,
       $unique_attributes,
       $pdo_params
     )) {
