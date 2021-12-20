@@ -13,10 +13,7 @@
 
 // C:/xampp/htdocs/
 define("DOCUMENT_ROOT", "{$_SERVER["DOCUMENT_ROOT"]}/");
-
-define("DB_NAME", "fdw_dic_2021_proyecto_final");
 define("LOCALHOST_URL", "http://localhost:8012/");
-define("HOST", "localhost");
 define("BARE_PROJECT_FOLDER_DIR", "fdw-2021-2022-a/proyecto-yeicobF/");
 
 /* ----------------------------------- SRC ---------------------------------- */

@@ -1,5 +1,7 @@
 <?php
 
+require_once "../config/config.php";
+
 /**
  * Para la base de datos, utilizamos el patrón de diseño Singleton, el cual,
  * solo permite tener una instancia de una misma clase. Esto para evitar
@@ -15,9 +17,11 @@ class DBConnection
    * Variable estática para solo tener una sola instancia.
    */
   private static $connection;
-  private const DB_NAME = "fdw_dic_2021_proyecto_final";
-  
-
+  const DB_NAME = "fdw_dic_2021_proyecto_final";
+  const HOST = "localhost";
+  const CHARSET = "utf8";
+  const USERNAME = "root";
+  const PASSWORD = "";
   /** 
    * Método para regresar el elemento de la conexión si es que ya está creado.
    * Esto para cumplir con el patrón Singleton.  
@@ -61,10 +65,26 @@ class DBConnection
        * )`
        * 
        */
+      /**
+       * https://www.php.net/manual/en/pdo.construct.php#:~:text=Parameters-,dsn,-The%20Data%20Source
+       * 
+       * The Data Source Name, or DSN, contains the information required to
+       * connect to the database.
+       *
+       * In general, a DSN consists of the PDO driver name, followed by a colon,
+       * followed by the PDO driver-specific connection syntax. Further
+       * information is available from the PDO driver-specific documentation.
+       */
+      $data_source_name =
+        "mysql:host=" . self::HOST
+        . "; dbname=" . self::DB_NAME
+        . "; charset=" . self::CHARSET;
+
+
       self::$connection = new PDO(
-        "mysql:host=localhost;dbname=" . self::DB_NAME . ";charset=utf8",
-        "root",
-        ""
+        $data_source_name,
+        self::USERNAME,
+        self::PASSWORD
       );
 
       /**
