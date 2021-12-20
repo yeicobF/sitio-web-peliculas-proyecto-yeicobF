@@ -61,15 +61,26 @@ class DirectoryPath
   //   ];
 
   /**
-   * Obtener ruta con el localhost al inicio.
+   * Obtener ruta de un directorio con una ruta inicial.
    * 
-   * No evaluará el tipo de valor que se envíe.
+   * Podríamos obtener la ruta de un directorio a partir del localhost o de la
+   * raíz física del proyecto con la variable `$_SERVER["DOCUMENT_ROOT"]}`.
    *
-   * @param string $pathConstant Constante de la ruta a obtener.
-   * @return string
+   * @param string $starting_path_constant Directorio raíz.
+   * @param array $path_constants Constantes de los directorios a obtener.
+   * @return array Directorios con el formato especificado.
    */
-  public static function getPathWithLocalhost($pathConstant)
-  {
-    return LOCALHOST_URL . $pathConstant;
+  public static function getPathWithStartingPath(
+    string $starting_path_constant,
+    array $path_constants
+  ): array {
+    $constants_with_starting_path = [];
+
+    foreach ($path_constants as $constant) {
+      $constant_key = mb_strtolower($constant, INTERNAL_ENCODING);
+      $constants_with_starting_path[$constant_key]
+        = $starting_path_constant . constant($constant);
+    }
+    return $constants_with_starting_path;
   }
 }
