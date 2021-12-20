@@ -1,6 +1,6 @@
 <?php
 
-include_once "model.php";
+// include_once __DIR__ . "/../libs/model.php";
 
 class Usuario extends Model
 {
@@ -55,7 +55,6 @@ class Usuario extends Model
     "administrador" => 1,
     "normal" => 2,
   ];
-
 
   public function __construct(
     string $nombres,

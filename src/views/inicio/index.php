@@ -3,7 +3,7 @@
 // https://stackoverflow.com/questions/13369529/full-url-not-working-with-php-include
 // $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
-include_once "../config/config.php";
+include_once "../../config/config.php";
 
 include_once DOCUMENT_ROOT
   . "fdw-2021-2022-a/proyecto-yeicobF/"
@@ -50,7 +50,7 @@ $baseHtmlHead = new BaseHtmlHead(
   <link rel="stylesheet" href="<?php echo $css_folder; ?>footer/footer.css">
 
   <!-- SCRIPTS -->
-  <script defer src="<?php echo DirectoryPath::getPathWithLocalhost(SRC) . "js/navbar.js"; ?>" type="module"></script>
+
 
 
   <?php

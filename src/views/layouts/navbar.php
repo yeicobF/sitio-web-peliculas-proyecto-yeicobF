@@ -27,7 +27,7 @@ $current_active_page_filename = $_SERVER["SCRIPT_FILENAME"];
 $css_current_page = " navbar__current-page";
 
 // Nombres de archivos que son páginas para poner clase de página activa.
-$inicio = "views/index.php";
+$inicio = "views/inicio/index.php";
 $peliculas = "views/peliculas/";
 $generos = "views/generos/";
 
@@ -53,11 +53,11 @@ $add_css_current_page = [
 $views_url = DirectoryPath::getPathWithLocalhost(VIEWS);
 $user_url = "{$views_url}user/";
 $url_page = [
-  "inicio" => $views_url . "index.php",
+  "inicio" => $views_url . "inicio/index.php",
   "peliculas" => $views_url . "peliculas/index.php",
   "generos" => $views_url . "generos/index.php",
-  "login" => $user_url . "login/index.php",
-  "registro" => $user_url . "registro/index.php",
+  "login" => $views_url . "login/index.php",
+  "registro" => $views_url . "registro/index.php",
 ];
 
 // var_dump($user_url);

@@ -1,5 +1,27 @@
+# Link documentación: https://httpd.apache.org/docs/2.2/mod/mod_rewrite.html
+
 RewriteEngine On
+# You can prefix the pattern string with a '!' character (exclamation mark) to
+# specify a non-matching pattern.
+# 
+# back-references (%N) to the last matched RewriteCond pattern
+# If requested is not a directory.
 RewriteCond %{REQUEST_FILENAME} !-d
+
+# If requested is not a filename.
 RewriteCond %{REQUEST_FILENAME} !-f
+
+# No es un link simbólico (symbolik link).
 RewriteCond %{REQUEST_FILENAME} !-l
+
+# RewriteRule: Defines rules for the rewriting engine.
+# The directive can occur more than once, with each instance defining a single 
+# rewrite rule. The order in which these rules are defined is important - this  
+# is the order in which they will be applied at run-time.
+# 
+# If you wish to match against the hostname, port, or query string, use a
+# RewriteCond with the %{HTTP_HOST}, %{SERVER_PORT}, or %{QUERY_STRING}
+# variables respectively.
+
+# Realiza esta redirección.
 RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]

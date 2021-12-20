@@ -1,6 +1,6 @@
 <?php
 
-include_once "model.php";
+// include_once __DIR__ . "/../libs/model.php";
 
 class ComentarioPelicula extends Model
 {
@@ -31,7 +31,7 @@ class ComentarioPelicula extends Model
     string $fecha,
     string $hora,
     ?int $id = null,
-    ) {
+  ) {
     $this->id = $id;
     $this->pelicula_id = $pelicula_id;
     $this->usuario_id = $usuario_id;

@@ -33,7 +33,7 @@ class Model
    */
   public static function initDbConnection()
   {
-    require_once "DB.php";
+    require_once __DIR__ . "../libs/DB.php";
 
     try {
       self::$db_connection = DBConnection::getConnection();
