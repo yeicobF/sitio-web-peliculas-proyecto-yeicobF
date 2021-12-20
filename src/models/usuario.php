@@ -1,6 +1,6 @@
 <?php
 
-// include_once __DIR__ . "/../libs/model.php";
+include_once __DIR__ . "/../libs/model.php";
 
 class Usuario extends Model
 {
@@ -13,7 +13,7 @@ class Usuario extends Model
   public ?string $_foto_perfil;
 
   const TABLE_NAME = "usuario";
-  
+
   /**
    * Tipo de los parámetros para cuando se utilicen en PDO.
    */
