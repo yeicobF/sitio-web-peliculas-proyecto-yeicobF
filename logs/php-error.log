@@ -321,3 +321,17 @@ Stack trace:
 #3 {main}
   thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php on line 60
 [20-Dec-2021 05:59:58 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[20-Dec-2021 21:51:06 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[20-Dec-2021 21:51:07 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "Controller" not found in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php:2
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php(134): require_once()
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(22): App->start()
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php on line 2
+[20-Dec-2021 22:14:09 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[20-Dec-2021 22:14:09 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "Controller" not found in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php:2
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php(134): require_once()
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(22): App->start()
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php on line 2
