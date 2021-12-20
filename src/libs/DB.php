@@ -1,6 +1,6 @@
 <?php
 
-require_once "../config/config.php";
+require_once __DIR__ . "/../config/config.php";
 
 /**
  * Para la base de datos, utilizamos el patrón de diseño Singleton, el cual,

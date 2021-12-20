@@ -10,6 +10,11 @@ ini_set("error_log", __DIR__ . "../logs/php-error.log");
 
 // Utilizar la clase App para el ruteo.
 require_once __DIR__ . "/libs/app.php";
+require_once __DIR__ . "/libs/DB.php";
+require_once __DIR__ . "/libs/model.php";
+require_once __DIR__ . "/libs/controller.php";
+require_once __DIR__ . "/libs/view.php";
+require_once __DIR__ . "/config/config.php";
 
 // Que automáticamente se ejecute el constructor y se empiecen a hacer las
 // validaciones.

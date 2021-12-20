@@ -12,13 +12,13 @@ class Controller
    *
    * @var object
    */
-  private $view;
+  protected $view;
   /**
    * Instancia del modelo.
    *
    * @var object
    */
-  private $model;
+  protected $model;
 
   /**
    * Inicializar una nueva vista respecto al controlador.
@@ -56,8 +56,10 @@ class Controller
      * Quitamos el guión del medio para obtener nuestro nombre de constructor.
      * 
      * `Like-Comentario` => `LikeComentario`
+     * 
+     * https://www.php.net/manual/es/function.str-replace.php
      */
-    $model_constructor_name = str_replace($model_constructor_name, "", "-");
+    $model_constructor_name = str_replace("-", "", $model_constructor_name);
     return $model_constructor_name;
   }
 
@@ -70,9 +72,13 @@ class Controller
    */
   function loadModel($model_name)
   {
+    /**
+     * Construimos una URL con la ubicación del modelo requerido.
+     */
     $url = "models/" . $model_name . ".php";
 
     if (file_exists($url)) {
+      // Traemos el archivo.
       require_once $url;
 
       $model_constructor_name = $this->getConstructorNameFromModelFileName(

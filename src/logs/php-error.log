@@ -235,3 +235,89 @@ Stack trace:
 #0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
 #1 {main}
   thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[20-Dec-2021 02:54:23 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/js.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[20-Dec-2021 02:54:23 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/js.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[20-Dec-2021 02:54:32 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/js.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[20-Dec-2021 02:54:32 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/js.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[20-Dec-2021 02:54:39 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/js.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[20-Dec-2021 02:54:39 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs/../controllers/js.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php:153
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(17): App->start()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php on line 153
+[20-Dec-2021 05:18:35 Europe/Berlin] PHP Warning:  require_once(../config/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\DB.php on line 3
+[20-Dec-2021 05:18:35 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required '../config/config.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\DB.php:3
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(13): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\DB.php on line 3
+[20-Dec-2021 05:19:28 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[20-Dec-2021 05:19:29 Europe/Berlin] PHP Warning:  Undefined property: Login::$view in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php on line 12
+[20-Dec-2021 05:19:29 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function render() on null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php:12
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php(139): Login->render()
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(22): App->start()
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php on line 12
+[20-Dec-2021 05:20:08 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[20-Dec-2021 05:20:08 Europe/Berlin] PHP Warning:  require(views/login.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\view.php on line 28
+[20-Dec-2021 05:20:08 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'views/login.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\view.php:28
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php(12): View->render('login')
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php(139): Login->render()
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(22): App->start()
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\view.php on line 28
+[20-Dec-2021 05:21:23 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[20-Dec-2021 05:21:24 Europe/Berlin] PHP Warning:  require(): http:// wrapper is disabled in the server configuration by allow_url_include=0 in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\view.php on line 28
+[20-Dec-2021 05:21:24 Europe/Berlin] PHP Warning:  require(http://localhost:8012/fdw-2021-2022-a/proyecto-yeicobF/src/views/login.php): Failed to open stream: no suitable wrapper could be found in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\view.php on line 28
+[20-Dec-2021 05:21:24 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'http://localhost:8012/fdw-2021-2022-a/proyecto-yeicobF/src/views/login.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\view.php:28
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php(12): View->render('login')
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php(139): Login->render()
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(22): App->start()
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\view.php on line 28
+[20-Dec-2021 05:22:08 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[20-Dec-2021 05:22:08 Europe/Berlin] PHP Warning:  require(C:/xampp/htdocs/fdw-2021-2022-a/proyecto-yeicobF/src/views/login.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\view.php on line 28
+[20-Dec-2021 05:22:08 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:/xampp/htdocs/fdw-2021-2022-a/proyecto-yeicobF/src/views/login.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\view.php:28
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php(12): View->render('login')
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php(139): Login->render()
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(22): App->start()
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\view.php on line 28
+[20-Dec-2021 05:38:54 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[20-Dec-2021 05:38:54 Europe/Berlin] PHP Warning:  include_once(C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models../libs/model.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php on line 3
+[20-Dec-2021 05:38:54 Europe/Berlin] PHP Warning:  include_once(): Failed opening 'C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models../libs/model.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php on line 3
+[20-Dec-2021 05:38:54 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "-" not found in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php:85
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php(138): Controller->loadModel('usuario')
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(22): App->start()
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 85
+[20-Dec-2021 05:39:53 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[20-Dec-2021 05:39:53 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "-" not found in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php:85
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php(138): Controller->loadModel('usuario')
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(22): App->start()
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 85
+[20-Dec-2021 05:41:18 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[20-Dec-2021 05:54:34 Europe/Berlin] APP::__construct() -> No hay controlador especificado.
+[20-Dec-2021 05:59:54 Europe/Berlin] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Usuario::__construct(), 0 passed in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 87 and at least 5 expected in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php:60
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php(87): Usuario->__construct()
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\app.php(138): Controller->loadModel('usuario')
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(22): App->start()
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php on line 60
+[20-Dec-2021 05:59:58 Europe/Berlin] APP::__construct() -> No hay controlador especificado.

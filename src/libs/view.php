@@ -19,12 +19,12 @@ class View
    * operaciones para mostrar la información.
    * @return void
    */
-  function render($view_name, $data = [])
+  function render(string $view_name, array $data = []): void
   {
     $this->data = $data;
     $this->view_name = $view_name;
 
     // Llamar al archivo de la vista requerida.
-    require "views/" . $this->view_name . ".php";
+    require DOCUMENT_ROOT . SRC . "views/" . $this->view_name . ".php";
   }
 }
