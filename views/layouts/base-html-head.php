@@ -107,6 +107,12 @@ class BaseHtmlHead
         href='" . DirectoryPath::getPathWithLocalhost(ASSETS) . "ico/iconscout/film.ico' 
         type='image/x-icon'
       >
+
+      <script 
+        defer 
+        src='" . DirectoryPath::getPathWithLocalhost(JS) . "navbar.js' 
+        type='module'
+      ></script>
     ";
 
     $htmlBaseHead .=

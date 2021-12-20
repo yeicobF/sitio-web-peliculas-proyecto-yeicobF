@@ -51,7 +51,7 @@ $baseHtmlHead = new BaseHtmlHead(
 <body class="body-container container-sm container-fluid">
 
   <header class="page-info">
-    <a class="page-info__logo" rel="noopener noreferrer" href="<?php echo $views_folder; ?>index.php">
+    <a class="page-info__logo" rel="noopener noreferrer" href="<?php echo $views_folder; ?>inicio/index.php">
       <img class="" src="<?php echo DirectoryPath::getPathWithLocalhost(PAGE_LOGO); ?>" alt="Colección de películas" srcset="">
     </a>
     <h1 class="page-info__title">Colección de películas</h1>
@@ -73,7 +73,7 @@ $baseHtmlHead = new BaseHtmlHead(
     </section>
     <input type="submit" class="btn form__button" id="register-form-button" value="Registrarse">
   </form>
-  <a href="<?php echo $views_folder; ?>user/login/index.php" class="form__link">
+  <a href="<?php echo $views_folder; ?>login/index.php" class="form__link">
     Iniciar sesión
   </a>
 

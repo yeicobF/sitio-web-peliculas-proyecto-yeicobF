@@ -109,7 +109,8 @@ class App
 
     // Establecemos la ruta inicial de los controladores respecto a la ruta del
     // archivo.
-    $this->file_controller = __DIR__ . "/../controllers/";
+    // $this->file_controller = __DIR__ . "/../controllers/";
+    $this->file_controller = "controllers/";
   }
 
   /**
