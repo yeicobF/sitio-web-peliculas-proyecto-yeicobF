@@ -90,3 +90,10 @@ define(
     $path_constants_array
   )
 );
+
+/* --------- Directorios como variables para acceder más fácilmente. -------- */
+
+$src_folder = FOLDERS_URL_WITH_LOCALHOST["src"];
+$views_folder = FOLDERS_URL_WITH_LOCALHOST["views"];
+$assets_folder = FOLDERS_URL_WITH_LOCALHOST["assets"];
+$css_folder = FOLDERS_URL_WITH_LOCALHOST["css"];

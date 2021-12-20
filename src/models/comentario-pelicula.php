@@ -1,6 +1,6 @@
 <?php
 
-// include_once __DIR__ . "/../libs/model.php";
+include_once __DIR__ . "/../libs/model.php";
 
 class ComentarioPelicula extends Model
 {

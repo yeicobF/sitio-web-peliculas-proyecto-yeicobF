@@ -1,9 +1,6 @@
 <?php
 $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
-
-
-include_once $path . "fdw-2021-2022-a/proyecto-yeicobF/src/config/directory-path.php";
 include_once $path . "fdw-2021-2022-a/proyecto-yeicobF/src/config/config.php";
 
 /**
