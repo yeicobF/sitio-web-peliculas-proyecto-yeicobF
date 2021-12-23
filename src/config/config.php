@@ -44,6 +44,7 @@ define("ASSETS", PUBLIC_FOLDER . "assets/");
 
 define("PAGE_LOGO_ORIGINAL_PATH", ASSETS . "iconscout/office-icon-pack-by-gunaldi-yunus/svg/film-1505229.svg");
 define("PAGE_LOGO", ASSETS . "page-logo/film-1505229.svg");
+define("IMG", ASSETS . "img/");
 
 
 
@@ -67,6 +68,7 @@ $path_constants_array = [
   "CSS",
   "JS",
   "ASSETS",
+  "IMG",
   "PAGE_LOGO_ORIGINAL_PATH",
   "PAGE_LOGO",
 ];
@@ -75,7 +77,7 @@ $path_constants_array = [
  * Arreglo asociativo con cada directorio incluyendo el localhost al inicio.
  */
 define(
-  "FOLDERS_URL_WITH_LOCALHOST",
+  "FOLDERS_WITH_LOCALHOST",
   DirectoryPath::getPathWithStartingPath(
     LOCALHOST_URL,
     $path_constants_array
@@ -84,9 +86,17 @@ define(
 
 /* ------------------- VARIABLES RESPECTO AL DOCUMENT_ROOT ------------------ */
 define(
-  "FOLDERS_URL_WITH_DOCUMENT_ROOT",
+  "FOLDERS_WITH_DOCUMENT_ROOT",
   DirectoryPath::getPathWithStartingPath(
     DOCUMENT_ROOT,
     $path_constants_array
   )
 );
+
+/* --------- Directorios como variables para acceder más fácilmente. -------- */
+
+$src_folder = FOLDERS_WITH_LOCALHOST["SRC"];
+$views_folder = FOLDERS_WITH_LOCALHOST["VIEWS"];
+$assets_folder = FOLDERS_WITH_LOCALHOST["ASSETS"];
+$css_folder = FOLDERS_WITH_LOCALHOST["CSS"];
+$img_folder = FOLDERS_WITH_LOCALHOST["IMG"];

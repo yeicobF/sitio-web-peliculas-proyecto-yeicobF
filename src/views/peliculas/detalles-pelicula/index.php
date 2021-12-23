@@ -4,22 +4,11 @@ $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
 include_once $path
   . "fdw-2021-2022-a/proyecto-yeicobF/"
-  . "src/config/directory-path.php";
-include_once $path
-  . "fdw-2021-2022-a/proyecto-yeicobF/"
   . "src/config/config.php";
 
 include_once $path
   . LAYOUTS
   . "base-html-head.php";
-
-$src_folder = DirectoryPath::getPathWithLocalhost(SRC);
-$views_folder = DirectoryPath::getPathWithLocalhost(VIEWS);
-$img_folder =
-  DirectoryPath::getPathWithLocalhost(ASSETS)
-  . "img/";
-$css_folder =
-  DirectoryPath::getPathWithLocalhost(CSS);
 
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Detalles de película",
@@ -49,8 +38,7 @@ $baseHtmlHead = new BaseHtmlHead(
   <link rel="stylesheet" href="<?php echo $css_folder; ?>footer/footer.css">
   <link rel="stylesheet" href="<?php echo $css_folder; ?>form/form.css">
 
-  <!-- SCRIPTS -->
-  <script defer src="<?php echo DirectoryPath::getPathWithLocalhost(SRC) . "js/navbar.js"; ?>" type="module"></script>
+
 
 
   <?php
@@ -195,7 +183,7 @@ $baseHtmlHead = new BaseHtmlHead(
           -->
           <div class="movie-poster__year-image col-6">
             <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
-              <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(ASSETS); ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
+              <img class="movie-poster__img" src="<?php echo FOLDERS_WITH_LOCALHOST["ASSETS"]; ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
             </a>
             <time datetime="2021" class="movie-poster__year">2021</time>
           </div>
@@ -214,7 +202,7 @@ $baseHtmlHead = new BaseHtmlHead(
           -->
           <div class="movie-poster__year-image col-6">
             <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
-              <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(ASSETS); ?>img/movie-posters/friday-the-13th/1.jpg" alt="Friday the 13th">
+              <img class="movie-poster__img" src="<?php echo FOLDERS_WITH_LOCALHOST["ASSETS"]; ?>img/movie-posters/friday-the-13th/1.jpg" alt="Friday the 13th">
             </a>
             <time datetime="2021" class="movie-poster__year">1980</time>
           </div>
@@ -234,7 +222,7 @@ $baseHtmlHead = new BaseHtmlHead(
           -->
           <div class="movie-poster__year-image col-6">
             <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
-              <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(ASSETS); ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
+              <img class="movie-poster__img" src="<?php echo FOLDERS_WITH_LOCALHOST["ASSETS"]; ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
             </a>
             <time datetime="2021" class="movie-poster__year">2021</time>
           </div>
@@ -253,7 +241,7 @@ $baseHtmlHead = new BaseHtmlHead(
           -->
           <div class="movie-poster__year-image col-6">
             <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
-              <img class="movie-poster__img" src="<?php echo DirectoryPath::getPathWithLocalhost(ASSETS); ?>img/movie-posters/friday-the-13th/1.jpg" alt="Friday the 13th">
+              <img class="movie-poster__img" src="<?php echo FOLDERS_WITH_LOCALHOST["ASSETS"]; ?>img/movie-posters/friday-the-13th/1.jpg" alt="Friday the 13th">
             </a>
             <time datetime="2021" class="movie-poster__year">1980</time>
           </div>
