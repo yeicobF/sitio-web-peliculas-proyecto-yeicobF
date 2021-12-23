@@ -14,7 +14,7 @@ class LikeComentario extends Model
   const PDO_PARAMS = [
     "comentario_pelicula_id" => PDO::PARAM_INT,
     "usuario_id" => PDO::PARAM_INT,
-    "tipo" => PDO::PARAM_STR,
+    "tipo" => PDO::PARAM_INT,
   ];
 
   const TIPO_ENUM_INDEX = [
@@ -23,7 +23,10 @@ class LikeComentario extends Model
   ];
 
 
-  const UNIQUE_ATTRIBUTES = [];
+  const UNIQUE_ATTRIBUTES = [
+    "comentario_pelicula_id",
+    "usuario_id",
+  ];
 
   public function __construct(
     int $comentario_pelicula_id,
@@ -114,18 +117,18 @@ class LikeComentario extends Model
       gettype($tipo) === "string"
       && array_key_exists($tipo, self::TIPO_ENUM_INDEX)
     ) {
-      $this->_tipo = self::TIPO_ENUM_INDEX[$tipo];
+      $this->tipo = self::TIPO_ENUM_INDEX[$tipo];
       return;
     }
     // Revisamos que el número de tipo exista entre los posibles.
     if (in_array($tipo, self::TIPO_ENUM_INDEX, true)) {
       // El tipo es un número directamente.
-      $this->_tipo = $tipo;
+      $this->tipo = $tipo;
       return;
     }
     // Si no entró en ninguna de las anteriores condiciones, asignar un 0 al 
     // tipo, indicando que no existe el tipo dado.
-    $this->_tipo = 0;
+    $this->tipo = 0;
   }
 
   public function returnJson()

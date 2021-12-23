@@ -33,7 +33,7 @@ class Model
    */
   public static function initDbConnection()
   {
-    require_once __DIR__ . "../libs/DB.php";
+    require_once __DIR__ . "/DB.php";
 
     try {
       self::$db_connection = DBConnection::getConnection();
@@ -548,14 +548,14 @@ class Model
     $table,
     $where_clause_names,
   ) {
-    $query = "DELETE FROM {$table} ";
+    $query = "DELETE FROM {$table}";
 
     for ($i = 0; $i < count($where_clause_names); $i++) {
       if ($i === 0) {
         $query
-          .= "WHERE";
+          .= " WHERE";
       } else {
-        $query .= "AND";
+        $query .= " AND";
       }
       $query .= " {$where_clause_names[$i]} = :{$where_clause_names[$i]}";
     }

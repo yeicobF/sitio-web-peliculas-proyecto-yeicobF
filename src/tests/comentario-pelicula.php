@@ -1,9 +1,9 @@
 <?php
-include_once "../models/DB.php";
+include_once "../libs/DB.php";
 include_once "../models/pelicula.php";
 include_once "../models/usuario.php";
 include_once "../models/comentario-pelicula.php";
-include_once "../models/model.php";
+include_once "../libs/model.php";
 
 // https://www.php.net/manual/es/function.date.php#116914
 // https://www.php.net/manual/es/timezones.america.php
