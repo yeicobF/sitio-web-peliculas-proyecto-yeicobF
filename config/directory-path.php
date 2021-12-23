@@ -77,7 +77,8 @@ class DirectoryPath
     $constants_with_starting_path = [];
 
     foreach ($path_constants as $constant) {
-      $constant_key = mb_strtolower($constant, INTERNAL_ENCODING);
+      // $constant_key = mb_strtolower($constant, INTERNAL_ENCODING);
+      $constant_key = $constant;
       $constants_with_starting_path[$constant_key]
         = $starting_path_constant . constant($constant);
     }

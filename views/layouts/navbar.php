@@ -51,13 +51,13 @@ $add_css_current_page = [
 
 /* ------------------------- ENLACE PARA CADA PÁGINA ------------------------ */
 
-$user_url = "{$views_url}user/";
+$user_url = "{$views_folder}user/";
 $url_page = [
-  "inicio" => $views_url . "inicio/index.php",
-  "peliculas" => $views_url . "peliculas/index.php",
-  "generos" => $views_url . "generos/index.php",
-  "login" => $views_url . "login/index.php",
-  "registro" => $views_url . "registro/index.php",
+  "inicio" => $views_folder . "index.php",
+  "peliculas" => $views_folder . "peliculas/index.php",
+  "generos" => $views_folder . "generos/index.php",
+  "login" => $views_folder . "login/index.php",
+  "registro" => $views_folder . "registro/index.php",
 ];
 
 // var_dump($user_url);
@@ -76,7 +76,7 @@ $url_page = [
 <nav class="navbar">
   <a rel="noopener noreferrer" href="<?php echo $url_page["inicio"]; ?>" class="navbar-brand">
     <!-- https://developer.mozilla.org/es/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images -->
-    <img src="<?php echo DirectoryPath::getPathWithLocalhost(PAGE_LOGO); ?>" alt="Colección de películas" srcset="" sizes="" class="logo">
+    <img src="<?php echo FOLDERS_WITH_LOCALHOST["PAGE_LOGO"]; ?>" alt="Colección de películas" srcset="" sizes="" class="logo">
     <!-- p.navbar__title -->
   </a>
   <!-- 

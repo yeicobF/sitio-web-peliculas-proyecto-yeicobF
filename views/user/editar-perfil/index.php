@@ -4,22 +4,11 @@ $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
 include_once $path
   . "fdw-2021-2022-a/proyecto-yeicobF/"
-  . "src/config/directory-path.php";
-include_once $path
-  . "fdw-2021-2022-a/proyecto-yeicobF/"
   . "src/config/config.php";
 
 include_once $path
   . LAYOUTS
   . "base-html-head.php";
-
-$src_folder = DirectoryPath::getPathWithLocalhost(SRC);
-$views_folder = DirectoryPath::getPathWithLocalhost(VIEWS);
-$img_folder =
-  DirectoryPath::getPathWithLocalhost(ASSETS)
-  . "img/";
-
-$css_folder = DirectoryPath::getPathWithLocalhost(CSS);
 
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Editar perfil",
@@ -53,7 +42,7 @@ $baseHtmlHead = new BaseHtmlHead(
   <link rel="stylesheet" href="<?php echo $css_folder; ?>editar-perfil/editar-perfil.css">
 
   <!-- SCRIPTS -->
-  <script defer src="<?php echo DirectoryPath::getPathWithLocalhost(SRC) . "js/navbar.js"; ?>" type="module"></script>
+  <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["SRC"] . "js/navbar.js"; ?>" type="module"></script>
 
 
   <?php
