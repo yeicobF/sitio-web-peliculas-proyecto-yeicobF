@@ -546,35 +546,69 @@ class Model
 
   public static function createDeleteQuery(
     $table,
-    $where_clause,
+    $where_clause_names,
   ) {
-    $query =
-      "DELETE FROM {$table} 
-      WHERE {$where_clause} = :{$where_clause}";
+    $query = "DELETE FROM {$table} ";
+
+    for ($i = 0; $i < count($where_clause_names); $i++) {
+      if ($i === 0) {
+        $query
+          .= "WHERE";
+      } else {
+        $query .= "AND";
+      }
+      $query .= " {$where_clause_names[$i]} = :{$where_clause_names[$i]}";
+    }
+    // WHERE {$where_clause} = :{$where_clause}";
+
+    // Si hay más de una where clause, agregarla con un AND de por medio.
 
     return $query;
   }
+
+  /**
+   * Crear un mapa con las where clauses de un arreglo.
+   *
+   * @param array $where_clauses Arreglo con los nombres de las where clauses.
+   * @param array $values Arreglo con los valores.
+   * @return array
+   */
+  public static function bindWhereClauses(
+    array $where_clauses,
+    array $values
+  ): array {
+    $pdo_params = [];
+    for ($i = 0; $i < count($where_clauses); $i++) {
+      $name = $where_clauses[$i];
+      $value = $values[$i];
+
+      $pdo_params[":{$name}"] = $value;
+    }
+
+    return $pdo_params;
+  }
+
   /**
    * Eliminar un registro.
    *
+   * Si hay más de una WHERE CLAUSE, se agregará el operador lógico AND.
+   *
    * @param string $table
-   * @param array $where_clause ["name"], ["value"].
+   * @param array $where_clauses Arreglo con los nombres de las where clauses.
+   * @param array $values Arreglo con los valores.
    * @param array $pdo_params
    * @return bool
    */
   public static function deleteRecord(
     string $table,
-    array $where_clause,
+    array $where_clauses,
+    array $values,
     array $pdo_params
   ): bool {
-    $delete_query = self::createDeleteQuery($table, $where_clause["name"]);
+    $delete_query = self::createDeleteQuery($table, $where_clauses);
     $query = self::$db_connection->prepare($delete_query);
-    $query->bindParam(
-      ":{$where_clause["name"]}",
-      $where_clause["value"],
-      $pdo_params[$where_clause["name"]]
-    );
-    $query->execute();
+
+    $query->execute(self::bindWhereClauses($where_clauses, $values));
 
     return $query->rowCount() > 0;
   }
