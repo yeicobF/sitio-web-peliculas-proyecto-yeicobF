@@ -4,21 +4,11 @@ $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
 include_once $path
   . "fdw-2021-2022-a/proyecto-yeicobF/"
-  . "src/config/directory-path.php";
-include_once $path
-  . "fdw-2021-2022-a/proyecto-yeicobF/"
   . "src/config/config.php";
 
 include_once $path
   . LAYOUTS
   . "base-html-head.php";
-
-$css_folder = DirectoryPath::getPathWithLocalhost(SRC);
-$views_folder = DirectoryPath::getPathWithLocalhost(VIEWS);
-$img_folder =
-  DirectoryPath::getPathWithLocalhost(ASSETS)
-  . "img/";
-$css_folder = DirectoryPath::getPathWithLocalhost(CSS);
 
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Iniciar sesión",
@@ -49,13 +39,10 @@ $baseHtmlHead = new BaseHtmlHead(
 </head>
 
 <body class="body-container container-sm container-fluid">
-
-  <header class="page-info">
-    <a class="page-info__logo" rel="noopener noreferrer" href="<?php echo $views_folder; ?>inicio/index.php">
-      <img class="" src="<?php echo DirectoryPath::getPathWithLocalhost(PAGE_LOGO); ?>" alt="Colección de películas" srcset="">
-    </a>
-    <h1 class="page-info__title">Colección de películas</h1>
-  </header>
+  <?php
+  require_once FOLDERS_WITH_DOCUMENT_ROOT["LAYOUTS"] . "login-header.php";
+  ?>
+  
   <form autocomplete="off" action="" method="get" class="form__container">
     <!-- Hay que definir el método a utilizar con un input hidden. -->
     <input type="hidden" name="_method" value="POST">

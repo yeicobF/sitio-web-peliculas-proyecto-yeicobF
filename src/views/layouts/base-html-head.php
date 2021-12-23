@@ -101,13 +101,13 @@ class BaseHtmlHead
       <!-- favicon -->
       <link 
         rel='shortcut icon' 
-        href='" . DirectoryPath::getPathWithLocalhost(ASSETS) . "ico/iconscout/film.ico' 
+        href='" . FOLDERS_WITH_LOCALHOST["PAGE_LOGO"] . "' 
         type='image/x-icon'
       >
 
       <script 
         defer 
-        src='" . DirectoryPath::getPathWithLocalhost(JS) . "navbar.js' 
+        src='" . FOLDERS_WITH_LOCALHOST["JS"] . "navbar.js' 
         type='module'
       ></script>
     ";
