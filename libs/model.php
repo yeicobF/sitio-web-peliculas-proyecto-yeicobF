@@ -173,6 +173,26 @@ class Model
 
   /* ----------------------------- GET (SELECT) ----------------------------- */
 
+  /**
+   * Agregar símbolos de porcentaje para un `WHERE` con `LIKE` en lugar de `=`.
+   *
+   * @param array $use_like Arreglo indicando si se utiliza like al final,
+   * inicio de la sentencia o en los dos.
+   * @param string $attribute Atributo actual.
+   * @return void
+   */
+  public static function addLikeSymbolsToWhereClause(
+    array $use_like,
+    string $attribute_to_bind
+  ) {
+    $beginning = ($use_like["beginning"] ? "'%', " : "");
+    $ending = ($use_like["ending"] ? ", '%'" : "");
+    return "CONCAT("
+      . $beginning
+      . $attribute_to_bind
+      . $ending
+      . ")";
+  }
 
   /**
    * Crear parte del query en donde va el WHERE.
@@ -183,7 +203,8 @@ class Model
    * @return string
    */
   public static function createQueryWherePart(
-    array $where_clause_names
+    array $where_clause_names,
+    array $use_like = null
   ) {
     $query_where_part = "";
     for ($i = 0; $i < count($where_clause_names); $i++) {
@@ -193,7 +214,40 @@ class Model
       } else {
         $query_where_part .= " AND";
       }
-      $query_where_part .= " {$where_clause_names[$i]} = :{$where_clause_names[$i]}";
+
+      // Atributo con los 2 puntos al inicio para hacer el bindParam.
+      $attribute_to_bind = ":{$where_clause_names[$i]}";
+      $equal = "=";
+
+      // Modificar atributos si es que hay que utilizar el LIKE.
+      // Si los 2 son false, no cambiar la query, ya que no requiere el LIKE.
+      if (
+        (isset($use_like[$i])
+          && !empty($use_like[$i])
+        )
+        && (array_key_exists("beginning", $use_like[$i])
+          || array_key_exists("ending", $use_like[$i])
+        )
+      ) {
+        $current_use_like = $use_like[$i];
+        // Si se estableció el like, agregarlo en lugar del `=`.
+        $equal = "LIKE";
+        // Agregar símbolo al inicio, al final o en los 2 lados dependiendo de los
+        // valores. Siento que se puede escribir de otra manera para no redundar,
+        // pero no sé cómo. Tal vez podría ser con un loop.
+        // 
+        // Para utilizar el LIKE hay que hacer uso del CONCAT().
+        // Aquí se especifica el por qué:
+        // https://stackoverflow.com/a/7357296/13562806
+        // Técnicamente por la preparación del query y SQL injection.
+        $attribute_to_bind = self::addLikeSymbolsToWhereClause(
+          use_like: $current_use_like,
+          attribute_to_bind: $attribute_to_bind
+        );
+      }
+
+      $query_where_part
+        .= " {$where_clause_names[$i]} {$equal} {$attribute_to_bind}";
     }
 
     return $query_where_part;
@@ -206,7 +260,7 @@ class Model
    * Si no se le envían los otros 2 parámetros, no se le agrega el `WHERE`.
    *
    * @param string $table
-   * @param array|null $where_clause
+   * @param array|null $where_clause_names
    * @param array use_like Indicar si se usará el mecanismo like o no. Esto solo
    * se puede utilizar cuando se hace uso del `WHERE`. Es un arreglo que indica
    * en qué posición se encontrará el modificador.
@@ -215,7 +269,7 @@ class Model
    */
   public static function createSelectQuery(
     string $table,
-    string $where_clause = null,
+    array $where_clause_names = null,
     array $use_like = null,
     array $pdo_params = null
   ): string {
@@ -223,38 +277,16 @@ class Model
 
     // Early return si no están establecidas dichas variables.
     if (
-      !isset($where_clause) && empty($where_clause)
+      !isset($where_clause_names) && empty($where_clause_names)
       && !isset($pdo_params) && empty($pdo_params)
     ) {
       return $query;
     }
-    $attr = ":{$where_clause}";
-    $equal = "=";
 
-    // Modificar atributos si es que hay que utilizar el LIKE.
-    // Si los 2 son false, no cambiar la query, ya que no requiere el LIKE.
-    if ((isset($use_like) && !empty($use_like))
-      && ($use_like["beggining"] || $use_like["ending"])
-    ) {
-      // Si se estableció el like, agregarlo en lugar del `=`.
-      $equal = "LIKE";
-      // Agregar símbolo al inicio, al final o en los 2 lados dependiendo de los
-      // valores. Siento que se puede escribir de otra manera para no redundar,
-      // pero no sé cómo. Tal vez podría ser con un loop.
-      // 
-      // Para utilizar el LIKE hay que hacer uso del CONCAT().
-      // Aquí se especifica el por qué:
-      // https://stackoverflow.com/a/7357296/13562806
-      // Técnicamente por la preparación del query y SQL injection.
-      $attr =
-        "CONCAT("
-        . ($use_like["beggining"] ? "'%', " : "")
-        . $attr
-        . ($use_like["ending"] ? ", '%'" : "")
-        . ")";
-    }
-
-    $query .= " WHERE {$where_clause} {$equal} {$attr}";
+    $query .= self::createQueryWherePart(
+      $where_clause_names,
+      $use_like
+    );
 
     // echo "<br><br>" . $query . "<br><br>";
 
@@ -289,23 +321,23 @@ class Model
    */
   public static function getRecord(
     string $table,
-    array $where_clause,
+    array $where_clause_names,
+    array $where_clause_values,
     ?array $pdo_params
   ): array {
     try {
       $query_select = self::createSelectQuery(
         table: $table,
-        where_clause: $where_clause["name"],
+        where_clause_names: $where_clause_names,
         pdo_params: $pdo_params
       );
 
       $query = self::$db_connection->prepare($query_select);
-      $query->bindParam(
-        ":{$where_clause["name"]}",
-        $where_clause["value"],
-        $pdo_params[$where_clause["name"]]
-      );
-      $query->execute();
+
+      $query->execute(self::bindWhereClauses(
+        $where_clause_names,
+        $where_clause_values
+      ));
 
       return self::getFetchedRecords($query);
     } catch (PDOException $e) {
@@ -324,25 +356,27 @@ class Model
    */
   public static function getRecordLike(
     string $table,
-    array $where_clause,
+    array $where_clause_names,
+    array $where_clause_values,
     array $use_like,
     array $pdo_params
   ): array {
     try {
       $query_select = self::createSelectQuery(
         $table,
-        $where_clause["name"],
+        $where_clause_names,
         $use_like,
         $pdo_params
       );
 
       $query = self::$db_connection->prepare($query_select);
-      $query->bindParam(
-        ":{$where_clause["name"]}",
-        $where_clause["value"],
-        $pdo_params[$where_clause["name"]]
+
+      $query->execute(
+        self::bindWhereClauses(
+          $where_clause_names,
+          $where_clause_values
+        )
       );
-      $query->execute();
 
       return self::getFetchedRecords($query);
     } catch (PDOException $e) {
