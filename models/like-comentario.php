@@ -24,8 +24,10 @@ class LikeComentario extends Model
 
 
   const UNIQUE_ATTRIBUTES = [
-    "comentario_pelicula_id",
-    "usuario_id",
+    "fk" => [
+      "comentario_pelicula_id",
+      "usuario_id",
+    ]
   ];
 
   public function __construct(
@@ -36,20 +38,6 @@ class LikeComentario extends Model
     $this->comentario_pelicula_id = $comentario_pelicula_id;
     $this->usuario_id = $usuario_id;
     $this->setTipo($tipo);
-  }
-
-  /**
-   * Obtener arreglo con el nombre y valor de cada atributo del objeto.
-   *
-   * @return array Array asociativo con parámetro y valor.
-   */
-  public function getParamValues(): array
-  {
-    // Con la función get_object_vars($object) podemos obtener las propiedades
-    // no estáticas accesibles del objeto dependiendo del scope, por lo que, al
-    // llamarla desde aquí, podremos obtener todas las variables.
-    // https://www.php.net/manual/es/function.get-object-vars.php
-    return get_object_vars($this);
   }
 
   public static function getLikeComentario(
@@ -107,7 +95,7 @@ class LikeComentario extends Model
    *
    * @return boolean
    */
-  public function update(): bool
+  public function update(): int
   {
     $new_tipo = $this->tipo <= 1 ? 2 : 1;
 
@@ -125,7 +113,7 @@ class LikeComentario extends Model
     return $new_state->insertLikeComentario();
   }
 
-  public function delete(): bool
+  public function delete(): int
   {
     return parent::deleteRecord(
       table: self::TABLE_NAME,
@@ -163,15 +151,5 @@ class LikeComentario extends Model
     // Si no entró en ninguna de las anteriores condiciones, asignar un 0 al 
     // tipo, indicando que no existe el tipo dado.
     $this->tipo = 0;
-  }
-
-  public function returnJson()
-  {
-    /**
-     * Convertimos a JSON. Recibe un objeto y lo hace cadena. 
-     *
-     * Transformamos todo nuestro objeto a una cadena JSON para leerla en JS. 
-     */
-    echo json_encode($this->getParamValues());
   }
 }

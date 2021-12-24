@@ -35,7 +35,11 @@ class Pelicula extends Model
   const TABLE_NAME = "pelicula";
 
   const PRIMARY_KEY = "id";
-  const UNIQUE_ATTRIBUTES = [];
+  const UNIQUE_ATTRIBUTES = [
+    "pk" => [
+      "id"
+    ]
+  ];
 
   public function __construct(
     string $nombre_original,
@@ -61,20 +65,6 @@ class Pelicula extends Model
     $this->id = $id;
     $this->nombre_es_mx = $nombre_es_mx;
     $this->poster = $poster;
-  }
-
-  /**
-   * Obtener arreglo con el nombre y valor de cada atributo del objeto.
-   *
-   * @return array Array asociativo con parámetro y valor.
-   */
-  public function getParamValues(): array
-  {
-    // Con la función get_object_vars($object) podemos obtener las propiedades
-    // no estáticas accesibles del objeto dependiendo del scope, por lo que, al
-    // llamarla desde aquí, podremos obtener todas las variables.
-    // https://www.php.net/manual/es/function.get-object-vars.php
-    return get_object_vars($this);
   }
 
   /**
@@ -108,9 +98,11 @@ class Pelicula extends Model
     return parent::updateRecord(
       table: self::TABLE_NAME,
       param_values: $param_values,
-      where_clause: [
-        "name" => "id",
-        "value" => $this->_id,
+      where_clause_names: [
+        "id",
+      ],
+      where_clause_values: [
+        $this->_id
       ],
       unique_attributes: self::UNIQUE_ATTRIBUTES,
       pdo_params: self::PDO_PARAMS
@@ -121,21 +113,13 @@ class Pelicula extends Model
   {
     return parent::deleteRecord(
       table: self::TABLE_NAME,
-      where_clause: [
-        "name" => "id",
-        "value" => $this->_id
+      where_clauses: [
+        "id",
+      ],
+      values: [
+        $this->_id
       ],
       pdo_params: self::PDO_PARAMS
     );
-  }
-
-  public function returnJson()
-  {
-    /**
-     * Convertimos a JSON. Recibe un objeto y lo hace cadena. 
-     *
-     * Transformamos todo nuestro objeto a una cadena JSON para leerla en JS. 
-     */
-    echo json_encode($this->getParamValues());
   }
 }
