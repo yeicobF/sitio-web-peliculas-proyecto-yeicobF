@@ -43,6 +43,30 @@ class Model
     }
   }
 
+  /**
+   * Obtener arreglo con el nombre y valor de cada atributo del objeto.
+   *
+   * @return array Array asociativo con parámetro y valor.
+   */
+  protected function getParamValues(): array
+  {
+    // Con la función get_object_vars($object) podemos obtener las propiedades
+    // no estáticas accesibles del objeto dependiendo del scope, por lo que, al
+    // llamarla desde aquí, podremos obtener todas las variables.
+    // https://www.php.net/manual/es/function.get-object-vars.php
+    return get_object_vars($this);
+  }
+
+  public function returnJson()
+  {
+    /**
+     * Convertimos a JSON. Recibe un objeto y lo hace cadena. 
+     *
+     * Transformamos todo nuestro objeto a una cadena JSON para leerla en JS. 
+     */
+    json_encode($this->getParamValues());
+  }
+
   /* -------------------------- OBTENCIÓN DE FECHA -------------------------- */
 
   /**
@@ -102,26 +126,26 @@ class Model
    */
   public static function recordExists(
     string $table,
-    string $attribute_name,
-    int | string $attribute_value,
+    array $where_clause_names,
+    array $where_clause_values,
     array $pdo_params
   ): bool {
     try {
-      // Esta opción devolverá 0 o 1 resultados. Esto ayudará a ver si existe o
-      // no.
-      $query = self::$db_connection->prepare(
-        "SELECT *
-          FROM {$table}
-          WHERE {$attribute_name} = :attribute_value;
-        "
+
+      $query_select = "SELECT * FROM {$table}";
+      $query_select .= self::createQueryWherePart(
+        $where_clause_names
       );
 
-      $query->bindParam(
-        ":attribute_value",
-        $attribute_value,
-        $pdo_params[$attribute_name]
-      );
-      $query->execute();
+      // Esta opción devolverá 0 o 1 resultados. Esto ayudará a ver si existe o
+      // no.
+      $query = self::$db_connection->prepare($query_select);
+
+
+      $query->execute(self::bindWhereClauses(
+        where_clauses: $where_clause_names,
+        values: $where_clause_values
+      ));
 
       // Si no hay filas, devolver false, indicando que no hay coincidencias.
       // fetch devuelve false si no encuentra registros. Si encuentra registros,
@@ -145,6 +169,12 @@ class Model
   /**
    * Revisar que registros únicos existan en la tabla.
    *
+   * Hay registros que tienen más de un campo único a la vez. Revisar que,
+   * combinados no existan juntos.
+   * 
+   * ! Lo que hace esta función podría dividirlo en varias funciones, pero por
+   * el momento así quedará.
+   * 
    * @param string $table
    * @param array $unique_attributes Valores únicos en arreglo asociativo:
    * nombre de atributo => valor.
@@ -157,12 +187,86 @@ class Model
     array $unique_attributes,
     array $pdo_params
   ): bool {
-    // Recorrer los elementos y revisar. Si alguno existe, ya devolvemos true.
-    foreach ($unique_attributes as $attribute_name) {
+    // Si los atributos únicos no se encuentran en los `$param_values`, indicar
+    // que no existen.
+    $encountered_params = 0;
+
+    foreach ($unique_attributes as $type => $values) {
+      $current_value = 0;
+      foreach ($values as $name) {
+        if (array_key_exists($name, $param_values)) {
+          $encountered_params++;
+        } else {
+          // Eliminar el elemento que no se encontró.
+          unset($unique_attributes[$type][$current_value]);
+        }
+        $current_value++;
+      }
+    }
+
+    if ($encountered_params === 0) {
+      return false;
+    }
+
+    $fk_names = null;
+    $pk_names = array_key_exists("pk", $unique_attributes)
+      ? array_values($unique_attributes["pk"])
+      : null;
+    $unique_names = array_key_exists("unique", $unique_attributes)
+      ? array_values($unique_attributes["unique"])
+      : null;
+
+    // Se trata de llaves foráneas.
+    if (array_key_exists("fk", $unique_attributes)) {
+      $fk_names = $unique_attributes["fk"];
+      $fk_values = [];
+
+      foreach ($fk_names as $name) {
+        if (isset($param_values[$name])) {
+          array_push($fk_values, $param_values[$name]);
+        }
+      }
+      // Revisar que se hayan encontrado valores para revisar el registro.
+      if (
+        count($fk_names) === count($fk_values)
+        && count($fk_values) > 0
+      )
+        if (self::recordExists(
+          $table,
+          $fk_names,
+          $fk_values,
+          $pdo_params
+        )) return true;
+
+      // Quitamos las llaves foráneas para revisar solo las únicas y primarias,
+      // ya que, esas se revisan de forma individual.
+      unset($unique_attributes["fk"]);
+    }
+
+
+    $unique_attributes = array_merge(
+      $pk_names,
+      $unique_names,
+    );
+
+    /** 
+     * En este momento, el arreglo ya no tendría las llaves únicas, por lo que,
+     * los elementos se revisarán de forma individual. 
+     *
+     * Recorrer los elementos y revisar. 
+     *
+     * - Si alguno existe, ya devolvemos true. 
+     * - Si son llaves foráneas, revisarlas en conjunto. Si es un campo único o
+     *   una llave primaria, revisar solo. 
+     */
+    foreach ($unique_attributes as $name) {
+      if (empty($name) || !isset($name)) {
+        continue;
+      }
       if (self::recordExists(
         $table,
-        $attribute_name,
-        $param_values[$attribute_name],
+        [$name],
+        [$param_values[$name]],
         $pdo_params
       )) return true;
     }
@@ -179,12 +283,12 @@ class Model
    * @param array $use_like Arreglo indicando si se utiliza like al final,
    * inicio de la sentencia o en los dos.
    * @param string $attribute Atributo actual.
-   * @return void
+   * @return string
    */
   public static function addLikeSymbolsToWhereClause(
     array $use_like,
     string $attribute_to_bind
-  ) {
+  ): string {
     $beginning = ($use_like["beginning"] ? "'%', " : "");
     $ending = ($use_like["ending"] ? ", '%'" : "");
     return "CONCAT("
@@ -324,7 +428,7 @@ class Model
     array $where_clause_names,
     array $where_clause_values,
     ?array $pdo_params
-  ): array {
+  ): array|null {
     try {
       $query_select = self::createSelectQuery(
         table: $table,
@@ -520,7 +624,7 @@ class Model
   public static function createUpdateQuery(
     string $table,
     array $attribute_names,
-    string $where_clause
+    array $where_clause_names,
   ): string {
     $query = "UPDATE {$table} SET ";
 
@@ -532,16 +636,19 @@ class Model
         : ", ";
     }
 
-    $query .= "WHERE {$where_clause} = :{$where_clause}";
+    $query .= self::createQueryWherePart($where_clause_names);
 
     return $query;
   }
 
   /**
    * Actualizar un registro de la BD.
-   * 
+   *
    * Si no se actualizó nada del registro, devuelve true aunque haya encontrado
    * un registro.
+   *
+   * - Si regresa 0, significa que no se realizó la inserción. Esto puede
+   *   suceder porque no se actualizó ningún campo.
    *
    * @param string $table
    * @param array $param_values Array con nombre y valor.
@@ -552,14 +659,16 @@ class Model
   public static function updateRecord(
     string $table,
     array $param_values,
-    array $where_clause,
+    array $where_clause_names,
+    array $where_clause_values,
     array $unique_attributes,
     array $pdo_params
   ): int {
+    // El récord (registro) no existe.
     if (!self::recordExists(
       $table,
-      $where_clause["name"],
-      $where_clause["value"],
+      $where_clause_names,
+      $where_clause_values,
       $pdo_params
     )) {
       // Campo por actualizar no existente.
@@ -580,20 +689,29 @@ class Model
       $update_query = self::createUpdateQuery(
         $table,
         array_keys($param_values),
-        $where_clause["name"]
+        $where_clause_names
       );
 
       // echo $update_query . "<br>";
 
       $query = self::$db_connection->prepare($update_query);
 
-      // Agregamos el nombre del where y su valor, ya que también forman parte
-      // de los parámetros.
-      $param_values[$where_clause["name"]] = $where_clause["value"];
+      // Parámetros y su valor en un arreglo asociativo.
+      $params = self::bindEveryParamToArray($param_values);
+
+      // Agregamos el nombre de los where, ya que también forman parte de los
+      // parámetros.
+      $params = array_merge(
+        $params,
+        self::bindWhereClauses(
+          $where_clause_names,
+          $where_clause_values
+        )
+      );
 
       // echo var_dump($param_values) . "<br>";
 
-      $query->execute(self::bindEveryParamToArray($param_values));
+      $query->execute($params);
 
       return $query->rowCount() > 0;
     } catch (PDOException $e) {
