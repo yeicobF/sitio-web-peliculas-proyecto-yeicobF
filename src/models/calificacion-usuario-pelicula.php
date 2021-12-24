@@ -23,8 +23,10 @@ class CalificacionUsuarioPelicula extends Model
   ];
 
   const UNIQUE_ATTRIBUTES = [
-    "pelicula_id",
-    "usuario_id",
+    "fk" => [
+      "pelicula_id",
+      "usuario_id",
+    ]
   ];
 
   public function __construct(
@@ -91,7 +93,7 @@ class CalificacionUsuarioPelicula extends Model
       $this->usuario_id,
       $numero_estrellas
     );
-    $param_values = parent::getParamValues($this);
+    $param_values = parent::getParamValues($new_state);
     unset($param_values["pelicula_id"]);
     unset($param_values["usuario_id"]);
 
@@ -99,9 +101,13 @@ class CalificacionUsuarioPelicula extends Model
     return parent::updateRecord(
       table: self::TABLE_NAME,
       param_values: $param_values,
-      where_clause: [
+      where_clause_names: [
         "pelicula_id",
         "usuario_id"
+      ],
+      where_clause_values: [
+        $this->pelicula_id,
+        $this->usuario_id
       ],
       unique_attributes: self::UNIQUE_ATTRIBUTES,
       pdo_params: self::PDO_PARAMS

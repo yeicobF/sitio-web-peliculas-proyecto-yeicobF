@@ -116,26 +116,26 @@ class Model
    */
   public static function recordExists(
     string $table,
-    string $attribute_name,
-    int | string $attribute_value,
+    array $where_clause_names,
+    array $where_clause_values,
     array $pdo_params
   ): bool {
     try {
-      // Esta opción devolverá 0 o 1 resultados. Esto ayudará a ver si existe o
-      // no.
-      $query = self::$db_connection->prepare(
-        "SELECT *
-          FROM {$table}
-          WHERE {$attribute_name} = :attribute_value;
-        "
+
+      $query_select = "SELECT * FROM {$table}";
+      $query_select .= self::createQueryWherePart(
+        $where_clause_names
       );
 
-      $query->bindParam(
-        ":attribute_value",
-        $attribute_value,
-        $pdo_params[$attribute_name]
-      );
-      $query->execute();
+      // Esta opción devolverá 0 o 1 resultados. Esto ayudará a ver si existe o
+      // no.
+      $query = self::$db_connection->prepare($query_select);
+
+
+      $query->execute(self::bindWhereClauses(
+        where_clauses: $where_clause_names,
+        values: $where_clause_values
+      ));
 
       // Si no hay filas, devolver false, indicando que no hay coincidencias.
       // fetch devuelve false si no encuentra registros. Si encuentra registros,
@@ -159,6 +159,9 @@ class Model
   /**
    * Revisar que registros únicos existan en la tabla.
    *
+   * Hay registros que tienen más de un campo único a la vez. Revisar que,
+   * combinados no existan juntos.
+   * 
    * @param string $table
    * @param array $unique_attributes Valores únicos en arreglo asociativo:
    * nombre de atributo => valor.
@@ -171,7 +174,55 @@ class Model
     array $unique_attributes,
     array $pdo_params
   ): bool {
-    // Recorrer los elementos y revisar. Si alguno existe, ya devolvemos true.
+    // Si los atributos únicos no se encuentran en los `$param_values`, indicar
+    // que no existen.
+
+
+    $fk_names = null;
+    $pk_names = array_key_exists("pk", $unique_attributes)
+      ? $unique_attributes["pk"]
+      : null;
+    $unique_names = array_key_exists("unique", $unique_attributes)
+      ? $unique_attributes["unique"]
+      : null;
+
+    // Se trata de llaves foráneas.
+    if (array_key_exists("fk", $unique_attributes)) {
+      $fk_names = $unique_attributes["fk"];
+      $fk_values = [];
+
+      foreach ($fk_names as $name) {
+        if (isset($param_values[$name])) {
+          array_push($fk_values, $param_values[$name]);
+        }
+      }
+      // Revisar que se hayan encontrado valores para revisar el registro.
+      if (
+        count($fk_names) === count($fk_values)
+        && count($fk_values) > 0
+      )
+        if (self::recordExists(
+          $table,
+          $fk_names,
+          $fk_values,
+          $pdo_params
+        )) return true;
+
+      // Quitamos las llaves foráneas para revisar solo las únicas y primarias,
+      // ya que, esas se revisan de forma individual.
+      unset($unique_attributes["fk"]);
+    }
+
+    /** 
+     * En este momento, el arreglo ya no tendría las llaves únicas, por lo que,
+     * los elementos se revisarán de forma individual. 
+     *
+     * Recorrer los elementos y revisar. 
+     *
+     * - Si alguno existe, ya devolvemos true. 
+     * - Si son llaves foráneas, revisarlas en conjunto. Si es un campo único o
+     *   una llave primaria, revisar solo. 
+     */
     foreach ($unique_attributes as $attribute_name) {
       if (self::recordExists(
         $table,
@@ -534,7 +585,7 @@ class Model
   public static function createUpdateQuery(
     string $table,
     array $attribute_names,
-    string $where_clause
+    array $where_clause_names,
   ): string {
     $query = "UPDATE {$table} SET ";
 
@@ -546,7 +597,7 @@ class Model
         : ", ";
     }
 
-    $query .= "WHERE {$where_clause} = :{$where_clause}";
+    $query .= self::createQueryWherePart($where_clause_names);
 
     return $query;
   }
@@ -566,14 +617,16 @@ class Model
   public static function updateRecord(
     string $table,
     array $param_values,
-    array $where_clause,
+    array $where_clause_names,
+    array $where_clause_values,
     array $unique_attributes,
     array $pdo_params
   ): int {
+    // El récord (registro) no existe.
     if (!self::recordExists(
       $table,
-      $where_clause["name"],
-      $where_clause["value"],
+      $where_clause_names,
+      $where_clause_values,
       $pdo_params
     )) {
       // Campo por actualizar no existente.
@@ -594,20 +647,29 @@ class Model
       $update_query = self::createUpdateQuery(
         $table,
         array_keys($param_values),
-        $where_clause["name"]
+        $where_clause_names
       );
 
       // echo $update_query . "<br>";
 
       $query = self::$db_connection->prepare($update_query);
 
-      // Agregamos el nombre del where y su valor, ya que también forman parte
-      // de los parámetros.
-      $param_values[$where_clause["name"]] = $where_clause["value"];
+      // Parámetros y su valor en un arreglo asociativo.
+      $params = self::bindEveryParamToArray($param_values);
+
+      // Agregamos el nombre de los where, ya que también forman parte de los
+      // parámetros.
+      $params = array_merge(
+        $params,
+        self::bindWhereClauses(
+          $where_clause_names,
+          $where_clause_values
+        )
+      );
 
       // echo var_dump($param_values) . "<br>";
 
-      $query->execute(self::bindEveryParamToArray($param_values));
+      $query->execute($params);
 
       return $query->rowCount() > 0;
     } catch (PDOException $e) {
