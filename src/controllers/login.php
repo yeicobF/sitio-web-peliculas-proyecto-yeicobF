@@ -36,6 +36,7 @@ if (
   // exit;
 }
 
+// Esto podría ir en una inicialización del Controller.
 Model::initDbConnection();
 
 // El método sí es POST.
