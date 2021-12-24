@@ -100,3 +100,12 @@ $views_folder = FOLDERS_WITH_LOCALHOST["VIEWS"];
 $assets_folder = FOLDERS_WITH_LOCALHOST["ASSETS"];
 $css_folder = FOLDERS_WITH_LOCALHOST["CSS"];
 $img_folder = FOLDERS_WITH_LOCALHOST["IMG"];
+
+/* -------------------------------------------------------------------------- */
+
+function showElements(array $elements)
+{
+  foreach ($elements as $value) {
+    echo "<br><br>" . var_dump($value) . "<br><br>";
+  }
+}

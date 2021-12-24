@@ -41,8 +41,10 @@ $baseHtmlHead = new BaseHtmlHead(
 <body class="body-container container-sm container-fluid">
   <?php
   require_once FOLDERS_WITH_DOCUMENT_ROOT["LAYOUTS"] . "login-header.php";
+
+  $action = FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "login.php";
   ?>
-  <form autocomplete="off" action="" method="get" class="form__container">
+  <form autocomplete="off" action="<?php echo $action; ?>" method="POST" class="form__container">
     <input type="hidden" name="_method" value="POST">
 
     <section class="form__input__container">

@@ -1,7 +1,14 @@
 <?php
+
+use Libs\Controller;
+
 $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
 include_once $path . "fdw-2021-2022-a/proyecto-yeicobF/src/config/config.php";
+
+require_once FOLDERS_WITH_DOCUMENT_ROOT["LIBS"] . "controller.php";
+
+Controller::startSession();
 
 /**
  * Obtener la base que viene en el head del HTML en general y no ponerla de

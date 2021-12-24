@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__ . "/../libs/controller.php";
-require_once __DIR__ . "/../libs/usuario.php";
-
 namespace Controllers;
+
+require_once __DIR__ . "/../libs/controller.php";
+require_once __DIR__ . "/../models/usuario.php";
 
 use Libs\Controller;
 
