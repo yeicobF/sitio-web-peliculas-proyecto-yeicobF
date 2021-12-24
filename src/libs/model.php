@@ -175,6 +175,32 @@ class Model
 
 
   /**
+   * Crear parte del query en donde va el WHERE.
+   * 
+   * Si hay más de un where clause, concatenar con AND.
+   *
+   * @param array $where_clause_names
+   * @return string
+   */
+  public static function createQueryWherePart(
+    array $where_clause_names
+  ) {
+    $query_where_part = "";
+    for ($i = 0; $i < count($where_clause_names); $i++) {
+      if ($i === 0) {
+        $query_where_part
+          .= " WHERE";
+      } else {
+        $query_where_part .= " AND";
+      }
+      $query_where_part .= " {$where_clause_names[$i]} = :{$where_clause_names[$i]}";
+    }
+
+    return $query_where_part;
+  }
+
+
+  /**
    * Crear query de `SELECT`.
    *
    * Si no se le envían los otros 2 parámetros, no se le agrega el `WHERE`.
@@ -549,16 +575,7 @@ class Model
     $where_clause_names,
   ) {
     $query = "DELETE FROM {$table}";
-
-    for ($i = 0; $i < count($where_clause_names); $i++) {
-      if ($i === 0) {
-        $query
-          .= " WHERE";
-      } else {
-        $query .= " AND";
-      }
-      $query .= " {$where_clause_names[$i]} = :{$where_clause_names[$i]}";
-    }
+    $query .= self::createQueryWherePart($where_clause_names);
     // WHERE {$where_clause} = :{$where_clause}";
 
     // Si hay más de una where clause, agregarla con un AND de por medio.

@@ -31,7 +31,7 @@ class LikeComentario extends Model
   public function __construct(
     int $comentario_pelicula_id,
     int $usuario_id,
-    int $tipo
+    int | string $tipo
   ) {
     $this->comentario_pelicula_id = $comentario_pelicula_id;
     $this->usuario_id = $usuario_id;
@@ -50,6 +50,41 @@ class LikeComentario extends Model
     // llamarla desde aquí, podremos obtener todas las variables.
     // https://www.php.net/manual/es/function.get-object-vars.php
     return get_object_vars($this);
+  }
+
+  public static function getLikeComentario(
+    int $comentario_pelicula_id,
+    int $usuario_id
+  ) {
+    try {
+      $where_clauses = [
+        "comentario_pelicula_id",
+        "usuario_id"
+      ];
+
+      $query_select = parent::createSelectQuery(
+        self::TABLE_NAME,
+      );
+
+      $query_select .= parent::createQueryWherePart($where_clauses);
+
+      $query = self::$db_connection->prepare($query_select);
+
+      $query->execute(
+        parent::bindWhereClauses(
+          where_clauses: $where_clauses,
+          values: [
+            $comentario_pelicula_id,
+            $usuario_id
+          ]
+        )
+      );
+
+      return self::getFetchedRecords($query);
+    } catch (PDOException $e) {
+      error_log("Error en la query - {$e}");
+      exit();
+    }
   }
 
   /**
@@ -81,7 +116,7 @@ class LikeComentario extends Model
     $this->delete();
 
     // Instanciamos con nuevo tipo.
-    $new_state  = new $this->__construct(
+    $new_state  = new LikeComentario(
       $this->comentario_pelicula_id,
       $this->usuario_id,
       $new_tipo
