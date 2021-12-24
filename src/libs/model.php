@@ -221,8 +221,13 @@ class Model
 
       // Modificar atributos si es que hay que utilizar el LIKE.
       // Si los 2 son false, no cambiar la query, ya que no requiere el LIKE.
-      if ((isset($current_use_like) && !empty($current_use_like))
-        && ($current_use_like["beginning"] || $current_use_like["ending"])
+      if (
+        (isset($use_like[$i])
+          && !empty($use_like[$i])
+        )
+        && (array_key_exists("beginning", $use_like[$i])
+          || array_key_exists("ending", $use_like[$i])
+        )
       ) {
         $current_use_like = $use_like[$i];
         // Si se estableció el like, agregarlo en lugar del `=`.
@@ -236,7 +241,7 @@ class Model
         // https://stackoverflow.com/a/7357296/13562806
         // Técnicamente por la preparación del query y SQL injection.
         $attribute_to_bind = self::addLikeSymbolsToWhereClause(
-          use_like: $use_like[$i],
+          use_like: $current_use_like,
           attribute_to_bind: $attribute_to_bind
         );
       }

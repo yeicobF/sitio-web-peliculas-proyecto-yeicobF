@@ -83,25 +83,25 @@ $use_like = [
     "beginning" => true,
     "ending" => true,
   ],
-  [
-    "beginning" => true,
-    "ending" => true,
-  ],
-  [
-    "beginning" => true,
-    "ending" => true,
-  ],
 ];
 
-// echo "SELECT LIKE %ja% true true" . var_dump(Model::getRecordLike(
-//   Usuario::TABLE_NAME,
-//   array(
-//     "name" => "nombres",
-//     "value" => "ja"
-//   ),
-//   $use_like,
-//   Usuario::PDO_PARAMS
-// )) . "<br><br>";
+$where_clause_names = [
+  "nombres",
+  "apellidos"
+];
+
+$where_clause_values = [
+  "a",
+  "juárez"
+];
+
+echo "SELECT LIKE" . var_dump(Model::getRecordLike(
+  Usuario::TABLE_NAME,
+  $where_clause_names,
+  $where_clause_values,
+  $use_like,
+  Usuario::PDO_PARAMS
+)) . "<br><br>";
 
 // echo "SELECT LIKE Ja% false true" . var_dump(Model::getRecordLike(
 //   Usuario::TABLE_NAME,
