@@ -113,6 +113,10 @@ class Usuario extends Model
   /**
    * Obtener arreglo con el nombre y valor de cada atributo del objeto.
    *
+   * Implementación distinta a la de `Model`, ya que, en `Model` se obtienen los
+   * nombres de las propiedades directamente, y las de esta clase comienzan con
+   * un guión bajo.
+   *
    * @return array Array asociativo con parámetro y valor.
    */
   public function getParamValues(): array

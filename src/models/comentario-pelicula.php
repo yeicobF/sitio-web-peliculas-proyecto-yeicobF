@@ -22,7 +22,11 @@ class ComentarioPelicula extends Model
 
   const TABLE_NAME = "comentario_pelicula";
   const PRIMARY_KEY = "id";
-  const UNIQUE_ATTRIBUTES = [];
+  const UNIQUE_ATTRIBUTES = [
+    "id",
+    "pelicula_id",
+    "usuario_id",
+  ];
 
   public function __construct(
     int $pelicula_id,
@@ -41,20 +45,6 @@ class ComentarioPelicula extends Model
   }
 
   /**
-   * Obtener arreglo con el nombre y valor de cada atributo del objeto.
-   *
-   * @return array Array asociativo con parámetro y valor.
-   */
-  public function getParamValues(): array
-  {
-    // Con la función get_object_vars($object) podemos obtener las propiedades
-    // no estáticas accesibles del objeto dependiendo del scope, por lo que, al
-    // llamarla desde aquí, podremos obtener todas las variables.
-    // https://www.php.net/manual/es/function.get-object-vars.php
-    return get_object_vars($this);
-  }
-
-  /**
    * Inserción de un nuevo elemento.
    */
   public function insertComentarioPelicula(): int
@@ -67,7 +57,7 @@ class ComentarioPelicula extends Model
     );
   }
 
-  public function delete(): bool
+  public function delete(): int
   {
     return parent::deleteRecord(
       table: self::TABLE_NAME,

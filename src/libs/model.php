@@ -43,6 +43,20 @@ class Model
     }
   }
 
+  /**
+   * Obtener arreglo con el nombre y valor de cada atributo del objeto.
+   *
+   * @return array Array asociativo con parámetro y valor.
+   */
+  protected function getParamValues(): array
+  {
+    // Con la función get_object_vars($object) podemos obtener las propiedades
+    // no estáticas accesibles del objeto dependiendo del scope, por lo que, al
+    // llamarla desde aquí, podremos obtener todas las variables.
+    // https://www.php.net/manual/es/function.get-object-vars.php
+    return get_object_vars($this);
+  }
+
   /* -------------------------- OBTENCIÓN DE FECHA -------------------------- */
 
   /**
@@ -179,12 +193,12 @@ class Model
    * @param array $use_like Arreglo indicando si se utiliza like al final,
    * inicio de la sentencia o en los dos.
    * @param string $attribute Atributo actual.
-   * @return void
+   * @return string
    */
   public static function addLikeSymbolsToWhereClause(
     array $use_like,
     string $attribute_to_bind
-  ) {
+  ): string {
     $beginning = ($use_like["beginning"] ? "'%', " : "");
     $ending = ($use_like["ending"] ? ", '%'" : "");
     return "CONCAT("
@@ -324,7 +338,7 @@ class Model
     array $where_clause_names,
     array $where_clause_values,
     ?array $pdo_params
-  ): array {
+  ): array|null {
     try {
       $query_select = self::createSelectQuery(
         table: $table,
