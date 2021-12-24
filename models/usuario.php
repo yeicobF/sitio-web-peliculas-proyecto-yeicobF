@@ -174,9 +174,11 @@ class Usuario extends Model
   {
     return parent::deleteRecord(
       table: self::TABLE_NAME,
-      where_clause: [
-        "name" => "id",
-        "value" => $this->_id
+      where_clauses: [
+        "id"
+      ],
+      values: [
+        $this->_id
       ],
       pdo_params: self::PDO_PARAMS
     );
