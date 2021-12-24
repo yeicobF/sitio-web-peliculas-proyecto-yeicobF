@@ -55,7 +55,7 @@ class LikeComentario extends Model
   public static function getLikeComentario(
     int $comentario_pelicula_id,
     int $usuario_id
-  ) {
+  ): array {
     try {
       $where_clauses = [
         "comentario_pelicula_id",
@@ -64,9 +64,8 @@ class LikeComentario extends Model
 
       $query_select = parent::createSelectQuery(
         self::TABLE_NAME,
+        $where_clauses
       );
-
-      $query_select .= parent::createQueryWherePart($where_clauses);
 
       $query = self::$db_connection->prepare($query_select);
 
