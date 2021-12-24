@@ -55,7 +55,7 @@ $baseHtmlHead = new BaseHtmlHead(
     </section>
     <input type="submit" class="btn form__button" id="login-form-button" value="Iniciar sesión">
   </form>
-  <a href="<?php echo $views_folder; ?>registro/index.php" class="form__link">
+  <a href="registro.php" class="form__link">
     Regístrate
   </a>
 

@@ -1,8 +1,8 @@
 <?php
 
-include_once "../models/DB.php";
+include_once "../libs/DB.php";
 include_once "../models/usuario.php";
-include_once "../models/model.php";
+include_once "../libs/model.php";
 
 Model::initDbConnection();
 

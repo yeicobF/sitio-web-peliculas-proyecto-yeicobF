@@ -57,7 +57,7 @@ $url_page = [
   "peliculas" => $views_folder . "peliculas/index.php",
   "generos" => $views_folder . "generos/index.php",
   "login" => $views_folder . "login/index.php",
-  "registro" => $views_folder . "registro/index.php",
+  "registro" => $views_folder . "login/registro.php",
 ];
 
 // var_dump($user_url);
