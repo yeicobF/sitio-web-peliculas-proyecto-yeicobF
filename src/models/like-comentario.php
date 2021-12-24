@@ -24,8 +24,10 @@ class LikeComentario extends Model
 
 
   const UNIQUE_ATTRIBUTES = [
-    "comentario_pelicula_id",
-    "usuario_id",
+    "fk" => [
+      "comentario_pelicula_id",
+      "usuario_id",
+    ]
   ];
 
   public function __construct(
@@ -149,15 +151,5 @@ class LikeComentario extends Model
     // Si no entró en ninguna de las anteriores condiciones, asignar un 0 al 
     // tipo, indicando que no existe el tipo dado.
     $this->tipo = 0;
-  }
-
-  public function returnJson()
-  {
-    /**
-     * Convertimos a JSON. Recibe un objeto y lo hace cadena. 
-     *
-     * Transformamos todo nuestro objeto a una cadena JSON para leerla en JS. 
-     */
-    echo json_encode($this->getParamValues());
   }
 }

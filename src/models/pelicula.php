@@ -35,7 +35,11 @@ class Pelicula extends Model
   const TABLE_NAME = "pelicula";
 
   const PRIMARY_KEY = "id";
-  const UNIQUE_ATTRIBUTES = [];
+  const UNIQUE_ATTRIBUTES = [
+    "pk" => [
+      "id"
+    ]
+  ];
 
   public function __construct(
     string $nombre_original,
@@ -94,9 +98,11 @@ class Pelicula extends Model
     return parent::updateRecord(
       table: self::TABLE_NAME,
       param_values: $param_values,
-      where_clause: [
-        "name" => "id",
-        "value" => $this->_id,
+      where_clause_names: [
+        "id",
+      ],
+      where_clause_values: [
+        $this->_id
       ],
       unique_attributes: self::UNIQUE_ATTRIBUTES,
       pdo_params: self::PDO_PARAMS
@@ -115,15 +121,5 @@ class Pelicula extends Model
       ],
       pdo_params: self::PDO_PARAMS
     );
-  }
-
-  public function returnJson()
-  {
-    /**
-     * Convertimos a JSON. Recibe un objeto y lo hace cadena. 
-     *
-     * Transformamos todo nuestro objeto a una cadena JSON para leerla en JS. 
-     */
-    echo json_encode($this->getParamValues());
   }
 }

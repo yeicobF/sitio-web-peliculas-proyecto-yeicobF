@@ -57,6 +57,16 @@ class Model
     return get_object_vars($this);
   }
 
+  public function returnJson()
+  {
+    /**
+     * Convertimos a JSON. Recibe un objeto y lo hace cadena. 
+     *
+     * Transformamos todo nuestro objeto a una cadena JSON para leerla en JS. 
+     */
+    json_encode($this->getParamValues());
+  }
+
   /* -------------------------- OBTENCIÓN DE FECHA -------------------------- */
 
   /**
@@ -162,6 +172,9 @@ class Model
    * Hay registros que tienen más de un campo único a la vez. Revisar que,
    * combinados no existan juntos.
    * 
+   * ! Lo que hace esta función podría dividirlo en varias funciones, pero por
+   * el momento así quedará.
+   * 
    * @param string $table
    * @param array $unique_attributes Valores únicos en arreglo asociativo:
    * nombre de atributo => valor.
@@ -176,14 +189,31 @@ class Model
   ): bool {
     // Si los atributos únicos no se encuentran en los `$param_values`, indicar
     // que no existen.
+    $encountered_params = 0;
 
+    foreach ($unique_attributes as $type => $values) {
+      $current_value = 0;
+      foreach ($values as $name) {
+        if (array_key_exists($name, $param_values)) {
+          $encountered_params++;
+        } else {
+          // Eliminar el elemento que no se encontró.
+          unset($unique_attributes[$type][$current_value]);
+        }
+        $current_value++;
+      }
+    }
+
+    if ($encountered_params === 0) {
+      return false;
+    }
 
     $fk_names = null;
     $pk_names = array_key_exists("pk", $unique_attributes)
-      ? $unique_attributes["pk"]
+      ? array_values($unique_attributes["pk"])
       : null;
     $unique_names = array_key_exists("unique", $unique_attributes)
-      ? $unique_attributes["unique"]
+      ? array_values($unique_attributes["unique"])
       : null;
 
     // Se trata de llaves foráneas.
@@ -213,6 +243,12 @@ class Model
       unset($unique_attributes["fk"]);
     }
 
+
+    $unique_attributes = array_merge(
+      $pk_names,
+      $unique_names,
+    );
+
     /** 
      * En este momento, el arreglo ya no tendría las llaves únicas, por lo que,
      * los elementos se revisarán de forma individual. 
@@ -223,11 +259,14 @@ class Model
      * - Si son llaves foráneas, revisarlas en conjunto. Si es un campo único o
      *   una llave primaria, revisar solo. 
      */
-    foreach ($unique_attributes as $attribute_name) {
+    foreach ($unique_attributes as $name) {
+      if (empty($name) || !isset($name)) {
+        continue;
+      }
       if (self::recordExists(
         $table,
-        $attribute_name,
-        $param_values[$attribute_name],
+        [$name],
+        [$param_values[$name]],
         $pdo_params
       )) return true;
     }

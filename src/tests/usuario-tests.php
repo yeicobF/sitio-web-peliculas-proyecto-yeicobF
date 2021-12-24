@@ -58,7 +58,7 @@ Model::initDbConnection();
 //   pdo_params: Usuario::PDO_PARAMS
 // );
 // var_dump($usuario_db);
-
+// 
 // $usuario = new Usuario(
 //   nombres: $usuario_db["nombres"],
 //   apellidos: $usuario_db["apellidos"],
@@ -100,4 +100,48 @@ Model::initDbConnection();
 // var_dump($usuario);
 
 /* -------------------------------------------------------------------------- */
-Usuario::isLoginDataCorrect("abel_juarez", "abelito");
+// Usuario::isLoginDataCorrect("abel_juarez", "abelito");
+
+/* -------------------------------------------------------------------------- */
+
+// echo var_dump(Model::getEveryRecord(Usuario::TABLE_NAME));
+
+$usuario_db = Model::getRecord(
+  table: Usuario::TABLE_NAME,
+  where_clause_names: [
+    "id",
+  ],
+  where_clause_values: [
+    14
+  ],
+  pdo_params: Usuario::PDO_PARAMS
+)[0];
+var_dump($usuario_db);
+
+$usuario = new Usuario(
+  nombres: $usuario_db["nombres"],
+  apellidos: $usuario_db["apellidos"],
+  username: $usuario_db["username"],
+  password: $usuario_db["password"],
+  rol: Usuario::ROLES_ENUM_INDEX[$usuario_db["rol"]],
+  id: $usuario_db["id"],
+  foto_perfil: $usuario_db["foto_perfil"]
+);
+
+$usuario->_username = "avelardo_nuevo__yes";
+$usuario->_nombres .= "Jesús";
+
+echo "<br><br>";
+echo $usuario->updateInfo() . "<br><br>";
+
+$usuario_db = Model::getRecord(
+  table: Usuario::TABLE_NAME,
+  where_clause_names: [
+    "id",
+  ],
+  where_clause_values: [
+    14
+  ],
+  pdo_params: Usuario::PDO_PARAMS
+)[0];
+var_dump($usuario_db);

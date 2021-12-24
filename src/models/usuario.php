@@ -42,7 +42,12 @@ class Usuario extends Model
    * foráneas.
    */
   const UNIQUE_ATTRIBUTES = [
-    "username"
+    "pk" => [
+      "id"
+    ],
+    "unique" => [
+      "username"
+    ]
   ];
 
   /**
@@ -166,9 +171,11 @@ class Usuario extends Model
     return parent::updateRecord(
       table: self::TABLE_NAME,
       param_values: $param_values,
-      where_clause: [
-        "name" => "id",
-        "value" => $this->_id,
+      where_clause_names: [
+        "id",
+      ],
+      where_clause_values: [
+        $this->_id
       ],
       unique_attributes: self::UNIQUE_ATTRIBUTES,
       pdo_params: self::PDO_PARAMS
@@ -231,19 +238,20 @@ class Usuario extends Model
   {
     // Declaramos arreglo. Es un arreglo asociativo. 
     // Sigue siendo un objeto, por lo que, hay que transformarlo a JSON.
-    $usuario = array();
-    $usuario["id"] = $this->_id;
-    $usuario["nombres"] = $this->_nombres;
-    $usuario["apellidos"] = $this->_apellidos;
-    $usuario["username"] = $this->_username;
-    $usuario["password"] = $this->_password;
-    $usuario["rol"] = $this->_rol;
-    $usuario["foto_perfil"] = $this->_foto_perfil;
+    // $usuario = array();
+    // $usuario["id"] = $this->_id;
+    // $usuario["nombres"] = $this->_nombres;
+    // $usuario["apellidos"] = $this->_apellidos;
+    // $usuario["username"] = $this->_username;
+    // $usuario["password"] = $this->_password;
+    // $usuario["rol"] = $this->_rol;
+    // $usuario["foto_perfil"] = $this->_foto_perfil;
+
     /**
      * Convertimos a JSON. Recibe un objeto y lo hace cadena. 
      *
      * Transformamos todo nuestro objeto a una cadena JSON para leerla en JS. 
      */
-    echo json_encode($usuario);
+    echo json_encode($this->getParamValues());
   }
 }

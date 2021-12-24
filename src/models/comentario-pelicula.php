@@ -23,9 +23,13 @@ class ComentarioPelicula extends Model
   const TABLE_NAME = "comentario_pelicula";
   const PRIMARY_KEY = "id";
   const UNIQUE_ATTRIBUTES = [
-    "id",
-    "pelicula_id",
-    "usuario_id",
+    "pk" => [
+      "id"
+    ],
+    "fk" => [
+      "pelicula_id",
+      "usuario_id",
+    ]
   ];
 
   public function __construct(
@@ -69,15 +73,5 @@ class ComentarioPelicula extends Model
       ],
       pdo_params: self::PDO_PARAMS
     );
-  }
-
-  public function returnJson()
-  {
-    /**
-     * Convertimos a JSON. Recibe un objeto y lo hace cadena. 
-     *
-     * Transformamos todo nuestro objeto a una cadena JSON para leerla en JS. 
-     */
-    echo json_encode($this->getParamValues());
   }
 }

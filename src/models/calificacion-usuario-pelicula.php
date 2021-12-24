@@ -129,14 +129,4 @@ class CalificacionUsuarioPelicula extends Model
       pdo_params: self::PDO_PARAMS
     );
   }
-
-  public function returnJson()
-  {
-    /**
-     * Convertimos a JSON. Recibe un objeto y lo hace cadena. 
-     *
-     * Transformamos todo nuestro objeto a una cadena JSON para leerla en JS. 
-     */
-    echo json_encode($this->getParamValues());
-  }
 }
