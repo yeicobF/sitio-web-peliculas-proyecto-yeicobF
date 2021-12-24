@@ -604,9 +604,12 @@ class Model
 
   /**
    * Actualizar un registro de la BD.
-   * 
+   *
    * Si no se actualizó nada del registro, devuelve true aunque haya encontrado
    * un registro.
+   *
+   * - Si regresa 0, significa que no se realizó la inserción. Esto puede
+   *   suceder porque no se actualizó ningún campo.
    *
    * @param string $table
    * @param array $param_values Array con nombre y valor.

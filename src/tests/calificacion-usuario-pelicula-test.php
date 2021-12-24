@@ -6,13 +6,19 @@ include_once "../libs/model.php";
 
 Model::initDbConnection();
 
+$calificacion_get = CalificacionUsuarioPelicula::getCalificacionUsuarioPelicula(2, 3)[0];
+
 $calificacion = new CalificacionUsuarioPelicula(
-  2,
-  3,
-  "4.5"
+  $calificacion_get["pelicula_id"],
+  $calificacion_get["usuario_id"],
+  $calificacion_get["numero_estrellas"],
 );
 
-echo $calificacion->insertCalificacionUsuarioPelicula() . "<br><br>";
-echo $calificacion->update("2") . "<br><br>";
+// echo $calificacion->insertCalificacionUsuarioPelicula() . "<br><br>";
+
+echo var_dump($calificacion_get) . "<br><br>";
+echo var_dump($calificacion) . "<br><br>";
+
+echo $calificacion->update(3.5) . "<br><br>";
 
 // echo var_dump($calificacion->getParamValues());

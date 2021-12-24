@@ -7,7 +7,7 @@ class CalificacionUsuarioPelicula extends Model
 {
   public int $pelicula_id;
   public int $usuario_id;
-  public string $numero_estrellas;
+  public float | null $numero_estrellas;
 
   const TABLE_NAME = "calificacion_usuario_pelicula";
 
@@ -32,7 +32,7 @@ class CalificacionUsuarioPelicula extends Model
   public function __construct(
     int $pelicula_id,
     int $usuario_id,
-    string $numero_estrellas
+    float $numero_estrellas = null
   ) {
     $this->pelicula_id = $pelicula_id;
     $this->usuario_id = $usuario_id;
@@ -84,7 +84,7 @@ class CalificacionUsuarioPelicula extends Model
   {
     // No poder agregar más o menos estrellas de las posibles.
     if ($numero_estrellas > 5 || $numero_estrellas < 0) {
-      return false;
+      return 0;
     }
 
     // Instanciamos con nuevo numero_estrellas.
@@ -93,7 +93,7 @@ class CalificacionUsuarioPelicula extends Model
       $this->usuario_id,
       $numero_estrellas
     );
-    $param_values = parent::getParamValues($new_state);
+    $param_values = $new_state->getParamValues();
     unset($param_values["pelicula_id"]);
     unset($param_values["usuario_id"]);
 
