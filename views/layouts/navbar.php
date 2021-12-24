@@ -128,8 +128,8 @@ $url_page = [
       </li>
       <li class="nav-item dropdown">
 
-        <a rel="noopener noreferrer" href="#" id="nav-generos" class="nav-link dropdown-toggle<?php echo $add_css_current_page["generos"]; ?>">
-          <p>Géneros</p>
+        <a rel="noopener noreferrer" href="#" id="nav-generos" class="nav-link dropdown-toggle">
+          <p class="<?php echo $add_css_current_page["generos"]; ?>">Géneros</p>
           <i class="rotate fas fa-angle-down"></i>
           <!-- <i class="submenu-indicator-tooltip">v</i> -->
         </a>
