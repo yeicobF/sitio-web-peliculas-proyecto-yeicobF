@@ -19,52 +19,100 @@ class Login extends Controller
     Controller::startSession();
 
     // Agregar valores del usuario a la sesión.
-    $_SESSION = array_merge(
-      $_SESSION,
-      Usuario::getSessionArrayElements($user)
+    $_SESSION = Usuario::getSessionArrayElements($user);
+    $_SESSION["logged_in"] = true;
+  }
+
+  public static function isUserLoggedIn()
+  {
+    return (Controller::isSessionActive()
+      && isset($_SESSION["logged_in"])
+      && $_SESSION["logged_in"] === true
     );
   }
+  public static function redirectIfUserLoggedIn($redirect_view = "index.php")
+  {
+    if (self::isUserLoggedIn()) {
+      self::redirectView($redirect_view);
+    }
+  }
+}
+
+// Si nos encontramos en una view, no hacer el proceso.
+if (
+  str_contains(
+    $_SERVER["SCRIPT_FILENAME"],
+    "views/"
+  )
+  // && !str_contains(
+  //   $_SERVER["SCRIPT_FILENAME"],
+  //   "login/"
+  // )
+) {
+  return;
 }
 
 // Si no se trata de Post o el método no existe, redirigir al login. Así
 // evitamos que se entre desde la URL y que se envíen métodos inexistentes.
 if (
-  !Controller::isPost()
-  || !Controller::isMethodExistent()
+  (!Controller::isPost()
+    || !Controller::isMethodExistent())
+  // && !str_contains(
+  //   $_SERVER["SCRIPT_FILENAME"],
+  //   "login/"
+  // )
+  // && !str_contains(
+  //   $_SERVER["SCRIPT_FILENAME"],
+  //   "views/"
+  // )
 ) {
   Controller::redirectView("login/index.php");
   // exit;
 }
 
+
+
+// Esto podría ir en una inicialización del Controller.
 Model::initDbConnection();
 
 // El método sí es POST.
-$username = Controller::getPostValue("username");
-$password = Controller::getPostValue("password");
+// Ahora revisar el tipo de método. Si es uno, no puede ser el otro, por lo que,
+// no es necesario poner un else por cada sentencia.
 
-$login = ModelUsuario::isLoginDataCorrect($username, $password);
-
-if (!$login) {
-  // Error.
-  Controller::redirectView("login/index.php", "Error en inicio de sesión.");
-  exit;
+if (Controller::isMethodDelete()) {
+  Controller::startSession();
+  session_destroy();
 }
 
-$user = new ModelUsuario(
-  $login["nombres"],
-  $login["apellidos"],
-  $login["username"],
-  $login["password"],
-  $login["rol"],
-  $login["id"],
-  $login["foto_perfil"],
-);
+if (Controller::isMethodPost()) {
+  $username = Controller::getPostValue("username");
+  $password = Controller::getPostValue("password");
+
+  $login = ModelUsuario::isLoginDataCorrect($username, $password);
+
+  if (!$login) {
+    // Error.
+    Controller::redirectView("login/index.php", "Error en inicio de sesión.");
+    exit;
+  }
+
+  $user = new ModelUsuario(
+    $login["nombres"],
+    $login["apellidos"],
+    $login["username"],
+    $login["password"],
+    $login["rol"],
+    $login["id"],
+    $login["foto_perfil"],
+  );
 
 
-Login::login($user);
+  Login::login($user);
 
-// showElements([
-//   $_SESSION
-// ]);
+  // showElements([
+  //   $_SESSION
+  // ]);
+
+}
 
 Controller::redirectView();

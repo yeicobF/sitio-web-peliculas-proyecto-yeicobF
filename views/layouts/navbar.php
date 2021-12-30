@@ -49,24 +49,7 @@ $add_css_current_page = [
     : ""
 ];
 
-/* ------------------------- ENLACE PARA CADA PÁGINA ------------------------ */
 
-$user_url = "{$views_folder}user/";
-$url_page = [
-  "inicio" => $views_folder . "index.php",
-  "peliculas" => $views_folder . "peliculas/index.php",
-  "generos" => $views_folder . "generos/index.php",
-  "login" => $views_folder . "login/index.php",
-  "registro" => $views_folder . "login/registro.php",
-];
-
-// var_dump($user_url);
-// var_dump($url_page);
-// var_dump($url_page["login"]);
-// var_dump($url_page["registro"]);
-
-// Obtener nombre de archivo actual sin su extensión.
-// $current_file_name = basename(__DIR__, ".php");
 ?>
 
 <!-- 
@@ -100,17 +83,9 @@ $url_page = [
       <input type="text" name="search-input" id="search-input" placeholder="Buscar...">
     </form>
 
-    <!-- Inicio de sesión. -->
-    <form class="login-buttons">
-      <!-- button.btn.btn-light#login-button -->
-      <a rel="noopener noreferrer" href="<?php echo $url_page["login"]; ?>" class="btn btn-light" id="login-button">
-        Iniciar sesión
-      </a>
-      <!-- button.btn.btn-info#register-button{Registrarse} -->
-      <a rel="noopener noreferrer" href="<?php echo $url_page["registro"]; ?>" class="btn btn-info" id="register-button">
-        Registrarse
-      </a>
-    </form>
+    <?php
+    require_once __DIR__ . "/navbar/session-buttons.php";
+    ?>
 
     <!-- Contenedor de links del menú. -->
     <ul class="navbar-nav">

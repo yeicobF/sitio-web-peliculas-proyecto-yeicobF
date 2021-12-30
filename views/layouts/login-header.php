@@ -1,10 +1,11 @@
 <?php
 
-use Libs\Controller;
+require_once FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"] . "login.php";
 
-require_once FOLDERS_WITH_DOCUMENT_ROOT["LIBS"] . "controller.php";
+use Controllers\Login;
 
-Controller::redirectIfSessionActive();
+
+Login::redirectIfUserLoggedIn();
 ?>
 
 <header class="page-info">
