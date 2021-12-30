@@ -4,6 +4,16 @@
   gap: 1.4em;
   justify-content: space-evenly;
   align-items: center;
+  max-width: 576px;
+  /* max-width: 960px; */
+}
+
+.body-container.login-container {
+  max-width: 576px;
+
+}
+
+.body-container.register-container {
   max-width: 960px;
 }
 
