@@ -16,7 +16,7 @@ Orden en que se mostrarán los elementos del menú. Esto porque el móvil van en
   order: 0;
 }
 
-.navbar-collapse > .login-buttons {
+.navbar-collapse > .session-buttons {
   order: 1;
 }
 
@@ -49,7 +49,7 @@ Orden en que se mostrarán los elementos del menú. Esto porque el móvil van en
     /* Poner márgenes por los otros elementos a los lados. */
     margin: 0 1em;
   }
-  .navbar-collapse>.login-buttons {
+  .navbar-collapse>.session-buttons {
     order: 2;
   }
 }

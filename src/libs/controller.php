@@ -22,7 +22,24 @@ class Controller
   }
   public static function getMethod()
   {
-    return $_POST["_method"];
+    if (isset($_POST["_method"])) {
+      return $_POST["_method"];
+    }
+    return false;
+  }
+
+  public static function isMethodDelete()
+  {
+    return self::getMethod() === "DELETE";
+  }
+
+  public static function isMethodPost()
+  {
+    return self::getMethod() === "POST";
+  }
+  public static function isMethodPut()
+  {
+    return self::getMethod() === "PUT";
   }
 
   /**

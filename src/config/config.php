@@ -100,8 +100,31 @@ $views_folder = FOLDERS_WITH_LOCALHOST["VIEWS"];
 $assets_folder = FOLDERS_WITH_LOCALHOST["ASSETS"];
 $css_folder = FOLDERS_WITH_LOCALHOST["CSS"];
 $img_folder = FOLDERS_WITH_LOCALHOST["IMG"];
+$libs_folder = FOLDERS_WITH_LOCALHOST["LIBS"];
+$controllers_folder = FOLDERS_WITH_LOCALHOST["CONTROLLERS"];
+$config_folder = FOLDERS_WITH_LOCALHOST["CONFIG"];
 
 /* -------------------------------------------------------------------------- */
+
+/* ------------------------- ENLACE PARA CADA PÁGINA ------------------------ */
+
+$user_url = "{$views_folder}user/";
+$url_page = [
+  "inicio" => $views_folder . "index.php",
+  "peliculas" => $views_folder . "peliculas/index.php",
+  "generos" => $views_folder . "generos/index.php",
+  "login" => $views_folder . "login/index.php",
+  "registro" => $views_folder . "login/registro.php",
+  "editar-perfil" => $user_url . "editar-perfil/index.php",
+];
+
+// var_dump($user_url);
+// var_dump($url_page);
+// var_dump($url_page["login"]);
+// var_dump($url_page["registro"]);
+
+// Obtener nombre de archivo actual sin su extensión.
+// $current_file_name = basename(__DIR__, ".php");
 
 function showElements(array $elements)
 {
