@@ -38,7 +38,7 @@ $baseHtmlHead = new BaseHtmlHead(
   ?>
 </head>
 
-<body class="body-container container-sm container-fluid">
+<body class="body-container login-container container-sm container-fluid">
   <?php
   require_once FOLDERS_WITH_DOCUMENT_ROOT["LAYOUTS"] . "login-header.php";
 

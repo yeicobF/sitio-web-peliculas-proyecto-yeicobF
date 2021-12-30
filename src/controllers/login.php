@@ -115,4 +115,6 @@ if (Controller::isMethodPost()) {
 
 }
 
+// Al final de cualquiera de los procedimientos, redirigir a la pestaña
+// principal.
 Controller::redirectView();
