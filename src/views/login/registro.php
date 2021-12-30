@@ -42,21 +42,30 @@ $baseHtmlHead = new BaseHtmlHead(
   <?php
   require_once FOLDERS_WITH_DOCUMENT_ROOT["LAYOUTS"] . "login-header.php";
   ?>
-  
+
   <form autocomplete="off" action="" method="get" class="form__container">
     <!-- Hay que definir el método a utilizar con un input hidden. -->
     <input type="hidden" name="_method" value="POST">
 
+    <label for="username">Username</label>
     <section class="form__input__container">
       <input autocomplete="off" type="text" name="username" id="username" placeholder="Ingresa un nombre de usuario">
       <i class="form__input__icon fas fa-user-alt"></i>
     </section>
+    <label for="password">Contraseña</label>
     <section class="form__input__container">
+
       <input type="password" name="password" id="password" placeholder="Contraseña">
       <i class="form__input__icon fas fa-eye-slash"></i>
     </section>
+    <label for="fecha-nacimiento">Fecha de nacimiento</label>
     <section class="form__input__container form__birthday">
+
       <input type="date" name="fecha-nacimiento" id="fecha-nacimiento">
+    </section>
+    <section>
+      <label for="upload-picture">Foto de perfil</label>
+      <input class="form__input__picture" type="file" name="upload-picture" class="form-control">
     </section>
     <input type="submit" class="btn form__button" id="register-form-button" value="Registrarse">
   </form>
