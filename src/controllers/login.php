@@ -19,10 +19,7 @@ class Login extends Controller
     Controller::startSession();
 
     // Agregar valores del usuario a la sesión.
-    $_SESSION = array_merge(
-      $_SESSION,
-      Usuario::getSessionArrayElements($user)
-    );
+    $_SESSION = Usuario::getSessionArrayElements($user);
   }
 }
 
