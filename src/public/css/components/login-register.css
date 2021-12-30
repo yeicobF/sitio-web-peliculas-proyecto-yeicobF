@@ -2,7 +2,7 @@
 Registrarse e iniciar sesión.
 */
 
-.login-buttons {
+.session-buttons {
   margin: 1em 0.5em;
   flex-basis: 100%;
   gap: 0.5em;
@@ -27,11 +27,11 @@ Registrarse e iniciar sesión.
   font-weight: 600;
 }
 
-.login-buttons :first-child {
+.session-buttons :first-child {
   /* margin-right: 0.5em; */
 }
 
-.login-buttons > * {
+.session-buttons > * {
   flex-basis: 40%;
   font-weight: 600;
   align-items: center;
@@ -48,13 +48,13 @@ Registrarse e iniciar sesión.
 }
 
 @media (min-width: 768px) and (max-width: 900px) {
-  .login-buttons {
+  .session-buttons {
     font-size: 0.9em;
   }
 }
 
 @media (min-width: 768px) {
-  .login-buttons {
+  .session-buttons {
     margin: 0;
     /* Ocupar espacio sobrante sin hacer más pequeños elementos. */
     flex-basis: auto;
@@ -63,18 +63,18 @@ Registrarse e iniciar sesión.
     justify-content: space-between;
     /* font-size: 1em; */
   }
-  .login-buttons>* {
+  .session-buttons>* {
     flex-basis: auto;
   }
 }
 
 @media (max-width: 576px) {
-  .login-buttons {
+  .session-buttons {
     font-size: 1em;
   }
 }
 @media (min-width: 576px) and (max-width: 767px) {
-  /* .login-buttons {
+  /* .session-buttons {
     font-size: 0.8em;
   } */
 }
