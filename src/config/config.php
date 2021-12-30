@@ -101,6 +101,7 @@ $assets_folder = FOLDERS_WITH_LOCALHOST["ASSETS"];
 $css_folder = FOLDERS_WITH_LOCALHOST["CSS"];
 $img_folder = FOLDERS_WITH_LOCALHOST["IMG"];
 $libs_folder = FOLDERS_WITH_LOCALHOST["LIBS"];
+$controllers_folder = FOLDERS_WITH_LOCALHOST["CONTROLLERS"];
 $config_folder = FOLDERS_WITH_LOCALHOST["CONFIG"];
 
 /* -------------------------------------------------------------------------- */

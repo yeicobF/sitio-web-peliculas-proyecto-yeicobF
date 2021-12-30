@@ -1,6 +1,4 @@
-/* 
-Registrarse e iniciar sesión.
-*/
+/* Registrarse e iniciar sesión. */
 
 .session-buttons {
   margin: 1em 0.5em;
@@ -16,7 +14,6 @@ Registrarse e iniciar sesión.
   align-items: stretch;
   /* transition: background-color 0.5s ease-out; */
   /* transition: background-color 10s ease-out; */
-  
   /* 
   transition: name duration timing-function delay iteration-count direction fill-mode play-state ;
 
@@ -25,6 +22,10 @@ Registrarse e iniciar sesión.
   /* transition: align-items 0.8s ease-out; */
   /* height: 100%; */
   font-weight: 600;
+}
+
+.session-buttons .circle-avatar {
+  height: 2em;
 }
 
 .session-buttons :first-child {
