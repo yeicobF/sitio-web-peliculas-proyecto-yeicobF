@@ -20,16 +20,24 @@
           $username_alt = $_SESSION["username"];
         ?>
           <input type='hidden' name='_method' value='DELETE'>
-
           <!-- button.btn.btn-light#login-button -->
-          <input type="submit" class="btn btn-danger" value="Cerrar sesión">
+          <button type="submit" class="btn btn-danger" value="Cerrar sesión">
+            Cerrar sesión
+          </button>
           <!-- button.btn.btn-info#register-button{Registrarse} -->
-          <a rel="noopener noreferrer" href="<?php echo $avatar_url; ?>" class="" id="avatar" alt="<?php echo $username_alt; ?>">
+          <a rel="noopener noreferrer" href="<?php echo $avatar_url; ?>" class="session-buttons__user-info" id="avatar" alt="<?php echo $username_alt; ?>">
             <!-- <img src="http://localhost:8012/fdw-2021-2022-a/proyecto-yeicobF/src/public/assets/img/../avatar/1.jpg" alt="<?php echo $username_alt; ?>" class="circle-avatar"> -->
+
             <?php
             Usuario::getFotoPerfil();
             ?>
+            <h2 class="session-buttons__user-info__username">
+              <?php
+              echo Usuario::getUsername();
+              ?>
+            </h2>
           </a>
+
         <?php
         } else {
         ?>

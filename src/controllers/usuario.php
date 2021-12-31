@@ -61,6 +61,10 @@ class Usuario extends Controller
     </span>
 <?php
   }
+
+  public static function getUsername() {
+    return $_SESSION["username"];
+  }
 }
 
 if (Controller::isCurrentFileView()) {
