@@ -252,6 +252,6 @@ class Usuario extends Model
      *
      * Transformamos todo nuestro objeto a una cadena JSON para leerla en JS. 
      */
-    echo json_encode($this->getParamValues());
+    return json_encode($this->getParamValues());
   }
 }

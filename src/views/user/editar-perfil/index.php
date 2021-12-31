@@ -1,6 +1,7 @@
 <?php
 
 use Controllers\Login;
+use Controllers\Usuario;
 
 $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
@@ -15,6 +16,9 @@ include_once
 include_once
   FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
   . "login.php";
+include_once
+  FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
+  . "usuario.php";
 
 Login::redirectIfUserNotLoggedIn("login/index.php");
 
@@ -68,8 +72,11 @@ $baseHtmlHead = new BaseHtmlHead(
         <!-- <figcaption>
           <h2 class="edit-profile__title">Nombre del usuario</h2>
         </figcaption> -->
-        <img src="<?php echo $img_folder; ?>../avatar/1.jpg" alt="Username" class="circle-avatar">
-
+        <!-- <img src="<?php echo $img_folder; ?>../avatar/1.jpg" alt="Username" class="circle-avatar"> -->
+        
+        <?php
+        Usuario::getFotoPerfil();
+        ?>
       </figure>
       <form action="<?php echo $editar_perfil_action; ?>" method="POST" enctype="multipart/form-data" class="edit-profile__form col-12 col-sm-8">
         <!-- <input type="hidden" name="_method" value="PUT"> -->
