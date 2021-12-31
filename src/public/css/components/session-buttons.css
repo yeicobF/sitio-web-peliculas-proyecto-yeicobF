@@ -73,9 +73,17 @@ a.session-buttons__user-info {
   padding-bottom: 5px;
 
   text-overflow: ellipsis;
+  transition: color 75ms ease-in-out;
   /* overflow-x: hidden; */
 
   /* clip-path: ellipse(); */
+}
+
+.session-buttons__user-info__username:hover,
+.session-buttons__user-info__username:active,
+.session-buttons__user-info__username:focus,
+.session-buttons__user-info__username:focus-within {
+  color: var(--color-maximum-blue-purple);
 }
 
 /* -------------------------------------------------------------------------- */
