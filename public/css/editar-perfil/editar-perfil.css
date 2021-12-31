@@ -87,6 +87,13 @@
 /* -------------------------------------------------------------------------- */
 
 
+.edit-profile__username {
+  font-weight: 500;
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--color-maximum-blue-purple);
+  text-decoration-skip-ink: none;
+}
 
 
 /* -------------------------------------------------------------------------- */
