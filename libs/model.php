@@ -64,7 +64,7 @@ class Model
      *
      * Transformamos todo nuestro objeto a una cadena JSON para leerla en JS. 
      */
-    json_encode($this->getParamValues());
+    return json_encode($this->getParamValues());
   }
 
   /* -------------------------- OBTENCIÓN DE FECHA -------------------------- */

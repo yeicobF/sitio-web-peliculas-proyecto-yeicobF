@@ -12,7 +12,7 @@ include_once FOLDERS_WITH_DOCUMENT_ROOT["SRC"]
   . "logs/error-reporting.php";
 
 $baseHtmlHead = new BaseHtmlHead(
-  _pageName: "Inicio",
+  _pageName: "Detalles de usuario - ",
   _includeOwnFramework: true,
   _includeFontAwesome: true
 );

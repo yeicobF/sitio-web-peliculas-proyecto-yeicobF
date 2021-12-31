@@ -2,14 +2,7 @@
 Componentes en general.
 */
 @import url("session-buttons.css");
+@import url("circle-avatar.css");
+@import url("profile-picture.css");
 @import url("search.css");
 @import url("dropdown.css");
-
-.circle-avatar {
-  aspect-ratio: 1 / 1;
-  object-position: top;
-  object-fit: cover;
-  /* width: 2.5em; */
-  /* height: 2.5em; */
-  border-radius: 50%;
-}

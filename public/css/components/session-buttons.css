@@ -33,7 +33,7 @@
 }
 
 .session-buttons > * {
-  flex-basis: 40%;
+  /* flex-basis: 40%; */
   font-weight: 600;
   align-items: center;
   display: flex;
@@ -48,6 +48,46 @@
   transition: background-color 10s ease-out;
 }
 
+/* -------------------------------------------------------------------------- */
+
+.session-buttons__user-info {
+  display: flex;
+  gap: .5em;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+a.session-buttons__user-info {
+  text-decoration: none;
+}
+.session-buttons__user-info__username {
+  font-size: .95em;
+  padding: 0;
+  margin: 0;
+  text-decoration: underline wavy;
+  text-decoration-skip-ink: none;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 14ch;
+  /* padding por el underline. */
+  padding-bottom: 5px;
+
+  text-overflow: ellipsis;
+  transition: color 75ms ease-in-out;
+  /* overflow-x: hidden; */
+
+  /* clip-path: ellipse(); */
+}
+
+.session-buttons__user-info__username:hover,
+.session-buttons__user-info__username:active,
+.session-buttons__user-info__username:focus,
+.session-buttons__user-info__username:focus-within {
+  color: var(--color-maximum-blue-purple);
+}
+
+/* -------------------------------------------------------------------------- */
+
 @media (min-width: 768px) and (max-width: 900px) {
   .session-buttons {
     font-size: 0.9em;
@@ -61,12 +101,27 @@
     flex-basis: auto;
     /* Ocupar espacio restante. */
     /* flex-grow: 1; */
-    justify-content: space-between;
     /* font-size: 1em; */
   }
   .session-buttons>* {
     flex-basis: auto;
+  }  
+  .session-buttons__user-info {
+    /* max-width: 12ch; */
   }
+
+}
+
+@media (max-width: 360px) {
+  .session-buttons__user-info {
+    flex-direction: column;
+  }
+}
+@media (max-width: 768px) {
+  .session-buttons {
+    justify-content: center;
+  }
+
 }
 
 @media (max-width: 576px) {
