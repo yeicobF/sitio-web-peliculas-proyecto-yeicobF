@@ -1,20 +1,28 @@
 <?php
 
+use Controllers\Login;
+
 $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
 include_once $path
   . "fdw-2021-2022-a/proyecto-yeicobF/"
   . "src/config/config.php";
 
-include_once $path
-  . LAYOUTS
+include_once
+  FOLDERS_WITH_DOCUMENT_ROOT["LAYOUTS"]
   . "base-html-head.php";
+
+include_once
+  FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
+  . "login.php";
 
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Editar perfil",
   _includeOwnFramework: true,
   _includeFontAwesome: true
 );
+
+Login::redirectIfUserNotLoggedIn("login/index.php");
 ?>
 
 <!DOCTYPE html>
@@ -99,12 +107,18 @@ $baseHtmlHead = new BaseHtmlHead(
         </section>
 
         <section class="form__buttons">
-          <button title="Cancelar" class="btn form__button" type="submit">
-            Cancelar
+          <button title="Eliminar cuenta" class="btn btn-danger form__button" type="submit">
+            Eliminar cuenta
           </button>
-          <button title="Guardar cambios" class="btn form__button" type="submit">
-            Guardar cambios
-          </button>
+          <div class="form__buttons form__buttons--safe">
+            <a title="Cancelar" class="btn btn-warning form__button" href="<?php echo "{$views_folder}index.php"; ?>">
+              Cancelar
+            </a>
+            <button title="Guardar cambios" class="btn btn-success form__button" type="submit">
+              Guardar cambios
+            </button>
+          </div>
+
         </section>
       </form>
 

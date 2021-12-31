@@ -19,6 +19,35 @@ class Usuario extends Controller
   {
     $session_details = $user->getParamValues();
     unset($session_details["password"]);
+
     return $session_details;
   }
 }
+
+if (Controller::isCurrentFileView()) {
+  return;
+}
+
+if (Controller::isGet()) {
+  return;
+}
+
+Controller::redirectIfNonExistentPostMethod("login/index.php");
+
+/* ------------------------- ELIMINACIÓN DE USUARIO ------------------------- */
+if (Controller::isMethodDelete()) {
+  Controller::startSession();
+  session_destroy();
+}
+
+/* ------------------------------ NUEVO USUARIO ----------------------------- */
+if (Controller::isMethodPost()) {
+}
+
+/* ------------------------ ACTUALIZACIÓN DE USUARIO ------------------------ */
+if (Controller::isMethodPut()) {
+}
+
+// Al final de cualquiera de los procedimientos, redirigir a la pestaña
+// principal.
+Controller::redirectView();

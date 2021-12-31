@@ -160,4 +160,58 @@ class Controller
       session_start();
     }
   }
+
+  /**
+   * El archivo en que nos encontramos actualmente es una vista.
+   *
+   * @return boolean
+   */
+  public static function isCurrentFileView()
+  {
+    return str_contains(
+      $_SERVER["SCRIPT_FILENAME"],
+      "views/"
+    );
+  }
+
+  /**
+   * Si no se trata de Post o el método no existe, redirigir al login. Así
+   * evitamos que se entre desde la URL y que se envíen métodos inexistentes.
+   *
+   * @param string|null $view_path
+   * @return void
+   */
+  public static function redirectIfNonExistentPostMethod(
+    string $view_path = "index.php"
+  ) {
+    if (
+      !Controller::isPost()
+      || !Controller::isMethodExistent()
+      // && !str_contains(
+      //   $_SERVER["SCRIPT_FILENAME"],
+      //   "login/"
+      // )
+      // && !str_contains(
+      //   $_SERVER["SCRIPT_FILENAME"],
+      //   "views/"
+      // )
+    ) {
+      Controller::redirectView($view_path);
+      // exit;
+    }
+  }
+
+  // /**
+  //  * Hacer un `return` que detendrá el proceso si el archivo actual es una
+  //  * vista.
+  //  *
+  //  * @return void
+  //  */
+  // public static function returnIfFileIsView()
+  // {
+  //   // Si nos encontramos en una view, no hacer el proceso.
+  //   if (self::isCurrentFileView()) {
+  //     return;
+  //   }
+  // }
 }
