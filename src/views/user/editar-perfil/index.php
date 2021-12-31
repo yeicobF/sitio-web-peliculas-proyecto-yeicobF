@@ -16,13 +16,16 @@ include_once
   FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
   . "login.php";
 
+Login::redirectIfUserNotLoggedIn("login/index.php");
+
+$editar_perfil_action = "{$controllers_folder}usuario.php";
+$username = $_SESSION["username"];
+
 $baseHtmlHead = new BaseHtmlHead(
-  _pageName: "Editar perfil",
+  _pageName: "Editar perfil - {$username}",
   _includeOwnFramework: true,
   _includeFontAwesome: true
 );
-
-Login::redirectIfUserNotLoggedIn("login/index.php");
 ?>
 
 <!DOCTYPE html>
@@ -49,10 +52,6 @@ Login::redirectIfUserNotLoggedIn("login/index.php");
 
   <link rel="stylesheet" href="<?php echo $css_folder; ?>editar-perfil/editar-perfil.css">
 
-  <!-- SCRIPTS -->
-  <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["SRC"] . "js/navbar.js"; ?>" type="module"></script>
-
-
   <?php
   echo $baseHtmlHead->getTitle();
   ?>
@@ -72,21 +71,35 @@ Login::redirectIfUserNotLoggedIn("login/index.php");
         <img src="<?php echo $img_folder; ?>../avatar/1.jpg" alt="Username" class="circle-avatar">
 
       </figure>
-      <form action="" class="edit-profile__form col-12 col-sm-8" method="POST">
-        <input type="hidden" name="_method" value="PUT">
+      <form action="<?php echo $editar_perfil_action; ?>" method="POST" enctype="multipart/form-data" class="edit-profile__form col-12 col-sm-8">
+        <!-- <input type="hidden" name="_method" value="PUT"> -->
 
         <hgroup>
           <h1>Editar perfil</h1>
-          <h2>Nombre de usuario</h2>
+          <h2 class="edit-profile__username"><?php echo $username; ?></h2>
         </hgroup>
         <section>
-          <label for="upload-picture">Foto de perfil</label>
-          <input class="form__input__picture" type="file" name="upload-picture" class="form-control">
+          <label for="foto-perfil">Foto de perfil</label>
+          <input class="form__input__picture" type="file" name="foto-perfil" class="form-control">
         </section>
         <section class="">
           <label for="username">Nombre de usuario</label>
           <div class="form__input__container">
             <input autocomplete="off" type="text" name="username" id="username" placeholder="Correo electrónico o usuario">
+            <i class="form__input__icon fas fa-user-alt"></i>
+          </div>
+        </section>
+        <section class="">
+          <label for="nombres">Nombre(s)</label>
+          <div class="form__input__container">
+            <input autocomplete="off" type="text" name="nombres" id="nombres" placeholder="Ingresa tu nombre">
+            <i class="form__input__icon fas fa-user-alt"></i>
+          </div>
+        </section>
+        <section class="">
+          <label for="apellidos">Apellido(s)</label>
+          <div class="form__input__container">
+            <input autocomplete="off" type="text" name="apellidos" id="apellidos" placeholder="Ingresa tus apellidos">
             <i class="form__input__icon fas fa-user-alt"></i>
           </div>
         </section>
@@ -107,21 +120,23 @@ Login::redirectIfUserNotLoggedIn("login/index.php");
         </section>
 
         <section class="form__buttons">
-          <button title="Eliminar cuenta" class="btn btn-danger form__button" type="submit">
+          <!-- DELETE -->
+          <!-- <input type="hidden" name="_method" value="DELETE"> -->
+          <button name="_method" value="DELETE" title="Eliminar cuenta" class="btn btn-danger form__button" type="submit">
             Eliminar cuenta
           </button>
           <div class="form__buttons form__buttons--safe">
             <a title="Cancelar" class="btn btn-warning form__button" href="<?php echo "{$views_folder}index.php"; ?>">
               Cancelar
             </a>
-            <button title="Guardar cambios" class="btn btn-success form__button" type="submit">
+
+            <button name="_method" value="PUT" title="Guardar cambios" class="btn btn-success form__button" type="submit">
               Guardar cambios
             </button>
           </div>
 
         </section>
       </form>
-
     </div>
 
 

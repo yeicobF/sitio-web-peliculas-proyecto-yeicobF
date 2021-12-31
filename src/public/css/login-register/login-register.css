@@ -13,6 +13,11 @@
 
 }
 
+.login-container .form__button,
+.register-container .form__button {
+  color: white;
+}
+
 .body-container.register-container {
   max-width: 960px;
 }

@@ -49,7 +49,7 @@ input:not([type="text"]) ~ .form__input__icon {
   /* place-self: center; */
   /* flex-basis: fit-content; */
   font-weight: 600;
-  width: fit-content;
+  /* width: fit-content; */
   align-items: center;
   /* height: 100%; */
   justify-content: center;
@@ -58,6 +58,8 @@ input:not([type="text"]) ~ .form__input__icon {
   /* background-color: var(--color-pansy-purple); */
   /* border-radius: .3em; */
 }
+
+
 
 .form__input__picture {
   text-align: center;
@@ -93,6 +95,7 @@ input[type="file"]#file-upload-button.form__input__picture {
   align-items: stretch;
   /* height: 100%; */
   display: flex;
+  /* flex-wrap: wrap; */
   justify-content: space-between;
   gap: 1em;
 }

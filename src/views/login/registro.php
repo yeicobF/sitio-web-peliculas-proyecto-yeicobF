@@ -49,7 +49,7 @@ $baseHtmlHead = new BaseHtmlHead(
 
     <div class="row">
       <section class="col-12 col-md-6">
-        <label for="username">Username</label>
+        <label for="username">Nombre de usuario</label>
         <div class="form__input__container">
           <input autocomplete="off" type="text" name="username" id="username" placeholder="Ingresa un nombre de usuario">
           <i class="form__input__icon fas fa-user-alt"></i>
