@@ -7,9 +7,13 @@ require_once __DIR__ . "/../libs/controller.php";
 require_once __DIR__ . "/../models/usuario.php";
 
 use Libs\Controller;
+use Usuario as ModelUsuario;
 
 class Usuario extends Controller
 {
+
+  public static ?ModelUsuario $current_user = null;
+
   /**
    * Obtener parte del arreglo del sesión necesaria.
    *
@@ -64,6 +68,18 @@ class Usuario extends Controller
 
   public static function getUsername() {
     return $_SESSION["username"];
+  }
+  public static function getNombres() {
+    return $_SESSION["nombres"];
+  }
+  public static function getApellidos() {
+    return $_SESSION["apellidos"];
+  }
+  public static function getRol() {
+    return $_SESSION["rol"];
+  }
+  public static function getId() {
+    return $_SESSION["id"];
   }
 }
 

@@ -73,7 +73,7 @@ $baseHtmlHead = new BaseHtmlHead(
           <h2 class="edit-profile__title">Nombre del usuario</h2>
         </figcaption> -->
         <!-- <img src="<?php echo $img_folder; ?>../avatar/1.jpg" alt="Username" class="circle-avatar"> -->
-        
+
         <?php
         Usuario::getFotoPerfil();
         ?>
@@ -92,21 +92,21 @@ $baseHtmlHead = new BaseHtmlHead(
         <section class="">
           <label for="username">Nombre de usuario</label>
           <div class="form__input__container">
-            <input autocomplete="off" type="text" name="username" id="username" placeholder="Correo electrónico o usuario">
+            <input autocomplete="off" type="text" name="username" id="username" placeholder="<?php echo Usuario::getUsername(); ?>">
             <i class="form__input__icon fas fa-user-alt"></i>
           </div>
         </section>
         <section class="">
           <label for="nombres">Nombre(s)</label>
           <div class="form__input__container">
-            <input autocomplete="off" type="text" name="nombres" id="nombres" placeholder="Ingresa tu nombre">
+            <input autocomplete="off" type="text" name="nombres" id="nombres" placeholder="<?php echo Usuario::getNombres(); ?>">
             <i class="form__input__icon fas fa-user-alt"></i>
           </div>
         </section>
         <section class="">
           <label for="apellidos">Apellido(s)</label>
           <div class="form__input__container">
-            <input autocomplete="off" type="text" name="apellidos" id="apellidos" placeholder="Ingresa tus apellidos">
+            <input autocomplete="off" type="text" name="apellidos" id="apellidos" placeholder="<?php echo Usuario::getApellidos(); ?>">
             <i class="form__input__icon fas fa-user-alt"></i>
           </div>
         </section>
