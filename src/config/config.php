@@ -116,6 +116,7 @@ $url_page = [
   "login" => $views_folder . "login/index.php",
   "registro" => $views_folder . "login/registro.php",
   "editar-perfil" => $user_url . "editar-perfil/index.php",
+  "detalles-perfil" => $user_url . "index.php",
 ];
 
 // var_dump($user_url);

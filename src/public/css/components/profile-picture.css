@@ -1,0 +1,21 @@
+.profile-picture {
+  background-color: var(--color-maximum-blue-purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-picture__circle {
+  color: var(--color-maximum-blue-purple);
+  flex-basis: 100%;
+}
+
+/* Así superamos la especificidad de FontAwesome. */
+.profile-picture .profile-picture__icon {
+  /* flex-basis: 80%; */
+  height: 60%;
+  width: auto;
+  /* display: flex; */
+  /* flex-direction: row; */
+}
+
