@@ -2,9 +2,11 @@
       require_once __DIR__ . "/../../../config/config.php";
       require_once FOLDERS_WITH_DOCUMENT_ROOT["LIBS"] . "controller.php";
       require_once FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"] . "login.php";
+      require_once FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"] . "usuario.php";
 
       use Libs\Controller;
       use Controllers\Login;
+      use Controllers\Usuario;
 
       $action = "{$controllers_folder}login.php";
       ?>
@@ -23,7 +25,10 @@
           <input type="submit" class="btn btn-danger" value="Cerrar sesión">
           <!-- button.btn.btn-info#register-button{Registrarse} -->
           <a rel="noopener noreferrer" href="<?php echo $avatar_url; ?>" class="" id="avatar" alt="<?php echo $username_alt; ?>">
-            <img src="http://localhost:8012/fdw-2021-2022-a/proyecto-yeicobF/src/public/assets/img/../avatar/1.jpg" alt="<?php echo $username_alt; ?>" class="circle-avatar">
+            <!-- <img src="http://localhost:8012/fdw-2021-2022-a/proyecto-yeicobF/src/public/assets/img/../avatar/1.jpg" alt="<?php echo $username_alt; ?>" class="circle-avatar"> -->
+            <?php
+            Usuario::getFotoPerfil();
+            ?>
           </a>
         <?php
         } else {
