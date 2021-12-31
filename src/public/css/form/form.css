@@ -45,11 +45,21 @@ input:not([type="text"]) ~ .form__input__icon {
 /* -------------------------------------------------------------------------- */
 
 .form__button {
+  /* align-self: center; */
+  /* place-self: center; */
+  /* flex-basis: fit-content; */
   font-weight: 600;
-  color: white;
-  background-color: var(--color-pansy-purple);
+  /* width: fit-content; */
+  align-items: center;
+  /* height: 100%; */
+  justify-content: center;
+  display: flex;
+  /* color: white; */
+  /* background-color: var(--color-pansy-purple); */
   /* border-radius: .3em; */
 }
+
+
 
 .form__input__picture {
   text-align: center;
@@ -82,9 +92,19 @@ input[type="file"]#file-upload-button.form__input__picture {
 }
 
 .form__buttons {
+  align-items: stretch;
+  /* height: 100%; */
   display: flex;
-  justify-content: right;
+  /* flex-wrap: wrap; */
+  justify-content: space-between;
   gap: 1em;
+}
+
+/* Botones seguros. Separados del de eliminar. */
+.form__buttons--safe {
+  display: flex;
+  /* justify-content: right; */
+  /* flex: 2; */
 }
 
 .form__text-input {
@@ -98,15 +118,35 @@ input[type="file"]#file-upload-button.form__input__picture {
   background-color: var(--color-light);
 }
 
-.form__button[title="Guardar cambios"] {
+/* .form__button[title="Guardar cambios"] {
   background-color: var(--color-success);
-}
-.form__button[title="Cancelar"] {
-  background-color: var(--color-danger);
+} */
+/* .form__button[title="Cancelar"] {
+  background-color: var(--color-warning-darked);
+} */
+.form__button[title="Eliminar"] {
+  background-color: var(--color-warning);
 }
 
 @media (max-width: 768px) {
+
+
+}
+
+
+@media (max-width: 360px) {  
   .form__buttons {
     justify-content: center;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .form__button {
+    width: auto;
+    align-items: stretch;
+  }
+  .form__buttons.form__buttons--safe {
+    justify-content: center;
+    /* flex: 2; */
+    /* flex-direction: row; */
   }
 }

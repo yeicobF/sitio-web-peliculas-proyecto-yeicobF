@@ -36,40 +36,53 @@ class Login extends Controller
       self::redirectView($redirect_view);
     }
   }
+
+  public static function redirectIfUserNotLoggedIn($redirect_view = "index.php")
+  {
+    if (!self::isUserLoggedIn()) {
+      self::redirectView($redirect_view);
+    }
+  }
 }
 
 // Si nos encontramos en una view, no hacer el proceso.
-if (
-  str_contains(
-    $_SERVER["SCRIPT_FILENAME"],
-    "views/"
-  )
-  // && !str_contains(
-  //   $_SERVER["SCRIPT_FILENAME"],
-  //   "login/"
-  // )
-) {
+// if (
+//   str_contains(
+//     $_SERVER["SCRIPT_FILENAME"],
+//     "views/"
+//   )
+//   // && !str_contains(
+//   //   $_SERVER["SCRIPT_FILENAME"],
+//   //   "login/"
+//   // )
+// ) {
+//   return;
+// }
+// Si nos encontramos en una view, no hacer el proceso.
+if (Controller::isCurrentFileView()) {
   return;
 }
 
-// Si no se trata de Post o el método no existe, redirigir al login. Así
-// evitamos que se entre desde la URL y que se envíen métodos inexistentes.
-if (
-  (!Controller::isPost()
-    || !Controller::isMethodExistent())
-  // && !str_contains(
-  //   $_SERVER["SCRIPT_FILENAME"],
-  //   "login/"
-  // )
-  // && !str_contains(
-  //   $_SERVER["SCRIPT_FILENAME"],
-  //   "views/"
-  // )
-) {
-  Controller::redirectView("login/index.php");
-  // exit;
-}
 
+// // Si no se trata de Post o el método no existe, redirigir al login. Así
+// // evitamos que se entre desde la URL y que se envíen métodos inexistentes.
+// if (
+//   (!Controller::isPost()
+//     || !Controller::isMethodExistent())
+//   // && !str_contains(
+//   //   $_SERVER["SCRIPT_FILENAME"],
+//   //   "login/"
+//   // )
+//   // && !str_contains(
+//   //   $_SERVER["SCRIPT_FILENAME"],
+//   //   "views/"
+//   // )
+// ) {
+//   Controller::redirectView("login/index.php");
+//   // exit;
+// }
+
+Controller::redirectIfNonExistentPostMethod("login/index.php");
 
 
 // Esto podría ir en una inicialización del Controller.
