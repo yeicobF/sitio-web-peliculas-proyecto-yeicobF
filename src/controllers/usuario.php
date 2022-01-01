@@ -66,19 +66,24 @@ class Usuario extends Controller
 <?php
   }
 
-  public static function getUsername() {
+  public static function getUsername()
+  {
     return $_SESSION["username"];
   }
-  public static function getNombres() {
+  public static function getNombres()
+  {
     return $_SESSION["nombres"];
   }
-  public static function getApellidos() {
+  public static function getApellidos()
+  {
     return $_SESSION["apellidos"];
   }
-  public static function getRol() {
+  public static function getRol()
+  {
     return $_SESSION["rol"];
   }
-  public static function getId() {
+  public static function getId()
+  {
     return $_SESSION["id"];
   }
 }
@@ -111,8 +116,16 @@ if (Controller::isMethodPost()) {
 /* ------------------------ ACTUALIZACIÓN DE USUARIO ------------------------ */
 if (Controller::isMethodPut()) {
   echo "PUT";
+  unset($_POST["_method"]);
+  
+  $non_empty_fields = Controller::getNonEmptyFormFields($_POST);
+
+
+//   ModelUsuario::updateRecord(
+// 
+//   );
 }
 
 // Al final de cualquiera de los procedimientos, redirigir a la pestaña
 // principal.
-Controller::redirectView();
+// Controller::redirectView();
