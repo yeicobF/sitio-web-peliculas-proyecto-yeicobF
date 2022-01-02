@@ -66,6 +66,9 @@ class Controller
 
   public static function fileExists(string $file_key_name): bool
   {
+    if (!isset($_FILES) || empty(($_FILES))) {
+      return false;
+    }
     // Accedemos al nombre temporal, ya que ahí se guarda el archivo
     // temporalmente.
     $tmp_name = $_FILES[$file_key_name]["tmp_name"];
@@ -78,6 +81,17 @@ class Controller
     return file_exists($tmp_name) || is_uploaded_file($tmp_name);
   }
 
+  public static function getFile(string $file_key_name)
+  {
+    $tmp_name = $_FILES[$file_key_name]["tmp_name"];
+    return file_get_contents($tmp_name);
+  }
+
+  public static function getEncodedImage(string $file)
+  {
+    return base64_encode($file);
+  }
+
   /**
    * Redirigir a la vista especificada a partir del directorio `views/`.
    *
@@ -86,13 +100,20 @@ class Controller
    */
   public static function redirectView(
     string $view_path = "index.php",
+    string $message = "",
     string $error = ""
   ) {
     $redirect_path = FOLDERS_WITH_LOCALHOST["VIEWS"] . $view_path;
 
+    $query_params_symbol = str_contains($view_path, "?") ? "&" : "?";
+
     $redirect_path
-      .= !empty($error)
-      ? "?error={$error}"
+      .= strlen($error) > 0
+      ? "{$query_params_symbol}error={$error}"
+      : "";
+    $redirect_path
+      .= strlen($message) > 0
+      ? "{$query_params_symbol}message={$message}"
       : "";
 
     /**
@@ -122,15 +143,7 @@ class Controller
     // return false;
   }
 
-  /**
-   * Eliminar espacios en blanco de los campos con trim.
-   *
-   * @param array $fields
-   * @return void
-   */
-  public static function removeWhitespaces(array $fields)
-  {
-  }
+
 
   /**
    * Indica si la sesión ya inició.
@@ -199,6 +212,51 @@ class Controller
       Controller::redirectView($view_path);
       // exit;
     }
+  }
+
+  /**
+   * Eliminar espacios en blanco de los campos de un formulario con trim.
+   *
+   * @param array $form_fields Campos de formulario.
+   * @return array
+   */
+  public static function removeFormFieldsWhitespaces(
+    array $form_fields
+  ): array {
+    $trimmed_fields = [];
+
+    foreach ($form_fields as $field_name => $field) {
+      $trimmed_fields[$field_name] = trim($field);
+    }
+
+    return $trimmed_fields;
+  }
+
+  /**
+   * Obtener arreglo con los campos no vacíos de un formulario.
+   * 
+   * Esto será útil sobre todo para las actualizaciones de campos, en donde,
+   * solo se actualizarán los campos que no sean vacíos.
+   *
+   * @param array $form_fields Campos del formulario.
+   * @return array Arreglo de campos no vacíos.
+   */
+  public static function getNonEmptyFormFields(array $form_fields): array
+  {
+    /**
+     * Eliminar espacios en blanco del inicio y el final de los campos del
+     * formulario.
+     */
+    $trimmed_fields = self::removeFormFieldsWhitespaces($form_fields);
+    $non_empty_fields = [];
+
+    foreach ($trimmed_fields as $field_name => $field) {
+      if (strlen($field) > 0) {
+        $non_empty_fields[$field_name] = trim($field);
+      }
+    }
+
+    return $non_empty_fields;
   }
 
   // /**

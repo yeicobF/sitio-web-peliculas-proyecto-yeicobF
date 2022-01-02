@@ -335,3 +335,21 @@ Stack trace:
 #1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\index.php(22): App->start()
 #2 {main}
   thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php on line 2
+[02-Jan-2022 05:50:53 Europe/Berlin] PHP Warning:  include_once(C:/xampp/htdocs/fdw-2021-2022-a/proyecto-yeicobF/src/logs/error-reporting.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\index.php on line 12
+[02-Jan-2022 05:50:53 Europe/Berlin] PHP Warning:  include_once(): Failed opening 'C:/xampp/htdocs/fdw-2021-2022-a/proyecto-yeicobF/src/logs/error-reporting.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\index.php on line 12
+[02-Jan-2022 05:52:05 Europe/Berlin] PHP Warning:  include_once(C:/xampp/htdocs/fdw-2021-2022-a/proyecto-yeicobF/src/logs/error-reporting.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\index.php on line 12
+[02-Jan-2022 05:52:05 Europe/Berlin] PHP Warning:  include_once(): Failed opening 'C:/xampp/htdocs/fdw-2021-2022-a/proyecto-yeicobF/src/logs/error-reporting.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\index.php on line 12
+[02-Jan-2022 05:53:55 Europe/Berlin] hola en index, prueba propio log
+[02-Jan-2022 05:57:04 Europe/Berlin] hola en index, prueba propio log
+[02-Jan-2022 05:57:09 Europe/Berlin] Error de conexión con la BD - PDOException: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\DB.php:87
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\DB.php(87): PDO->__construct('mysql:host=loca...', 'root', '')
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php(39): DBConnection::getConnection()
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(162): Model::initDbConnection()
+#3 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php(8): require_once('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\layouts\navbar\session-buttons.php(4): require_once('C:\\xampp\\htdocs...')
+#5 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\layouts\navbar.php(87): require_once('C:\\xampp\\htdocs...')
+#6 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\index.php(51): include('C:\\xampp\\htdocs...')
+#7 {main}
+[02-Jan-2022 05:58:35 Europe/Berlin] hola en index, prueba propio log
+[02-Jan-2022 05:58:44 Europe/Berlin] hola en index, prueba propio log

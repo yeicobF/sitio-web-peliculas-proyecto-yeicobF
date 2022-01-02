@@ -21,6 +21,7 @@ class Login extends Controller
     // Agregar valores del usuario a la sesión.
     $_SESSION = Usuario::getSessionArrayElements($user);
     $_SESSION["logged_in"] = true;
+    Usuario::$current_user = $user;
   }
 
   public static function isUserLoggedIn()

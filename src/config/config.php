@@ -127,9 +127,18 @@ $url_page = [
 // Obtener nombre de archivo actual sin su extensión.
 // $current_file_name = basename(__DIR__, ".php");
 
-function showElements(array $elements)
+/**
+ * Imprimir elementos de un arreglo con salto de línea.
+ *
+ * @param array $elements
+ * @return void
+ */
+function showElements(array $elements = [])
 {
+  echo "<br><br>";
+  var_dump($elements);
   foreach ($elements as $value) {
     echo "<br><br>" . var_dump($value) . "<br><br>";
   }
+  echo "<br><br>";
 }
