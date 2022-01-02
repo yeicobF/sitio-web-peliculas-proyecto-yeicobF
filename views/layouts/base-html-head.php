@@ -7,6 +7,7 @@ $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 include_once $path . "fdw-2021-2022-a/proyecto-yeicobF/src/config/config.php";
 
 require_once FOLDERS_WITH_DOCUMENT_ROOT["LIBS"] . "controller.php";
+require_once FOLDERS_WITH_DOCUMENT_ROOT["LIBS"] . "error-reporting.php";
 
 Controller::startSession();
 
