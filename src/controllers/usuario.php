@@ -84,10 +84,37 @@ class Usuario extends Controller
     );
   }
 
-  public static function verifyPasswordToUpdate(
-    $current_password,
-    $new_password
-  ) {
+  /**
+   * Verificar si el usuario especificó una contraseña por actualizar, además de
+   * su contraseña actual.
+   *
+   * @param array $non_empty_fields Arreglo con campos no vacíos.
+   * @return boolean
+   */
+  public static function isNewPasswordSpecified($non_empty_form_fields)
+  {
+    return
+      $non_empty_form_fields["current_password"]
+      && $non_empty_form_fields["new_password"];
+  }
+
+  /**
+   * Verificar si se puede actualizar la contraseña o no.
+   * 
+   * Verificar si una contraseña existe para ser actualizada.
+   *
+   * @param string $current_password
+   * @return bool
+   */
+  public static function canUpdatePassword(
+    string $current_password
+  ): bool {
+    $login = ModelUsuario::isLoginDataCorrect(
+      Usuario::getUsername(),
+      $current_password
+    );
+
+    return !$login ? false : true;
   }
 
   /**
@@ -179,6 +206,19 @@ if (Controller::isMethodPut()) {
 
   $non_empty_fields = Controller::getNonEmptyFormFields($_POST);
   // showElements($non_empty_fields);
+
+  if (
+    Usuario::isNewPasswordSpecified($non_empty_fields)
+    && Usuario::canUpdatePassword($non_empty_fields["current_password"])
+  ) {
+    // Establecemos la nueva contraseña.
+    $non_empty_fields["password"] = $non_empty_fields["new_password"];
+
+    // Quitamos los campos de la actual y nueva contraseña, ya que, no se
+    // requieren para la actualización del usuario.
+    unset($non_empty_fields["current_password"]);
+    unset($non_empty_fields["new_password"]);
+  }
 
   $result = Model::updateRecord(
     table: ModelUsuario::TABLE_NAME,

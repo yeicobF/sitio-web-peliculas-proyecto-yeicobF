@@ -86,8 +86,8 @@ $baseHtmlHead = new BaseHtmlHead(
           <h2 class="edit-profile__username"><?php echo $username; ?></h2>
         </hgroup>
         <section>
-          <label for="foto-perfil">Foto de perfil</label>
-          <input class="form__input__picture" type="file" name="foto-perfil" class="form-control">
+          <label for="foto_perfil">Foto de perfil</label>
+          <input class="form__input__picture" type="file" name="foto_perfil" class="form-control">
         </section>
         <section class="">
           <label for="username">Nombre de usuario</label>
@@ -112,16 +112,16 @@ $baseHtmlHead = new BaseHtmlHead(
         </section>
 
         <section class="">
-          <label for="current-password">Contraseña actual</label>
+          <label for="current_password">Contraseña actual</label>
           <div class="form__input__container">
-            <input type="password" name="current-password" placeholder="Ingresa la contraseña actual">
+            <input type="password" name="current_password" placeholder="Ingresa la contraseña actual">
             <i class="form__input__icon fas fa-eye-slash"></i>
           </div>
         </section>
         <section class="">
-          <label for="new-password">Nueva contraseña</label>
+          <label for="new_password">Nueva contraseña</label>
           <div class="form__input__container">
-            <input type="password" name="new-password" placeholder="Ingresa la nueva contraseña">
+            <input type="password" name="new_password" placeholder="Ingresa la nueva contraseña">
             <i class="form__input__icon fas fa-eye-slash"></i>
           </div>
         </section>
