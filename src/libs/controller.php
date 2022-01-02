@@ -86,6 +86,10 @@ class Controller
     return file_get_contents($tmp_name);
   }
 
+  public static function getEncodedImage(string $file) {
+    return base64_encode($file);
+  }
+
   /**
    * Redirigir a la vista especificada a partir del directorio `views/`.
    *

@@ -41,7 +41,8 @@ class Usuario extends Controller
   {
     // echo var_dump($_SESSION);
 
-    $foto_perfil = $_SESSION["foto_perfil"];
+    $foto_perfil = Controller::getEncodedImage($_SESSION["foto_perfil"]);
+
     $username = $_SESSION["username"];
     $alt = "Detalles de usuario - {$username}";
     $detalles_perfil_url =
@@ -49,9 +50,7 @@ class Usuario extends Controller
       . "user/index.php?id={$_SESSION["id"]}";
     if (!empty($foto_perfil)) {
 ?>
-      <a href='<?php echo $detalles_perfil_url; ?>'>
-        <img src='data:image/jpeg; base64, <?php echo $foto_perfil; ?>' alt='<?php echo $alt; ?>' class='circle-avatar'>
-      </a>
+      <img src='data:image/jpeg; base64, <?php echo $foto_perfil; ?>' alt='<?php echo $alt; ?>' class='circle-avatar profile-picture'>
     <?php
       return;
     }
@@ -186,7 +185,7 @@ if (Controller::isCurrentFileView()) {
 
 Controller::redirectIfNonExistentPostMethod("login/index.php");
 
-echo var_dump($_POST);
+// echo var_dump($_POST);
 
 /* ------------------------- ELIMINACIÓN DE USUARIO ------------------------- */
 if (Controller::isMethodDelete()) {
