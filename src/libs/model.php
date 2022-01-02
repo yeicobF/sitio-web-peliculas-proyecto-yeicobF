@@ -796,14 +796,120 @@ class Model
   }
 
   /**
+   * Obtener el alias de una tabla en una query.
+   *
+   * El alias sirve para identificar de otra manera a un elemento que, en este
+   * caso es una tabla. Este sigue después de la palabra reservada `AS`.
+   *
+   * Ejemplo:
+   *
+   * ```sql
+   * SELECT * FROM 
+   * `usuario` AS u
+   * LEFT JOIN `comentario_pelicula` AS cp
+   *   ON u.id = cp.usuario_id
+   * LEFT JOIN `calificacion_usuario_pelicula` AS cup
+   *   ON u.id = cup.usuario_id
+   * LEFT JOIN `like_comentario` AS lc
+   *   ON u.id = lc.usuario_id
+   * WHERE u.id = ":u_id"
+   * ```
+   *
+   * @param array $table_names Nombres de las tablas.
+   * @return array Arreglo asociativo con key = nombre de la tabla y value =
+   * alias.
+   */
+  public static function getQueryAliases(array $table_names): array
+  {
+    $query_aliases = [];
+
+    foreach ($table_names as $table_name) {
+      /**
+       * Array con las palabras de la tabla en cada índice. Estas palabras se
+       * separan mediante un guión, pero en el arreglo se guardan sin este.
+       */
+      $table_name_words = explode("_", $table_name);
+
+      /**
+       * Obtener la primera letra de cada palabra. Imagino que habrá una función
+       * para unir los elementos siguiendo esta condición, pero por el momento,
+       * no encontré lo que buscaba.
+       * 
+       * Esto aumentará la complejidad de la operación.
+       * 
+       * Dado el hecho de que, el encoding de nuestra aplicación es UTF-8, se
+       * requiere de un multibyte encoding, y si no lo ponemos así, podríamos
+       * solo obtener el primer byte en lugar del primer caracter.
+       * 
+       * Por esta razón, utilizamos: `mb_substr()`.
+       */
+      for ($i = 0; $i < count($table_name_words); $i++) {
+        /**
+         * https://stackoverflow.com/a/1972111/13562806
+         *
+         * "
+         * Yes. Strings can be seen as character arrays, and the way to access a
+         * position of an array is to use the [] operator. Usually there's no
+         * problem at all in using $str[0] (and I'm pretty sure is much faster
+         * than the substr() method).
+         *
+         * There is only one caveat with both methods: they will get the first
+         * byte, rather than the first character. This is important if you're
+         * using multibyte encodings (such as UTF-8). If you want to support
+         * that, use mb_substr(). Arguably, you should always assume multibyte
+         * input these days, so this is the best option, but it will be slightly
+         * slower.
+         * "
+         */
+        $table_name_words[$i] = mb_substr(
+          $table_name_words[$i],
+          0,
+          1,
+          INTERNAL_ENCODING
+        );
+      }
+
+      /**
+       * El alias se conforma de la primera letra de cada palabra de la tabla.
+       */
+      $alias = join("_", $table_name_words);
+
+      /**
+       * Si el alias ya existe y sigue existiendo, agregar un número secuencial
+       * al final para diferenciarlos. Puede suceder que más de una tabla tenga
+       * las mismas iniciales.
+       */
+      while (array_key_exists($alias, $query_aliases)) {
+        $counter = 0;
+
+        $alias .= "_{$counter}";
+      }
+
+      $query_aliases[$table_name] = $alias;
+    }
+
+    return $query_aliases;
+  }
+
+  
+  public static function bindJoinWhereParameters() {
+
+  }
+
+  /**
    * Elimina un registro y sus incidencias (referencias) en otras tablas.
+   * 
+   * Utilizamos `LEFT JOIN` en lugar de `INNER JOIN`.
+   * 
+   * Este es un artículo que explica su diferencia:
+   * - https://www.sqlshack.com/learn-sql-inner-join-vs-left-join/
    *
    * @param string $table
    * @param array $reference_tables
    * @param array $where_clause_names
    * @param array $where_clause_values
    * @param array $pdo_params
-   * @return void
+   * @return : int
    */
   public static function deleteRecordAndReferences(
     string $table,
@@ -811,7 +917,7 @@ class Model
     array $where_clause_names,
     array $where_clause_values,
     array $pdo_params
-  ) {
+  ): int {
     // El récord (registro) no existe.
     if (!self::recordExists(
       $table,
@@ -823,6 +929,6 @@ class Model
       return 3;
     }
 
-
+    $where_aliases = self::getQueryAliases([$table]);
   }
 }
