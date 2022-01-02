@@ -891,8 +891,34 @@ class Model
     return $query_aliases;
   }
 
-  public static function getJoinWhereClauseNames()
-  {
+  public static function getJoinWhereClauseNames(
+    $table_aliases,
+    $where_clause_names
+  ) {
+    $join_where_clause_names = [];
+
+    foreach ($table_aliases as $alias) {
+      foreach ($where_clause_names as $name) {
+        /**                       "  u.id  =    :u_id" */
+        $join_where_clause_names["{$alias}.{$name}"] = ":{$alias}_{$name}";
+      }
+    }
+
+    return $join_where_clause_names;
+  }
+
+  public static function createLeftJoinQueryPart(
+    $main_table,
+    $reference_tables,
+    $table_aliases
+  ) {
+  }
+
+  public static function createDeleteJoinQuery(
+    $main_table,
+    $reference_tables,
+    $where_clause_names
+  ) {
   }
 
   /**
@@ -910,7 +936,7 @@ class Model
    * la complejidad.
    *
    * @param array $join_where_clause_names Arreglo asociativo con el nombre
-   * original de la igualación (u.id) y el valor del bindParam (:u.id).
+   * original de la igualación (u.id) y el valor del bindParam (:u_id).
    * @return void
    */
   public static function createJoinQueryWherePart($join_where_clause_names)
@@ -936,6 +962,15 @@ class Model
     $join_where_clause_names,
     $where_clause_values
   ) {
+    $bound_params = [];
+    $i = 0;
+
+    foreach ($join_where_clause_names as $bind_param) {
+      $bound_params[$bind_param] = $where_clause_values[$i];
+      $i++;
+    }
+
+    return $bound_params;
   }
 
   /**
