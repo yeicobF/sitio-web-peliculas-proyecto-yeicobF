@@ -94,7 +94,9 @@ class Usuario extends Controller
   public static function isNewPasswordSpecified($non_empty_form_fields)
   {
     return
-      $non_empty_form_fields["current_password"]
+      isset($non_empty_form_fields["current_password"])
+      && $non_empty_form_fields["current_password"]
+      && isset($non_empty_form_fields["new_password"])
       && $non_empty_form_fields["new_password"];
   }
 
@@ -129,7 +131,7 @@ class Usuario extends Controller
   {
     foreach ($session_values as $key => $value) {
       // Solo actualizar las llaves existentes.
-      if (isset($_SESSION[$key])) {
+      if (array_key_exists($key, $_SESSION)) {
         $_SESSION[$key] = $value;
       }
     }
@@ -204,7 +206,16 @@ if (Controller::isMethodPut()) {
   // echo "PUT";
   unset($_POST["_method"]);
 
-  $non_empty_fields = Controller::getNonEmptyFormFields($_POST);
+  $form_fields = $_POST;
+
+  // Verificar si hay una foto. Si la hay, obtenerla.
+  if (Controller::fileExists("foto_perfil")) {
+    $form_fields["foto_perfil"] = Controller::getFile("foto_perfil");
+  }
+
+  $non_empty_fields = Controller::getNonEmptyFormFields(
+    $form_fields
+  );
   // showElements($non_empty_fields);
 
   if (
@@ -219,6 +230,8 @@ if (Controller::isMethodPut()) {
     unset($non_empty_fields["current_password"]);
     unset($non_empty_fields["new_password"]);
   }
+
+
 
   $result = Model::updateRecord(
     table: ModelUsuario::TABLE_NAME,

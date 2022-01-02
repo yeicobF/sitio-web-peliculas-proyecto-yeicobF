@@ -81,6 +81,11 @@ class Controller
     return file_exists($tmp_name) || is_uploaded_file($tmp_name);
   }
 
+  public static function getFile(string $file_key_name) {
+    $tmp_name = $_FILES[$file_key_name]["tmp_name"];
+    return file_get_contents($tmp_name);
+  }
+
   /**
    * Redirigir a la vista especificada a partir del directorio `views/`.
    *
