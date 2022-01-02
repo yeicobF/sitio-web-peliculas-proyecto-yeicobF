@@ -194,17 +194,7 @@ Controller::redirectIfNonExistentPostMethod("login/index.php");
 if (Controller::isMethodDelete()) {
   // echo "DELETE";
 
-  $result = Model::deleteRecord(
-    table: ModelUsuario::TABLE_NAME,
-    where_clause_names: [
-      "id"
-    ],
-    where_clause_values: [
-      Usuario::getId()
-    ],
-    pdo_params: ModelUsuario::PDO_PARAMS
-
-  );
+  $result = ModelUsuario::delete(Usuario::getId());
 
   if ($result === 1) {
     session_destroy();

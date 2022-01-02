@@ -1070,8 +1070,6 @@ class Model
       )
     );
 
-
-
     $join_where_clause_names = self::getJoinWhereClauseNames(
       $table_aliases,
       $where_clause_names
