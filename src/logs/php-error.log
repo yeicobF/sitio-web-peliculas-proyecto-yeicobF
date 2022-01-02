@@ -355,3 +355,11 @@ Stack trace:
 [02-Jan-2022 05:58:44 Europe/Berlin] hola en index, prueba propio log
 [02-Jan-2022 06:26:31 Europe/Berlin] PHP Warning:  include_once(C:/xampp/htdocs/fdw-2021-2022-a/proyecto-yeicobF/src/logs/error-reporting.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\index.php on line 12
 [02-Jan-2022 06:26:31 Europe/Berlin] PHP Warning:  include_once(): Failed opening 'C:/xampp/htdocs/fdw-2021-2022-a/proyecto-yeicobF/src/logs/error-reporting.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\index.php on line 12
+[02-Jan-2022 17:28:37 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Libs\Controller::getEncodedImage(): Argument #1 ($file) must be of type string, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 44 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php:90
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(44): Libs\Controller::getEncodedImage(NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\layouts\navbar\session-buttons.php(32): Controllers\Usuario::getFotoPerfil()
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\layouts\navbar.php(87): require_once('C:\\xampp\\htdocs...')
+#3 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\index.php(51): include('C:\\xampp\\htdocs...')
+#4 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 90

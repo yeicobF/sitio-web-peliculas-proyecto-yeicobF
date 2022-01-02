@@ -766,19 +766,63 @@ class Model
    * @param array $where_clauses Arreglo con los nombres de las where clauses.
    * @param array $values Arreglo con los valores.
    * @param array $pdo_params
-   * @return bool
+   * @return int
    */
   public static function deleteRecord(
     string $table,
-    array $where_clauses,
-    array $values,
+    array $where_clause_names,
+    array $where_clause_values,
     array $pdo_params
-  ): bool {
-    $delete_query = self::createDeleteQuery($table, $where_clauses);
+  ): int {
+    // El récord (registro) no existe.
+    if (!self::recordExists(
+      $table,
+      $where_clause_names,
+      $where_clause_values,
+      $pdo_params
+    )) {
+      // Campo por actualizar no existente.
+      return 3;
+    }
+
+    $delete_query = self::createDeleteQuery($table, $where_clause_names);
     $query = self::$db_connection->prepare($delete_query);
 
-    $query->execute(self::bindWhereClauses($where_clauses, $values));
+    $query->execute(
+      self::bindWhereClauses($where_clause_names, $where_clause_values)
+    );
 
     return $query->rowCount() > 0;
+  }
+
+  /**
+   * Elimina un registro y sus incidencias (referencias) en otras tablas.
+   *
+   * @param string $table
+   * @param array $reference_tables
+   * @param array $where_clause_names
+   * @param array $where_clause_values
+   * @param array $pdo_params
+   * @return void
+   */
+  public static function deleteRecordAndReferences(
+    string $table,
+    array $reference_tables,
+    array $where_clause_names,
+    array $where_clause_values,
+    array $pdo_params
+  ) {
+    // El récord (registro) no existe.
+    if (!self::recordExists(
+      $table,
+      $where_clause_names,
+      $where_clause_values,
+      $pdo_params
+    )) {
+      // Campo por actualizar no existente.
+      return 3;
+    }
+
+
   }
 }
