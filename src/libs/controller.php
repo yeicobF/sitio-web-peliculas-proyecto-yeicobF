@@ -89,13 +89,18 @@ class Controller
    */
   public static function redirectView(
     string $view_path = "index.php",
+    string $message = "",
     string $error = ""
   ) {
     $redirect_path = FOLDERS_WITH_LOCALHOST["VIEWS"] . $view_path;
 
     $redirect_path
-      .= !empty($error)
+      .= strlen($error) > 0
       ? "?error={$error}"
+      : "";
+    $redirect_path
+      .= strlen($message) > 0
+      ? "?message={$message}"
       : "";
 
     /**
@@ -207,11 +212,8 @@ class Controller
   ): array {
     $trimmed_fields = [];
 
-    foreach ($form_fields as $field) {
-      array_push(
-        $trimmed_fields,
-        trim($field)
-      );
+    foreach ($form_fields as $field_name => $field) {
+      $trimmed_fields[$field_name] = trim($field);
     }
 
     return $trimmed_fields;
@@ -235,9 +237,9 @@ class Controller
     $trimmed_fields = self::removeFormFieldsWhitespaces($form_fields);
     $non_empty_fields = [];
 
-    foreach ($trimmed_fields as $field) {
+    foreach ($trimmed_fields as $field_name => $field) {
       if (strlen($field) > 0) {
-        array_push($non_empty_fields, $field);
+        $non_empty_fields[$field_name] = trim($field);
       }
     }
 

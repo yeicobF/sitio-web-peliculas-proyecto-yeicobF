@@ -133,9 +133,10 @@ $url_page = [
  * @param array $elements
  * @return void
  */
-function showElements(array $elements)
+function showElements(array $elements = [])
 {
   echo "<br><br>";
+  var_dump($elements);
   foreach ($elements as $value) {
     echo "<br><br>" . var_dump($value) . "<br><br>";
   }

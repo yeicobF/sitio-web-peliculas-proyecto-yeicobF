@@ -4,10 +4,12 @@ namespace Controllers;
 
 require_once __DIR__ . "/../config/config.php";
 require_once __DIR__ . "/../libs/controller.php";
+require_once __DIR__ . "/../libs/model.php";
 require_once __DIR__ . "/../models/usuario.php";
 
-use Libs\Controller;
 use Usuario as ModelUsuario;
+use Model as Model;
+use Libs\Controller;
 
 class Usuario extends Controller
 {
@@ -66,6 +68,25 @@ class Usuario extends Controller
 <?php
   }
 
+  public static function verifyPasswordToUpdate() {
+    
+  }
+
+  /**
+   * Actualizar los valores de la sesión que sean enviados en un arreglo
+   * asociativo.
+   *
+   * @param array $session_values Arreglo asociativo con los valores a
+   * actualizar de la sesión.
+   * @return void
+   */
+  public static function updateSessionValues(array $session_values)
+  {
+    foreach ($session_values as $key => $value) {
+      $_SESSION[$key] = $value;
+    }
+  }
+
   public static function getUsername()
   {
     return $_SESSION["username"];
@@ -87,6 +108,12 @@ class Usuario extends Controller
     return $_SESSION["id"];
   }
 }
+
+Controller::startSession();
+Model::initDbConnection();
+
+$result = 0;
+$message = "";
 
 if (Controller::isCurrentFileView()) {
   return;
@@ -115,17 +142,40 @@ if (Controller::isMethodPost()) {
 
 /* ------------------------ ACTUALIZACIÓN DE USUARIO ------------------------ */
 if (Controller::isMethodPut()) {
-  echo "PUT";
+  // echo "PUT";
   unset($_POST["_method"]);
-  
+
   $non_empty_fields = Controller::getNonEmptyFormFields($_POST);
+  // showElements($non_empty_fields);
 
+  $result = Model::updateRecord(
+    table: ModelUsuario::TABLE_NAME,
+    param_values: $non_empty_fields,
+    where_clause_names: [
+      "id"
+    ],
+    where_clause_values: [
+      Usuario::getId()
+    ],
+    unique_attributes: ModelUsuario::UNIQUE_ATTRIBUTES,
+    pdo_params: ModelUsuario::PDO_PARAMS
+  );
 
-//   ModelUsuario::updateRecord(
-// 
-//   );
+  if ($result === 1) {
+    Usuario::updateSessionValues($non_empty_fields);
+  }
+
+  // showElements($_SESSION);
 }
+
+$message = Model::OPERATION_INFO[$result];
+// showElements(array($message));
 
 // Al final de cualquiera de los procedimientos, redirigir a la pestaña
 // principal.
-// Controller::redirectView();
+if ($result === 1) {
+  Controller::redirectView(message: $message);
+  return;
+}
+
+Controller::redirectView(error: $message);
