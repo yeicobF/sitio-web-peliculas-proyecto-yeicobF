@@ -891,9 +891,51 @@ class Model
     return $query_aliases;
   }
 
-  
-  public static function bindJoinWhereParameters() {
+  public static function getJoinWhereClauseNames()
+  {
+  }
 
+  /**
+   * Crear la parte del WHERE de una query con JOIN.
+   * 
+   * Esto es como la otra función `Model::createQueryWherePart()`, pero con
+   * menos complejidad, ya que, aquí no se puede hacer lo siguiente:
+   * 
+   * ```sql
+   * WHERE u.id = ":u.id"
+   * ```
+   * 
+   * Sino que, tenemos que reemplazar ese punto del bound param por otro
+   * símbolo, y en la otra función eso no se hace. Hacerlo ahí sería aumentarle
+   * la complejidad.
+   *
+   * @param array $join_where_clause_names Arreglo asociativo con el nombre
+   * original de la igualación (u.id) y el valor del bindParam (:u.id).
+   * @return void
+   */
+  public static function createJoinQueryWherePart($join_where_clause_names)
+  {
+    $query_where_part = " WHERE";
+
+    $i = 0;
+    foreach ($join_where_clause_names as $key => $value) {
+      if ($i > 0) {
+        $query_where_part .= " AND";
+      }
+
+      /**                  "  u.id  =    :u_id" */
+      $query_where_part .= " {$key} = {$value}";
+
+      $i++;
+    }
+
+    return $query_where_part;
+  }
+
+  public static function bindJoinWhereParameters(
+    $join_where_clause_names,
+    $where_clause_values
+  ) {
   }
 
   /**
