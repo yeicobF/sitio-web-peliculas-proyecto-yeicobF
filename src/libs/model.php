@@ -975,15 +975,9 @@ class Model
   public static function createDeleteJoinQuery(
     string $main_table,
     array $reference_tables,
-    array $where_clause_names
+    array $table_aliases,
+    array $join_where_clause_names
   ) {
-    $main_table_alias = self::getQueryAliases([$main_table]);
-    $reference_tables_aliases = self::getQueryAliases($reference_tables);
-
-    $table_aliases = array_merge(
-      $main_table_alias,
-      $reference_tables_aliases
-    );
 
     /**
      * Alias en cadena para poder especificar su eliminación.
@@ -1007,7 +1001,7 @@ class Model
     $query =
       "DELETE "
       . $string_aliases
-      . "FROM {$main_table} AS {$main_table_alias}";
+      . "FROM {$main_table} AS {$table_aliases[$main_table]}";
 
     $query .= self::createLeftJoinQueryPart(
       $main_table,
@@ -1015,10 +1009,6 @@ class Model
       $table_aliases
     );
 
-    $join_where_clause_names = self::getJoinWhereClauseNames(
-      $table_aliases,
-      $where_clause_names
-    );
 
     $query .= self::createJoinQueryWherePart($join_where_clause_names);
 
@@ -1073,10 +1063,25 @@ class Model
       return 3;
     }
 
+    $table_aliases = self::getQueryAliases(
+      array_merge(
+        [$main_table],
+        $reference_tables
+      )
+    );
+
+
+
+    $join_where_clause_names = self::getJoinWhereClauseNames(
+      $table_aliases,
+      $where_clause_names
+    );
+
     $delete_query = self::createDeleteJoinQuery(
       $main_table,
       $reference_tables,
-      $where_clause_names
+      $table_aliases,
+      $join_where_clause_names
     );
 
     try {
@@ -1084,7 +1089,7 @@ class Model
 
       $query->execute(
         self::bindJoinWhereClauses(
-          $where_clause_names,
+          $join_where_clause_names,
           $where_clause_values
         )
       );
