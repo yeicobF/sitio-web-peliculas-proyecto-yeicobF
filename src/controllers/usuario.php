@@ -68,8 +68,26 @@ class Usuario extends Controller
 <?php
   }
 
-  public static function verifyPasswordToUpdate() {
-    
+  /**
+   * Obtener arreglo con los datos del usuario actual.
+   *
+   * @param int $id
+   * @return array
+   */
+  public static function getCurrentUserData(int $id): array
+  {
+    return Model::getRecord(
+      table: ModelUsuario::TABLE_NAME,
+      where_clause_names: ["id"],
+      where_clause_values: [$id],
+      pdo_params: ModelUsuario::PDO_PARAMS
+    );
+  }
+
+  public static function verifyPasswordToUpdate(
+    $current_password,
+    $new_password
+  ) {
   }
 
   /**
@@ -83,7 +101,10 @@ class Usuario extends Controller
   public static function updateSessionValues(array $session_values)
   {
     foreach ($session_values as $key => $value) {
-      $_SESSION[$key] = $value;
+      // Solo actualizar las llaves existentes.
+      if (isset($_SESSION[$key])) {
+        $_SESSION[$key] = $value;
+      }
     }
   }
 
@@ -115,11 +136,22 @@ Model::initDbConnection();
 $result = 0;
 $message = "";
 
-if (Controller::isCurrentFileView()) {
+
+
+// Obtener los datos del usuario actual, ya que, estos pudieron haber sido
+// actualizados.
+if (
+  Controller::isGet()
+  && str_contains(
+    $_SERVER["SCRIPT_FILENAME"],
+    "editar-perfil/index.php"
+  )
+) {
+  Usuario::updateSessionValues(Usuario::getCurrentUserData($_SESSION["id"])[0]);
   return;
 }
 
-if (Controller::isGet()) {
+if (Controller::isCurrentFileView()) {
   return;
 }
 
