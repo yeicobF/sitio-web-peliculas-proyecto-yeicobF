@@ -81,12 +81,14 @@ class Controller
     return file_exists($tmp_name) || is_uploaded_file($tmp_name);
   }
 
-  public static function getFile(string $file_key_name) {
+  public static function getFile(string $file_key_name)
+  {
     $tmp_name = $_FILES[$file_key_name]["tmp_name"];
     return file_get_contents($tmp_name);
   }
 
-  public static function getEncodedImage(string $file) {
+  public static function getEncodedImage(string $file)
+  {
     return base64_encode($file);
   }
 
@@ -103,13 +105,15 @@ class Controller
   ) {
     $redirect_path = FOLDERS_WITH_LOCALHOST["VIEWS"] . $view_path;
 
+    $query_params_symbol = str_contains($view_path, "?") ? "&" : "?";
+
     $redirect_path
       .= strlen($error) > 0
-      ? "?error={$error}"
+      ? "{$query_params_symbol}error={$error}"
       : "";
     $redirect_path
       .= strlen($message) > 0
-      ? "?message={$message}"
+      ? "{$query_params_symbol}message={$message}"
       : "";
 
     /**

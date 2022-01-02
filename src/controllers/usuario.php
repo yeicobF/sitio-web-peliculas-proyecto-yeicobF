@@ -203,9 +203,9 @@ if (Controller::isMethodPost()) {
 /* ------------------------ ACTUALIZACIÓN DE USUARIO ------------------------ */
 if (Controller::isMethodPut()) {
   // echo "PUT";
-  unset($_POST["_method"]);
 
   $form_fields = $_POST;
+  unset($form_fields["_method"]);
 
   // Verificar si hay una foto. Si la hay, obtenerla.
   if (Controller::fileExists("foto_perfil")) {
@@ -245,6 +245,8 @@ if (Controller::isMethodPut()) {
     pdo_params: ModelUsuario::PDO_PARAMS
   );
 
+  $message = Model::OPERATION_INFO[$result];
+
   if ($result === 1) {
     Usuario::updateSessionValues($non_empty_fields);
   }
@@ -258,6 +260,15 @@ $message = Model::OPERATION_INFO[$result];
 // Al final de cualquiera de los procedimientos, redirigir a la pestaña
 // principal.
 if ($result === 1) {
+  if (Controller::isMethodPut()) {
+    // Redirigir a los detalles del usuario.
+    Controller::redirectView(
+      "user/index.php?id=" . Usuario::getId(),
+      message: $message
+    );
+    return;
+  }
+  
   Controller::redirectView(message: $message);
   return;
 }
