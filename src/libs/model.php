@@ -785,14 +785,19 @@ class Model
       return 3;
     }
 
-    $delete_query = self::createDeleteQuery($table, $where_clause_names);
-    $query = self::$db_connection->prepare($delete_query);
+    try {
+      $delete_query = self::createDeleteQuery($table, $where_clause_names);
+      $query = self::$db_connection->prepare($delete_query);
 
-    $query->execute(
-      self::bindWhereClauses($where_clause_names, $where_clause_values)
-    );
+      $query->execute(
+        self::bindWhereClauses($where_clause_names, $where_clause_values)
+      );
 
-    return $query->rowCount() > 0;
+      return $query->rowCount() > 0;
+    } catch (PDOException $e) {
+      error_log("Error en la query - {$e}");
+      return 5;
+    }
   }
 
   /**
@@ -912,14 +917,23 @@ class Model
     $reference_tables,
     $table_aliases
   ) {
+    $left_join = "";
+    $main_table_alias = $table_aliases[$main_table];
+
+    foreach ($reference_tables as $table) {
+      $table_alias = $table_aliases[$table];
+
+      $left_join .= "LEFT JOIN `{$table}` AS {$table_alias}";
+      $left_join
+        .= " ON {$main_table_alias}.id = {$table_alias}.{$main_table}_id";
+
+      $left_join .= " ";
+    }
+
+    return $left_join;
   }
 
-  public static function createDeleteJoinQuery(
-    $main_table,
-    $reference_tables,
-    $where_clause_names
-  ) {
-  }
+
 
   /**
    * Crear la parte del WHERE de una query con JOIN.
@@ -936,7 +950,7 @@ class Model
    * la complejidad.
    *
    * @param array $join_where_clause_names Arreglo asociativo con el nombre
-   * original de la igualación (u.id) y el valor del bindParam (:u_id).
+   * original de la igualación (`u.id`) y el valor del bindParam (`:u_id`).
    * @return void
    */
   public static function createJoinQueryWherePart($join_where_clause_names)
@@ -958,7 +972,60 @@ class Model
     return $query_where_part;
   }
 
-  public static function bindJoinWhereParameters(
+  public static function createDeleteJoinQuery(
+    string $main_table,
+    array $reference_tables,
+    array $where_clause_names
+  ) {
+    $main_table_alias = self::getQueryAliases([$main_table]);
+    $reference_tables_aliases = self::getQueryAliases($reference_tables);
+
+    $table_aliases = array_merge(
+      $main_table_alias,
+      $reference_tables_aliases
+    );
+
+    /**
+     * Alias en cadena para poder especificar su eliminación.
+     * 
+     * https://stackoverflow.com/a/5593036/13562806
+     * 
+     * ```php
+     * echo substr('a,b,c,d,e,', 0, -1);
+     * # => 'a,b,c,d,e'
+     * ```
+     * 
+     * Después, eliminamos los 2 últimos caracteres: ", ".
+     */
+    $string_aliases = mb_substr(
+      join(", ", $table_aliases),
+      0,
+      -2,
+      INTERNAL_ENCODING
+    );
+
+    $query =
+      "DELETE "
+      . $string_aliases
+      . "FROM {$main_table} AS {$main_table_alias}";
+
+    $query .= self::createLeftJoinQueryPart(
+      $main_table,
+      $reference_tables,
+      $table_aliases
+    );
+
+    $join_where_clause_names = self::getJoinWhereClauseNames(
+      $table_aliases,
+      $where_clause_names
+    );
+
+    $query .= self::createJoinQueryWherePart($join_where_clause_names);
+
+    return $query;
+  }
+
+  public static function bindJoinWhereClauses(
     $join_where_clause_names,
     $where_clause_values
   ) {
@@ -989,7 +1056,7 @@ class Model
    * @return : int
    */
   public static function deleteRecordAndReferences(
-    string $table,
+    string $main_table,
     array $reference_tables,
     array $where_clause_names,
     array $where_clause_values,
@@ -997,7 +1064,7 @@ class Model
   ): int {
     // El récord (registro) no existe.
     if (!self::recordExists(
-      $table,
+      $main_table,
       $where_clause_names,
       $where_clause_values,
       $pdo_params
@@ -1006,6 +1073,26 @@ class Model
       return 3;
     }
 
-    $where_aliases = self::getQueryAliases([$table]);
+    $delete_query = self::createDeleteJoinQuery(
+      $main_table,
+      $reference_tables,
+      $where_clause_names
+    );
+
+    try {
+      $query = self::$db_connection->prepare($delete_query);
+
+      $query->execute(
+        self::bindJoinWhereClauses(
+          $where_clause_names,
+          $where_clause_values
+        )
+      );
+
+      return $query->rowCount() > 0;
+    } catch (PDOException $e) {
+      error_log("Error en la query - {$e}");
+      return 5;
+    }
   }
 }
