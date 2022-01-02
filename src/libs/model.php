@@ -897,11 +897,17 @@ class Model
   }
 
   public static function getJoinWhereClauseNames(
-    $table_aliases,
-    $where_clause_names
+    array $table_aliases,
+    array $where_clause_names
   ) {
     $join_where_clause_names = [];
 
+    /**
+     * Este ciclo tendría que modificarse en el caso de enviar más de un
+     * $table_alias, pero por el momento lo dejaré así. Si se hiciera esto,
+     * pasaría que, en el for anidado se asignarían los mismos parámetros a
+     * todos los alias.
+     */
     foreach ($table_aliases as $alias) {
       foreach ($where_clause_names as $name) {
         /**                       "  u.id  =    :u_id" */
@@ -981,27 +987,32 @@ class Model
 
     /**
      * Alias en cadena para poder especificar su eliminación.
-     * 
+     *
      * https://stackoverflow.com/a/5593036/13562806
-     * 
+     *
      * ```php
      * echo substr('a,b,c,d,e,', 0, -1);
      * # => 'a,b,c,d,e'
      * ```
-     * 
+     *
      * Después, eliminamos los 2 últimos caracteres: ", ".
+     *
+     * - Después vi que no es necesario hacer lo anterior, ya que, los
+     *   caracteres solo se agregan entre los caracteres y no al final.
+     * 
+     * $string_aliases = mb_substr(
+     *   join(", ", $table_aliases),
+     *   0,
+     *   -2,
+     *   INTERNAL_ENCODING
+     * );
      */
-    $string_aliases = mb_substr(
-      join(", ", $table_aliases),
-      0,
-      -2,
-      INTERNAL_ENCODING
-    );
+    $string_aliases = join(", ", $table_aliases);
 
     $query =
       "DELETE "
       . $string_aliases
-      . "FROM {$main_table} AS {$table_aliases[$main_table]}";
+      . " FROM {$main_table} AS {$table_aliases[$main_table]} ";
 
     $query .= self::createLeftJoinQueryPart(
       $main_table,
@@ -1065,13 +1076,13 @@ class Model
 
     $table_aliases = self::getQueryAliases(
       array_merge(
-        [$main_table],
-        $reference_tables
+        $reference_tables,
+        [$main_table]
       )
     );
 
     $join_where_clause_names = self::getJoinWhereClauseNames(
-      $table_aliases,
+      [$table_aliases[$main_table]],
       $where_clause_names
     );
 
