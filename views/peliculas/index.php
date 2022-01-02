@@ -8,8 +8,7 @@ include_once __DIR__ . "/../../config/config.php";
 include_once FOLDERS_WITH_DOCUMENT_ROOT["VIEWS"]
   . "layouts/base-html-head.php";
 
-include_once FOLDERS_WITH_DOCUMENT_ROOT["SRC"]
-  . "logs/error-reporting.php";
+
 
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Películas",

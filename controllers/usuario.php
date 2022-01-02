@@ -80,7 +80,7 @@ class Usuario extends Controller
       where_clause_names: ["id"],
       where_clause_values: [$id],
       pdo_params: ModelUsuario::PDO_PARAMS
-    );
+    )[0];
   }
 
   /**
@@ -175,7 +175,7 @@ if (
     "editar-perfil/index.php"
   )
 ) {
-  Usuario::updateSessionValues(Usuario::getCurrentUserData($_SESSION["id"])[0]);
+  Usuario::updateSessionValues(Usuario::getCurrentUserData($_SESSION["id"]));
   return;
 }
 
@@ -268,7 +268,7 @@ if ($result === 1) {
     );
     return;
   }
-  
+
   Controller::redirectView(message: $message);
   return;
 }
