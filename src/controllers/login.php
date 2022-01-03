@@ -60,7 +60,10 @@ class Login extends Controller
 //   return;
 // }
 // Si nos encontramos en una view, no hacer el proceso.
-if (Controller::isCurrentFileView()) {
+if (
+  Controller::isCurrentFileView()
+  || Controller::isCurrentFileAnotherController("login")
+) {
   return;
 }
 
