@@ -22,12 +22,14 @@
 
 .profile-details__figcaption {
   display: flex;
+  padding: 1.2em 1em;
   /* align-self: flex-start; */
   flex-direction: column;
   /* flex: 1; */
   width: 100%;
+  row-gap: 2em;
   /* align-items: stretch; */
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 .profile-details__figcaption__header {
   display: flex;
@@ -35,10 +37,13 @@
 }
 
 @media (max-width: 576px) {
+  .profile-details__figcaption,
+  .profile-details,
   .profile-details__figcaption__header {
     align-items: center;
+    text-align: center;
   }
-  .profile-details {
-    align-items: center;
+  .profile-details__figcaption {
+    row-gap: 1em;
   }
 }

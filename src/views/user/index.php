@@ -78,12 +78,12 @@ $baseHtmlHead = new BaseHtmlHead(
         <!-- <img src="<?php echo $img_folder; ?>../avatar/1.jpg" alt="Username" class="circle-avatar"> -->
 
 
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-sm-6 col-md-4">
           <?php
           Usuario::getFotoPerfil();
           ?>
         </div>
-        <figcaption class="profile-details__figcaption col-12 col-sm-6">
+        <figcaption class="profile-details__figcaption col-12 col-sm-6  col-md-8">
           <header class="profile-details__figcaption__header">
             <h2>
               <?php
@@ -94,7 +94,7 @@ $baseHtmlHead = new BaseHtmlHead(
               <?php echo $username; ?>
             </h3>
           </header>
-          <a href="<?php echo $url_page["detalles-perfil"]; ?>" class="btn btn-info">
+          <a href="<?php echo $url_page["editar-perfil"]; ?>" class="btn btn-primary btn-fit-content">
             Editar perfil
           </a>
         </figcaption>
