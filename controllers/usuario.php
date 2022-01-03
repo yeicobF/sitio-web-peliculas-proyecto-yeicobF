@@ -40,8 +40,11 @@ class Usuario extends Controller
   public static function getFotoPerfil()
   {
     // echo var_dump($_SESSION);
+    $foto_perfil = "";
 
-    $foto_perfil = Controller::getEncodedImage($_SESSION["foto_perfil"]);
+    if (!empty($_SESSION["foto_perfil"])) {
+      $foto_perfil = Controller::getEncodedImage($_SESSION["foto_perfil"]);
+    }
 
     $username = $_SESSION["username"];
     $alt = "Detalles de usuario - {$username}";
@@ -189,10 +192,13 @@ Controller::redirectIfNonExistentPostMethod("login/index.php");
 
 /* ------------------------- ELIMINACIÓN DE USUARIO ------------------------- */
 if (Controller::isMethodDelete()) {
-  // Controller::startSession();
-  echo "DELETE";
+  // echo "DELETE";
 
-  // session_destroy();
+  $result = ModelUsuario::delete(Usuario::getId());
+
+  if ($result === 1) {
+    session_destroy();
+  }
 }
 
 /* ------------------------------ NUEVO USUARIO ----------------------------- */
@@ -244,8 +250,6 @@ if (Controller::isMethodPut()) {
     unique_attributes: ModelUsuario::UNIQUE_ATTRIBUTES,
     pdo_params: ModelUsuario::PDO_PARAMS
   );
-
-  $message = Model::OPERATION_INFO[$result];
 
   if ($result === 1) {
     Usuario::updateSessionValues($non_empty_fields);

@@ -766,19 +766,354 @@ class Model
    * @param array $where_clauses Arreglo con los nombres de las where clauses.
    * @param array $values Arreglo con los valores.
    * @param array $pdo_params
-   * @return bool
+   * @return int
    */
   public static function deleteRecord(
     string $table,
-    array $where_clauses,
-    array $values,
+    array $where_clause_names,
+    array $where_clause_values,
     array $pdo_params
-  ): bool {
-    $delete_query = self::createDeleteQuery($table, $where_clauses);
-    $query = self::$db_connection->prepare($delete_query);
+  ): int {
+    // El récord (registro) no existe.
+    if (!self::recordExists(
+      $table,
+      $where_clause_names,
+      $where_clause_values,
+      $pdo_params
+    )) {
+      // Campo por actualizar no existente.
+      return 3;
+    }
 
-    $query->execute(self::bindWhereClauses($where_clauses, $values));
+    try {
+      $delete_query = self::createDeleteQuery($table, $where_clause_names);
+      $query = self::$db_connection->prepare($delete_query);
 
-    return $query->rowCount() > 0;
+      $query->execute(
+        self::bindWhereClauses($where_clause_names, $where_clause_values)
+      );
+
+      return $query->rowCount() > 0;
+    } catch (PDOException $e) {
+      error_log("Error en la query - {$e}");
+      return 5;
+    }
+  }
+
+  /**
+   * Obtener el alias de una tabla en una query.
+   *
+   * El alias sirve para identificar de otra manera a un elemento que, en este
+   * caso es una tabla. Este sigue después de la palabra reservada `AS`.
+   *
+   * Ejemplo:
+   *
+   * ```sql
+   * SELECT * FROM 
+   * `usuario` AS u
+   * LEFT JOIN `comentario_pelicula` AS cp
+   *   ON u.id = cp.usuario_id
+   * LEFT JOIN `calificacion_usuario_pelicula` AS cup
+   *   ON u.id = cup.usuario_id
+   * LEFT JOIN `like_comentario` AS lc
+   *   ON u.id = lc.usuario_id
+   * WHERE u.id = ":u_id"
+   * ```
+   *
+   * @param array $table_names Nombres de las tablas.
+   * @return array Arreglo asociativo con key = nombre de la tabla y value =
+   * alias.
+   */
+  public static function getQueryAliases(array $table_names): array
+  {
+    $query_aliases = [];
+
+    foreach ($table_names as $table_name) {
+      /**
+       * Array con las palabras de la tabla en cada índice. Estas palabras se
+       * separan mediante un guión, pero en el arreglo se guardan sin este.
+       */
+      $table_name_words = explode("_", $table_name);
+
+      /**
+       * Obtener la primera letra de cada palabra. Imagino que habrá una función
+       * para unir los elementos siguiendo esta condición, pero por el momento,
+       * no encontré lo que buscaba.
+       * 
+       * Esto aumentará la complejidad de la operación.
+       * 
+       * Dado el hecho de que, el encoding de nuestra aplicación es UTF-8, se
+       * requiere de un multibyte encoding, y si no lo ponemos así, podríamos
+       * solo obtener el primer byte en lugar del primer caracter.
+       * 
+       * Por esta razón, utilizamos: `mb_substr()`.
+       */
+      for ($i = 0; $i < count($table_name_words); $i++) {
+        /**
+         * https://stackoverflow.com/a/1972111/13562806
+         *
+         * "
+         * Yes. Strings can be seen as character arrays, and the way to access a
+         * position of an array is to use the [] operator. Usually there's no
+         * problem at all in using $str[0] (and I'm pretty sure is much faster
+         * than the substr() method).
+         *
+         * There is only one caveat with both methods: they will get the first
+         * byte, rather than the first character. This is important if you're
+         * using multibyte encodings (such as UTF-8). If you want to support
+         * that, use mb_substr(). Arguably, you should always assume multibyte
+         * input these days, so this is the best option, but it will be slightly
+         * slower.
+         * "
+         */
+        $table_name_words[$i] = mb_substr(
+          $table_name_words[$i],
+          0,
+          1,
+          INTERNAL_ENCODING
+        );
+      }
+
+      /**
+       * El alias se conforma de la primera letra de cada palabra de la tabla.
+       */
+      $alias = join("_", $table_name_words);
+
+      /**
+       * Si el alias ya existe y sigue existiendo, agregar un número secuencial
+       * al final para diferenciarlos. Puede suceder que más de una tabla tenga
+       * las mismas iniciales.
+       */
+      while (array_key_exists($alias, $query_aliases)) {
+        $counter = 0;
+
+        $alias .= "_{$counter}";
+      }
+
+      $query_aliases[$table_name] = $alias;
+    }
+
+    return $query_aliases;
+  }
+
+  public static function getJoinWhereClauseNames(
+    array $table_aliases,
+    array $where_clause_names
+  ) {
+    $join_where_clause_names = [];
+
+    /**
+     * Este ciclo tendría que modificarse en el caso de enviar más de un
+     * $table_alias, pero por el momento lo dejaré así. Si se hiciera esto,
+     * pasaría que, en el for anidado se asignarían los mismos parámetros a
+     * todos los alias.
+     */
+    foreach ($table_aliases as $alias) {
+      foreach ($where_clause_names as $name) {
+        /**                       "  u.id  =    :u_id" */
+        $join_where_clause_names["{$alias}.{$name}"] = ":{$alias}_{$name}";
+      }
+    }
+
+    return $join_where_clause_names;
+  }
+
+  public static function createLeftJoinQueryPart(
+    $main_table,
+    $reference_tables,
+    $table_aliases
+  ) {
+    $left_join = "";
+    $main_table_alias = $table_aliases[$main_table];
+
+    foreach ($reference_tables as $table) {
+      $table_alias = $table_aliases[$table];
+
+      $left_join .= "LEFT JOIN `{$table}` AS {$table_alias}";
+      $left_join
+        .= " ON {$main_table_alias}.id = {$table_alias}.{$main_table}_id";
+
+      $left_join .= " ";
+    }
+
+    return $left_join;
+  }
+
+
+
+  /**
+   * Crear la parte del WHERE de una query con JOIN.
+   * 
+   * Esto es como la otra función `Model::createQueryWherePart()`, pero con
+   * menos complejidad, ya que, aquí no se puede hacer lo siguiente:
+   * 
+   * ```sql
+   * WHERE u.id = ":u.id"
+   * ```
+   * 
+   * Sino que, tenemos que reemplazar ese punto del bound param por otro
+   * símbolo, y en la otra función eso no se hace. Hacerlo ahí sería aumentarle
+   * la complejidad.
+   *
+   * @param array $join_where_clause_names Arreglo asociativo con el nombre
+   * original de la igualación (`u.id`) y el valor del bindParam (`:u_id`).
+   * @return void
+   */
+  public static function createJoinQueryWherePart($join_where_clause_names)
+  {
+    $query_where_part = " WHERE";
+
+    $i = 0;
+    foreach ($join_where_clause_names as $key => $value) {
+      if ($i > 0) {
+        $query_where_part .= " AND";
+      }
+
+      /**                  "  u.id  =    :u_id" */
+      $query_where_part .= " {$key} = {$value}";
+
+      $i++;
+    }
+
+    return $query_where_part;
+  }
+
+  public static function createDeleteJoinQuery(
+    string $main_table,
+    array $reference_tables,
+    array $table_aliases,
+    array $join_where_clause_names
+  ) {
+
+    /**
+     * Alias en cadena para poder especificar su eliminación.
+     *
+     * https://stackoverflow.com/a/5593036/13562806
+     *
+     * ```php
+     * echo substr('a,b,c,d,e,', 0, -1);
+     * # => 'a,b,c,d,e'
+     * ```
+     *
+     * Después, eliminamos los 2 últimos caracteres: ", ".
+     *
+     * - Después vi que no es necesario hacer lo anterior, ya que, los
+     *   caracteres solo se agregan entre los caracteres y no al final.
+     * 
+     * $string_aliases = mb_substr(
+     *   join(", ", $table_aliases),
+     *   0,
+     *   -2,
+     *   INTERNAL_ENCODING
+     * );
+     */
+    $string_aliases = join(", ", $table_aliases);
+
+    $query =
+      "DELETE "
+      . $string_aliases
+      . " FROM {$main_table} AS {$table_aliases[$main_table]} ";
+
+    $query .= self::createLeftJoinQueryPart(
+      $main_table,
+      $reference_tables,
+      $table_aliases
+    );
+
+
+    $query .= self::createJoinQueryWherePart($join_where_clause_names);
+
+    return $query;
+  }
+
+  public static function bindJoinWhereClauses(
+    $join_where_clause_names,
+    $where_clause_values
+  ) {
+    $bound_params = [];
+    $i = 0;
+
+    foreach ($join_where_clause_names as $bind_param) {
+      $bound_params[$bind_param] = $where_clause_values[$i];
+      $i++;
+    }
+
+    return $bound_params;
+  }
+
+  /**
+   * Elimina un registro y sus incidencias (referencias) en otras tablas.
+   * 
+   * Utilizamos `LEFT JOIN` en lugar de `INNER JOIN`.
+   * 
+   * Este es un artículo que explica su diferencia:
+   * - https://www.sqlshack.com/learn-sql-inner-join-vs-left-join/
+   *
+   * ---
+   * 
+   * No logré hacer que se pudieran eliminar las filas sin que salte el mensaje
+   * de que no es posible la eliminación por la CONSTRAINT de las llaves foráneas.
+   * 
+   * Por esta razón, mejor cambié las llaves a `ON DELETE CASCADE`.
+   * 
+   * @param string $table
+   * @param array $reference_tables
+   * @param array $where_clause_names
+   * @param array $where_clause_values
+   * @param array $pdo_params
+   * @return : int
+   */
+  public static function deleteRecordAndReferences(
+    string $main_table,
+    array $reference_tables,
+    array $where_clause_names,
+    array $where_clause_values,
+    array $pdo_params
+  ): int {
+    // El récord (registro) no existe.
+    if (!self::recordExists(
+      $main_table,
+      $where_clause_names,
+      $where_clause_values,
+      $pdo_params
+    )) {
+      // Campo por actualizar no existente.
+      return 3;
+    }
+
+    $table_aliases = self::getQueryAliases(
+      array_merge(
+        $reference_tables,
+        [$main_table]
+      )
+    );
+
+    $join_where_clause_names = self::getJoinWhereClauseNames(
+      [$table_aliases[$main_table]],
+      $where_clause_names
+    );
+
+    $delete_query = self::createDeleteJoinQuery(
+      $main_table,
+      $reference_tables,
+      $table_aliases,
+      $join_where_clause_names
+    );
+
+    try {
+      $query = self::$db_connection->prepare($delete_query);
+
+      $query->execute(
+        self::bindJoinWhereClauses(
+          $join_where_clause_names,
+          $where_clause_values
+        )
+      );
+
+      return $query->rowCount() > 0;
+    } catch (PDOException $e) {
+      error_log("Error en la query - {$e}");
+      return 5;
+    }
   }
 }

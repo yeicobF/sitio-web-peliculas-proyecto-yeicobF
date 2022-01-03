@@ -61,6 +61,15 @@ class Usuario extends Model
     "normal" => 2,
   ];
 
+  /**
+   * Tablas en donde está usuario como llave foránea.
+   */
+  const REFERENCE_TABLES = [
+    "comentario_pelicula",
+    "calificacion_usuario_pelicula",
+    "like_comentario"
+  ];
+
   public function __construct(
     string $nombres,
     string $apellidos,
@@ -181,16 +190,20 @@ class Usuario extends Model
       pdo_params: self::PDO_PARAMS
     );
   }
-  public function delete(): bool
+
+  /**
+   * Eliminar registro y todas sus referencias.
+   *
+   * @param integer $id
+   * @return int
+   */
+  public static function delete(int $id): int
   {
-    return parent::deleteRecord(
-      table: self::TABLE_NAME,
-      where_clauses: [
-        "id"
-      ],
-      values: [
-        $this->_id
-      ],
+    return parent::deleteRecordAndReferences(
+      main_table: self::TABLE_NAME,
+      reference_tables: self::REFERENCE_TABLES,
+      where_clause_names: ["id"],
+      where_clause_values: [$id],
       pdo_params: self::PDO_PARAMS
     );
   }
