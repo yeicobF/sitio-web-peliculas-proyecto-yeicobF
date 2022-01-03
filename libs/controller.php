@@ -187,6 +187,36 @@ class Controller
     );
   }
 
+  public static function isCurrentFileController()
+  {
+    return str_contains(
+      $_SERVER["SCRIPT_FILENAME"],
+      "controllers/"
+    );
+  }
+
+  /**
+   * Revisar si el archivo actual es un controlador distinto al del controlador
+   * del archivo que hace los procedimientos.
+   *
+   * Esto ayuda a que, si importamos `Controllers\Usuario` en `Controllers\Login`,
+   * no se hagan los procedimientos de `Usuario` en `Login`.
+   *
+   * @return boolean
+   */
+  public static function isCurrentFileAnotherController(
+    string $current_controller_file_name
+  ) {
+    if (self::isCurrentFileController()) {
+      // Contiene el archivo actual o no.
+      return !str_contains(
+        $_SERVER["SCRIPT_FILENAME"],
+        "controllers/{$current_controller_file_name}.php"
+      );
+    }
+    return false;
+  }
+
   /**
    * Si no se trata de Post o el método no existe, redirigir al login. Así
    * evitamos que se entre desde la URL y que se envíen métodos inexistentes.

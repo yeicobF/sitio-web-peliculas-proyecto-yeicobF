@@ -7,11 +7,13 @@ require_once __DIR__ . "/../libs/controller.php";
 require_once __DIR__ . "/../libs/model.php";
 require_once __DIR__ . "/../models/usuario.php";
 require_once __DIR__ . "/registro.php";
+require_once __DIR__ . "/login.php";
 
 use Usuario as ModelUsuario;
 use Model as Model;
 use Libs\Controller;
 use Controllers\Registro;
+use Controllers\Login;
 
 class Usuario extends Controller
 {
@@ -186,11 +188,16 @@ if (
     )
   )
 ) {
+  // No obtener datos de usuario y redirigir si no ha iniciado sesión.
+  Login::redirectIfUserNotLoggedIn("login/index.php");
   Usuario::updateSessionValues(Usuario::getCurrentUserData($_SESSION["id"]));
   return;
 }
 
-if (Controller::isCurrentFileView()) {
+if (
+  Controller::isCurrentFileView()
+  || Controller::isCurrentFileAnotherController("usuario")
+) {
   return;
 }
 
