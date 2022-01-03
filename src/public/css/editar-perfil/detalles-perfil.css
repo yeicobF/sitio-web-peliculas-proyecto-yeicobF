@@ -1,3 +1,44 @@
-.profile-details__username {
+.profile-details {
+  padding: 2em 0;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  flex-direction: column;
+}
+
+.profile-details__title {
   text-align: center;
+}
+
+.profile-details__username {
+  /* text-align: center; */
+}
+
+.profile-details__figure {
+  flex-direction: row;
+  column-gap: 0;
+  align-items: stretch;
+}
+
+.profile-details__figcaption {
+  display: flex;
+  /* align-self: flex-start; */
+  flex-direction: column;
+  /* flex: 1; */
+  width: 100%;
+  /* align-items: stretch; */
+  justify-content: space-between;
+}
+.profile-details__figcaption__header {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 576px) {
+  .profile-details__figcaption__header {
+    align-items: center;
+  }
+  .profile-details {
+    align-items: center;
+  }
 }

@@ -18,7 +18,7 @@
 }
 
 .footer__elements li {
-  font-size: .8em;
+  font-size: .85em;
   font-weight: 500;
   color: white;
 }
@@ -34,6 +34,6 @@
 
 @media (max-width: 768px) {
   .footer__elements li {
-    font-size: .65em;
+    font-size: 0.75em;
   }
 }

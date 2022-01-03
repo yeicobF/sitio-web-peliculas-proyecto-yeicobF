@@ -53,6 +53,7 @@ class Usuario extends Controller
     $detalles_perfil_url =
       FOLDERS_WITH_LOCALHOST["VIEWS"]
       . "user/index.php?id={$_SESSION["id"]}";
+      // . "user/index.php?id={$_SESSION["id"]}";
     if (!empty($foto_perfil)) {
 ?>
       <img src='data:image/jpeg; base64, <?php echo $foto_perfil; ?>' alt='<?php echo $alt; ?>' class='circle-avatar profile-picture'>
