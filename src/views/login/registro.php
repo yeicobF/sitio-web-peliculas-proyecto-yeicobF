@@ -58,7 +58,7 @@ $baseHtmlHead = new BaseHtmlHead(
       <section class="col-12 col-md-6">
         <label for="username">Nombre de usuario</label>
         <div class="form__input__container">
-          <input autocomplete="off" type="text" name="username" id="username" placeholder="Ingresa un nombre de usuario">
+          <input required autocomplete="off" type="text" name="username" id="username" placeholder="Ingresa un nombre de usuario">
           <i class="form__input__icon fas fa-user-alt"></i>
         </div>
       </section>
@@ -72,14 +72,14 @@ $baseHtmlHead = new BaseHtmlHead(
       <section class="col-12 col-lg-6">
         <label for="nombres">Nombre(s)</label>
         <div class="form__input__container">
-          <input autocomplete="off" type="text" name="nombres" id="nombres" placeholder="Ingresa tu nombre">
+          <input required autocomplete="off" type="text" name="nombres" id="nombres" placeholder="Ingresa tu nombre">
           <i class="form__input__icon fas fa-user-alt"></i>
         </div>
       </section>
       <section class="col-12 col-lg-6">
         <label for="apellidos">Apellido(s)</label>
         <div class="form__input__container">
-          <input autocomplete="off" type="text" name="apellidos" id="apellidos" placeholder="Ingresa tus apellidos">
+          <input required autocomplete="off" type="text" name="apellidos" id="apellidos" placeholder="Ingresa tus apellidos">
           <i class="form__input__icon fas fa-user-alt"></i>
         </div>
       </section>
@@ -88,7 +88,7 @@ $baseHtmlHead = new BaseHtmlHead(
     <section>
       <label for="password">Contraseña</label>
       <div class="form__input__container">
-        <input type="password" name="password" id="password" placeholder="Ingrese la contraseña">
+        <input required type="password" name="password" id="password" placeholder="Ingrese la contraseña">
         <i class="form__input__icon fas fa-eye-slash"></i>
       </div>
     </section>
