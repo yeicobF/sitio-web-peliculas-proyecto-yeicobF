@@ -58,19 +58,20 @@
   font-size: .8rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding-bottom: 1em;
-  /* gap: 0.3em; */
+  row-gap: 1em;
 }
 .best-movies__details-list .movie-poster__title {
   text-align: left;
   padding: 0;
+  font-size: 1.7em;
 }
 
 .best-movies__details-list li,
 .best-movies__details-list li *
 {
-  /* font-size: 0.85rem; */
+  font-size: 1.3em;
 }
 /* -------------------------------------------------------------------------- */
 
@@ -117,7 +118,7 @@
 
 .movie-poster__title {
   font-family: 'Noto Sans', sans-serif;
-  /* font-size: 1em; */
+  font-size: 1em;
   text-align: center;
   font-weight: 600;
   padding-top: 0.4em;
@@ -138,6 +139,16 @@
 
 /* ------------------------------ MEDIA QUERIES ----------------------------- */
 
+@media (min-width: 768px) {
+  .best-movies__details-list {
+    font-size: .7rem;
+  }
+}
+@media (max-width: 376px) {
+  /* .best-movies-container .movie-poster {
+    flex-direction: column;
+  } */
+}
 @media (max-width: 576px) {
   .best-movies-container__title {
 

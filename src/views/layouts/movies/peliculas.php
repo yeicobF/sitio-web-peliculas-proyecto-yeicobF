@@ -1,5 +1,5 @@
 <!-- Contenedor de películas. -->
-<main class="movies-container col-12 col-sm-8">
+<main class="movies-container col-12 col-md-8">
   <h2 class="movies-container__title">Películas</h2>
   <section class="row">
     <!-- Póster de películas. -->
