@@ -363,3 +363,11 @@ Stack trace:
 #3 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\index.php(51): include('C:\\xampp\\htdocs...')
 #4 {main}
   thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 90
+[03-Jan-2022 01:59:57 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 181
+[03-Jan-2022 01:59:57 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Controllers\Usuario::getCurrentUserData(): Argument #1 ($id) must be of type int, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 181 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php:79
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(181): Controllers\Usuario::getCurrentUserData(NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php(8): require_once('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\editar-perfil\index.php(18): include_once('C:\\xampp\\htdocs...')
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 79

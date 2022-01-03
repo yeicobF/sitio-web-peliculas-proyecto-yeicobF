@@ -1049,6 +1049,13 @@ class Model
    * Este es un artículo que explica su diferencia:
    * - https://www.sqlshack.com/learn-sql-inner-join-vs-left-join/
    *
+   * ---
+   * 
+   * No logré hacer que se pudieran eliminar las filas sin que salte el mensaje
+   * de que no es posible la eliminación por la CONSTRAINT de las llaves foráneas.
+   * 
+   * Por esta razón, mejor cambié las llaves a `ON DELETE CASCADE`.
+   * 
    * @param string $table
    * @param array $reference_tables
    * @param array $where_clause_names
