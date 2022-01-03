@@ -175,9 +175,14 @@ $message = "";
 // actualizados.
 if (
   Controller::isGet()
-  && str_contains(
-    $_SERVER["SCRIPT_FILENAME"],
-    "editar-perfil/index.php"
+  && (str_contains(
+      $_SERVER["SCRIPT_FILENAME"],
+      "editar-perfil/index.php"
+    )
+    || str_contains(
+      $_SERVER["SCRIPT_FILENAME"],
+      "user/index.php"
+    )
   )
 ) {
   Usuario::updateSessionValues(Usuario::getCurrentUserData($_SESSION["id"]));

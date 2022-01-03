@@ -22,7 +22,8 @@
 
 
 
-.edit-profile__figure {
+.edit-profile__figure,
+.profile-details__figure {
   gap: 0.5em;
   display: flex;
   flex-direction: column;
@@ -31,7 +32,8 @@
   align-items: center;
 }
 
-.edit-profile__picture {
+.edit-profile__picture,
+.profile-details__picture {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -39,7 +41,8 @@
   width: 100%;
 }
 
-.edit-profile__figure .circle-avatar {
+.edit-profile__figure .circle-avatar,
+.profile-details__figure .circle-avatar {
   width: 100%;
   height: auto;
 }
