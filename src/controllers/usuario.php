@@ -6,10 +6,12 @@ require_once __DIR__ . "/../config/config.php";
 require_once __DIR__ . "/../libs/controller.php";
 require_once __DIR__ . "/../libs/model.php";
 require_once __DIR__ . "/../models/usuario.php";
+require_once __DIR__ . "/registro.php";
 
 use Usuario as ModelUsuario;
 use Model as Model;
 use Libs\Controller;
+use Controllers\Registro;
 
 class Usuario extends Controller
 {
@@ -192,8 +194,6 @@ Controller::redirectIfNonExistentPostMethod("login/index.php");
 
 /* ------------------------- ELIMINACIÓN DE USUARIO ------------------------- */
 if (Controller::isMethodDelete()) {
-  // echo "DELETE";
-
   $result = ModelUsuario::delete(Usuario::getId());
 
   if ($result === 1) {
@@ -201,28 +201,44 @@ if (Controller::isMethodDelete()) {
   }
 }
 
+// Campos del formulario.
+$form_fields = $_POST;
+unset($form_fields["_method"]);
+
+// Verificar si hay una foto. Si la hay, obtenerla.
+if (Controller::fileExists("foto_perfil")) {
+  $form_fields["foto_perfil"] = Controller::getFile("foto_perfil");
+}
+
+$non_empty_fields = Controller::getNonEmptyFormFields(
+  $form_fields
+);
+
 /* ------------------------------ NUEVO USUARIO ----------------------------- */
 if (Controller::isMethodPost()) {
-  echo "POST";
+  // Revisar que todos los campos menos "fecha_nacimiento" tienen datos.
+  if (!Registro::areRequiredFieldsFilled($non_empty_fields)) {
+    Controller::redirectView(
+      view_path: "login/registro.php",
+      error: "No se ingresaron los datos de todos los campos."
+    );
+    return;
+  }
+
+  $user = new ModelUsuario(
+    nombres: $non_empty_fields["nombres"],
+    apellidos: $non_empty_fields["apellidos"],
+    username: $non_empty_fields["username"],
+    password: $non_empty_fields["password"],
+    rol: "normal",
+    foto_perfil: $non_empty_fields["foto_perfil"],
+  );
+
+  $result = $user->insertUsuario();
 }
 
 /* ------------------------ ACTUALIZACIÓN DE USUARIO ------------------------ */
 if (Controller::isMethodPut()) {
-  // echo "PUT";
-
-  $form_fields = $_POST;
-  unset($form_fields["_method"]);
-
-  // Verificar si hay una foto. Si la hay, obtenerla.
-  if (Controller::fileExists("foto_perfil")) {
-    $form_fields["foto_perfil"] = Controller::getFile("foto_perfil");
-  }
-
-  $non_empty_fields = Controller::getNonEmptyFormFields(
-    $form_fields
-  );
-  // showElements($non_empty_fields);
-
   if (
     Usuario::isNewPasswordSpecified($non_empty_fields)
     && Usuario::canUpdatePassword($non_empty_fields["current_password"])
@@ -254,8 +270,6 @@ if (Controller::isMethodPut()) {
   if ($result === 1) {
     Usuario::updateSessionValues($non_empty_fields);
   }
-
-  // showElements($_SESSION);
 }
 
 $message = Model::OPERATION_INFO[$result];
