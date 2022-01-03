@@ -371,3 +371,4 @@ Stack trace:
 #2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\editar-perfil\index.php(18): include_once('C:\\xampp\\htdocs...')
 #3 {main}
   thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 79
+[03-Jan-2022 03:05:04 Europe/Berlin] PHP Warning:  Undefined variable $editar_perfil_action in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\login\registro.php on line 53

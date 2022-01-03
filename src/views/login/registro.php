@@ -10,8 +10,15 @@ include_once $path
   . LAYOUTS
   . "base-html-head.php";
 
+include_once
+  FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
+  . "usuario.php";
+
+$registro_action = "{$controllers_folder}usuario.php";
+
+
 $baseHtmlHead = new BaseHtmlHead(
-  _pageName: "Iniciar sesión",
+  _pageName: "Registro",
   _includeOwnFramework: true,
   _includeFontAwesome: true
 );
@@ -43,7 +50,7 @@ $baseHtmlHead = new BaseHtmlHead(
   require_once FOLDERS_WITH_DOCUMENT_ROOT["LAYOUTS"] . "login-header.php";
   ?>
 
-  <form autocomplete="off" action="" method="get" class="form__container">
+  <form autocomplete="off" action="<?php echo $registro_action; ?>" method="POST" enctype="multipart/form-data" class="form__container">
     <!-- Hay que definir el método a utilizar con un input hidden. -->
     <input type="hidden" name="_method" value="POST">
 
@@ -56,23 +63,23 @@ $baseHtmlHead = new BaseHtmlHead(
         </div>
       </section>
       <section class="col-12 col-md-6">
-        <label for="upload-picture">Foto de perfil</label>
-        <input class="form__input__picture" type="file" name="upload-picture" class="form-control">
+        <label for="foto_perfil">Foto de perfil</label>
+        <input class="form__input__picture" type="file" name="foto_perfil" class="form-control">
       </section>
     </div>
     <div class="row">
 
       <section class="col-12 col-lg-6">
-        <label for="name">Nombre(s)</label>
+        <label for="nombres">Nombre(s)</label>
         <div class="form__input__container">
-          <input autocomplete="off" type="text" name="name" id="name" placeholder="Ingresa tu nombre">
+          <input autocomplete="off" type="text" name="nombres" id="nombres" placeholder="Ingresa tu nombre">
           <i class="form__input__icon fas fa-user-alt"></i>
         </div>
       </section>
       <section class="col-12 col-lg-6">
-        <label for="last-name">Apellido(s)</label>
+        <label for="apellidos">Apellido(s)</label>
         <div class="form__input__container">
-          <input autocomplete="off" type="text" name="last-name" id="last-name" placeholder="Ingresa tus apellidos">
+          <input autocomplete="off" type="text" name="apellidos" id="apellidos" placeholder="Ingresa tus apellidos">
           <i class="form__input__icon fas fa-user-alt"></i>
         </div>
       </section>
