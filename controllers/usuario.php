@@ -250,7 +250,8 @@ if (Controller::isMethodPost()) {
   $result = $user->insertUsuario();
 }
 
-// No se mandaron datos.
+// No se mandaron datos. Esto solo es posible en una actualización, ya que, no
+// hay campos requeridos como en el registro.
 if (count($non_empty_fields) === 0) {
   Controller::redirectView(
     "user/index.php",
