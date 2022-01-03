@@ -16,7 +16,9 @@
         <?php
 
         if (Login::isUserLoggedIn()) {
-          $avatar_url = "{$url_page["editar-perfil"]}?id={$_SESSION["id"]}";
+          $avatar_url = "{$url_page["detalles-perfil"]}";
+          // $avatar_url = "{$url_page["editar-perfil"]}?id={$_SESSION["id"]}";
+
           $username_alt = $_SESSION["username"];
         ?>
           <input type='hidden' name='_method' value='DELETE'>

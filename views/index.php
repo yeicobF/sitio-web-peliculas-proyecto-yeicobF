@@ -9,7 +9,7 @@ include_once FOLDERS_WITH_DOCUMENT_ROOT["VIEWS"]
   . "layouts/base-html-head.php";
 
 $baseHtmlHead = new BaseHtmlHead(
-  _pageName: "Detalles de usuario - ",
+  _pageName: "Inicio",
   _includeOwnFramework: true,
   _includeFontAwesome: true
 );

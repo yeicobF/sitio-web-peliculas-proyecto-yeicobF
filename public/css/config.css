@@ -77,8 +77,26 @@ body :is(.h1, .h2, .h3, .h4, .h5, .h6) {
   padding: 1em 1em;
 }
 
+.btn {
+  /* flex-basis: 40%; */
+  font-weight: 600;
+  /* align-items: center;
+  display: flex;
+  justify-content: center;
+  /* transition: flex 0.8s ease-out; */
+  /* transition: font-size 0.2s ease-out; */
+}
+
+.btn-fit-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
 @media (min-width: 768px) {
-  * {
+  /* * {
     font-size: 16px;
-  }
+  } */
 }

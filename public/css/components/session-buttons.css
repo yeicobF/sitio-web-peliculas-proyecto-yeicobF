@@ -62,7 +62,7 @@ a.session-buttons__user-info {
 }
 .session-buttons__user-info__username {
   font-size: .95em;
-  padding: 0;
+  /* padding: 0; */
   margin: 0;
   text-decoration: underline wavy;
   text-decoration-skip-ink: none;
@@ -70,13 +70,12 @@ a.session-buttons__user-info {
   overflow: hidden;
   max-width: 14ch;
   /* padding por el underline. */
-  padding-bottom: 5px;
-
+  /* padding-bottom: 6px; */
   text-overflow: ellipsis;
   transition: color 75ms ease-in-out;
   /* overflow-x: hidden; */
-
   /* clip-path: ellipse(); */
+  padding: 0 1px 6px;
 }
 
 .session-buttons__user-info__username:hover,
