@@ -53,6 +53,7 @@ class Usuario extends Controller
     $detalles_perfil_url =
       FOLDERS_WITH_LOCALHOST["VIEWS"]
       . "user/index.php?id={$_SESSION["id"]}";
+    // . "user/index.php?id={$_SESSION["id"]}";
     if (!empty($foto_perfil)) {
 ?>
       <img src='data:image/jpeg; base64, <?php echo $foto_perfil; ?>' alt='<?php echo $alt; ?>' class='circle-avatar profile-picture'>
@@ -175,9 +176,14 @@ $message = "";
 // actualizados.
 if (
   Controller::isGet()
-  && str_contains(
+  && (str_contains(
     $_SERVER["SCRIPT_FILENAME"],
     "editar-perfil/index.php"
+  )
+    || str_contains(
+      $_SERVER["SCRIPT_FILENAME"],
+      "user/index.php"
+    )
   )
 ) {
   Usuario::updateSessionValues(Usuario::getCurrentUserData($_SESSION["id"]));
@@ -237,6 +243,15 @@ if (Controller::isMethodPost()) {
   $result = $user->insertUsuario();
 }
 
+// No se mandaron datos.
+if (count($non_empty_fields) === 0) {
+  Controller::redirectView(
+    "user/index.php",
+    error: "No se enviaron datos en el formulario."
+  );
+  return;
+}
+
 /* ------------------------ ACTUALIZACIÓN DE USUARIO ------------------------ */
 if (Controller::isMethodPut()) {
   if (
@@ -281,7 +296,7 @@ if ($result === 1) {
   if (Controller::isMethodPut()) {
     // Redirigir a los detalles del usuario.
     Controller::redirectView(
-      "user/index.php?id=" . Usuario::getId(),
+      "user/index.php",
       message: $message
     );
     return;
