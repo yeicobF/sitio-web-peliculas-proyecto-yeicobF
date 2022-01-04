@@ -19,10 +19,18 @@ include_once
   FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
   . "usuario.php";
 
-if (!Controller::getKeyExist("id")) {
-  Controller::redirectView(error: "No se especificó un ID.");
+if (
+  (Controller::getKeyExist("id")
+    && !is_numeric($_GET["id"]))
+  || !Controller::getKeyExist("id")
+) {
+  Controller::redirectView(
+    view_path: "peliculas/index.php",
+    error: "No se especificó un ID correcto."
+  );
   return;
 }
+
 
 $id_pelicula = $_GET["id"];
 $nombre_pelicula;
@@ -74,7 +82,7 @@ $baseHtmlHead = new BaseHtmlHead(
         FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
         . "pelicula.php";
       ?>
-      
+
     </main>
     <div class="row">
       <section class="comments__container col-12 col-md-8">

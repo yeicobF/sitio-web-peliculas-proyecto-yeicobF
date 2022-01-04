@@ -207,7 +207,7 @@ class Pelicula extends Model
     );
   }
 
-  public static function delete($id): bool
+  public static function delete($id): int
   {
     return parent::deleteRecord(
       table: self::TABLE_NAME,

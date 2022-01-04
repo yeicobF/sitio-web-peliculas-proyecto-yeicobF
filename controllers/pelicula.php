@@ -170,6 +170,8 @@ $result = 0;
 $message = "";
 
 /* -------------------------- DETALLES DE PELÍCULA -------------------------- */
+
+
 if (
   Controller::isGet()
   && Controller::getKeyExist("id")
@@ -286,8 +288,8 @@ if (Controller::isMethodPost()) {
 
 // Tanto DELETE como PUT requieren de un ID.
 if (
-  $non_empty_fields["id"] === null
-  && is_numeric($non_empty_fields["id"])
+  ($non_empty_fields["id"] === null
+    || !is_numeric($non_empty_fields["id"]))
   && (Controller::isMethodDelete()
     || Controller::isMethodPut()
   )
@@ -302,9 +304,7 @@ if (
 /* --------------------------------- DELETE --------------------------------- */
 /* ------------------------- ELIMINACIÓN DE PELÍCULA ------------------------ */
 if (Controller::isMethodDelete()) {
-  echo "DELETE";
-  if ($result === 1) {
-  }
+  $result = ModelPelicula::delete($non_empty_fields["id"]);
 }
 
 // No se mandaron datos. Esto solo es posible en una actualización, ya que, no
@@ -321,18 +321,18 @@ if (count($non_empty_fields) === 0) {
 /* ------------------------ ACTUALIZACIÓN DE PELÍCULA ----------------------- */
 if (Controller::isMethodPut()) {
 
-  $result = Model::updateRecord(
-    table: ModelPelicula::TABLE_NAME,
-    param_values: $non_empty_fields,
-    where_clause_names: [
-      "id"
-    ],
-    where_clause_values: [
-      Usuario::getId()
-    ],
-    unique_attributes: ModelPelicula::UNIQUE_ATTRIBUTES,
-    pdo_params: ModelPelicula::PDO_PARAMS
-  );
+  // $result = Model::updateRecord(
+  //   table: ModelPelicula::TABLE_NAME,
+  //   param_values: $non_empty_fields,
+  //   where_clause_names: [
+  //     "id"
+  //   ],
+  //   where_clause_values: [
+  //     Usuario::getId()
+  //   ],
+  //   unique_attributes: ModelPelicula::UNIQUE_ATTRIBUTES,
+  //   pdo_params: ModelPelicula::PDO_PARAMS
+  // );
 }
 
 $message = Model::OPERATION_INFO[$result];
