@@ -381,6 +381,42 @@ class Controller
     return null;
   }
 
+  /**
+   * Convierte cadena a arreglo con las palabras iniciando en mayúsucula.
+   *
+   * @param string $delimiter
+   * @param string $element
+   * @return array
+   */
+  public static function stringToUppercasePerWord(
+    string $delimiter,
+    string $element
+  ): array {
+    $words = explode($delimiter, $element);
+    $uc_words = [];
+
+    foreach ($words as $word) {
+      $uc_word = ucfirst($word);
+      array_push($uc_words, $uc_word);
+    }
+
+    return $uc_words;
+  }
+
+  /**
+   * Obtener elementos en forma de lista.
+   *
+   * @param array $items
+   * @return void
+   */
+  public static function getListItems(array $items, string $classes)
+  {
+    foreach ($items as $item) {
+?>
+      <li class="<?php echo $classes; ?>"><?php echo $item; ?></li>
+<?php
+    }
+  }
   // /**
   //  * Hacer un `return` que detendrá el proceso si el archivo actual es una
   //  * vista.

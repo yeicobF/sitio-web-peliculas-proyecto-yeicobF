@@ -36,15 +36,7 @@ class Pelicula extends Controller
   {
   }
 
-  /**
-   * Obtener elementos en forma de lista.
-   *
-   * @param array $items
-   * @return void
-   */
-  private static function getListItems(array $items, string $classes)
-  {
-  }
+
 
   /**
    * Obtener poster de película si es que tiene.
@@ -85,6 +77,10 @@ class Pelicula extends Controller
 
     $display_time = "{$horas}h {$minutos}m";
     $display_time .= $segundos > 0 ? " {$segundos}s" : "";
+
+    $actores = Controller::stringToUppercasePerWord(", ", $movie->actores);
+    $directores = Controller::stringToUppercasePerWord(", ", $movie->directores);
+    $generos = Controller::stringToUppercasePerWord(", ", $movie->generos);
   ?>
     <section class="movie-details__poster col-12 col-sm-4">
 
@@ -114,7 +110,7 @@ class Pelicula extends Controller
       <!-- Título original y en español. -->
       <header class="movie-details__title">
 
-        <h1>Nombre original</h1>
+        <h1><?php echo $movie->nombre_original; ?></h1>
         <?php
         if ($movie->nombre_es_mx !== null) {
           echo "<h2>{$movie->nombre_es_mx}</h2>";
@@ -140,10 +136,7 @@ class Pelicula extends Controller
             Director/es:
           </h3>
           <ul>
-            <li class="movie-details__cast__member">Lorem, ipsum dolor.</li>
-            <li class="movie-details__cast__member">Lorem, ipsum dolor.</li>
-            <li class="movie-details__cast__member">Lorem, ipsum dolor.</li>
-            <li class="movie-details__cast__member">Lorem, ipsum.</li>
+            <?php echo Controller::getListItems($directores, "movie-details__cast__member"); ?>
           </ul>
         </li>
         <li class="movie-details__cast__type">
@@ -151,8 +144,7 @@ class Pelicula extends Controller
             Actor/es:
           </h3>
           <ul>
-            <li class="movie-details__cast__member">Lorem, ipsum dolor.</li>
-            <li class="movie-details__cast__member">Lorem, ipsum.</li>
+            <?php echo Controller::getListItems($actores, "movie-details__cast__member"); ?>
           </ul>
         </li>
         <li class="movie-details__cast__type">
@@ -160,8 +152,7 @@ class Pelicula extends Controller
             Géneros:
           </h3>
           <ul>
-            <li class="movie-details__cast__member">Comedia</li>
-            <li class="movie-details__cast__member">Acción</li>
+            <?php echo Controller::getListItems($generos, "movie-details__cast__member"); ?>
           </ul>
         </li>
       </ul>

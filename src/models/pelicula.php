@@ -70,20 +70,24 @@ class Pelicula extends Model
     $this->release_year = $release_year;
     $this->restriccion_edad = $restriccion_edad;
     $this->resumen_trama = $resumen_trama;
-    $this->actores = $actores;
-    $this->directores = $directores;
-    $this->generos = $generos;
     $this->id = $id;
     $this->nombre_es_mx = $nombre_es_mx;
     $this->poster = $poster;
+    
+    $this->actores = $actores;
+    $this->directores = $directores;
+    $this->generos = $generos;
   }
+
+
 
   /**
    * Obtener tiempo del formato `h:m:s` a un arreglo con cada cantidad separada.
    *
    * @return array
    */
-  public function getSplitTime() {
+  public function getSplitTime()
+  {
     $split_time = explode(":", $this->duracion);
     return [
       "horas" => $split_time[0],
