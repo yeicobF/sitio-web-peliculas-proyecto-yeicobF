@@ -42,24 +42,62 @@ class Pelicula extends Controller
    * @param array $items
    * @return void
    */
-  private static function getListItems(array $items, string $classes) {
-
+  private static function getListItems(array $items, string $classes)
+  {
   }
+
+  /**
+   * Obtener poster de película si es que tiene.
+   * 
+   * Si no tiene póster, entregar algo más.
+   *
+   * @param ModelPelicula $movie
+   * @return void
+   */
+  public static function getPoster($movie)
+  {
+
+    if (!empty($movie->poster)) {
+      $poster = Controller::getEncodedImage($movie->poster);
+?>
+      <img src="data:image/jpeg; base64, <?php echo $poster; ?>" alt="<?php echo $movie->nombre_original; ?>" class="movie-poster__img movie-details__img">
+    <?php
+      return;
+    }
+    ?>
+
+    <!-- 
+    Si no hay poster, poner un fondo y un ícono que lo indique.
+    -->
+    <span class="fa-stack movie-poster__img movie-details__img movie-details__no-poster">
+      <i class="fa-solid fa-border-none"></i>
+      <p>No poster</p>
+    </span>
+  <?php
+  }
+
   public static function getDetailedMovie(ModelPelicula $movie)
   {
-    $poster = Controller::getEncodedImage($movie->poster);
-?>
+    $time = $movie->getSplitTime();
+    $horas = $time["horas"];
+    $minutos = $time["minutos"];
+    $segundos = $time["segundos"];
+
+    $display_time = "{$horas}h {$minutos}m";
+    $display_time .= $segundos > 0 ? " {$segundos}s" : "";
+  ?>
     <section class="movie-details__poster col-12 col-sm-4">
-      <img src="data:image/jpeg; base64, <?php echo $poster; ?>" class="movie-poster__img movie-details__img" alt="Póster de película">
 
       <?php
+      self::getPoster($movie);
+
       if (Usuario::isAdmin()) {
       ?>
         <form action="<?php echo CONTROLLERS_FOLDER . "pelicula.php"; ?>" class="form__buttons movie-details__form__buttons" method="POST">
           <input type="hidden" name="_method" value="DELETE">
-          <input type="hidden" name="id" value="1">
+          <input type="hidden" name="id" value="<?php echo $movie->id; ?>">
 
-          <a rel="noopener noreferrer" href="<?php echo URL_PAGE["editar-pelicula"] . "?id={$id_pelicula}"; ?>" class="btn btn-info">
+          <a rel="noopener noreferrer" href="<?php echo URL_PAGE["editar-pelicula"] . "?id={$movie->id}"; ?>" class="btn btn-info">
             Editar película
           </a>
           <button type="submit" class="btn btn-danger">
@@ -75,22 +113,26 @@ class Pelicula extends Controller
     <section class="movie-details col-12 col-sm-8">
       <!-- Título original y en español. -->
       <header class="movie-details__title">
-        <h1>Nombre español</h1>
-        <h2>Nombre original</h2>
+
+        <h1>Nombre original</h1>
+        <?php
+        if ($movie->nombre_es_mx !== null) {
+          echo "<h2>{$movie->nombre_es_mx}</h2>";
+        }
+        ?>
       </header>
       <section class="movie-details__info">
-        <time datetime="2021" class="movie-details__year">2021</time>
+        <time datetime="<?php echo $movie->release_year; ?>" class="movie-details__year"><?php echo $movie->release_year; ?></time>
         <!-- Calificaciones de la película. -->
+        <!-- Hay que obtenerlas de otra tabla y promediarlas. -->
         <data value="4.5" class="movie-details__user-rating">4.5/5</data>
-        <time datetime="PT2H28M">2h 38m</time>
-        <data value="18" class="movie-details__age-rating">
-          Clasificación: 18+
+        <time datetime="<?php echo "PT{$horas}H{$minutos}M{$segundos}S"; ?>"><?php echo $display_time; ?></time>
+        <data value="<?php echo $movie->restriccion_edad; ?>" class="movie-details__age-rating">
+          Clasificación: <?php echo $movie->restriccion_edad; ?>
         </data>
       </section>
       <p class="movie-details__synopsis">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint iste, ratione consequatur aliquid dolores cupiditate facere molestiae alias officia nisi totam modi ullam. Praesentium adipisci expedita iusto ullam deserunt illo?
-
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint iste, ratione consequatur aliquid dolores cupiditate facere molestiae alias officia nisi totam modi ullam. Praesentium adipisci expedita iusto ullam deserunt illo?
+        <?php echo $movie->resumen_trama; ?>
       </p>
       <ul class="movie-details__cast">
         <li class="movie-details__cast__type">

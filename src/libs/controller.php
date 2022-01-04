@@ -238,7 +238,7 @@ class Controller
     if (self::isCurrentFileView()) {
       return str_contains(
         $_SERVER["SCRIPT_FILENAME"],
-        "views/{$path_from_view_folder}"
+        $path_from_view_folder
       );
     }
 

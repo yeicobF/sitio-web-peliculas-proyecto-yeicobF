@@ -79,6 +79,20 @@ class Pelicula extends Model
   }
 
   /**
+   * Obtener tiempo del formato `h:m:s` a un arreglo con cada cantidad separada.
+   *
+   * @return array
+   */
+  public function getSplitTime() {
+    $split_time = explode(":", $this->duracion);
+    return [
+      "horas" => $split_time[0],
+      "minutos" => $split_time[1],
+      "segundos" => $split_time[2],
+    ];
+  }
+
+  /**
    * Inserción de un nuevo elemento.
    */
   public function insert(): int
