@@ -42,6 +42,14 @@ if (
 
 Controller::redirectIfNonExistentPostMethod("login/index.php");
 
+/* -------------------------------------------------------------------------- */
+// Un usuario sin rol de administrador no puede hacer las siguientes
+// operaciones:
+// - POST
+// - PUT
+// - DELETE
+Usuario::redirectIfNotAdmin();
+
 // echo var_dump($_POST);
 
 // Campos del formulario.
@@ -62,11 +70,12 @@ $hours = $non_empty_fields["horas"];
 $minutes = $non_empty_fields["minutos"];
 $seconds = $non_empty_fields["segundos"];
 
-$non_empty_fields["duracion"] = Controller::getTime(
-  $hours,
-  $minutes,
-  $seconds
-);
+$duracion = Controller::getTime($hours, $minutes, $seconds);
+
+// h:m:s = Mínimo 5 caracteres.
+if (strlen($duracion) >= 5) {
+  $non_empty_fields["duracion"] = $duracion;
+}
 
 /* ---------------------------------- POST ---------------------------------- */
 /* ----------------------------- NUEVA PELÍCULA ----------------------------- */

@@ -41,7 +41,10 @@ class Usuario extends Controller
   {
     return (Controller::isSessionActive()
       && isset($_SESSION["rol"])
-      && $_SESSION["rol"] === ModelUsuario::ROLES_ENUM_INDEX["administrador"]
+      && (
+        $_SESSION["rol"] === ModelUsuario::ROLES_ENUM_INDEX["administrador"]
+        ||$_SESSION["rol"] === "administrador"
+        )
     );
   }
 

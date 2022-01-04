@@ -141,15 +141,15 @@ $baseHtmlHead = new BaseHtmlHead(
           <label for="duracion">Duración</label>
           <div name="duracion" class="add-movie__duracion form__input__container">
             <label for="horas">h: </label>
-            <input required autocomplete="off" type="number" name="horas" placeholder="Horas" min="0" max="100">
+            <input required value=0 autocomplete="off" type="number" name="horas" placeholder="Horas" min="0" max="100">
             <span class="vertical-line"></span>
 
             <label for="minutos">m: </label>
-            <input required autocomplete="off" type="number" name="minutos" placeholder="Minutos" min="0" max="59">
+            <input required value=0 autocomplete="off" type="number" name="minutos" placeholder="Minutos" min="0" max="59">
             <span class="vertical-line"></span>
 
             <label for="segundos">s: </label>
-            <input required autocomplete="off" type="number" name="segundos" placeholder="Segundos" min="0" max="59">
+            <input required value=0 autocomplete="off" type="number" name="segundos" placeholder="Segundos" min="0" max="59">
             <i class="form__input__icon fas fa-clock"></i>
           </div>
         </section>
