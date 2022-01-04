@@ -1,5 +1,5 @@
 <main class="movie-details__container row">
-  <img class="movie-poster__img movie-details__img col-12 col-sm-4" src="<?php echo $img_folder; ?>movie-posters/spiderman-no-way-home/1.jpg" alt="Póster de película">
+  <img class="movie-poster__img movie-details__img col-12 col-sm-4" src="<?php echo IMG_FOLDER; ?>movie-posters/spiderman-no-way-home/1.jpg" alt="Póster de película">
   <section class="movie-details col-12 col-sm-8">
     <!-- Título original y en español. -->
     <header class="movie-details__title">

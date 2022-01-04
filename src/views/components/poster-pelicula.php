@@ -13,7 +13,7 @@ Podría haber 2 póster:
     no a todo el contenedor. 
   -->
   <div class="movie-poster__year-image">
-    <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
+    <a rel="noopener noreferrer" href="<?php echo VIEWS_FOLDER; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
       <img class="movie-poster__img" src="<?php echo FOLDERS_WITH_LOCALHOST["ASSETS"]; ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
     </a>
     <time datetime="2021" class="movie-poster__year">2021</time>

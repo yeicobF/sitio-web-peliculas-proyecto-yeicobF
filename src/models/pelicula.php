@@ -119,7 +119,8 @@ class Pelicula extends Model
       pdo_params: self::PDO_PARAMS
     );
   }
-  public static function getMovie(int $id)
+
+  public static function getMovie(int $id): array | null
   {
     return parent::getRecord(
       table: self::TABLE_NAME,

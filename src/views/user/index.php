@@ -42,20 +42,20 @@ $baseHtmlHead = new BaseHtmlHead(
 
   <!-- CSS -->
   <!-- CSS Propios -->
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>config.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>components/components.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>menu/menu.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>utilities/utilities.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>transformations/rotate.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>movies/movies.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>movies/movie-details.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>movies/comments.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>footer/footer.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>config.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>components/components.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>menu/menu.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>utilities/utilities.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>transformations/rotate.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>movies/movies.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>movies/movie-details.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>movies/comments.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>footer/footer.css">
 
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>form/form.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>form/form.css">
 
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>editar-perfil/editar-perfil.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>editar-perfil/detalles-perfil.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>editar-perfil/editar-perfil.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>editar-perfil/detalles-perfil.css">
 
   <?php
   echo $baseHtmlHead->getTitle();
@@ -76,7 +76,7 @@ $baseHtmlHead = new BaseHtmlHead(
         <!-- <figcaption>
           <h2 class="edit-profile__title">Nombre del usuario</h2>
         </figcaption> -->
-        <!-- <img src="<?php echo $img_folder; ?>../avatar/1.jpg" alt="Username" class="circle-avatar"> -->
+        <!-- <img src="<?php echo IMG_FOLDER; ?>../avatar/1.jpg" alt="Username" class="circle-avatar"> -->
 
 
         <div class="col-12 col-sm-6 col-md-4">
@@ -95,7 +95,7 @@ $baseHtmlHead = new BaseHtmlHead(
               <?php echo $username; ?>
             </h3>
           </header>
-          <a href="<?php echo $url_page["editar-perfil"]; ?>" class="btn btn-primary btn-fit-content">
+          <a href="<?php echo URL_PAGE["editar-perfil"]; ?>" class="btn btn-primary btn-fit-content">
             Editar perfil
           </a>
         </figcaption>

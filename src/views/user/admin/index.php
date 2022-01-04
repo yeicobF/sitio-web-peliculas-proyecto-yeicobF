@@ -30,13 +30,13 @@ $baseHtmlHead = new BaseHtmlHead(
 
   <!-- CSS -->
   <!-- CSS Propios -->
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>config.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>components/components.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>menu/menu.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>utilities/utilities.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>transformations/rotate.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>movies/movies.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>footer/footer.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>config.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>components/components.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>menu/menu.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>utilities/utilities.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>transformations/rotate.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>movies/movies.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>footer/footer.css">
 
 
 
@@ -65,7 +65,7 @@ $baseHtmlHead = new BaseHtmlHead(
               no a todo el contenedor. 
             -->
             <div class="movie-poster__year-image">
-              <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
+              <a rel="noopener noreferrer" href="<?php echo VIEWS_FOLDER; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
                 <img class="movie-poster__img" src="<?php echo FOLDERS_WITH_LOCALHOST["ASSETS"]; ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
               </a>
               <time datetime="2021" class="movie-poster__year">2021</time>
@@ -76,7 +76,7 @@ $baseHtmlHead = new BaseHtmlHead(
           <!-- Póster de películas. -->
           <figure class="movie-poster   col-6 col-sm-4">
             <div class="movie-poster__year-image">
-              <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
+              <a rel="noopener noreferrer" href="<?php echo VIEWS_FOLDER; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
                 <img class="movie-poster__img" src="<?php echo FOLDERS_WITH_LOCALHOST["ASSETS"]; ?>img/movie-posters/friday-the-13th/1.jpg" alt="Friday the 13th">
               </a>
               <time datetime="2021" class="movie-poster__year">1980</time>
@@ -87,7 +87,7 @@ $baseHtmlHead = new BaseHtmlHead(
           <!-- Póster de películas. -->
           <figure class="movie-poster   col-6 col-sm-4">
             <div class="movie-poster__year-image">
-              <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
+              <a rel="noopener noreferrer" href="<?php echo VIEWS_FOLDER; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
                 <img class="movie-poster__img" src="<?php echo FOLDERS_WITH_LOCALHOST["ASSETS"]; ?>img/movie-posters/avengers-endgame/1.jpg" alt="Avengers: Endgame">
               </a>
               <time datetime="2021" class="movie-poster__year">2019</time>
@@ -98,7 +98,7 @@ $baseHtmlHead = new BaseHtmlHead(
           <!-- Póster de películas. -->
           <figure class="movie-poster   col-6 col-sm-4">
             <div class="movie-poster__year-image">
-              <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
+              <a rel="noopener noreferrer" href="<?php echo VIEWS_FOLDER; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
                 <img class="movie-poster__img" src="<?php echo FOLDERS_WITH_LOCALHOST["ASSETS"]; ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
               </a>
               <time datetime="2021" class="movie-poster__year">2021</time>
@@ -109,7 +109,7 @@ $baseHtmlHead = new BaseHtmlHead(
           <!-- Póster de películas. -->
           <figure class="movie-poster   col-6 col-sm-4">
             <div class="movie-poster__year-image">
-              <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
+              <a rel="noopener noreferrer" href="<?php echo VIEWS_FOLDER; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
                 <img class="movie-poster__img" src="<?php echo FOLDERS_WITH_LOCALHOST["ASSETS"]; ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
               </a>
               <time datetime="2021" class="movie-poster__year">2021</time>
@@ -129,7 +129,7 @@ $baseHtmlHead = new BaseHtmlHead(
             no a todo el contenedor.
           -->
           <div class="movie-poster__year-image col-6">
-            <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
+            <a rel="noopener noreferrer" href="<?php echo VIEWS_FOLDER; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
               <img class="movie-poster__img" src="<?php echo FOLDERS_WITH_LOCALHOST["ASSETS"]; ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
             </a>
             <time datetime="2021" class="movie-poster__year">2021</time>
@@ -148,7 +148,7 @@ $baseHtmlHead = new BaseHtmlHead(
             no a todo el contenedor.
           -->
           <div class="movie-poster__year-image col-6">
-            <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
+            <a rel="noopener noreferrer" href="<?php echo VIEWS_FOLDER; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
               <img class="movie-poster__img" src="<?php echo FOLDERS_WITH_LOCALHOST["ASSETS"]; ?>img/movie-posters/friday-the-13th/1.jpg" alt="Friday the 13th">
             </a>
             <time datetime="2021" class="movie-poster__year">1980</time>
@@ -168,7 +168,7 @@ $baseHtmlHead = new BaseHtmlHead(
             no a todo el contenedor.
           -->
           <div class="movie-poster__year-image col-6">
-            <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
+            <a rel="noopener noreferrer" href="<?php echo VIEWS_FOLDER; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
               <img class="movie-poster__img" src="<?php echo FOLDERS_WITH_LOCALHOST["ASSETS"]; ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">
             </a>
             <time datetime="2021" class="movie-poster__year">2021</time>
@@ -187,7 +187,7 @@ $baseHtmlHead = new BaseHtmlHead(
             no a todo el contenedor.
           -->
           <div class="movie-poster__year-image col-6">
-            <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
+            <a rel="noopener noreferrer" href="<?php echo VIEWS_FOLDER; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
               <img class="movie-poster__img" src="<?php echo FOLDERS_WITH_LOCALHOST["ASSETS"]; ?>img/movie-posters/friday-the-13th/1.jpg" alt="Friday the 13th">
             </a>
             <time datetime="2021" class="movie-poster__year">1980</time>

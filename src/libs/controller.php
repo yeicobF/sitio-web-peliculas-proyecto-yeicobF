@@ -226,6 +226,25 @@ class Controller
     );
   }
 
+  /**
+   * Revisar si la ruta del archivo actual contiene el directorio especificado.
+   *
+   * @param string $path_from_view_folder Dirección relativa al directorio
+   * `views/`.
+   * @return boolean
+   */
+  public static function containsSpecificViewPath($path_from_view_folder)
+  {
+    if (self::isCurrentFileView()) {
+      return str_contains(
+        $_SERVER["SCRIPT_FILENAME"],
+        "views/{$path_from_view_folder}"
+      );
+    }
+
+    return false;
+  }
+
   public static function isCurrentFileController()
   {
     return str_contains(

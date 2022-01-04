@@ -27,7 +27,7 @@ include_once
 Login::redirectIfUserNotLoggedIn("login/index.php");
 Usuario::redirectIfNotAdmin();
 
-$agregar_pelicula_action = "{$controllers_folder}pelicula.php";
+$agregar_pelicula_action = CONTROLLERS_FOLDER . "pelicula.php";
 
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Agregar película",
@@ -47,16 +47,16 @@ $baseHtmlHead = new BaseHtmlHead(
 
   <!-- CSS -->
   <!-- CSS Propios -->
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>config.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>components/components.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>menu/menu.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>utilities/utilities.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>transformations/rotate.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>movies/movies.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>movies/movie-details.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>footer/footer.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>form/form.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>form/add-movie.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>config.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>components/components.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>menu/menu.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>utilities/utilities.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>transformations/rotate.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>movies/movies.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>movies/movie-details.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>footer/footer.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>form/form.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>form/add-movie.css">
 
 
 
@@ -160,7 +160,7 @@ $baseHtmlHead = new BaseHtmlHead(
       </section>
 
       <section class="form__buttons add-movie__buttons">
-        <a href="<?php echo "{$views_folder}index.php"; ?>" title="Cancelar" class="btn btn-danger form__button" type="submit">
+        <a href="<?php echo VIEWS_FOLDER . "index.php"; ?>" title="Cancelar" class="btn btn-danger form__button" type="submit">
           Cancelar
         </a>
         <button title="Guardar cambios" class="btn btn-success form__button" type="submit">

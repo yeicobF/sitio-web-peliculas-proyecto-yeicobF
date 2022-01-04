@@ -99,7 +99,7 @@ echo "SELECT LIKE" . var_dump(Model::getRecordLike(
   Usuario::TABLE_NAME,
   $where_clause_names,
   $where_clause_values,
-  $ ,
+  $use_like,
   Usuario::PDO_PARAMS
 )) . "<br><br>";
 
