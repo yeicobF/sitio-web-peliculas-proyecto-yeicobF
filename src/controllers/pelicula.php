@@ -113,7 +113,12 @@ if (Controller::isMethodPost()) {
  */
 
 // Tanto DELETE como PUT requieren de un ID.
-if ($non_empty_fields["id"] === null) {
+if (
+  $non_empty_fields["id"] === null
+  && (Controller::isMethodDelete()
+    || Controller::isMethodPut()
+  )
+) {
   Controller::redirectView(
     "user/index.php",
     error: "No se envió el ID de la película."
