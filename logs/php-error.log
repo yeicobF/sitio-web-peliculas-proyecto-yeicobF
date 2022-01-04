@@ -444,3 +444,4 @@ Stack trace:
 #2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\editar-perfil\index.php(18): include_once('C:\\xampp\\htdocs...')
 #3 {main}
   thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 84
+[04-Jan-2022 15:26:49 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 17

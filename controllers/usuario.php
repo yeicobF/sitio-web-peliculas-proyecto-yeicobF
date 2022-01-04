@@ -39,12 +39,12 @@ class Usuario extends Controller
    */
   public static function isAdmin()
   {
-    return (Controller::isSessionActive()
+    return (Login::isUserLoggedIn()
+      && Controller::isSessionActive()
       && isset($_SESSION["rol"])
-      && (
-        $_SESSION["rol"] === ModelUsuario::ROLES_ENUM_INDEX["administrador"]
-        ||$_SESSION["rol"] === "administrador"
-        )
+      && ($_SESSION["rol"] === ModelUsuario::ROLES_ENUM_INDEX["administrador"]
+        || $_SESSION["rol"] === "administrador"
+      )
     );
   }
 

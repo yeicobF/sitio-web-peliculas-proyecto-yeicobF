@@ -43,7 +43,7 @@ $baseHtmlHead = new BaseHtmlHead(
 <head>
   <?php
   echo $baseHtmlHead->getHtmlBaseHead();
-  ?>
+  ?>  
 
   <!-- CSS -->
   <!-- CSS Propios -->

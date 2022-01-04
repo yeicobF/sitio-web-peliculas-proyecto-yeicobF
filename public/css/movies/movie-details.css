@@ -1,3 +1,15 @@
+.movie-details__poster {
+  display: flex;
+  flex-direction: column;
+  gap: .5em;
+  padding-bottom: 1em;
+}
+
+.movie-details__form__buttons {
+  display: flex;
+  flex-direction: column;
+}
+
 .movie-details__container {
   display: flex;
   flex-direction: row;
@@ -6,7 +18,7 @@
 }
 
 .movie-details__container * {
-  font-family: 'Noto Sans', sans-serif;
+  /* font-family: 'Noto Sans', sans-serif; */
 }
 
 .movie-details {
@@ -107,6 +119,20 @@
   }
 
   .fill-height-flex {
-    gap: 3em;
+    gap: 1em;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 575px) {
+  .movie-details__container .movie-details__form__buttons {
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+  }
+  .movie-details__form__buttons .btn {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center
   }
 }

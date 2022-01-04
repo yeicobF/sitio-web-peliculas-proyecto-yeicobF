@@ -6,11 +6,50 @@ require_once __DIR__ . "/../config/config.php";
 
 class Controller
 {
+  const FILES = [
+    "login" => FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "login.php",
+    "pelicula" => FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "pelicula.php",
+    "usuario" => FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "usuario.php",
+  ];
 
+  /**
+   * Revisar si el método al que se llama es GET.
+   *
+   * @return boolean
+   */
   public static function isGet()
   {
     return $_SERVER["REQUEST_METHOD"] === "GET";
   }
+
+  /**
+   * Verificar si una key existe en la URL.
+   * 
+   * Esto es del método GET.
+   *
+   * @param string $key
+   * @return bool
+   */
+  public static function getKeyExist(string $key)
+  {
+    if (self::isGet()) {
+      return $_GET[$key] !== null;
+    }
+
+    return false;
+  }
+
+  /**
+   * Obtener el ID del URL con GET.
+   * 
+   * Hay que verificar si sí es numérico.
+   *
+   * @return int | null
+   */
+  //   public static function getIdFromGet() {
+  // 
+  //   }
+
   public static function isPost()
   {
     return $_SERVER["REQUEST_METHOD"] === "POST";

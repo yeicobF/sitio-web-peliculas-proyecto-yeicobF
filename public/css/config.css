@@ -80,6 +80,8 @@ body :is(.h1, .h2, .h3, .h4, .h5, .h6) {
 .btn {
   /* flex-basis: 40%; */
   font-weight: 600;
+  font-family: 'Quicksand', sans-serif;
+
   /* align-items: center;
   display: flex;
   justify-content: center;
