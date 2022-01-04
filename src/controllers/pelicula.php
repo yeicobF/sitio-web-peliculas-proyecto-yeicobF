@@ -13,8 +13,34 @@ use Model as Model;
 use Libs\Controller;
 use Controllers\Login;
 
+/**
+ * Hay 3 posibilidades para el GET:
+ * 
+ * - Poster + año y nombre en la parte principal de películas.
+ * - Poster y otros detalles en mejores películas.
+ * - Detalles de película.
+ * 
+ * Además, si no se envía el ID, se obtendrán todas las películas en la categoría mencionada.
+ */
 class Pelicula extends Controller
 {
+  const DISPLAY_TYPE = [
+    "minimal",
+    "some-details",
+    "detailed",
+  ];
+
+  public static function getEveryMovie() {
+
+  }
+
+  public static function getBestMovies() {
+
+  }
+
+  public static function getDetailedMovie() {
+    
+  }
 }
 
 Controller::startSession();
@@ -23,14 +49,13 @@ Model::initDbConnection();
 $result = 0;
 $message = "";
 
-
-// Obtener los datos del usuario actual, ya que, estos pudieron haber sido
-// actualizados.
+/* -------------------------- DETALLES DE PELÍCULA -------------------------- */
 if (
   Controller::isGet()
+  && Controller::getKeyExist("id")
+  && is_numeric($_GET["id"])
 ) {
-
-  return;
+  
 }
 
 if (
@@ -40,7 +65,7 @@ if (
   return;
 }
 
-Controller::redirectIfNonExistentPostMethod("login/index.php");
+Controller::redirectIfNonExistentPostMethod("peliculas/index.php");
 
 /* -------------------------------------------------------------------------- */
 // Un usuario sin rol de administrador no puede hacer las siguientes

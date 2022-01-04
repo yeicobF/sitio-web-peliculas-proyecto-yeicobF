@@ -91,6 +91,74 @@ class Pelicula extends Model
     );
   }
 
+  public static function searchMovies(string $query)
+  {
+    /** Usar LIKE en el nombre original y español. */
+    $use_like = [
+      [
+        "beginning" => true,
+        "ending" => true,
+      ],
+      [
+        "beginning" => true,
+        "ending" => true,
+      ],
+    ];
+
+    return parent::getRecordLike(
+      table: self::TABLE_NAME,
+      where_clause_names: [
+        "nombre_original",
+        "nombre_es_mx",
+      ],
+      where_clause_values: [
+        $query,
+        $query,
+      ],
+      use_like: $use_like,
+      pdo_params: self::PDO_PARAMS
+    );
+  }
+  public static function getMovie(int $id)
+  {
+    return parent::getRecord(
+      table: self::TABLE_NAME,
+      where_clause_names: ["id"],
+      where_clause_values: [$id],
+      pdo_params: self::PDO_PARAMS
+    )[0];
+  }
+  public static function getEveryMovie()
+  {
+    return parent::getEveryRecord(self::TABLE_NAME);
+  }
+
+  public static function getMoviesByGenre($genre)
+  {
+    return parent::getRecordLike(
+      table: self::TABLE_NAME,
+      where_clause_names: ["generos"],
+      where_clause_values: [$genre],
+      use_like: [
+        [
+          "beginning" => true,
+          "ending" => true,
+        ],
+      ],
+      pdo_params: self::PDO_PARAMS
+    );
+  }
+
+  public static function getBestMovies()
+  {
+    // return parent::getRecord(
+    //   table: self::TABLE_NAME,
+    //   where_clause_names: ["id"],
+    //   where_clause_values: [$id],
+    //   pdo_params: self::PDO_PARAMS
+    // );
+  }
+
   /**
    * Actualizar una película.
    * 
