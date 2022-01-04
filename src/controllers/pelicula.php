@@ -6,10 +6,12 @@ require_once __DIR__ . "/../config/config.php";
 require_once __DIR__ . "/../libs/controller.php";
 require_once __DIR__ . "/../libs/model.php";
 require_once __DIR__ . "/../models/pelicula.php";
+require_once __DIR__ . "/usuario.php";
 
 use Pelicula as ModelPelicula;
 use Model as Model;
 use Libs\Controller;
+use Controllers\Usuario;
 
 /**
  * Hay 3 posibilidades para el GET:
