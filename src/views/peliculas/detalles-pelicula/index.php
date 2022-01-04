@@ -1,5 +1,7 @@
 <?php
 
+use Libs\Controller;
+
 $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
 include_once $path
@@ -9,6 +11,21 @@ include_once $path
 include_once $path
   . LAYOUTS
   . "base-html-head.php";
+
+include_once
+  FOLDERS_WITH_DOCUMENT_ROOT["LIBS"]
+  . "controller.php";
+include_once
+  FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
+  . "usuario.php";
+
+if (!Controller::getKeyExist("id")) {
+  Controller::redirectView(error: "No se especificó un ID.");
+  return;
+}
+
+$id_pelicula = $_GET["id"];
+$nombre_pelicula;
 
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Detalles de película",
@@ -38,9 +55,6 @@ $baseHtmlHead = new BaseHtmlHead(
   <link rel="stylesheet" href="<?php echo $css_folder; ?>footer/footer.css">
   <link rel="stylesheet" href="<?php echo $css_folder; ?>form/form.css">
 
-
-
-
   <?php
   echo $baseHtmlHead->getTitle();
   ?>
@@ -53,7 +67,27 @@ $baseHtmlHead = new BaseHtmlHead(
 
   <div class="fill-height-flex container-fluid container-lg">
     <main class="movie-details__container row">
-      <img class="movie-poster__img movie-details__img col-12 col-sm-4" src="<?php echo $img_folder; ?>movie-posters/spiderman-no-way-home/1.jpg" alt="Póster de película">
+
+      <section class="movie-details__poster col-12 col-sm-4">
+        <img class="movie-poster__img movie-details__img" src="<?php echo $img_folder; ?>movie-posters/spiderman-no-way-home/1.jpg" alt="Póster de película">
+
+        <?php
+        if (Controllers\Usuario::isAdmin()) {
+        ?>
+          <form action="" class="form__buttons movie-details__form__buttons">
+            <a rel="noopener noreferrer" href="<?php echo "{$url_page["editar-pelicula"]}?id={$id_pelicula}"; ?>" class="btn btn-info">
+              Editar película
+            </a>
+            <button type="submit" class="btn btn-danger">
+              Eliminar película
+            </button>
+          </form>
+        <?php
+        }
+
+        ?>
+
+      </section>
       <section class="movie-details col-12 col-sm-8">
         <!-- Título original y en español. -->
         <header class="movie-details__title">
@@ -108,7 +142,7 @@ $baseHtmlHead = new BaseHtmlHead(
       </section>
     </main>
     <div class="row">
-      <section class="comments__container col-12 col-sm-8">
+      <section class="comments__container col-12 col-md-8">
         <h2>Comentarios</h2>
         <form action="" method="post" class="comments__form">
           <!-- Hay que definir el método a utilizar con un input hidden. -->
@@ -169,11 +203,11 @@ $baseHtmlHead = new BaseHtmlHead(
           </footer>
         </article>
 
-        <?php 
-        include $path . VIEWS . "components/posted-comment.php"; 
+        <?php
+        include $path . VIEWS . "components/posted-comment.php";
         ?>
       </section>
-      <aside class="best-movies-container col-12 col-sm-4">
+      <aside class="best-movies-container col-12 col-md-4">
         <h2 class="best-movies-container__title">Mejores Películas</h2>
         <!-- Póster de películas. -->
         <figure class="row movie-poster   col-12">

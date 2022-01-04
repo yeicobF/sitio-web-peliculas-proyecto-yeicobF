@@ -11,6 +11,14 @@ class Controller
   {
     return $_SERVER["REQUEST_METHOD"] === "GET";
   }
+
+  public static function getKeyExist(string $key) {
+    if (self::isGet()) {
+      return $_GET[$key] !== null;
+    }
+
+    return false;
+  }
   public static function isPost()
   {
     return $_SERVER["REQUEST_METHOD"] === "POST";
