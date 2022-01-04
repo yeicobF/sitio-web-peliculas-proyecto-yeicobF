@@ -1,3 +1,4 @@
+/* -------------------------------------------------------------------------- */
 .movies-container,
 .movies-container * {
   /* font-family: 'Noto Sans', sans-serif; */
@@ -89,6 +90,8 @@
   row-gap: .5em;
 }
 
+/* ------------------------------ MOVIE POSTER ------------------------------ */
+
 .movie-poster {
   display: flex;
   flex-direction: column;
@@ -102,6 +105,28 @@
 .movie-poster * {
   /* font-size: .8em; */
 }
+
+/* ------------------------ BOTONES DE ADMINISTRADOR ------------------------ */
+.movie-poster__admin-buttons {
+  position: absolute;
+  /* width: 100%; */
+  padding: .6em;
+  display: flex;
+  flex-direction: row;
+  z-index: 1;
+  flex-wrap: wrap;
+  gap: .4em;
+  /* top: 0px; */
+}
+
+.movie-poster__admin-buttons .btn-danger {
+  border-color: var(--color-danger-clear);
+}
+.movie-poster__admin-buttons .btn-primary {
+  border-color: var(--color-primary-clear);
+}
+
+/* -------------------------------------------------------------------------- */
 
 .movie-poster__year-image {
   position: relative;

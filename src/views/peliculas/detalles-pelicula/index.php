@@ -27,6 +27,7 @@ if (!Controller::getKeyExist("id")) {
 $id_pelicula = $_GET["id"];
 $nombre_pelicula;
 
+
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Detalles de película",
   _includeOwnFramework: true,
@@ -74,7 +75,10 @@ $baseHtmlHead = new BaseHtmlHead(
         <?php
         if (Controllers\Usuario::isAdmin()) {
         ?>
-          <form action="" class="form__buttons movie-details__form__buttons">
+          <form action="<?php echo "{$controllers_folder}pelicula.php"; ?>" class="form__buttons movie-details__form__buttons" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="id" value="1">
+
             <a rel="noopener noreferrer" href="<?php echo "{$url_page["editar-pelicula"]}?id={$id_pelicula}"; ?>" class="btn btn-info">
               Editar película
             </a>

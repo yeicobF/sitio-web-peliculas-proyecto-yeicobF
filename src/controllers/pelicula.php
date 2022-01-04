@@ -115,6 +115,7 @@ if (Controller::isMethodPost()) {
 // Tanto DELETE como PUT requieren de un ID.
 if (
   $non_empty_fields["id"] === null
+  && is_numeric($non_empty_fields["id"])
   && (Controller::isMethodDelete()
     || Controller::isMethodPut()
   )
@@ -129,7 +130,7 @@ if (
 /* --------------------------------- DELETE --------------------------------- */
 /* ------------------------- ELIMINACIÓN DE PELÍCULA ------------------------ */
 if (Controller::isMethodDelete()) {
-
+  echo "DELETE";
   if ($result === 1) {
   }
 }
