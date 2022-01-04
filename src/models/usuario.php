@@ -14,6 +14,13 @@ class Usuario extends Model
 
   const TABLE_NAME = "usuario";
 
+  const REQUIRED_FIELDS = [
+    "username",
+    "nombres",
+    "apellidos",
+    "password"
+  ];
+
   /**
    * Tipo de los parámetros para cuando se utilicen en PDO.
    */

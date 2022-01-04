@@ -18,6 +18,26 @@ class Pelicula extends Model
   public string $directores;
   public string $generos;
 
+  const TABLE_NAME = "pelicula";
+
+  const REQUIRED_FIELDS = [
+    "nombre_original",
+    "duracion",
+    "release_year",
+    "restriccion_edad",
+    "resumen_trama",
+    "actores",
+    "directores",
+    "generos"
+  ];
+
+  const PRIMARY_KEY = "id";
+  const UNIQUE_ATTRIBUTES = [
+    "pk" => [
+      "id"
+    ]
+  ];
+
   const PDO_PARAMS = [
     "id" => PDO::PARAM_INT,
     "nombre_original" => PDO::PARAM_STR,
@@ -30,15 +50,6 @@ class Pelicula extends Model
     "actores" => PDO::PARAM_STR,
     "directores" => PDO::PARAM_STR,
     "generos" => PDO::PARAM_STR,
-  ];
-
-  const TABLE_NAME = "pelicula";
-
-  const PRIMARY_KEY = "id";
-  const UNIQUE_ATTRIBUTES = [
-    "pk" => [
-      "id"
-    ]
   ];
 
   public function __construct(
@@ -70,7 +81,7 @@ class Pelicula extends Model
   /**
    * Inserción de un nuevo elemento.
    */
-  public function insertPelicula(): int
+  public function insert(): int
   {
     return parent::insertRecord(
       self::TABLE_NAME,
@@ -109,16 +120,12 @@ class Pelicula extends Model
     );
   }
 
-  public function delete(): bool
+  public static function delete($id): bool
   {
     return parent::deleteRecord(
       table: self::TABLE_NAME,
-      where_clauses: [
-        "id",
-      ],
-      values: [
-        $this->_id
-      ],
+      where_clause_names: ["id"],
+      where_clause_values: [$id],
       pdo_params: self::PDO_PARAMS
     );
   }

@@ -6,13 +6,11 @@ require_once __DIR__ . "/../config/config.php";
 require_once __DIR__ . "/../libs/controller.php";
 require_once __DIR__ . "/../libs/model.php";
 require_once __DIR__ . "/../models/usuario.php";
-require_once __DIR__ . "/registro.php";
 require_once __DIR__ . "/login.php";
 
 use Usuario as ModelUsuario;
 use Model as Model;
 use Libs\Controller;
-use Controllers\Registro;
 use Controllers\Login;
 
 class Usuario extends Controller
@@ -32,6 +30,32 @@ class Usuario extends Controller
     unset($session_details["password"]);
 
     return $session_details;
+  }
+
+  /**
+   * Revisar si el usuario actual es administrador.
+   *
+   * @return boolean
+   */
+  public static function isAdmin()
+  {
+    return (Controller::isSessionActive()
+      && isset($_SESSION["rol"])
+      && (
+        $_SESSION["rol"] === ModelUsuario::ROLES_ENUM_INDEX["administrador"]
+        ||$_SESSION["rol"] === "administrador"
+        )
+    );
+  }
+
+  public static function redirectIfNotAdmin($redirect_view = "index.php")
+  {
+    if (!self::isAdmin()) {
+      self::redirectView(
+        $redirect_view,
+        message: "No tienes permisos de administrador."
+      );
+    }
   }
 
   /**
@@ -173,7 +197,6 @@ $result = 0;
 $message = "";
 
 
-
 // Obtener los datos del usuario actual, ya que, estos pudieron haber sido
 // actualizados.
 if (
@@ -230,7 +253,10 @@ $non_empty_fields = Controller::getNonEmptyFormFields(
 /* ------------------------------ NUEVO USUARIO ----------------------------- */
 if (Controller::isMethodPost()) {
   // Revisar que todos los campos menos "fecha_nacimiento" tienen datos.
-  if (!Registro::areRequiredFieldsFilled($non_empty_fields)) {
+  if (!Controller::areRequiredFieldsFilled(
+    ModelUsuario::REQUIRED_FIELDS,
+    $non_empty_fields
+  )) {
     Controller::redirectView(
       view_path: "login/registro.php",
       error: "No se ingresaron los datos de todos los campos."

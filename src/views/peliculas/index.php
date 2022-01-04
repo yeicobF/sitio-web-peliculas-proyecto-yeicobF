@@ -7,7 +7,8 @@ include_once __DIR__ . "/../../config/config.php";
 
 include_once FOLDERS_WITH_DOCUMENT_ROOT["VIEWS"]
   . "layouts/base-html-head.php";
-
+include_once FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
+  . "login.php";
 
 
 $baseHtmlHead = new BaseHtmlHead(

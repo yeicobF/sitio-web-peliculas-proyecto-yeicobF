@@ -1,4 +1,12 @@
+.add-movie__buttons {
+  justify-content: center;
+}
 
+.add-movie__duracion {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
 
 .form__movie__cast {
   display: flex;

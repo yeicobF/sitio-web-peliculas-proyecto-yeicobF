@@ -1,5 +1,5 @@
 <!-- Mejores películas. Es un sidebar. -->
-<aside class="best-movies-container   col-12 col-sm-4">
+<aside class="best-movies-container col-12 col-md-4">
   <h2 class="best-movies-container__title">Mejores Películas</h2>
   <!-- Póster de películas. -->
   <figure class="row movie-poster   col-12">
