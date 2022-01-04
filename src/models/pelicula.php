@@ -81,7 +81,7 @@ class Pelicula extends Model
   /**
    * Inserción de un nuevo elemento.
    */
-  public function insertPelicula(): int
+  public function insert(): int
   {
     return parent::insertRecord(
       self::TABLE_NAME,

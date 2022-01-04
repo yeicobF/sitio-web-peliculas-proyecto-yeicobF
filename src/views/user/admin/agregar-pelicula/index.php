@@ -1,7 +1,10 @@
 <?php
 
-$path = "{$_SERVER["DOCUMENT_ROOT"]}/";
+use Libs\Controller;
+use Controllers\Login;
+use Controllers\Usuario;
 
+$path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
 include_once $path
   . "fdw-2021-2022-a/proyecto-yeicobF/"
@@ -11,11 +14,27 @@ include_once $path
   . LAYOUTS
   . "base-html-head.php";
 
+include_once
+  FOLDERS_WITH_DOCUMENT_ROOT["LIBS"]
+  . "controller.php";
+include_once
+  FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
+  . "login.php";
+include_once
+  FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
+  . "usuario.php";
+
+Login::redirectIfUserNotLoggedIn("login/index.php");
+Usuario::redirectIfNotAdmin();
+
+$agregar_pelicula_action = "{$controllers_folder}pelicula.php";
+
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Agregar película",
   _includeOwnFramework: true,
   _includeFontAwesome: true
 );
+
 ?>
 
 <!DOCTYPE html>
@@ -53,10 +72,10 @@ $baseHtmlHead = new BaseHtmlHead(
   ?>
 
   <div class="fill-height-flex container-fluid container-xl">
-    <form class="form__container row" enctype="multipart/form-data" action="" method="POST" autocomplete="off">
+    <form class="form__container row" enctype="multipart/form-data" action="<?php echo $agregar_pelicula_action; ?>" method="POST" autocomplete="off">
       <h1 class="col-12 form__movie__title">Agregar película</h1>
-
       <input type="hidden" name="_method" value="POST">
+
       <section class="col-12">
         <label for="nombre_original">Nombre original</label>
         <div class="form__input__container">
@@ -100,25 +119,25 @@ $baseHtmlHead = new BaseHtmlHead(
       </div>
       <div class="form__movie__details row">
 
-        <section class="col-12 col-sm-4 col-md-6 col-xl-3">
+        <section class="col-12 col-sm-4 col-md-6 col-xl-12">
           <label for="poster">Póster</label>
           <input class="form__input__picture" type="file" name="poster" class="form-control">
         </section>
-        <section class="col-12 col-sm-4 col-md-6 col-xl-3">
+        <section class="col-12 col-sm-4 col-md-6 col-xl-4">
           <label for="restriccion_edad">Clasificación de edad</label>
           <div class="form__input__container">
             <input required autocomplete="off" type="text" name="restriccion_edad" placeholder="Clasificación de edad">
             <i class="form__input__icon fas fa-address-card"></i>
           </div>
         </section>
-        <section class="col-12 col-sm-4 col-md-6 col-xl-3">
+        <section class="col-12 col-sm-4 col-md-6 col-xl-4">
           <label for="release_year">Año</label>
           <div class="form__input__container">
             <input required autocomplete="off" type="number" min="1800" max="2022" step="1" name="release_year" placeholder="Año">
             <i class="form__input__icon fas fa-calendar-plus"></i>
           </div>
         </section>
-        <section class="col-12 col-md-6 col-xl-3">
+        <section class="col-12 col-md-6 col-xl-4">
           <label for="duracion">Duración</label>
           <div name="duracion" class="add-movie__duracion form__input__container">
             <label for="horas">h: </label>
@@ -141,9 +160,9 @@ $baseHtmlHead = new BaseHtmlHead(
       </section>
 
       <section class="form__buttons add-movie__buttons">
-        <button title="Cancelar" class="btn btn-danger form__button" type="submit">
+        <a href="<?php echo "{$views_folder}index.php"; ?>" title="Cancelar" class="btn btn-danger form__button" type="submit">
           Cancelar
-        </button>
+        </a>
         <button title="Guardar cambios" class="btn btn-success form__button" type="submit">
           Guardar cambios
         </button>

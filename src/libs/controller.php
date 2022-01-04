@@ -307,6 +307,22 @@ class Controller
     return count($diff) === 0;
   }
 
+  public static function isTimeSpecified($hours, $minutes, $seconds)
+  {
+    return
+      strlen($hours) > 0
+      && strlen($minutes) > 0
+      && strlen($seconds) > 0;
+  }
+
+  public static function getTime($hours, $minutes, $seconds)
+  {
+    if (self::isTimeSpecified($hours, $minutes, $seconds)) {
+      return "{$hours}:{$minutes}:{$seconds}";
+    }
+    return null;
+  }
+
   // /**
   //  * Hacer un `return` que detendrá el proceso si el archivo actual es una
   //  * vista.

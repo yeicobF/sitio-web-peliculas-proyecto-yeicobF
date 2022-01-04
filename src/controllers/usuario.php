@@ -11,7 +11,6 @@ require_once __DIR__ . "/login.php";
 use Usuario as ModelUsuario;
 use Model as Model;
 use Libs\Controller;
-use Controllers\Registro;
 use Controllers\Login;
 
 class Usuario extends Controller
@@ -44,6 +43,16 @@ class Usuario extends Controller
       && isset($_SESSION["rol"])
       && $_SESSION["rol"] === ModelUsuario::ROLES_ENUM_INDEX["administrador"]
     );
+  }
+
+  public static function redirectIfNotAdmin($redirect_view = "index.php")
+  {
+    if (!self::isAdmin()) {
+      self::redirectView(
+        $redirect_view,
+        message: "No tienes permisos de administrador."
+      );
+    }
   }
 
   /**
