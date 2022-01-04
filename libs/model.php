@@ -194,7 +194,10 @@ class Model
     foreach ($unique_attributes as $type => $values) {
       $current_value = 0;
       foreach ($values as $name) {
-        if (array_key_exists($name, $param_values)) {
+        if (
+          array_key_exists($name, $param_values)
+          && $param_values[$name] !== null
+          ) {
           $encountered_params++;
         } else {
           // Eliminar el elemento que no se encontró.

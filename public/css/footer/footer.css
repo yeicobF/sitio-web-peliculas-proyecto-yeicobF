@@ -10,6 +10,7 @@
 .footer__elements {
   display: flex;
   flex-direction: row;
+  column-gap: 1em;
   list-style: none;
   margin: 0;
   padding: 1em 0;
@@ -21,6 +22,7 @@
   font-size: .85em;
   font-weight: 500;
   color: white;
+  text-align: center;
 }
 
 @media (max-width: 576px) {

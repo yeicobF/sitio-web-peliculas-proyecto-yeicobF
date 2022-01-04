@@ -289,6 +289,40 @@ class Controller
     return $non_empty_fields;
   }
 
+  /**
+   * Revisar que todos los datos de registro hayan sido especificados.
+   *
+   * @param array $form_fields
+   * @return bool
+   */
+  public static function areRequiredFieldsFilled($required_fields, $form_fields)
+  {
+    /**
+     * an array containing all the entries from array1 that are not present in
+     * any of the other arrays.
+     * 
+     * Si es igual a 0, significa que encontró todos los valores.
+     */
+    $diff = array_diff($required_fields, array_keys($form_fields));
+    return count($diff) === 0;
+  }
+
+  public static function isTimeSpecified($hours, $minutes, $seconds)
+  {
+    return
+      strlen($hours) > 0
+      && strlen($minutes) > 0
+      && strlen($seconds) > 0;
+  }
+
+  public static function getTime($hours, $minutes, $seconds)
+  {
+    if (self::isTimeSpecified($hours, $minutes, $seconds)) {
+      return "{$hours}:{$minutes}:{$seconds}";
+    }
+    return null;
+  }
+
   // /**
   //  * Hacer un `return` que detendrá el proceso si el archivo actual es una
   //  * vista.

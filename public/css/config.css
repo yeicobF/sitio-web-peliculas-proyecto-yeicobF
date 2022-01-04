@@ -95,6 +95,16 @@ body :is(.h1, .h2, .h3, .h4, .h5, .h6) {
   width: fit-content;
 }
 
+.vertical-line {
+  height: 1em;
+  width: 1px;
+  /* display: inline-flex; */
+  background-color: var(--color-lavender-blue);
+  /* align-content: stretch; */
+  /* flex-wrap: nowrap; */
+  /* flex-direction: row; */
+}
+
 @media (min-width: 768px) {
   /* * {
     font-size: 16px;
