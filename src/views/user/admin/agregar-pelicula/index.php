@@ -111,10 +111,17 @@ $baseHtmlHead = new BaseHtmlHead(
             <i class="form__input__icon fas fa-calendar-plus"></i>
           </div>
         </section>
-        <section class="col-12 col-sm-4 col-md-3">
+        <section class="col-12 col-lg-6">
           <label for="duracion">Duración</label>
           <div class="form__input__container">
-            <input required autocomplete="off" type="text" name="duracion" placeholder="Duración">
+            <label for="horas">Horas: </label>
+            <input required autocomplete="off" type="number" name="horas" placeholder="h:" min="0" max="100">
+            
+            <label for="minutos">Minutos: </label>
+            <input required autocomplete="off" type="number" name="minutos" placeholder="m:" min="0" max="59">
+            
+            <label for="segundos">Segundos: </label>
+            <input required autocomplete="off" type="number" name="segundos" placeholder="s" min="0" max="59">
             <i class="form__input__icon fas fa-clock"></i>
           </div>
         </section>
@@ -132,10 +139,10 @@ $baseHtmlHead = new BaseHtmlHead(
       </section>
 
       <section class="form__buttons">
-        <button title="Cancelar" class="btn form__button" type="submit">
+        <button title="Cancelar" class="btn btn-danger form__button" type="submit">
           Cancelar
         </button>
-        <button title="Guardar cambios" class="btn form__button" type="submit">
+        <button title="Guardar cambios" class="btn btn-success form__button" type="submit">
           Guardar cambios
         </button>
       </section>
