@@ -8,7 +8,7 @@
       use Controllers\Login;
       use Controllers\Usuario;
 
-      $action = "{$controllers_folder}login.php";
+      $action = CONTROLLERS_FOLDER . "login.php";
       ?>
 
       <!-- Inicio de sesión. -->
@@ -16,8 +16,8 @@
         <?php
 
         if (Login::isUserLoggedIn()) {
-          $avatar_url = "{$url_page["detalles-perfil"]}";
-          // $avatar_url = "{$url_page["editar-perfil"]}?id={$_SESSION["id"]}";
+          $avatar_url = URL_PAGE["detalles-perfil"];
+          // $avatar_url = "{URL_PAGE["editar-perfil"]}?id={$_SESSION["id"]}";
 
           $username_alt = $_SESSION["username"];
         ?>
@@ -44,11 +44,11 @@
         } else {
         ?>
           <!-- button.btn.btn-light#login-button -->
-          <a rel="noopener noreferrer" href="<?php echo $url_page["login"]; ?>" class="btn btn-light" id="login-button">
+          <a rel="noopener noreferrer" href="<?php echo URL_PAGE["login"]; ?>" class="btn btn-light" id="login-button">
             Iniciar sesión
           </a>
           <!-- button.btn.btn-info#register-button{Registrarse} -->
-          <a rel="noopener noreferrer" href="<?php echo $url_page["registro"]; ?>" class="btn btn-info" id="register-button">
+          <a rel="noopener noreferrer" href="<?php echo URL_PAGE["registro"]; ?>" class="btn btn-info" id="register-button">
             Registrarse
           </a>
         <?php

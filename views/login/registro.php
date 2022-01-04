@@ -14,7 +14,7 @@ include_once
   FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
   . "usuario.php";
 
-$registro_action = "{$controllers_folder}usuario.php";
+$registro_action = CONTROLLERS_FOLDER . "usuario.php";
 
 
 $baseHtmlHead = new BaseHtmlHead(
@@ -34,11 +34,11 @@ $baseHtmlHead = new BaseHtmlHead(
 
   <!-- CSS -->
   <!-- CSS Propios -->
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>config.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>components/components.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>utilities/utilities.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>form/form.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>login-register/login-register.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>config.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>components/components.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>utilities/utilities.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>form/form.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>login-register/login-register.css">
 
   <?php
   echo $baseHtmlHead->getTitle();

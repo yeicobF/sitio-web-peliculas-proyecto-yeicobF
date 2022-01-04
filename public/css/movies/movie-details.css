@@ -24,6 +24,7 @@
 .movie-details {
   display: flex;
   gap: 1em;
+  flex-wrap: wrap;
   flex-direction: column;
 }
 
@@ -32,8 +33,33 @@
   /* border-radius: 18.3px; */
   display: flex;
   object-fit: contain;
-
+  width: 100%;
+  height: auto;
 }
+
+.movie-details__no-poster {
+  /* From https://css.glass */
+  font-size: 3.5em;
+  padding: .3em;
+  color: crimson;
+  flex-direction: column;
+  background: rgba(201, 126, 235, 0.14);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7.9px);
+  -webkit-backdrop-filter: blur(7.9px);
+  border: 1px solid rgba(201, 126, 235, 0.07);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.movie-details__no-poster p {
+  text-align: center;
+  font-size: .4em;
+  font-weight: 700;
+}
+
 .movie-details__info {
   display: flex;
   justify-content: flex-start;
@@ -49,6 +75,7 @@
   color: white;
   font-weight: 400;
   padding: 0 .3em;
+  text-align: center;
   border-radius: .2em;
 }
 
@@ -113,13 +140,16 @@
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 575px) {
   .movie-details__info {
     justify-content: center;
   }
 
   .fill-height-flex {
     gap: 1em;
+  }
+  .movie-details__no-poster  {
+    aspect-ratio: 16/9;
   }
 }
 

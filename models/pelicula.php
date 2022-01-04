@@ -70,12 +70,30 @@ class Pelicula extends Model
     $this->release_year = $release_year;
     $this->restriccion_edad = $restriccion_edad;
     $this->resumen_trama = $resumen_trama;
-    $this->actores = $actores;
-    $this->directores = $directores;
-    $this->generos = $generos;
     $this->id = $id;
     $this->nombre_es_mx = $nombre_es_mx;
     $this->poster = $poster;
+    
+    $this->actores = $actores;
+    $this->directores = $directores;
+    $this->generos = $generos;
+  }
+
+
+
+  /**
+   * Obtener tiempo del formato `h:m:s` a un arreglo con cada cantidad separada.
+   *
+   * @return array
+   */
+  public function getSplitTime()
+  {
+    $split_time = explode(":", $this->duracion);
+    return [
+      "horas" => $split_time[0],
+      "minutos" => $split_time[1],
+      "segundos" => $split_time[2],
+    ];
   }
 
   /**
@@ -89,6 +107,75 @@ class Pelicula extends Model
       self::PDO_PARAMS,
       self::UNIQUE_ATTRIBUTES
     );
+  }
+
+  public static function searchMovies(string $query)
+  {
+    /** Usar LIKE en el nombre original y español. */
+    $use_like = [
+      [
+        "beginning" => true,
+        "ending" => true,
+      ],
+      [
+        "beginning" => true,
+        "ending" => true,
+      ],
+    ];
+
+    return parent::getRecordLike(
+      table: self::TABLE_NAME,
+      where_clause_names: [
+        "nombre_original",
+        "nombre_es_mx",
+      ],
+      where_clause_values: [
+        $query,
+        $query,
+      ],
+      use_like: $use_like,
+      pdo_params: self::PDO_PARAMS
+    );
+  }
+
+  public static function getMovie(int $id): array | null
+  {
+    return parent::getRecord(
+      table: self::TABLE_NAME,
+      where_clause_names: ["id"],
+      where_clause_values: [$id],
+      pdo_params: self::PDO_PARAMS
+    )[0];
+  }
+  public static function getEveryMovie()
+  {
+    return parent::getEveryRecord(self::TABLE_NAME);
+  }
+
+  public static function getMoviesByGenre($genre)
+  {
+    return parent::getRecordLike(
+      table: self::TABLE_NAME,
+      where_clause_names: ["generos"],
+      where_clause_values: [$genre],
+      use_like: [
+        [
+          "beginning" => true,
+          "ending" => true,
+        ],
+      ],
+      pdo_params: self::PDO_PARAMS
+    );
+  }
+
+  public static function getBestMovies()
+  {
+    // return parent::getRecord(
+    //   table: self::TABLE_NAME,
+    //   where_clause_names: ["id"],
+    //   where_clause_values: [$id],
+    //   pdo_params: self::PDO_PARAMS
+    // );
   }
 
   /**

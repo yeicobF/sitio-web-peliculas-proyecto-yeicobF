@@ -57,7 +57,7 @@ $add_css_current_page = [
     indicando que se trata de una navbar.
   -->
 <nav class="navbar">
-  <a rel="noopener noreferrer" href="<?php echo $url_page["inicio"]; ?>" class="navbar-brand">
+  <a rel="noopener noreferrer" href="<?php echo URL_PAGE["inicio"]; ?>" class="navbar-brand">
     <!-- https://developer.mozilla.org/es/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images -->
     <img src="<?php echo FOLDERS_WITH_LOCALHOST["PAGE_LOGO"]; ?>" alt="Colección de películas" srcset="" sizes="" class="logo">
     <!-- p.navbar__title -->
@@ -91,13 +91,13 @@ $add_css_current_page = [
     <ul class="navbar-nav">
       <!-- Elementos individuales. -->
       <li class="nav-item">
-        <a rel="noopener noreferrer" href="<?php echo $url_page["inicio"]; ?>" id="nav-inicio" class="nav-link<?php echo $add_css_current_page["inicio"]; ?>">
+        <a rel="noopener noreferrer" href="<?php echo URL_PAGE["inicio"]; ?>" id="nav-inicio" class="nav-link<?php echo $add_css_current_page["inicio"]; ?>">
           Inicio
         </a>
       </li>
 
       <li class="nav-item">
-        <a rel="noopener noreferrer" href="<?php echo $url_page["peliculas"]; ?>" id="nav-peliculas" class="nav-link<?php echo $add_css_current_page["peliculas"]; ?>">
+        <a rel="noopener noreferrer" href="<?php echo URL_PAGE["peliculas"]; ?>" id="nav-peliculas" class="nav-link<?php echo $add_css_current_page["peliculas"]; ?>">
           Películas
         </a>
       </li>
@@ -117,22 +117,22 @@ $add_css_current_page = [
               propiedad "display: block;".
             -->
           <li>
-            <a rel="noopener noreferrer" href="<?php echo $url_page["generos"]; ?>?genero=acción" class="dropdown-item">
+            <a rel="noopener noreferrer" href="<?php echo URL_PAGE["generos"]; ?>?genero=acción" class="dropdown-item">
               Acción
             </a>
           </li>
           <li>
-            <a rel="noopener noreferrer" href="<?php echo $url_page["generos"]; ?>?genero=terror" class="dropdown-item">
+            <a rel="noopener noreferrer" href="<?php echo URL_PAGE["generos"]; ?>?genero=terror" class="dropdown-item">
               Terror
             </a>
           </li>
           <li>
-            <a rel="noopener noreferrer" href="<?php echo $url_page["generos"]; ?>?genero=comedia" class="dropdown-item">
+            <a rel="noopener noreferrer" href="<?php echo URL_PAGE["generos"]; ?>?genero=comedia" class="dropdown-item">
               Comedia
             </a>
           </li>
           <li>
-            <a rel="noopener noreferrer" href="<?php echo $url_page["generos"]; ?>?genero=todos" class="dropdown-item">
+            <a rel="noopener noreferrer" href="<?php echo URL_PAGE["generos"]; ?>?genero=todos" class="dropdown-item">
               Ver todos
             </a>
           </li>

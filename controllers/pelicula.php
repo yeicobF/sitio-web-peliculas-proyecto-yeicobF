@@ -6,15 +6,161 @@ require_once __DIR__ . "/../config/config.php";
 require_once __DIR__ . "/../libs/controller.php";
 require_once __DIR__ . "/../libs/model.php";
 require_once __DIR__ . "/../models/pelicula.php";
-require_once __DIR__ . "/login.php";
+require_once __DIR__ . "/usuario.php";
 
 use Pelicula as ModelPelicula;
 use Model as Model;
 use Libs\Controller;
-use Controllers\Login;
+use Controllers\Usuario;
 
+/**
+ * Hay 3 posibilidades para el GET:
+ * 
+ * - Poster + año y nombre en la parte principal de películas.
+ * - Poster y otros detalles en mejores películas.
+ * - Detalles de película.
+ * 
+ * Además, si no se envía el ID, se obtendrán todas las películas en la categoría mencionada.
+ */
 class Pelicula extends Controller
 {
+  const DISPLAY_TYPE = [
+    "minimal",
+    "some-details",
+    "detailed",
+  ];
+
+  public static function getEveryMovie()
+  {
+  }
+
+  public static function getBestMovies()
+  {
+  }
+
+
+
+  /**
+   * Obtener poster de película si es que tiene.
+   * 
+   * Si no tiene póster, entregar algo más.
+   *
+   * @param ModelPelicula $movie
+   * @return void
+   */
+  public static function getPoster($movie)
+  {
+
+    if (!empty($movie->poster)) {
+      $poster = Controller::getEncodedImage($movie->poster);
+?>
+      <img src="data:image/jpeg; base64, <?php echo $poster; ?>" alt="<?php echo $movie->nombre_original; ?>" class="movie-poster__img movie-details__img">
+    <?php
+      return;
+    }
+    ?>
+
+    <!-- 
+    Si no hay poster, poner un fondo y un ícono que lo indique.
+    -->
+    <span class="fa-stack movie-poster__img movie-details__img movie-details__no-poster">
+      <i class="fa-solid fa-border-none"></i>
+      <p>No poster</p>
+    </span>
+  <?php
+  }
+
+  public static function getDetailedMovie(ModelPelicula $movie)
+  {
+    $time = $movie->getSplitTime();
+    $horas = $time["horas"];
+    $minutos = $time["minutos"];
+    $segundos = $time["segundos"];
+
+    $display_time = "{$horas}h {$minutos}m";
+    $display_time .= $segundos > 0 ? " {$segundos}s" : "";
+
+    $actores = Controller::stringToUppercasePerWord(", ", $movie->actores);
+    $directores = Controller::stringToUppercasePerWord(", ", $movie->directores);
+    $generos = Controller::stringToUppercasePerWord(", ", $movie->generos);
+  ?>
+    <section class="movie-details__poster col-12 col-sm-4">
+
+      <?php
+      self::getPoster($movie);
+
+      if (Usuario::isAdmin()) {
+      ?>
+        <form action="<?php echo CONTROLLERS_FOLDER . "pelicula.php"; ?>" class="form__buttons movie-details__form__buttons" method="POST">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="hidden" name="id" value="<?php echo $movie->id; ?>">
+
+          <a rel="noopener noreferrer" href="<?php echo URL_PAGE["editar-pelicula"] . "?id={$movie->id}"; ?>" class="btn btn-info">
+            Editar película
+          </a>
+          <button type="submit" class="btn btn-danger">
+            Eliminar película
+          </button>
+        </form>
+      <?php
+      }
+
+      ?>
+
+    </section>
+    <section class="movie-details col-12 col-sm-8">
+      <!-- Título original y en español. -->
+      <header class="movie-details__title">
+
+        <h1><?php echo $movie->nombre_original; ?></h1>
+        <?php
+        if ($movie->nombre_es_mx !== null) {
+          echo "<h2>{$movie->nombre_es_mx}</h2>";
+        }
+        ?>
+      </header>
+      <section class="movie-details__info">
+        <time datetime="<?php echo $movie->release_year; ?>" class="movie-details__year"><?php echo $movie->release_year; ?></time>
+        <!-- Calificaciones de la película. -->
+        <!-- Hay que obtenerlas de otra tabla y promediarlas. -->
+        <data value="4.5" class="movie-details__user-rating">4.5/5</data>
+        <time datetime="<?php echo "PT{$horas}H{$minutos}M{$segundos}S"; ?>"><?php echo $display_time; ?></time>
+        <data value="<?php echo $movie->restriccion_edad; ?>" class="movie-details__age-rating">
+          Clasificación: <?php echo $movie->restriccion_edad; ?>
+        </data>
+      </section>
+      <p class="movie-details__synopsis">
+        <?php echo $movie->resumen_trama; ?>
+      </p>
+      <ul class="movie-details__cast">
+        <li class="movie-details__cast__type">
+          <h3 class="movie-details__cast__type__title">
+            Director/es:
+          </h3>
+          <ul>
+            <?php echo Controller::getListItems($directores, "movie-details__cast__member"); ?>
+          </ul>
+        </li>
+        <li class="movie-details__cast__type">
+          <h3 class="movie-details__cast__type__title">
+            Actor/es:
+          </h3>
+          <ul>
+            <?php echo Controller::getListItems($actores, "movie-details__cast__member"); ?>
+          </ul>
+        </li>
+        <li class="movie-details__cast__type">
+          <h3 class="movie-details__cast__type__title">
+            Géneros:
+          </h3>
+          <ul>
+            <?php echo Controller::getListItems($generos, "movie-details__cast__member"); ?>
+          </ul>
+        </li>
+      </ul>
+    </section>
+<?php
+  }
 }
 
 Controller::startSession();
@@ -23,13 +169,39 @@ Model::initDbConnection();
 $result = 0;
 $message = "";
 
-
-// Obtener los datos del usuario actual, ya que, estos pudieron haber sido
-// actualizados.
+/* -------------------------- DETALLES DE PELÍCULA -------------------------- */
 if (
   Controller::isGet()
+  && Controller::getKeyExist("id")
+  && is_numeric($_GET["id"])
+  // Solo se pide el ID en la vista de detalles.
+  && Controller::containsSpecificViewPath("detalles-pelicula")
 ) {
+  $db_movie = ModelPelicula::getMovie($_GET["id"]);
 
+  if ($db_movie === null) {
+    Controller::redirectView(
+      view_path: "peliculas/index.php",
+      error: "No se encontró la película."
+    );
+    return;
+  }
+
+  $movie = new ModelPelicula(
+    nombre_original: $db_movie["nombre_original"],
+    duracion: $db_movie["duracion"],
+    release_year: $db_movie["release_year"],
+    restriccion_edad: $db_movie["restriccion_edad"],
+    resumen_trama: $db_movie["resumen_trama"],
+    actores: $db_movie["actores"],
+    directores: $db_movie["directores"],
+    generos: $db_movie["generos"],
+    id: $db_movie["id"],
+    nombre_es_mx: $db_movie["nombre_es_mx"],
+    poster: $db_movie["poster"],
+  );
+
+  Pelicula::getDetailedMovie($movie);
   return;
 }
 
@@ -40,7 +212,7 @@ if (
   return;
 }
 
-Controller::redirectIfNonExistentPostMethod("login/index.php");
+Controller::redirectIfNonExistentPostMethod("peliculas/index.php");
 
 /* -------------------------------------------------------------------------- */
 // Un usuario sin rol de administrador no puede hacer las siguientes
