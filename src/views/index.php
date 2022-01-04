@@ -28,13 +28,13 @@ $baseHtmlHead = new BaseHtmlHead(
 
   <!-- CSS -->
   <!-- CSS Propios -->
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>config.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>components/components.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>menu/menu.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>utilities/utilities.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>transformations/rotate.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>movies/movies.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>footer/footer.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>config.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>components/components.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>menu/menu.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>utilities/utilities.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>transformations/rotate.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>movies/movies.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>footer/footer.css">
 
   <!-- SCRIPTS -->
 

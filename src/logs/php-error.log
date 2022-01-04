@@ -445,3 +445,10 @@ Stack trace:
 #3 {main}
   thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 84
 [04-Jan-2022 15:26:49 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 17
+[04-Jan-2022 22:43:53 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Pelicula::stringToUppercasePerWord(): Argument #2 ($element) must be of type string, array given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php on line 81 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php:93
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php(81): Pelicula::stringToUppercasePerWord(', ', Array)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(195): Pelicula->__construct('Spiderman', '00:00:02', '2021', 'E', 'Pel\xC3\xADcula del h...', Array, 'Jon Watts', Array, 1, 'Hombre Ara\xC3\xB1a', NULL)
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php(75): include_once('C:\\xampp\\htdocs...')
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php on line 93

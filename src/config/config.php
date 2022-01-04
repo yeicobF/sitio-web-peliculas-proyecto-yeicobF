@@ -95,40 +95,48 @@ define(
 
 /* --------- Directorios como variables para acceder más fácilmente. -------- */
 
-$src_folder = FOLDERS_WITH_LOCALHOST["SRC"];
-$views_folder = FOLDERS_WITH_LOCALHOST["VIEWS"];
-$assets_folder = FOLDERS_WITH_LOCALHOST["ASSETS"];
-$css_folder = FOLDERS_WITH_LOCALHOST["CSS"];
-$img_folder = FOLDERS_WITH_LOCALHOST["IMG"];
-$libs_folder = FOLDERS_WITH_LOCALHOST["LIBS"];
-$controllers_folder = FOLDERS_WITH_LOCALHOST["CONTROLLERS"];
-$config_folder = FOLDERS_WITH_LOCALHOST["CONFIG"];
-
-/* -------------------------------------------------------------------------- */
+define("SRC_FOLDER", FOLDERS_WITH_LOCALHOST["SRC"]);
+define("VIEWS_FOLDER", FOLDERS_WITH_LOCALHOST["VIEWS"]);
+define("ASSETS_FOLDER", FOLDERS_WITH_LOCALHOST["ASSETS"]);
+define("CSS_FOLDER", FOLDERS_WITH_LOCALHOST["CSS"]);
+define("IMG_FOLDER", FOLDERS_WITH_LOCALHOST["IMG"]);
+define("LIBS_FOLDER", FOLDERS_WITH_LOCALHOST["LIBS"]);
+define("CONTROLLERS_FOLDER", FOLDERS_WITH_LOCALHOST["CONTROLLERS"]);
+define("CONFIG_FOLDER", FOLDERS_WITH_LOCALHOST["CONFIG"]);
 
 /* ------------------------- ENLACE PARA CADA PÁGINA ------------------------ */
 
-$user_url = "{$views_folder}user/";
-$admin_url = "{$user_url}admin/";
-$detalles_pelicula_folder = $views_folder . "peliculas/detalles-pelicula/";
+define("USER_URL", VIEWS_FOLDER . "user/");
 
-$url_page = [
-  "inicio" => $views_folder . "index.php",
-  "peliculas" => $views_folder . "peliculas/index.php",
-  "generos" => $views_folder . "generos/index.php",
-  "login" => $views_folder . "login/index.php",
-  "registro" => $views_folder . "login/registro.php",
-  "editar-perfil" => $user_url . "editar-perfil/index.php",
-  "detalles-perfil" => $user_url . "index.php",
-  "detalles-pelicula" => $detalles_pelicula_folder . "index.php",
-  "editar-pelicula" => $detalles_pelicula_folder . "editar.php",
-  "agregar-pelicula" => $admin_url . "agregar-pelicula/index.php",
-];
+define("ADMIN_URL", USER_URL . "admin/");
+define(
+  "DETALLES_PELICULA_FOLDER",
+  VIEWS_FOLDER . "peliculas/detalles-pelicula/"
+);
 
-// var_dump($user_url);
-// var_dump($url_page);
-// var_dump($url_page["login"]);
-// var_dump($url_page["registro"]);
+// "\{\$url_page\["[a-z-]*"\]\}
+// \$url_page\["[a-z-]*
+
+define(
+  "URL_PAGE",
+  [
+    "inicio" => VIEWS_FOLDER . "index.php",
+    "peliculas" => VIEWS_FOLDER . "peliculas/index.php",
+    "generos" => VIEWS_FOLDER . "generos/index.php",
+    "login" => VIEWS_FOLDER . "login/index.php",
+    "registro" => VIEWS_FOLDER . "login/registro.php",
+    "editar-perfil" => USER_URL . "editar-perfil/index.php",
+    "detalles-perfil" => USER_URL . "index.php",
+    "detalles-pelicula" => DETALLES_PELICULA_FOLDER . "index.php",
+    "editar-pelicula" => DETALLES_PELICULA_FOLDER . "editar.php",
+    "agregar-pelicula" => ADMIN_URL . "agregar-pelicula/index.php",
+  ]
+);
+
+// var_dump(USER_URL);
+// var_dump(URL_PAGE);
+// var_dump(URL_PAGE["login"]);
+// var_dump(URL_PAGE["registro"]);
 
 // Obtener nombre de archivo actual sin su extensión.
 // $current_file_name = basename(__DIR__, ".php");

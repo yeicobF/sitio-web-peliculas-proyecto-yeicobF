@@ -22,7 +22,7 @@ include_once
 
 Login::redirectIfUserNotLoggedIn("login/index.php");
 
-$editar_perfil_action = "{$controllers_folder}usuario.php";
+$editar_perfil_action = CONTROLLERS_FOLDER . "usuario.php";
 $username = $_SESSION["username"];
 
 $baseHtmlHead = new BaseHtmlHead(
@@ -42,19 +42,19 @@ $baseHtmlHead = new BaseHtmlHead(
 
   <!-- CSS -->
   <!-- CSS Propios -->
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>config.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>components/components.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>menu/menu.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>utilities/utilities.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>transformations/rotate.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>movies/movies.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>movies/movie-details.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>movies/comments.css">
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>footer/footer.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>config.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>components/components.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>menu/menu.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>utilities/utilities.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>transformations/rotate.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>movies/movies.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>movies/movie-details.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>movies/comments.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>footer/footer.css">
 
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>form/form.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>form/form.css">
 
-  <link rel="stylesheet" href="<?php echo $css_folder; ?>editar-perfil/editar-perfil.css">
+  <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>editar-perfil/editar-perfil.css">
 
   <?php
   echo $baseHtmlHead->getTitle();
@@ -72,7 +72,7 @@ $baseHtmlHead = new BaseHtmlHead(
         <!-- <figcaption>
           <h2 class="edit-profile__title">Nombre del usuario</h2>
         </figcaption> -->
-        <!-- <img src="<?php echo $img_folder; ?>../avatar/1.jpg" alt="Username" class="circle-avatar"> -->
+        <!-- <img src="<?php echo IMG_FOLDER; ?>../avatar/1.jpg" alt="Username" class="circle-avatar"> -->
 
         <?php
         Usuario::getFotoPerfil();
@@ -133,7 +133,7 @@ $baseHtmlHead = new BaseHtmlHead(
             Eliminar cuenta
           </button>
           <div class="form__buttons form__buttons--safe">
-            <a title="Cancelar" class="btn btn-warning form__button" href="<?php echo "{$views_folder}index.php"; ?>">
+            <a title="Cancelar" class="btn btn-warning form__button" href="<?php echo VIEWS_FOLDER . "index.php"; ?>">
               Cancelar
             </a>
 
