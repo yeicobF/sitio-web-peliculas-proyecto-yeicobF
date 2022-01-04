@@ -109,7 +109,7 @@ $config_folder = FOLDERS_WITH_LOCALHOST["CONFIG"];
 /* ------------------------- ENLACE PARA CADA PÁGINA ------------------------ */
 
 $user_url = "{$views_folder}user/";
-$admin_url = "{$user_url}/admin/";
+$admin_url = "{$user_url}admin/";
 $url_page = [
   "inicio" => $views_folder . "index.php",
   "peliculas" => $views_folder . "peliculas/index.php",

@@ -100,36 +100,38 @@ $baseHtmlHead = new BaseHtmlHead(
       </div>
       <div class="form__movie__details row">
 
-        <section class="col-12 col-md-3">
+        <section class="col-12 col-sm-4 col-md-6 col-xl-3">
           <label for="poster">Póster</label>
           <input class="form__input__picture" type="file" name="poster" class="form-control">
         </section>
-        <section class="col-12 col-sm-4 col-md-3">
+        <section class="col-12 col-sm-4 col-md-6 col-xl-3">
+          <label for="restriccion_edad">Clasificación de edad</label>
+          <div class="form__input__container">
+            <input required autocomplete="off" type="text" name="restriccion_edad" placeholder="Clasificación de edad">
+            <i class="form__input__icon fas fa-address-card"></i>
+          </div>
+        </section>
+        <section class="col-12 col-sm-4 col-md-6 col-xl-3">
           <label for="release_year">Año</label>
           <div class="form__input__container">
             <input required autocomplete="off" type="number" min="1800" max="2022" step="1" name="release_year" placeholder="Año">
             <i class="form__input__icon fas fa-calendar-plus"></i>
           </div>
         </section>
-        <section class="col-12 col-lg-6">
+        <section class="col-12 col-md-6 col-xl-3">
           <label for="duracion">Duración</label>
-          <div class="form__input__container">
-            <label for="horas">Horas: </label>
-            <input required autocomplete="off" type="number" name="horas" placeholder="h:" min="0" max="100">
-            
-            <label for="minutos">Minutos: </label>
-            <input required autocomplete="off" type="number" name="minutos" placeholder="m:" min="0" max="59">
-            
-            <label for="segundos">Segundos: </label>
-            <input required autocomplete="off" type="number" name="segundos" placeholder="s" min="0" max="59">
+          <div name="duracion" class="add-movie__duracion form__input__container">
+            <label for="horas">h: </label>
+            <input required autocomplete="off" type="number" name="horas" placeholder="Horas" min="0" max="100">
+            <span class="vertical-line"></span>
+
+            <label for="minutos">m: </label>
+            <input required autocomplete="off" type="number" name="minutos" placeholder="Minutos" min="0" max="59">
+            <span class="vertical-line"></span>
+
+            <label for="segundos">s: </label>
+            <input required autocomplete="off" type="number" name="segundos" placeholder="Segundos" min="0" max="59">
             <i class="form__input__icon fas fa-clock"></i>
-          </div>
-        </section>
-        <section class="col-12 col-sm-4 col-md-3">
-          <label for="restriccion_edad">Clasificación de edad</label>
-          <div class="form__input__container">
-            <input required autocomplete="off" type="text" name="restriccion_edad" placeholder="Clasificación de edad">
-            <i class="form__input__icon fas fa-address-card"></i>
           </div>
         </section>
       </div>
@@ -138,7 +140,7 @@ $baseHtmlHead = new BaseHtmlHead(
         <textarea class="form__text-input" name="resumen_trama" id="" cols="" rows=""></textarea>
       </section>
 
-      <section class="form__buttons">
+      <section class="form__buttons add-movie__buttons">
         <button title="Cancelar" class="btn btn-danger form__button" type="submit">
           Cancelar
         </button>
