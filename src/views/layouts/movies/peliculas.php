@@ -8,7 +8,7 @@
       && Controllers\Usuario::isAdmin()
     ) {
     ?>
-      <a rel="noopener noreferrer" href="<?php echo $url_page["agregar-pelicula"]; ?>" class="btn btn-success">Agregar película</a>
+      <a rel="noopener noreferrer" href="<?php echo $url_page["agregar-pelicula"]; ?>" class="btn btn-light">Agregar película</a>
     <?php
     }
 
@@ -23,6 +23,24 @@
             Contenedor para que el año tenga posición relativa al póster y 
             no a todo el contenedor. 
           -->
+      <?php
+      if (Controllers\Usuario::isAdmin()) {
+      ?>
+        <form action="<?php echo Libs\Controller::FILES["pelicula"]; ?>" method="POST" class="movie-poster__admin-buttons">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="hidden" name="id" value="1">
+
+          <a rel="noopener noreferrer" href="<?php echo "{$url_page["editar-pelicula"]}?id=1"; ?>" class="btn btn-primary">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </a>
+          <button type="submit" class="btn btn-danger">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </form>
+      <?php
+      }
+
+      ?>
       <div class="movie-poster__year-image">
         <a rel="noopener noreferrer" href="<?php echo $views_folder; ?>peliculas/detalles-pelicula/index.php?id=id_pelicula" class="">
           <img class="movie-poster__img" src="<?php echo $assets_folder; ?>img/movie-posters/spiderman-no-way-home/1.jpg" alt="Spiderman: No Way Home">

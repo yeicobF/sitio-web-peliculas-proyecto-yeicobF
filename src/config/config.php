@@ -110,6 +110,8 @@ $config_folder = FOLDERS_WITH_LOCALHOST["CONFIG"];
 
 $user_url = "{$views_folder}user/";
 $admin_url = "{$user_url}admin/";
+$detalles_pelicula_folder = $views_folder . "peliculas/detalles-pelicula/";
+
 $url_page = [
   "inicio" => $views_folder . "index.php",
   "peliculas" => $views_folder . "peliculas/index.php",
@@ -118,6 +120,8 @@ $url_page = [
   "registro" => $views_folder . "login/registro.php",
   "editar-perfil" => $user_url . "editar-perfil/index.php",
   "detalles-perfil" => $user_url . "index.php",
+  "detalles-pelicula" => $detalles_pelicula_folder . "index.php",
+  "editar-pelicula" => $detalles_pelicula_folder . "editar.php",
   "agregar-pelicula" => $admin_url . "agregar-pelicula/index.php",
 ];
 

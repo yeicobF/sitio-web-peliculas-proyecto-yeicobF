@@ -115,6 +115,7 @@ if (Controller::isMethodPost()) {
 // Tanto DELETE como PUT requieren de un ID.
 if (
   $non_empty_fields["id"] === null
+  && is_numeric($non_empty_fields["id"])
   && (Controller::isMethodDelete()
     || Controller::isMethodPut()
   )
@@ -129,7 +130,7 @@ if (
 /* --------------------------------- DELETE --------------------------------- */
 /* ------------------------- ELIMINACIÓN DE PELÍCULA ------------------------ */
 if (Controller::isMethodDelete()) {
-
+  echo "DELETE";
   if ($result === 1) {
   }
 }
@@ -168,18 +169,23 @@ $message = Model::OPERATION_INFO[$result];
 // Al final de cualquiera de los procedimientos, redirigir a la pestaña
 // principal.
 if ($result === 1) {
+  $view_path = "peliculas/index.php";
+
   if (Controller::isMethodPut()) {
     $view_path = "peliculas/detalles-pelicula/index.php?id={$non_empty_fields["id"]}";
 
     // Redirigir a los detalles del usuario.
-    Controller::redirectView(
-      view_path: $view_path,
-      message: $message
-    );
-    return;
+    // Controller::redirectView(
+    //   view_path: $view_path,
+    //   message: $message
+    // );
+    // return;
   }
 
-  Controller::redirectView(message: $message);
+  Controller::redirectView(
+    view_path: $view_path,
+    message: $message
+  );
   return;
 }
 
