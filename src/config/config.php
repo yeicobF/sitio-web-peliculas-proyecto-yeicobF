@@ -109,6 +109,7 @@ $config_folder = FOLDERS_WITH_LOCALHOST["CONFIG"];
 /* ------------------------- ENLACE PARA CADA PÁGINA ------------------------ */
 
 $user_url = "{$views_folder}user/";
+$admin_url = "{$user_url}/admin/";
 $url_page = [
   "inicio" => $views_folder . "index.php",
   "peliculas" => $views_folder . "peliculas/index.php",
@@ -117,6 +118,7 @@ $url_page = [
   "registro" => $views_folder . "login/registro.php",
   "editar-perfil" => $user_url . "editar-perfil/index.php",
   "detalles-perfil" => $user_url . "index.php",
+  "agregar-pelicula" => $admin_url . "agregar-pelicula/index.php",
 ];
 
 // var_dump($user_url);

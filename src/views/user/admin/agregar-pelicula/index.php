@@ -57,42 +57,43 @@ $baseHtmlHead = new BaseHtmlHead(
       <h1 class="col-12 form__movie__title">Agregar película</h1>
 
       <input type="hidden" name="_method" value="POST">
+      <section class="col-12">
+        <label for="nombre_original">Nombre original</label>
+        <div class="form__input__container">
+          <input required autocomplete="off" type="text" name="nombre_original" placeholder="Ingresa el nombre original">
+          <i class="form__input__icon fas fa-film"></i>
+        </div>
+      </section>
 
       <section class="col-12">
-        <label for="spanish-movie-name">Nombre en español</label>
+        <label for="nombre_es_mx">Nombre en español</label>
         <div class="form__input__container">
-          <input autocomplete="off" type="text" name="spanish-movie-name" placeholder="Ingresa el nombre en español">
+          <input autocomplete="off" type="text" name="nombre_es_mx" placeholder="Ingresa el nombre en español">
           <i class="form__input__icon fas fa-film"></i>
         </div>
       </section>
-      <section class="col-12">
-        <label for="original-movie-name">Nombre original</label>
-        <div class="form__input__container">
-          <input autocomplete="off" type="text" name="original-movie-name" placeholder="Ingresa el nombre original">
-          <i class="form__input__icon fas fa-film"></i>
-        </div>
-      </section>
+
       <div class="row form__movie__cast">
 
         <section class="col-12 col-lg-4">
-          <label for="directors">Directores</label>
+          <label for="directores">Directores</label>
           <div class="form__input__container">
-            <input autocomplete="off" type="text" name="directors" placeholder="Ingresa el nombre en español">
+            <input required autocomplete="off" type="text" name="directores" placeholder="Ingresa el nombre en español">
             <i class="form__input__icon fas fa-user"></i>
           </div>
         </section>
 
         <section class="col-12 col-lg-4">
-          <label for="actors">Actores</label>
+          <label for="actores">Actores</label>
           <div class="form__input__container">
-            <input autocomplete="off" type="text" name="actors" placeholder="Ingresa el nombre en español">
+            <input required autocomplete="off" type="text" name="actores" placeholder="Ingresa el nombre en español">
             <i class="form__input__icon fas fa-user"></i>
           </div>
         </section>
         <section class="col-12 col-lg-4">
-          <label for="genres">Géneros</label>
+          <label for="generos">Géneros</label>
           <div class="form__input__container">
-            <input autocomplete="off" type="text" name="genres" placeholder="Ingresa el nombre en español">
+            <input required autocomplete="off" type="text" name="generos" placeholder="Ingresa el nombre en español">
             <i class="form__input__icon fas fa-info"></i>
           </div>
         </section>
@@ -100,34 +101,34 @@ $baseHtmlHead = new BaseHtmlHead(
       <div class="form__movie__details row">
 
         <section class="col-12 col-md-3">
-          <label for="upload-picture">Póster</label>
-          <input class="form__input__picture" type="file" name="upload-picture" class="form-control">
+          <label for="poster">Póster</label>
+          <input class="form__input__picture" type="file" name="poster" class="form-control">
         </section>
         <section class="col-12 col-sm-4 col-md-3">
-          <label for="year">Año</label>
+          <label for="release_year">Año</label>
           <div class="form__input__container">
-            <input autocomplete="off" type="number" min="1800" max="2022" step="1" name="year" placeholder="Año">
+            <input required autocomplete="off" type="number" min="1800" max="2022" step="1" name="release_year" placeholder="Año">
             <i class="form__input__icon fas fa-calendar-plus"></i>
           </div>
         </section>
         <section class="col-12 col-sm-4 col-md-3">
-          <label for="running-time">Duración</label>
+          <label for="duracion">Duración</label>
           <div class="form__input__container">
-            <input autocomplete="off" type="text" name="running-time" placeholder="Duración">
+            <input required autocomplete="off" type="text" name="duracion" placeholder="Duración">
             <i class="form__input__icon fas fa-clock"></i>
           </div>
         </section>
         <section class="col-12 col-sm-4 col-md-3">
-          <label for="age-rating">Clasificación de edad</label>
+          <label for="restriccion_edad">Clasificación de edad</label>
           <div class="form__input__container">
-            <input autocomplete="off" type="text" name="age-rating" placeholder="Clasificación de edad">
+            <input required autocomplete="off" type="text" name="restriccion_edad" placeholder="Clasificación de edad">
             <i class="form__input__icon fas fa-address-card"></i>
           </div>
         </section>
       </div>
       <section class="col-12">
-        <label for="synopsis">Sinopsis</label>
-        <textarea class="form__text-input" name="synopsis" id="" cols="" rows=""></textarea>
+        <label for="resumen_trama">Sinopsis</label>
+        <textarea class="form__text-input" name="resumen_trama" id="" cols="" rows=""></textarea>
       </section>
 
       <section class="form__buttons">

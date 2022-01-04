@@ -34,6 +34,19 @@ class Usuario extends Controller
   }
 
   /**
+   * Revisar si el usuario actual es administrador.
+   *
+   * @return boolean
+   */
+  public static function isAdmin()
+  {
+    return (Controller::isSessionActive()
+      && isset($_SESSION["rol"])
+      && $_SESSION["rol"] === ModelUsuario::ROLES_ENUM_INDEX["administrador"]
+    );
+  }
+
+  /**
    * Obtenemos foto de perfil del usuario.
    * 
    * Si no hay foto, es decir, que es null, regresar una genérica.

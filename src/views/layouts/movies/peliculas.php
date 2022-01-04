@@ -1,6 +1,21 @@
 <!-- Contenedor de películas. -->
 <main class="movies-container col-12 col-md-8">
-  <h2 class="movies-container__title">Películas</h2>
+  <header class="movies__header">
+    <h2 class="movies-container__title">Películas</h2>
+    <?php
+    if (
+      Controllers\Login::isUserLoggedIn()
+      && Controllers\Usuario::isAdmin()
+    ) {
+    ?>
+      <a rel="noopener noreferrer" href="<?php echo $url_page["agregar-pelicula"]; ?>" class="btn btn-success">Agregar película</a>
+    <?php
+    }
+
+    ?>
+
+  </header>
+
   <section class="row">
     <!-- Póster de películas. -->
     <figure class="movie-poster   col-6 col-sm-4">

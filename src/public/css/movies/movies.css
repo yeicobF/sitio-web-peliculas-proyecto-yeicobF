@@ -10,7 +10,6 @@
 .movies-container__title,
 .best-movies-container__title {
   margin: 0;
-  padding: 0.5em;
   /* height: 3em; */
   font-weight: 700;
 }
@@ -53,7 +52,7 @@
   list-style: none;
   margin: 0;
   height: 100%;
-  padding: 0;
+  padding: 1em 0;
   text-align: left;
   font-size: .8rem;
   display: flex;
@@ -79,6 +78,15 @@
   display: flex;
   flex-wrap: wrap;
   /* gap: 0.5em; */
+}
+
+.movies__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  column-gap: 1.5em;
+  row-gap: .5em;
 }
 
 .movie-poster {
@@ -148,6 +156,10 @@
   /* .best-movies-container .movie-poster {
     flex-direction: column;
   } */
+  .movies__header {
+    justify-content: center;
+    text-align: center;
+  }
 }
 @media (max-width: 576px) {
   .best-movies-container__title {
