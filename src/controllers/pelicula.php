@@ -284,7 +284,7 @@ if (
   if (Controller::containsSpecificViewPath("detalles-pelicula/index.php")) {
     Pelicula::getDetailedMovie(Pelicula::$current_movie);
   }
-  return;
+  return Pelicula::$current_movie->returnJson();
 }
 
 if (
