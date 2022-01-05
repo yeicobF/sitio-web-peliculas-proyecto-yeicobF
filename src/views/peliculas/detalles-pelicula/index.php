@@ -92,7 +92,7 @@ $baseHtmlHead = new BaseHtmlHead(
           <input type="hidden" name="_method" value="POST">
 
           <textarea placeholder="Ingresa un comentario" name="nuevo-comentario" id="" rows="5"></textarea>
-          <input type="submit" value="Publicar" class="btn btn-info">
+          <input type="submit" value="Publicar" class="comments__form__btn btn btn-primary">
         </form>
 
         <!-- Comentarios ya publicados. -->
