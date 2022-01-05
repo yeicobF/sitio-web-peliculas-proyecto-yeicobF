@@ -1,45 +1,57 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"cssvar.files": [
-			"css/config.css",
-			"https://fundamentos2122.github.io/framework-css-yeicobF/css/config.css"
-		],
-		"cssvar.extensions": [
-			"css"
-		],
-		"workbench.colorCustomizations": {
-			"activityBar.activeBackground": "#8c5617",
-			"activityBar.activeBorder": "#093722",
-			"activityBar.background": "#8c5617",
-			"activityBar.foreground": "#e7e7e7",
-			"activityBar.inactiveForeground": "#e7e7e799",
-			"activityBarBadge.background": "#093722",
-			"activityBarBadge.foreground": "#e7e7e7",
-			"sash.hoverBorder": "#8c5617",
-			"statusBar.background": "#603b10",
-			"statusBar.foreground": "#e7e7e7",
-			"statusBarItem.hoverBackground": "#8c5617",
-			"statusBarItem.remoteBackground": "#603b10",
-			"statusBarItem.remoteForeground": "#e7e7e7",
-			"titleBar.activeBackground": "#603b10",
-			"titleBar.activeForeground": "#e7e7e7",
-			"titleBar.inactiveBackground": "#603b1099",
-			"titleBar.inactiveForeground": "#e7e7e799"
-		},
-		"peacock.color": "#603b10"
-	},
-	"extensions": {
-		"recommendations": [
-			"stylelint.vscode-stylelint",
-			"zignd.html-css-class-completion",
-			"pranaygp.vscode-css-peek",
-			"emilast.logfilehighlighter",
-			"mrmlnc.vscode-apache"
-		]
-	}
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    /**
+     * - Viernes, 5 de noviembre del 2021
+     *
+     * Activar autocomplete de variables CSS con la extensión
+     * "CSS Var Complete".
+     *
+     * Esto dado a que, VSCode soporta el autocompletado de variables dentro del
+     * mismo archivo, pero cuando queremos acceder a estas desde otro archivo ya
+     * no las encuentra. Esta extensión soluciona eso.
+     *
+     * Cabe mencionar que, solo funciona el autocompletado si tenemos abierto el
+     * workspace con su configuración. Por lo que vi, si tenemos abierto otro
+     * workspace aunque este esté dentro, no mostrará las variables.
+     */
+    "cssvar.files": [
+      "./public/css/config.css",
+      "https://fundamentos2122.github.io/framework-css-yeicobF/css/config.css"
+    ],
+    "cssvar.extensions": ["css"],
+    "workbench.colorCustomizations": {
+      "activityBar.activeBackground": "#8c5617",
+      "activityBar.activeBorder": "#093722",
+      "activityBar.background": "#8c5617",
+      "activityBar.foreground": "#e7e7e7",
+      "activityBar.inactiveForeground": "#e7e7e799",
+      "activityBarBadge.background": "#093722",
+      "activityBarBadge.foreground": "#e7e7e7",
+      "sash.hoverBorder": "#8c5617",
+      "statusBar.background": "#603b10",
+      "statusBar.foreground": "#e7e7e7",
+      "statusBarItem.hoverBackground": "#8c5617",
+      "statusBarItem.remoteBackground": "#603b10",
+      "statusBarItem.remoteForeground": "#e7e7e7",
+      "titleBar.activeBackground": "#603b10",
+      "titleBar.activeForeground": "#e7e7e7",
+      "titleBar.inactiveBackground": "#603b1099",
+      "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.color": "#603b10"
+  },
+  "extensions": {
+    "recommendations": [
+      "stylelint.vscode-stylelint",
+      "zignd.html-css-class-completion",
+      "pranaygp.vscode-css-peek",
+      "emilast.logfilehighlighter",
+      "mrmlnc.vscode-apache"
+    ]
+  }
 }
