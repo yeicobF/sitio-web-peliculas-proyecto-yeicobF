@@ -58,20 +58,28 @@
   font-size: .8rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  /* justify-content: flex-start; */
   padding-bottom: 1em;
-  row-gap: 1em;
+  row-gap: .2em;
+  padding-top: .1em;
 }
 .best-movies__details-list .movie-poster__title {
   text-align: left;
   padding: 0;
-  font-size: 1.7em;
+  overflow: hidden;
+  /* font-size: 1.7em; */
 }
 
 .best-movies__details-list li,
 .best-movies__details-list li *
 {
-  font-size: 1.3em;
+  /* font-size: 1.3em; */
+  max-lines: 3;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
 }
 /* -------------------------------------------------------------------------- */
 
@@ -98,7 +106,7 @@
   padding: .75em;
   /* width: 100%; */
   font-size: .8em;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Noto Sans JP', sans-serif;
   position: relative;
 }
 
@@ -186,8 +194,8 @@
 }
 
 .movie-poster__title {
-  font-family: 'Noto Sans', sans-serif;
-  font-size: 1em;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 1.1em;
   text-align: center;
   font-weight: 600;
   padding-top: 0.4em;
@@ -210,7 +218,7 @@
 
 @media (min-width: 768px) {
   .best-movies__details-list {
-    font-size: .7rem;
+    font-size: 1rem;
   }
 }
 @media (max-width: 376px) {
@@ -222,7 +230,7 @@
     text-align: center;
   }
 }
-@media (max-width: 576px) {
+@media (min-width: 375px) and (max-width: 767px) {
   .best-movies-container__title {
 
   }
