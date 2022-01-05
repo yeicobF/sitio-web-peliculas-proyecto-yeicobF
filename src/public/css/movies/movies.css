@@ -1,3 +1,8 @@
+/* Separación entre películas y mejores películas. */
+.movies-page {
+  row-gap: 1em;
+}
+
 /* -------------------------------------------------------------------------- */
 .movies-container,
 .movies-container * {
@@ -23,6 +28,7 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  row-gap: .5em;
   align-items: flex-start;
   align-content: flex-start;
 }
@@ -30,7 +36,7 @@
 
 .best-movies-container__title {
   font-size: 1em;
-  margin: 1em 0;
+  /* margin: 1em 0; */
   max-width: 20em;
   padding: 0.7em 0.5em;
   width: 100%;

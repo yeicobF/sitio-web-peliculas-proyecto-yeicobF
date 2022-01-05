@@ -54,11 +54,32 @@ $baseHtmlHead = new BaseHtmlHead(
   ?>
 
   <div class="container-fluid container-lg fill-height-flex">
-    <div class="row">
-      <?php
-      require_once FOLDERS_WITH_DOCUMENT_ROOT["LAYOUTS"] . "movies/peliculas.php";
-      require_once FOLDERS_WITH_DOCUMENT_ROOT["LAYOUTS"] . "movies/mejores-peliculas.php";
-      ?>
+    <div class="row movies-page">
+      <!-- Contenedor de películas. -->
+      <main class="movies-container col-12 col-md-8">
+        <header class="movies__header">
+          <h2 class="movies-container__title">Películas</h2>
+          <?php
+          if (
+            Controllers\Login::isUserLoggedIn()
+            && Controllers\Usuario::isAdmin()
+          ) {
+          ?>
+            <a rel="noopener noreferrer" href="<?php echo URL_PAGE["agregar-pelicula"]; ?>" class="btn btn-light">Agregar película</a>
+          <?php
+          }
+          ?>
+        </header>
+        <?php
+        require_once FOLDERS_WITH_DOCUMENT_ROOT["LAYOUTS"] . "movies/peliculas.php";
+        ?>
+      </main>
+
+      <aside class="best-movies-container col-12 col-md-4">
+        <?php
+        require_once FOLDERS_WITH_DOCUMENT_ROOT["LAYOUTS"] . "movies/mejores-peliculas.php";
+        ?>
+      </aside>
     </div>
   </div>
 
