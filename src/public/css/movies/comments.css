@@ -99,6 +99,7 @@
 }
   
 .comments__text {
+  color: var(--color-pansy-purple);
   font-size: .8em;
 }
 
@@ -155,8 +156,13 @@
   flex-direction: row;
   gap: 1em;
   font-size: .9em;
-  font-weight: 500;
+  font-weight: 700;
   align-items: baseline;
+}
+
+.comments__interaction,
+.comments__interaction__button {
+  color: var(--color-dark-purple);
 }
 
 .comments__interaction__button.selected {
