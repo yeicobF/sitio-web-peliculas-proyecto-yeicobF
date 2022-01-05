@@ -30,8 +30,84 @@ class Pelicula extends Controller
     "detailed",
   ];
 
+  /**
+   * Película que se visualiza actualmente.
+   *
+   * @var ModelPelicula
+   */
+  public static $current_movie;
+
+  public static function getMinimalDetailsMovie(ModelPelicula $movie)
+  {
+    $url_id = "?id={$movie->id}";
+    $edit_url = URL_PAGE["editar-pelicula"] . $url_id;
+    $details_url = URL_PAGE["detalles-pelicula"] . $url_id;
+?>
+    <!-- Póster de películas. -->
+    <figure class="movie-poster col-6 col-sm-4">
+      <!-- 
+            Contenedor para que el año tenga posición relativa al póster y 
+            no a todo el contenedor. 
+          -->
+      <?php
+      if (Usuario::isAdmin()) {
+      ?>
+        <form action="<?php echo Controller::FILES["pelicula"]; ?>" method="POST" class="movie-poster__admin-buttons">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="hidden" name="id" value="<?php echo $movie->id; ?>">
+
+          <a rel="noopener noreferrer" href="<?php echo $edit_url; ?>" class="btn btn-primary">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </a>
+          <button type="submit" class="btn btn-danger">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </form>
+      <?php
+      }
+
+      ?>
+      <div class="movie-poster__year-image">
+        <a rel="noopener noreferrer" href="<?php echo $details_url; ?>" class="">
+          <?php self::getPoster($movie) ?>
+        </a>
+        <time datetime="<?php echo $movie->release_year; ?>" class="movie-poster__year">
+          <?php echo $movie->release_year; ?>
+        </time>
+      </div>
+      <figcaption class="movie-poster__title">
+        <?php echo $movie->nombre_original; ?>
+      </figcaption>
+    </figure>
+    <?php
+  }
+
   public static function getEveryMovie()
   {
+    $db_movies = ModelPelicula::getEveryMovie();
+
+    if ($db_movies === null) {
+      echo "<h3>No se encontraron películas</h3>";
+      return;
+    }
+
+    foreach ($db_movies as $db_movie) {
+      $movie = new ModelPelicula(
+        nombre_original: $db_movie["nombre_original"],
+        duracion: $db_movie["duracion"],
+        release_year: $db_movie["release_year"],
+        restriccion_edad: $db_movie["restriccion_edad"],
+        resumen_trama: $db_movie["resumen_trama"],
+        actores: $db_movie["actores"],
+        directores: $db_movie["directores"],
+        generos: $db_movie["generos"],
+        id: $db_movie["id"],
+        nombre_es_mx: $db_movie["nombre_es_mx"],
+        poster: $db_movie["poster"],
+      );
+
+      self::getMinimalDetailsMovie($movie);
+    }
   }
 
   public static function getBestMovies()
@@ -48,13 +124,15 @@ class Pelicula extends Controller
    * @param ModelPelicula $movie
    * @return void
    */
-  public static function getPoster($movie)
-  {
+  public static function getPoster(
+    $movie,
+    string $poster_classes = ""
+  ) {
 
     if (!empty($movie->poster)) {
       $poster = Controller::getEncodedImage($movie->poster);
-?>
-      <img src="data:image/jpeg; base64, <?php echo $poster; ?>" alt="<?php echo $movie->nombre_original; ?>" class="movie-poster__img movie-details__img">
+    ?>
+      <img src="data:image/jpeg; base64, <?php echo $poster; ?>" alt="<?php echo $movie->nombre_original; ?>" class="movie-poster__img <?php echo $poster_classes; ?>">
     <?php
       return;
     }
@@ -63,7 +141,7 @@ class Pelicula extends Controller
     <!-- 
     Si no hay poster, poner un fondo y un ícono que lo indique.
     -->
-    <span class="fa-stack movie-poster__img movie-details__img movie-details__no-poster">
+    <span class="fa-stack movie-poster__img movie__no-poster <?php echo $poster_classes; ?>">
       <i class="fa-solid fa-border-none"></i>
       <p>No poster</p>
     </span>
@@ -87,7 +165,7 @@ class Pelicula extends Controller
     <section class="movie-details__poster col-12 col-sm-4">
 
       <?php
-      self::getPoster($movie);
+      self::getPoster($movie, "movie-details__img");
 
       if (Usuario::isAdmin()) {
       ?>

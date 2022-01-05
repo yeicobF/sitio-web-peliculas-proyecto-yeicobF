@@ -19,7 +19,33 @@
   font-weight: 800;
   color: var(--color-primary-darked);
   text-decoration: underline;
+  display: flex;
+  flex-direction: row;
+  gap: .5em;
+  align-items: center;
+  justify-content: flex-start;
 }
+
+.navbar__current-page .navbar__current-movie__icon,
+.navbar__current-movie__icon {
+  font-size: .7em;
+}
+
+.navbar__current-movie__name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: none;
+}
+
+/* 
+Que en el navbar no se muestre el nombre de la película, sino, la leyenda
+"Detalles". 
+*/
+.navbar__current-movie__legend {
+  display: none;
+}
+
 @media (min-width: 768px) and (max-width: 900px) {
   .navbar,
   .navbar * {
@@ -48,8 +74,16 @@
   .search-container {
     flex-grow: 1;
   }
+  .navbar__current-movie__legend {
+    display: inline-block;
+  }
 }
 
+@media (max-width: 767px) {
+  .navbar__current-movie__name {
+    display: inline-block;
+  }
+}
 @media (max-width: 576px) {
   .logo {
     height: 1.6em;

@@ -10,8 +10,7 @@ include_once $path
   . "fdw-2021-2022-a/proyecto-yeicobF/"
   . "src/config/config.php";
 
-include_once $path
-  . LAYOUTS
+include_once FOLDERS_WITH_DOCUMENT_ROOT["LAYOUTS"]
   . "base-html-head.php";
 
 include_once
@@ -57,9 +56,6 @@ $baseHtmlHead = new BaseHtmlHead(
   <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>footer/footer.css">
   <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>form/form.css">
   <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>form/add-movie.css">
-
-
-
 
   <?php
   echo $baseHtmlHead->getTitle();
