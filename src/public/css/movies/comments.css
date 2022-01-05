@@ -187,4 +187,7 @@
   .comments__interaction {
     justify-content: space-evenly;
   }
+  .comments__form {
+    align-items: center;
+  }
 }
