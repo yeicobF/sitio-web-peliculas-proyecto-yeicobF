@@ -33,7 +33,7 @@ class Controller
   public static function getKeyExist(string $key)
   {
     if (self::isGet()) {
-      return $_GET[$key] !== null;
+      return array_key_exists($key, $_GET) && $_GET[$key] !== null;
     }
 
     return false;

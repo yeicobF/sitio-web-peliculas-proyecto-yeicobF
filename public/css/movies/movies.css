@@ -106,6 +106,42 @@
   /* font-size: .8em; */
 }
 
+/* -------------------------------- NO POSTER ------------------------------- */
+
+.movie__no-poster {
+  /* From https://css.glass */
+  font-size: 3.5em;
+  padding: .3em;
+  color: crimson;
+  flex-direction: column;
+  background: rgba(201, 126, 235, 0.14);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7.9px);
+  -webkit-backdrop-filter: blur(7.9px);
+  border: 1px solid rgba(201, 126, 235, 0.07);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.movie__no-poster p {
+  text-align: center;
+  font-size: .4em;
+  font-weight: 700;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.movie-poster a {
+  text-decoration: none;
+}
+
+.movie-poster__year-image .movie__no-poster {
+  justify-content: center;
+
+}
+
 /* ------------------------ BOTONES DE ADMINISTRADOR ------------------------ */
 .movie-poster__admin-buttons {
   position: absolute;
@@ -136,8 +172,8 @@
 
 .movie-poster__img {
   display: flex;
-  /* height: 100%; */
-  border-radius: .9em;
+  height: auto;
+  border-radius: 16px;
   /* max-height: 10em; */
   aspect-ratio: 2 / 3;
   width: 100%;

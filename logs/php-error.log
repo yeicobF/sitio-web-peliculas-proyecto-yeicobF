@@ -456,3 +456,28 @@ Stack trace:
 [05-Jan-2022 00:06:40 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php:60) in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 176
 [05-Jan-2022 00:07:23 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php:60) in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 176
 [05-Jan-2022 00:08:41 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php:60) in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 176
+[05-Jan-2022 03:22:07 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 216
+[05-Jan-2022 03:22:07 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Controllers\Usuario::getCurrentUserData(): Argument #1 ($id) must be of type int, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 216 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php:108
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(216): Controllers\Usuario::getCurrentUserData(NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php(8): require_once('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\editar-perfil\index.php(18): include_once('C:\\xampp\\htdocs...')
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 108
+[05-Jan-2022 11:16:59 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 36
+[05-Jan-2022 11:17:00 Europe/Berlin] PHP Warning:  Undefined property: Pelicula::$year in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 68
+[05-Jan-2022 11:17:00 Europe/Berlin] PHP Warning:  Undefined property: Pelicula::$year in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 69
+[05-Jan-2022 11:17:00 Europe/Berlin] PHP Warning:  Undefined property: Pelicula::$year in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 68
+[05-Jan-2022 11:17:00 Europe/Berlin] PHP Warning:  Undefined property: Pelicula::$year in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 69
+[05-Jan-2022 11:17:00 Europe/Berlin] PHP Warning:  Undefined property: Pelicula::$year in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 68
+[05-Jan-2022 11:17:00 Europe/Berlin] PHP Warning:  Undefined property: Pelicula::$year in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 69
+[05-Jan-2022 11:17:00 Europe/Berlin] PHP Warning:  Undefined property: Pelicula::$year in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 68
+[05-Jan-2022 11:17:00 Europe/Berlin] PHP Warning:  Undefined property: Pelicula::$year in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 69
+[05-Jan-2022 11:17:00 Europe/Berlin] PHP Warning:  Undefined property: Pelicula::$year in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 68
+[05-Jan-2022 11:17:00 Europe/Berlin] PHP Warning:  Undefined property: Pelicula::$year in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 69
+[05-Jan-2022 11:17:00 Europe/Berlin] PHP Warning:  Undefined property: Pelicula::$year in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 68
+[05-Jan-2022 11:17:00 Europe/Berlin] PHP Warning:  Undefined property: Pelicula::$year in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 69
+[05-Jan-2022 11:17:00 Europe/Berlin] PHP Warning:  Undefined property: Pelicula::$year in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 68
+[05-Jan-2022 11:17:00 Europe/Berlin] PHP Warning:  Undefined property: Pelicula::$year in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 69
+[05-Jan-2022 11:17:25 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 36
+[05-Jan-2022 11:19:11 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 36
