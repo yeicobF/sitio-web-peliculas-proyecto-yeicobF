@@ -16,6 +16,9 @@ include_once $path
   . "fdw-2021-2022-a/proyecto-yeicobF/"
   . "src/config/config.php";
 
+require_once FOLDERS_WITH_DOCUMENT_ROOT["MODELS"] . "pelicula.php";
+require_once FOLDERS_WITH_DOCUMENT_ROOT["LIBS"] . "controller.php";
+
 /* -------------------------------------------------------------------------- */
 /* ----------------------- ARCHIVO ACTUAL Y CLASES CSS ---------------------- */
 
@@ -49,7 +52,33 @@ $add_css_current_page = [
     : ""
 ];
 
+$nav_pelicula = "<p>Películas</p>";
 
+// Ver si estamos en los detalles de una película.
+if (
+  str_contains($current_active_page_filename, "/detalles-pelicula/")
+  && Libs\Controller::getKeyExist("id")
+  && is_numeric($_GET["id"])
+) {
+  $current_movie = Pelicula::getMovie($_GET["id"]);
+  $current_movie_name = $current_movie["nombre_original"];
+
+  // Símbolo >
+  $nav_pelicula .=
+    "<i class='fas fa-chevron-right navbar__current-movie__icon'></i>";
+
+  // El nombre de la película solo se mostrará en resoluciones menores en el
+  // navbar.
+  $nav_pelicula_max_767 =
+    "<p class='navbar__current-movie__name'>{$current_movie_name}</p>";
+
+  // Resoluciones mayores a 768px no muestran el nombre de la película, solo la
+  // leyenda "Detalles".
+  $nav_pelicula_min_768 =
+    "<p class='navbar__current-movie__legend'>Detalles</p>";
+
+  $nav_pelicula .= $nav_pelicula_max_767 . $nav_pelicula_min_768;
+}
 ?>
 
 <!-- 
@@ -98,7 +127,7 @@ $add_css_current_page = [
 
       <li class="nav-item">
         <a rel="noopener noreferrer" href="<?php echo URL_PAGE["peliculas"]; ?>" id="nav-peliculas" class="nav-link<?php echo $add_css_current_page["peliculas"]; ?>">
-          Películas
+          <?php echo $nav_pelicula; ?>
         </a>
       </li>
       <li class="nav-item dropdown">
