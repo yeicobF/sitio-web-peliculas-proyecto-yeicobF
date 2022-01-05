@@ -54,30 +54,64 @@ $add_css_current_page = [
 
 $nav_pelicula = "<p>Películas</p>";
 
-// Ver si estamos en los detalles de una película.
+// Ver si estamos en los detalles de una película o su edición.
 if (
-  str_contains($current_active_page_filename, "/detalles-pelicula/")
+  Libs\Controller::containsSpecificViewPath("/detalles-pelicula/")
   && Libs\Controller::getKeyExist("id")
   && is_numeric($_GET["id"])
 ) {
   $current_movie = Pelicula::getMovie($_GET["id"]);
   $current_movie_name = $current_movie["nombre_original"];
 
-  // Símbolo >
-  $nav_pelicula .=
+  // Símbolo ">"
+  $chevron_right =
     "<i class='fas fa-chevron-right navbar__current-movie__icon'></i>";
+  
+  // Leyenda que se muestra dependiendo si nos encontramos en los detalles o en
+  // la edición de detalles de película.
+  $legend = "Detalles";
+  $legend_class = "navbar__current-movie__legend";
 
   // El nombre de la película solo se mostrará en resoluciones menores en el
   // navbar.
-  $nav_pelicula_max_767 =
-    "<p class='navbar__current-movie__name'>{$current_movie_name}</p>";
+  $p_movie = "<p class='navbar__current-movie__name'>{$current_movie_name}</p>";
+  
+  // Inicializamos aquí, ya que, en el if puede cambiar, pero si no entra, queda
+  // este valor.
+  $nav_pelicula_max_767 = $p_movie;
+
+  if (Libs\Controller::containsSpecificViewPath("editar.php")) {
+    $legend = "Editar";
+    // La leyenda no llevará clase, por lo que, siempre se mostrará.
+    $legend_class = "";
+
+    // Div que se ocultará cuando se llegue a los 768px.
+    // Se muestra "Películas > "Editar" > $p_movie
+    $nav_pelicula_max_767 =
+      "<div class='navbar__current_movie__edit--hide-on-767px'>"
+      . $chevron_right
+      . $p_movie
+      . "</div>";
+  }
 
   // Resoluciones mayores a 768px no muestran el nombre de la película, solo la
-  // leyenda "Detalles".
+  // leyenda "Detalles" o "Editar".
   $nav_pelicula_min_768 =
-    "<p class='navbar__current-movie__legend'>Detalles</p>";
+    "<p class='{$legend_class}'>"
+    . $legend
+    . "</p>";
 
-  $nav_pelicula .= $nav_pelicula_max_767 . $nav_pelicula_min_768;
+  /**
+   * Agregamos primero la leyenda, porque cuando se muestra en la pantalla
+   * "Detalles" no importa su orden, ya que se oculta, pero cuando estamos en la
+   * pantalla "Editar", debe ir primero y nunca se oculta.
+   *
+   * Así evitamos más condicionales, aprovechando estos parámetros.
+   */
+  $nav_pelicula .= 
+    $chevron_right
+    . $nav_pelicula_min_768 
+    . $nav_pelicula_max_767;
 }
 ?>
 

@@ -15,15 +15,18 @@
 }
 
 /* Página actual en el navbar. */
-.navbar__current-page {
+.navbar__current-page,
+.navbar__current_movie__edit--hide-on-767px {
   font-weight: 800;
   color: var(--color-primary-darked);
   text-decoration: underline;
   display: flex;
+  flex-wrap: nowrap;
   flex-direction: row;
   gap: .5em;
   align-items: center;
   justify-content: flex-start;
+  overflow: hidden;
 }
 
 .navbar__current-page .navbar__current-movie__icon,
@@ -45,6 +48,8 @@ Que en el navbar no se muestre el nombre de la película, sino, la leyenda
 .navbar__current-movie__legend {
   display: none;
 }
+
+
 
 @media (min-width: 768px) and (max-width: 900px) {
   .navbar,
@@ -76,6 +81,10 @@ Que en el navbar no se muestre el nombre de la película, sino, la leyenda
   }
   .navbar__current-movie__legend {
     display: inline-block;
+  }
+  /* En la pantalla de edición de película hay más elementos, por lo que, no podemos ocultarlos individualmente. */
+  .navbar__current_movie__edit--hide-on-767px {
+    display: none;
   }
 }
 

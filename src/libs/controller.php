@@ -24,7 +24,7 @@ class Controller
 
   /**
    * Verificar si una key existe en la URL.
-   * 
+   *
    * Esto es del método GET.
    *
    * @param string $key
@@ -41,13 +41,13 @@ class Controller
 
   /**
    * Obtener el ID del URL con GET.
-   * 
+   *
    * Hay que verificar si sí es numérico.
    *
    * @return int | null
    */
   //   public static function getIdFromGet() {
-  // 
+  //
   //   }
 
   public static function isPost()
@@ -83,7 +83,7 @@ class Controller
 
   /**
    * El método solicitado existe o no.
-   * 
+   *
    * Si no es POST, PUT o DELETE, no existe.
    *
    * @return boolean
@@ -166,16 +166,13 @@ class Controller
      *
      */
 
-    // Nos aseguramos de que existe el enlace antes de redirigir.
-    // if (
-    //   isset($file_headers)
-    //   && !empty($file_headers)
-    //   && $file_headers[0] === "HTTP/1.1 200 OK"
+    // Nos aseguramos de que existe el enlace antes de redirigir. if (
+    // isset($file_headers) && !empty($file_headers) && $file_headers[0] ===
+    // "HTTP/1.1 200 OK"
     // ) {
 
     header("Location: " . $redirect_path);
-    // Se deja de parsear el archivo, ya que pasaremos a uno nuevo.
-    // exit();
+    // Se deja de parsear el archivo, ya que pasaremos a uno nuevo. exit();
     // return true;
 
     // }
@@ -257,8 +254,9 @@ class Controller
    * Revisar si el archivo actual es un controlador distinto al del controlador
    * del archivo que hace los procedimientos.
    *
-   * Esto ayuda a que, si importamos `Controllers\Usuario` en `Controllers\Login`,
-   * no se hagan los procedimientos de `Usuario` en `Login`.
+   * Esto ayuda a que, si importamos `Controllers\Usuario` en
+   * `Controllers\Login`, no se hagan los procedimientos de `Usuario` en
+   * `Login`.
    *
    * @return boolean
    */
@@ -288,18 +286,66 @@ class Controller
     if (
       !Controller::isPost()
       || !Controller::isMethodExistent()
-      // && !str_contains(
-      //   $_SERVER["SCRIPT_FILENAME"],
-      //   "login/"
+      // && !str_contains( $_SERVER["SCRIPT_FILENAME"], "login/"
       // )
-      // && !str_contains(
-      //   $_SERVER["SCRIPT_FILENAME"],
-      //   "views/"
+      // && !str_contains( $_SERVER["SCRIPT_FILENAME"], "views/"
       // )
     ) {
       Controller::redirectView($view_path);
       // exit;
     }
+  }
+  /**
+   * Revisar si la llave "id" existe en un arreglo.
+   *
+   * @param boolean $check_in_get Indica si se va a revisar en la variable
+   * `$_GET`.
+   * @param array $find_here Si `$check_in_get = false`, buscar si se encuentra
+   * el ID en este arreglo.
+   * @return bool
+   */
+  public static function idExists(
+    bool $check_in_get = true,
+    array $find_here = []
+  ): bool {
+    return $check_in_get
+      ? Controller::getKeyExist("id") && is_numeric($_GET["id"])
+      : array_key_exists("id", $find_here) && is_numeric($find_here["id"]);
+  }
+
+  /**
+   * Redirigir a vista si no se encuentra el ID.
+   *
+   * Se puede buscar directamente en `$_GET` o en un arreglo que se envíe por
+   * parámetro.
+   *
+   * @param string $redirect_view
+   * @param boolean $check_in_get Indica si se va a revisar en la variable
+   * `$_GET`.
+   * @param array $find_here Si `$check_in_get = false`, buscar si se encuentra
+   * el ID en este arreglo.
+   * @return void
+   */
+  public static function redirectIfIdNotFound(
+    string $view_path = "index.php",
+    bool $check_in_get = true,
+    array $find_here = []
+  ) {
+    $redirect = false;
+
+    // No existe la llave en GET o si existe, no es numérica.
+    $redirect = !self::idExists($check_in_get, $find_here);
+
+    if ($redirect) {
+      Controller::redirectView(
+        view_path: $view_path,
+        error: "No se especificó un ID correcto."
+      );
+    }
+
+    // Creo que después del redireccionamiento el programa sigue corriendo, por
+    // lo que, hay que indicar que redireccionamos.
+    return $redirect;
   }
 
   /**
@@ -322,7 +368,7 @@ class Controller
 
   /**
    * Obtener arreglo con los campos no vacíos de un formulario.
-   * 
+   *
    * Esto será útil sobre todo para las actualizaciones de campos, en donde,
    * solo se actualizarán los campos que no sean vacíos.
    *
@@ -358,7 +404,7 @@ class Controller
     /**
      * an array containing all the entries from array1 that are not present in
      * any of the other arrays.
-     * 
+     *
      * Si es igual a 0, significa que encontró todos los valores.
      */
     $diff = array_diff($required_fields, array_keys($form_fields));
@@ -422,12 +468,11 @@ class Controller
   //  * vista.
   //  *
   //  * @return void
-  //  */
+  //    */
   // public static function returnIfFileIsView()
   // {
-  //   // Si nos encontramos en una view, no hacer el proceso.
-  //   if (self::isCurrentFileView()) {
-  //     return;
+  //   // Si nos encontramos en una view, no hacer el proceso. if
+  //   (self::isCurrentFileView()) { return;
   //   }
   // }
 }

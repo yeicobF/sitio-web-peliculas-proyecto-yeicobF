@@ -244,6 +244,7 @@ class Pelicula extends Controller
 Controller::startSession();
 Model::initDbConnection();
 
+Pelicula::$current_movie = null;
 $result = 0;
 $message = "";
 
@@ -254,8 +255,6 @@ if (
   Controller::isGet()
   && Controller::getKeyExist("id")
   && is_numeric($_GET["id"])
-  // Solo se pide el ID en la vista de detalles.
-  && Controller::containsSpecificViewPath("detalles-pelicula")
 ) {
   $db_movie = ModelPelicula::getMovie($_GET["id"]);
 
@@ -267,7 +266,7 @@ if (
     return;
   }
 
-  $movie = new ModelPelicula(
+  Pelicula::$current_movie = new ModelPelicula(
     nombre_original: $db_movie["nombre_original"],
     duracion: $db_movie["duracion"],
     release_year: $db_movie["release_year"],
@@ -281,7 +280,10 @@ if (
     poster: $db_movie["poster"],
   );
 
-  Pelicula::getDetailedMovie($movie);
+  // Solo se pide el ID en la vista de detalles.
+  if (Controller::containsSpecificViewPath("detalles-pelicula/index.php")) {
+    Pelicula::getDetailedMovie(Pelicula::$current_movie);
+  }
   return;
 }
 
@@ -366,8 +368,7 @@ if (Controller::isMethodPost()) {
 
 // Tanto DELETE como PUT requieren de un ID.
 if (
-  ($non_empty_fields["id"] === null
-    || !is_numeric($non_empty_fields["id"]))
+  !Controller::idExists(false, $non_empty_fields)
   && (Controller::isMethodDelete()
     || Controller::isMethodPut()
   )

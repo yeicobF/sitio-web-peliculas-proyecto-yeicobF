@@ -481,3 +481,4 @@ Stack trace:
 [05-Jan-2022 11:17:00 Europe/Berlin] PHP Warning:  Undefined property: Pelicula::$year in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 69
 [05-Jan-2022 11:17:25 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 36
 [05-Jan-2022 11:19:11 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 36
+[05-Jan-2022 20:14:02 Europe/Berlin] PHP Warning:  Undefined variable $agregar_pelicula_action in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\editar.php on line 69
