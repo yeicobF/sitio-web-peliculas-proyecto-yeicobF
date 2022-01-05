@@ -1,14 +1,9 @@
 <?php
 
-use Libs\Controller;
 use Controllers\Login;
 use Controllers\Usuario;
 
-$path = "{$_SERVER["DOCUMENT_ROOT"]}/";
-
-include_once $path
-  . "fdw-2021-2022-a/proyecto-yeicobF/"
-  . "src/config/config.php";
+include_once __DIR__ . "/../../../../config/config.php";
 
 include_once FOLDERS_WITH_DOCUMENT_ROOT["LAYOUTS"]
   . "base-html-head.php";
@@ -42,7 +37,7 @@ $baseHtmlHead = new BaseHtmlHead(
 <head>
   <?php
   echo $baseHtmlHead->getHtmlBaseHead();
-  ?>  
+  ?>
 
   <!-- CSS -->
   <!-- CSS Propios -->

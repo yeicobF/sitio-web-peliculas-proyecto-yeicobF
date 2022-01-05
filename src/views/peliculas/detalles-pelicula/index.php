@@ -19,15 +19,7 @@ include_once
   FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
   . "usuario.php";
 
-if (
-  (Controller::getKeyExist("id")
-    && !is_numeric($_GET["id"]))
-  || !Controller::getKeyExist("id")
-) {
-  Controller::redirectView(
-    view_path: "peliculas/index.php",
-    error: "No se especificó un ID correcto."
-  );
+if (Controller::redirectIfIdNotFound(view_path: "peliculas/index.php")) {
   return;
 }
 
