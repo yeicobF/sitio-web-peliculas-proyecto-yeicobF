@@ -355,7 +355,7 @@ class Usuario extends Controller
 
 if (
   Controller::isCurrentFileAnotherController("usuario")
-  || Controller::wasControllerIncludedAfterController("usuario")
+  // || Controller::wasControllerIncludedAfterController("usuario")
 ) {
   return;
 }
@@ -430,13 +430,17 @@ if (Controller::isMethodPost()) {
     return;
   }
 
+  $foto_perfil = array_key_exists("foto_perfil", $non_empty_fields)
+    ? $non_empty_fields["foto_perfil"]
+    : null;
+
   $user = new ModelUsuario(
     nombres: $non_empty_fields["nombres"],
     apellidos: $non_empty_fields["apellidos"],
     username: $non_empty_fields["username"],
     password: $non_empty_fields["password"],
     rol: "normal",
-    foto_perfil: $non_empty_fields["foto_perfil"],
+    foto_perfil: $foto_perfil,
   );
 
   $result = $user->insertUsuario();
