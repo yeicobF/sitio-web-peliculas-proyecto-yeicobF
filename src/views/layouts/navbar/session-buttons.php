@@ -16,10 +16,10 @@
         <?php
 
         if (Login::isUserLoggedIn()) {
-          $avatar_url = URL_PAGE["detalles-perfil"];
+          $avatar_url = URL_PAGE["detalles-perfil"] . "?id=" . $_SESSION["id"];
           // $avatar_url = "{URL_PAGE["editar-perfil"]}?id={$_SESSION["id"]}";
 
-          $username_alt = $_SESSION["username"];
+          $username_alt = "Detalles de usuario - " . $_SESSION["username"];
         ?>
           <input type='hidden' name='_method' value='DELETE'>
           <!-- button.btn.btn-light#login-button -->

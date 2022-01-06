@@ -140,15 +140,15 @@ class Pelicula extends Model
 
   public static function getMovie(int $id): array | null
   {
-    $movies = parent::getRecords(
+    $db_movie = parent::getRecords(
       table: self::TABLE_NAME,
       where_clause_names: ["id"],
       where_clause_values: [$id],
       pdo_params: self::PDO_PARAMS
     );
 
-    if (array_key_exists(0, $movies) && $movies[0] !== null) {
-      return $movies[0];
+    if (array_key_exists(0, $db_movie) && $db_movie[0] !== null) {
+      return $db_movie[0];
     }
     
     return null;
