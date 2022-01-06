@@ -182,6 +182,7 @@
   position: relative;
   font-size: .8em;
   height: min-content;
+  padding: 0;
 }
 
 .movie-poster__img {

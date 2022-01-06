@@ -504,3 +504,37 @@ Stack trace:
 [06-Jan-2022 01:47:05 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php:54) in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 174
 [06-Jan-2022 01:55:27 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php:57) in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 174
 [06-Jan-2022 01:55:27 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\layouts\navbar.php on line 72
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "nombre_original" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 270
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "duracion" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 271
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "release_year" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 272
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "restriccion_edad" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 273
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "resumen_trama" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 274
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "actores" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 275
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "directores" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 276
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "generos" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 277
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 278
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "nombre_es_mx" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 279
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "poster" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 280
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Pelicula::__construct(): Argument #1 ($nombre_original) must be of type string, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 280 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php:55
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(280): Pelicula->__construct(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php(23): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php on line 55
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "nombre_original" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 270
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "duracion" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 271
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "release_year" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 272
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "restriccion_edad" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 273
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "resumen_trama" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 274
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "actores" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 275
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "directores" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 276
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "generos" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 277
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 278
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "nombre_es_mx" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 279
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "poster" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 280
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Pelicula::__construct(): Argument #1 ($nombre_original) must be of type string, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 280 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php:55
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(280): Pelicula->__construct(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php(23): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php on line 55

@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: column;
   row-gap: .3em;
-  align-items: flex-end;
+  align-items: stretch;
   border-radius: 0px;
   border-width: 4px;
   border-style: solid;
@@ -51,11 +51,33 @@
 .comments__posted > * {
   transition: all 150ms ease-in;
 }
-.comments__form > *,
+.comments__form > textarea,
+.comments__form .comments__form__btn,
 .comments__posted {
   border-radius: 0px;
   border-width: 2px;
   border-style: solid;
+}
+
+/* --------------------------------- BOTONES -------------------------------- */
+
+.comments__form__buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+}
+
+.comments__form > .comments__form__buttons > .circle-avatar {
+  border-color: var(--color-mint);
+  /* outline: solid 1px var(--color-mint); */
+  /* box-shadow: 0px 0px 5px 1px var(--color-mint); */
+  /* border: none; */
+}
+
+.comments__container .circle-avatar {
+  border: solid 2px var(--color-lavender-blue);
 }
 
 .comments__form__btn {
@@ -110,7 +132,8 @@
   column-gap: 1em;
   /* flex-basis: 100%; */
 }
-.comments__details .circle-avatar {
+.comments__details .circle-avatar,
+.comments__form__buttons .circle-avatar {
   width: 2.5em;
   height: 2.5em;
 }

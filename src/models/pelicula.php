@@ -148,7 +148,7 @@ class Pelicula extends Model
     );
 
     if (array_key_exists(0, $movies) && $movies[0] !== null) {
-      return $movies;
+      return $movies[0];
     }
     
     return null;
