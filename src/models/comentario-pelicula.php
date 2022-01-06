@@ -21,6 +21,15 @@ class ComentarioPelicula extends Model
   ];
 
   const TABLE_NAME = "comentario_pelicula";
+
+  const REQUIRED_FIELDS = [
+    "pelicula_id",
+    "usuario_id",
+    "comentario",
+    "fecha",
+    "hora"
+  ];
+
   const PRIMARY_KEY = "id";
   const UNIQUE_ATTRIBUTES = [
     "pk" => [
@@ -49,6 +58,22 @@ class ComentarioPelicula extends Model
   }
 
   /**
+   * Obtener todos los comentarios de una película.
+   *
+   * @param integer $pelicula_id
+   * @return array | null
+   */
+  public static function getEveryMovieComment(int $pelicula_id)
+  {
+    return parent::getRecords(
+      table: self::TABLE_NAME,
+      where_clause_names: ["pelicula_id"],
+      where_clause_values: [$pelicula_id],
+      pdo_params: self::PDO_PARAMS
+    );
+  }
+
+  /**
    * Inserción de un nuevo elemento.
    */
   public function insertComentarioPelicula(): int
@@ -61,16 +86,12 @@ class ComentarioPelicula extends Model
     );
   }
 
-  public function delete(): int
+  public function delete(int $id): int
   {
     return parent::deleteRecord(
       table: self::TABLE_NAME,
-      where_clauses: [
-        "id"
-      ],
-      values: [
-        $this->_id
-      ],
+      where_clause_names: ["id"],
+      where_clause_values: [$id],
       pdo_params: self::PDO_PARAMS
     );
   }

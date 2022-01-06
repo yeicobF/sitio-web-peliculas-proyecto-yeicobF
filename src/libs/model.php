@@ -426,7 +426,7 @@ class Model
    * @return (array | null) Aquí se encuentran los resultados. Se regresa el
    * arreglo con los valores.
    */
-  public static function getRecord(
+  public static function getRecords(
     string $table,
     array $where_clause_names,
     array $where_clause_values,
@@ -461,7 +461,7 @@ class Model
    *
    * @return array
    */
-  public static function getRecordLike(
+  public static function getRecordsLike(
     string $table,
     array $where_clause_names,
     array $where_clause_values,

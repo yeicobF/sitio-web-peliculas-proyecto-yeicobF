@@ -123,7 +123,7 @@ class Pelicula extends Model
       ],
     ];
 
-    return parent::getRecordLike(
+    return parent::getRecordsLike(
       table: self::TABLE_NAME,
       where_clause_names: [
         "nombre_original",
@@ -140,7 +140,7 @@ class Pelicula extends Model
 
   public static function getMovie(int $id): array | null
   {
-    $movies = parent::getRecord(
+    $movies = parent::getRecords(
       table: self::TABLE_NAME,
       where_clause_names: ["id"],
       where_clause_values: [$id],
@@ -160,7 +160,7 @@ class Pelicula extends Model
 
   public static function getMoviesByGenre($genre)
   {
-    return parent::getRecordLike(
+    return parent::getRecordsLike(
       table: self::TABLE_NAME,
       where_clause_names: ["generos"],
       where_clause_values: [$genre],
@@ -176,17 +176,14 @@ class Pelicula extends Model
 
   public static function getBestMovies()
   {
-    // return parent::getRecord(
-    //   table: self::TABLE_NAME,
-    //   where_clause_names: ["id"],
-    //   where_clause_values: [$id],
-    //   pdo_params: self::PDO_PARAMS
+    // return parent::getRecords( table: self::TABLE_NAME, where_clause_names:
+    //   ["id"], where_clause_values: [$id], pdo_params: self::PDO_PARAMS
     // );
   }
 
   /**
    * Actualizar una película.
-   * 
+   *
    * Esta función se llama desde una instancia con el ID del pelicula a
    * actualizar, pero con sus nuevos datos.
    *

@@ -14,7 +14,7 @@
 .comments__form {
   display: flex;
   flex-direction: column;
-  row-gap: .3em;
+  row-gap: 0.3em;
   align-items: stretch;
   border-radius: 0px;
   border-width: 4px;
@@ -31,7 +31,7 @@
   width: 100%;
   resize: none;
   overflow: auto;
-  padding: .5em;
+  padding: 0.5em;
   border-color: var(--color-lavender-blue);
 }
 
@@ -42,13 +42,13 @@
 
 .comments__form,
 .comments__posted {
-  padding: .5em;
+  padding: 0.5em;
 }
 
 .comments__form,
-.comments__form > *,
+.comments__form *,
 .comments__posted,
-.comments__posted > * {
+.comments__posted * {
   transition: all 150ms ease-in;
 }
 .comments__form > textarea,
@@ -83,10 +83,9 @@
 .comments__form__btn {
   color: white;
   font-weight: 500;
-  width: fit-content;  
+  width: fit-content;
   border-color: var(--color-lavender-blue);
   background-color: var(--color-maximum-blue-purple);
-
 }
 
 .comments__form__btn:hover {
@@ -94,8 +93,6 @@
   background-color: var(--color-lavender-blue);
   color: var(--color-purple);
 }
-
-
 
 /* .comments__form button {
   background-color: var(--color-info);
@@ -108,21 +105,20 @@
   flex-direction: column;
   /* border-radius: 8px; */
   border-color: var(--color-maximum-blue-purple);
-  row-gap: .8em;
+  row-gap: 0.8em;
   flex-wrap: wrap;
   border-width: 3px;
 }
 
 .comments__posted,
-.comments__posted  *,
+.comments__posted *,
 .comments__form * {
-  font-family: 'Noto Sans JP', sans-serif;
-
+  font-family: "Noto Sans JP", sans-serif;
 }
-  
+
 .comments__text {
   color: var(--color-pansy-purple);
-  font-size: .8em;
+  font-size: 0.8em;
 }
 
 .comments__details {
@@ -137,7 +133,6 @@
   width: 2.5em;
   height: 2.5em;
 }
-
 
 .comments__details__info {
   /* max-height: 2.5em; */
@@ -169,7 +164,7 @@
 }
 
 .comments__details__time-ago {
-  font-size: .75em;
+  font-size: 0.75em;
   color: var(--color-maximum-blue-purple);
   font-weight: 500;
 }
@@ -178,7 +173,7 @@
   display: flex;
   flex-direction: row;
   gap: 1em;
-  font-size: .9em;
+  font-size: 0.9em;
   font-weight: 700;
   align-items: baseline;
 }

@@ -107,7 +107,7 @@ class Usuario extends Controller
    */
   public static function getCurrentUserData(int $id): array
   {
-    return Model::getRecord(
+    return Model::getRecords(
       table: ModelUsuario::TABLE_NAME,
       where_clause_names: ["id"],
       where_clause_values: [$id],

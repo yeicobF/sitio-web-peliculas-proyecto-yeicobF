@@ -48,7 +48,7 @@ class CalificacionUsuarioPelicula extends Model
       "usuario_id"
     ];
 
-    return parent::getRecord(
+    return parent::getRecords(
       table: self::TABLE_NAME,
       where_clause_names: $where_clauses,
       where_clause_values: [
