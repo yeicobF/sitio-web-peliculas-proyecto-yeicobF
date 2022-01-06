@@ -1,8 +1,5 @@
 <?php
 
-use Controllers\Login;
-use Controllers\Usuario;
-
 $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
 include_once $path
@@ -15,7 +12,9 @@ include_once
 
 include_once
   FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
-  . "login.php";
+  . "usuario.php";
+
+use Controllers\Usuario;
 
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Detalles de perfil",
@@ -61,9 +60,9 @@ $baseHtmlHead = new BaseHtmlHead(
 
   <div class="fill-height-flex container-fluid container-lg">
     <?php
-    include_once
-      FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
-      . "usuario.php";
+    if (!Usuario::getRequest()) {
+      return;
+    }
     ?>
   </div>
 

@@ -208,7 +208,7 @@ class Usuario extends Controller
     if (
       $are_details_from_logged_user
       && array_key_exists("rol", $_SESSION)
-      && $_SESSION["rol"] === "administrador"
+      && $_SESSION["rol"] === ModelUsuario::ROLES_ENUM_INDEX["administrador"]
     ) {
       $is_user_admin = true;
     }
@@ -277,6 +277,60 @@ class Usuario extends Controller
 <?php
   }
 
+  /**
+   * Ejecutar los procedimientos de la petición GET.
+   * 
+   * Lo pongo en la función y no en el archivo, ya que, en el navbar se hace un
+   * require_once de este controlador, por lo que, al incluirlo en la página que
+   * lo necesito, me da una excepción porque la clase ya se definió (cuando se
+   * llamó en el navbar), por lo que, no puedo volver a llamar a este archivo.
+   * 
+   * Así que, la mejor opción que encontré es esta función, aunque tenga que
+   * hacer el llamado manual. Al menos resolvería el problema.
+   * 
+   * Seguramente hay una mejor solución.
+   *
+   * @return bool
+   */
+  public static function getRequest()
+  {
+    Controller::startSession();
+    Model::initDbConnection();
+
+    // Mostrar detalles de usuario.
+    if (
+      str_contains(
+        $_SERVER["SCRIPT_FILENAME"],
+        "user/index.php"
+      )
+      && Controller::getKeyExist("id")
+      && is_numeric($_GET["id"])
+    ) {
+      $db_user = ModelUsuario::getById($_GET["id"]);
+
+      if ($db_user === null) {
+        Controller::redirectView(
+          view_path: "index.php",
+          error: "No se encontró el usuario."
+        );
+        return false;
+      }
+
+      $user = new ModelUsuario(
+        nombres: $db_user["nombres"],
+        apellidos: $db_user["apellidos"],
+        username: $db_user["username"],
+        password: $db_user["password"],
+        rol: $db_user["rol"],
+        id: $db_user["id"],
+        foto_perfil: $db_user["foto_perfil"]
+      );
+
+      Usuario::renderUserDetails($user);
+    }
+    return true;
+  }
+
   public static function getUsername()
   {
     return $_SESSION["username"];
@@ -297,6 +351,13 @@ class Usuario extends Controller
   {
     return $_SESSION["id"];
   }
+}
+
+if (
+  Controller::isCurrentFileAnotherController("usuario")
+  || Controller::wasControllerIncludedAfterController("usuario")
+) {
+  return;
 }
 
 Controller::startSession();
@@ -323,45 +384,9 @@ if (Controller::isGet()) {
     Login::redirectIfUserNotLoggedIn("login/index.php");
     Usuario::updateSessionValues(Usuario::getCurrentUserData($_SESSION["id"]));
   }
-
-  // Mostrar detalles de usuario.
-  if (
-    str_contains(
-      $_SERVER["SCRIPT_FILENAME"],
-      "user/index.php"
-    )
-    && Controller::getKeyExist("id")
-    && is_numeric($_GET["id"])
-  ) {
-    $db_user = ModelUsuario::getById($_GET["id"]);
-
-    if ($db_user === null) {
-      Controller::redirectView(
-        view_path: "index.php",
-        error: "No se encontró el usuario."
-      );
-      return;
-    }
-
-    $user = new ModelUsuario(
-      nombres: $db_user["nombres"],
-      apellidos: $db_user["apellidos"],
-      username: $db_user["username"],
-      password: $db_user["password"],
-      rol: $db_user["rol"],
-      id: $db_user["id"],
-      foto_perfil: $db_user["foto_perfil"]
-    );
-
-    Usuario::renderUserDetails($user);
-  }
-  return;
 }
 
-if (
-  Controller::isCurrentFileView()
-  || Controller::isCurrentFileAnotherController("usuario")
-) {
+if (Controller::isCurrentFileView()) {
   return;
 }
 

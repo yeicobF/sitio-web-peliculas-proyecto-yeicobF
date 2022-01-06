@@ -575,3 +575,26 @@ Stack trace:
 #2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(18): include_once('C:\\xampp\\htdocs...')
 #3 {main}
   thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php on line 80
+[06-Jan-2022 22:25:33 Europe/Berlin] PHP Fatal error:  Cannot declare class Controllers\Usuario, because the name is already in use in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 16
+[06-Jan-2022 22:27:36 Europe/Berlin] PHP Fatal error:  Cannot declare class Controllers\Usuario, because the name is already in use in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 16
+[06-Jan-2022 22:46:11 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php:442
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php(178): Model::getRecords('usuario', Array, Array, Array)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(306): Usuario::getById(26)
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(63): Controllers\Usuario::getRequest()
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php on line 442
+[06-Jan-2022 22:48:37 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php:442
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php(178): Model::getRecords('usuario', Array, Array, Array)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(306): Usuario::getById(26)
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(63): Controllers\Usuario::getRequest()
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php on line 442
+[06-Jan-2022 22:51:09 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php:442
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php(178): Model::getRecords('usuario', Array, Array, Array)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(306): Usuario::getById(26)
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(63): Controllers\Usuario::getRequest()
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php on line 442
