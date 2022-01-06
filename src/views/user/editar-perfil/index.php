@@ -75,7 +75,11 @@ $baseHtmlHead = new BaseHtmlHead(
         <!-- <img src="<?php echo IMG_FOLDER; ?>../avatar/1.jpg" alt="Username" class="circle-avatar"> -->
 
         <?php
-        Usuario::getFotoPerfil();
+        Usuario::renderFotoPerfil(
+          usuario_id: $_SESSION["id"],
+          username: $_SESSION["username"],
+          foto_perfil: $_SESSION["foto_perfil"]
+        );
         ?>
       </figure>
       <form action="<?php echo $editar_perfil_action; ?>" method="POST" enctype="multipart/form-data" class="edit-profile__form col-12 col-sm-8">

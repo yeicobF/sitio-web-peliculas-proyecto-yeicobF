@@ -81,7 +81,11 @@ $baseHtmlHead = new BaseHtmlHead(
 
         <div class="col-12 col-sm-6 col-md-4">
           <?php
-          Usuario::getFotoPerfil();
+          Usuario::renderFotoPerfil(
+            usuario_id: $_SESSION["id"],
+            username: $_SESSION["username"],
+            foto_perfil: $_SESSION["foto_perfil"]
+          );
           ?>
         </div>
         <figcaption class="profile-details__figcaption col-12 col-sm-6  col-md-8">

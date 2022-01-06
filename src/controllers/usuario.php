@@ -59,30 +59,36 @@ class Usuario extends Controller
   }
 
   /**
-   * Obtenemos foto de perfil del usuario.
+   * Obtenemos foto de perfil del usuario especificado.
    * 
    * Si no hay foto, es decir, que es null, regresar una genérica.
+   * 
+   * Esta función sirve para obtener la foto de perfil de cualquier usuario.
    *
    * @return void
    */
-  public static function getFotoPerfil()
-  {
-    // echo var_dump($_SESSION);
-    $foto_perfil = "";
+  public static function renderFotoPerfil(
+    int $usuario_id,
+    string $username,
+    ?string $foto_perfil
+  ) {
+    $has_foto_perfil = false;
+    $encoded_image = "";
 
-    if (!empty($_SESSION["foto_perfil"])) {
-      $foto_perfil = Controller::getEncodedImage($_SESSION["foto_perfil"]);
+    if (strlen($foto_perfil) > 0 && $foto_perfil !== null) {
+      $encoded_image = Controller::getEncodedImage($foto_perfil);
+      $has_foto_perfil = true;
     }
 
-    $username = $_SESSION["username"];
-    $alt = "Detalles de usuario - {$username}";
+    $alt = "Foto de perfil de usuario - {$username}";
     $detalles_perfil_url =
       FOLDERS_WITH_LOCALHOST["VIEWS"]
-      . "user/index.php?id={$_SESSION["id"]}";
+      . "user/index.php?id={$usuario_id}";
     // . "user/index.php?id={$_SESSION["id"]}";
-    if (!empty($foto_perfil)) {
+
+    if ($has_foto_perfil) {
 ?>
-      <img src='data:image/jpeg; base64, <?php echo $foto_perfil; ?>' alt='<?php echo $alt; ?>' class='circle-avatar profile-picture'>
+      <img src='data:image/jpeg; base64, <?php echo $encoded_image; ?>' alt='<?php echo $alt; ?>' class='circle-avatar profile-picture'>
     <?php
       return;
     }

@@ -31,7 +31,11 @@
             <!-- <img src="http://localhost:8012/fdw-2021-2022-a/proyecto-yeicobF/src/public/assets/img/../avatar/1.jpg" alt="<?php echo $username_alt; ?>" class="circle-avatar"> -->
 
             <?php
-            Usuario::getFotoPerfil();
+            Usuario::renderFotoPerfil(
+              usuario_id: $_SESSION["id"],
+              username: $_SESSION["username"],
+              foto_perfil: $_SESSION["foto_perfil"]
+            );
             ?>
             <h2 class="session-buttons__user-info__username">
               <?php
