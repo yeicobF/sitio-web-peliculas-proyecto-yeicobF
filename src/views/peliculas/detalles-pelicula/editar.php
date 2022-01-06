@@ -37,6 +37,9 @@ $baseHtmlHead = new BaseHtmlHead(
 );
 ?>
 
+<!DOCTYPE html>
+<html lang="es">
+
 <head>
   <?php
   echo $baseHtmlHead->getHtmlBaseHead();
@@ -65,14 +68,15 @@ $baseHtmlHead = new BaseHtmlHead(
   include $path . LAYOUTS . "navbar.php";
   ?>
 
-  <div class="container-fluid container-lg fill-height-flex">
+  <div class="fill-height-flex container-fluid container-xl">
 
     <!-- Los datos del formulario serán llenados con XMLHttpRequest. -->
-    <form class="form__container row" enctype="multipart/form-data" action="<?php echo $agregar_pelicula_action; ?>" method="POST" autocomplete="off">
+    <form class="form__container row" enctype="multipart/form-data" action="<?php echo CONTROLLERS_FOLDER . "pelicula.php"; ?>" method="POST" autocomplete="off">
       <h1 class="col-12 form__movie__title">Editar detalles de película</h1>
       <h2 id="nombre-original-title"></h2>
       <h3 id="nombre-es-mx-title"></h3>
-      <input type="hidden" name="_method" value="POST">
+      <input type="hidden" name="_method" value="PUT">
+      <input type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
 
       <section class="col-12">
         <label for="nombre_original">Nombre original</label>

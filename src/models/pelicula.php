@@ -73,7 +73,7 @@ class Pelicula extends Model
     $this->id = $id;
     $this->nombre_es_mx = $nombre_es_mx;
     $this->poster = $poster;
-    
+
     $this->actores = $actores;
     $this->directores = $directores;
     $this->generos = $generos;
@@ -140,12 +140,18 @@ class Pelicula extends Model
 
   public static function getMovie(int $id): array | null
   {
-    return parent::getRecord(
+    $movies = parent::getRecord(
       table: self::TABLE_NAME,
       where_clause_names: ["id"],
       where_clause_values: [$id],
       pdo_params: self::PDO_PARAMS
-    )[0];
+    );
+
+    if (array_key_exists(0, $movies) && $movies[0] !== null) {
+      return $movies;
+    }
+    
+    return null;
   }
   public static function getEveryMovie()
   {

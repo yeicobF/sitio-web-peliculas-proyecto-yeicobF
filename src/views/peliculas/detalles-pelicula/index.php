@@ -18,6 +18,9 @@ include_once
 include_once
   FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
   . "usuario.php";
+include_once
+  FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
+  . "pelicula.php";
 
 if (Controller::redirectIfIdNotFound(view_path: "peliculas/index.php")) {
   return;
