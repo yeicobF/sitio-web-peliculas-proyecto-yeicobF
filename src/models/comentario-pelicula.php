@@ -59,17 +59,47 @@ class ComentarioPelicula extends Model
   /**
    * Obtener todos los comentarios de una película.
    *
+   * Estos habrá que obtenerlos por orden descendiente, del más nuevo al más
+   * antiguo.
+   *
+   * Ejemplo query:
+   *
+   * ```sql
+   * SELECT * FROM comentario_pelicula WHERE pelicula_id = 10 ORDER BY fecha DESC, hora DESC;
+   * ```
+   *
    * @param integer $pelicula_id
    * @return array | null
    */
   public static function getEveryMovieComment(int $pelicula_id)
   {
-    return parent::getRecords(
-      table: self::TABLE_NAME,
-      where_clause_names: ["pelicula_id"],
-      where_clause_values: [$pelicula_id],
-      pdo_params: self::PDO_PARAMS
-    );
+    $where_clause_names  = ["pelicula_id"];
+    $where_clause_values = [$pelicula_id];
+
+    try {
+      $query_select = self::createSelectQuery(
+        table: self::TABLE_NAME,
+        where_clause_names: $where_clause_names,
+        pdo_params: self::PDO_PARAMS
+      );
+
+      // Ordenamos del más reciente al más antiguo por fecha y hora.
+      // Esto lo agregamos a la parte de la query que ya creamos con el WHERE y
+      // la tabla.
+      $query_select .= " ORDER BY fecha DESC, hora DESC;";
+
+      $query = self::$db_connection->prepare($query_select);
+
+      $query->execute(self::bindWhereClauses(
+        $where_clause_names,
+        $where_clause_values
+      ));
+
+      return self::getFetchedRecords($query);
+    } catch (PDOException $e) {
+      error_log("Error en la query - {$e}");
+      exit();
+    }
   }
 
   /**

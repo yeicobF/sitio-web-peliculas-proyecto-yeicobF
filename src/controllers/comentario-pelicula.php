@@ -165,7 +165,7 @@ class ComentarioPelicula extends Controller
             <input type="hidden" name="id" value="<?php echo $movie_comment->id; ?>">
             <input type="hidden" name="pelicula_id" value="<?php echo $movie_comment->pelicula_id; ?>">
 
-            <button type="submit" class="fa-btn--danger">
+            <button type="submit" class="fa-btn--danger" id="delete-comentario-pelicula">
               <i class="fa-solid fa-trash"></i>
             </button>
           </form>
@@ -301,6 +301,9 @@ if ($result === 1) {
   // Si publicamos el comentario, regresar el JSON.
   if (Controller::isMethodPost()) {
     return $comentario_pelicula->returnJson();
+  }
+  if (Controller::isMethodDelete()) {
+    return $result;
   }
 
   return;
