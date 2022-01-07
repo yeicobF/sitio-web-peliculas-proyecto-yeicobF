@@ -115,6 +115,42 @@ body :is(.h1, .h2, .h3, .h4, .h5, .h6) {
   -webkit-backdrop-filter: blur(7.9px);
 }
 
+/* Esto se ve muy mal, pero bueno. */
+.disabled:focus,
+input.disabled:focus,
+a.disabled:focus,
+button.disabled:focus,
+.disabled:focus-within,
+input.disabled:focus-within,
+a.disabled:focus-within,
+button.disabled:focus-within,
+.disabled:focus-visible,
+input.disabled:focus-visible,
+a.disabled:focus-visible,
+button.disabled:focus-visible,
+.disabled:active,
+input.disabled:active,
+a.disabled:active,
+button.disabled:active,
+.disabled:disabled,
+input.disabled:disabled,
+a.disabled:disabled,
+button.disabled:disabled,
+.disabled:hover,
+input.disabled:hover,
+a.disabled:hover,
+button.disabled:hover,
+.disabled,
+input.disabled,
+a.disabled,
+button.disabled,
+input.disabled,
+a.disabled,
+button.disabled {
+  background-color: lightgray;
+  color: darkgray;
+}
+
 @media (min-width: 768px) {
   /* * {
     font-size: 16px;

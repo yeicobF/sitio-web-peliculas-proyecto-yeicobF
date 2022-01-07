@@ -69,15 +69,19 @@
   border: none;
 }
 
-.comments__form > .comments__form__buttons > .circle-avatar {
-  border-color: var(--color-mint);
-  /* outline: solid 1px var(--color-mint); */
+.comments__container .circle-avatar.own-avatar {
+  /* border-color: var(--color-mint); */
+  outline: solid 2px var(--color-mint);
   /* box-shadow: 0px 0px 5px 1px var(--color-mint); */
   /* border: none; */
 }
 
 .comments__container .circle-avatar {
-  border: solid 2px var(--color-lavender-blue);
+  /* 
+  No agregar más píxeles a la pantalla. Sobre todo evitamos problemas con el SVG
+  de Font Awesome. 
+  */
+  outline: solid 2px var(--color-lavender-blue);
 }
 
 .comments__form__btn {

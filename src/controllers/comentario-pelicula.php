@@ -100,6 +100,13 @@ class ComentarioPelicula extends Controller
     );
 
     $user_details_url = URL_PAGE["detalles-perfil"] . "?id=" . $user->_id;
+    $avatar_classes = "";
+    // Ver si los detalles del comentario son los del usuario con sesión
+    // iniciada.
+    if (Usuario::areDetailsFromLoggedUser($user)) {
+      $avatar_classes = "own-avatar";
+    }
+
     // Obtener los likes y dislikes del comentario.
 ?>
     <article class="comments__posted">
@@ -109,7 +116,8 @@ class ComentarioPelicula extends Controller
           Usuario::renderFotoPerfil(
             $user->_id,
             $user->_username,
-            $user->_foto_perfil
+            $user->_foto_perfil,
+            $avatar_classes
           );
           ?>
         </a>

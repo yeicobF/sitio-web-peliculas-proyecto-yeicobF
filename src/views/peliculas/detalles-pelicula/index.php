@@ -1,6 +1,8 @@
 <?php
 
 use Libs\Controller;
+use Controllers\Login;
+use Controllers\Usuario;
 
 $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
@@ -18,15 +20,16 @@ include_once
 include_once
   FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
   . "usuario.php";
+include_once
+  FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
+  . "login.php";
 
 if (Controller::redirectIfIdNotFound(view_path: "peliculas/index.php")) {
   return;
 }
 
-
 $id_pelicula = $_GET["id"];
 $nombre_pelicula;
-
 
 $baseHtmlHead = new BaseHtmlHead(
   _pageName: "Detalles de película",
@@ -79,21 +82,66 @@ $baseHtmlHead = new BaseHtmlHead(
     <div class="row">
       <section class="comments__container col-12 col-md-8">
         <h2>Comentarios</h2>
-        <form action="" method="post" class="comments__form">
-          <!-- Hay que definir el método a utilizar con un input hidden. -->
-          <input type="hidden" name="_method" value="POST">
+        <?php
+        $logged_in = false;
+        $action = "";
+        // Hay que definir el método a utilizar con un input hidden.
+        $input_movie_id =
+          "<input type='hidden' name='pelicula_id' value='{$id_pelicula}'>";
+        $post_method = "";
+        $input_user_id = "";
+        $textarea_placeholder = "Inicia sesión para comentar.";
+        $profile_picture = "";
+        $btn_classes = "comments__form__btn btn";
+        // El formulario depende de si el usuario ha iniciado sesión o no.
+        if (
+          Login::isUserLoggedIn()
+          && Controller::idExists(false, $_SESSION)
+          && is_numeric($_SESSION["id"])
+        ) {
+          $logged_in = true;
+          $post_method =
+            "<input type='hidden' name='_method' value='POST'>";
+          $input_user_id =
+            "<input type='hidden' name='usuario_id' value='{$_SESSION["id"]}'>";
+          $action =
+            FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "comentario-pelicula.php";
+          $textarea_placeholder = "Agrega un comentario.";
+        } else {
+          $btn_classes .= " disabled";
+        }
+        ?>
+        <form action="<?php echo $action; ?>" method="POST" class="comments__form">
+          <?php
+          echo "
+            {$post_method}
+            {$input_movie_id}
+            {$input_user_id}
+            ";
+          ?>
 
-          <textarea placeholder="Ingresa un comentario" name="nuevo-comentario" id="" rows="5"></textarea>
+          <textarea placeholder="<?php echo $textarea_placeholder; ?>" name="nuevo-comentario" id="nuevo-comentario" rows="5"></textarea>
           <footer class="comments__form__buttons">
-            <img src="<?php echo IMG_FOLDER; ?>../avatar/1.jpg" alt="Username" class="circle-avatar">
+            <?php
+            if ($logged_in) {
+              Usuario::renderFotoPerfil(
+                $_SESSION["id"],
+                $_SESSION["username"],
+                $_SESSION["foto_perfil"],
+                "own-avatar"
+              );
+            }
+            ?>
 
-            <input type="submit" value="Publicar" class="comments__form__btn btn btn-primary">
+            <button type="submit" value="Publicar" class="<?php echo $btn_classes; ?>">
+              Publicar
+            </button>
           </footer>
         </form>
 
         <!-- Comentarios ya publicados. -->
         <?php
-        include_once
+        require_once
           FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
           . "comentario-pelicula.php";
         ?>
