@@ -72,6 +72,8 @@ class Model
   /**
    * Obtener la hora actual en el formato de la BD.
    *
+   * Ejemplo: '19:27:43'
+   * 
    * @param string $timeZone Zona horaria en la cual se basa la obtención.
    * https://www.php.net/manual/es/function.date.php#116914
    * https://www.php.net/manual/es/timezones.america.php

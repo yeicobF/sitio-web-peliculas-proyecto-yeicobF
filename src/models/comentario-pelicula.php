@@ -12,7 +12,6 @@ class ComentarioPelicula extends Model
   public string $hora;
 
   const PDO_PARAMS = [
-    "id" => PDO::PARAM_INT,
     "pelicula_id" => PDO::PARAM_INT,
     "usuario_id" => PDO::PARAM_INT,
     "comentario" => PDO::PARAM_STR,
@@ -35,10 +34,10 @@ class ComentarioPelicula extends Model
     "pk" => [
       "id"
     ],
-    "fk" => [
-      "pelicula_id",
-      "usuario_id",
-    ]
+    // "fk" => [
+    //   "pelicula_id",
+    //   "usuario_id",
+    // ]
   ];
 
   public function __construct(

@@ -19,6 +19,7 @@ use Libs\Controller;
 use Controllers\Usuario;
 use Controllers\Pelicula;
 use Controllers\Login;
+use View;
 
 class ComentarioPelicula extends Controller
 {
@@ -217,3 +218,91 @@ if (
 
   return true;
 }
+
+if (
+  Controller::isCurrentFileView()
+  || Controller::isCurrentFileAnotherController("comentario-pelicula")
+) {
+  return;
+}
+
+/* ---------------- NO ES GET, ENTONCES TENDRÍA QUE SER POST ---------------- */
+Controller::redirectIfNonExistentPostMethod("peliculas/index.php");
+
+$view_path = "peliculas/index.php";
+// Campos del formulario.
+$form_fields = $_POST;
+unset($form_fields["_method"]);
+
+$non_empty_fields = Controller::getNonEmptyFormFields(
+  $form_fields
+);
+
+// Hay que agregar la fecha y hora nosotros.
+// 
+$non_empty_fields["fecha"] = Model::getCurrentDate();
+$non_empty_fields["hora"] = Model::getCurrentTime();
+
+
+if (
+  array_key_exists("pelicula_id", $non_empty_fields)
+  && is_numeric($non_empty_fields["pelicula_id"])
+) {
+  $view_path = "peliculas/detalles-pelicula/index.php?id={$non_empty_fields["pelicula_id"]}";
+}
+
+// El usuario no puede hacer ningún procedimiento POST si no ha iniciado sesión.
+if (!Login::isUserLoggedIn()) {
+  Controller::redirectView(
+    view_path: $view_path,
+    error: "No has iniciado sesión."
+  );
+}
+
+if (Controller::isMethodPost()) {
+
+  // Revisar que todos los campos menos "fecha_nacimiento" tienen datos.
+  if (!Controller::areRequiredFieldsFilled(
+    ModelComentarioPelicula::REQUIRED_FIELDS,
+    $non_empty_fields
+  )) {
+    Controller::redirectView(
+      view_path: $view_path,
+      error: "No se enviaron los datos correctamente."
+    );
+    return;
+  }
+
+  $comentario_pelicula = new ModelComentarioPelicula(
+    pelicula_id: $non_empty_fields["pelicula_id"],
+    usuario_id: $non_empty_fields["usuario_id"],
+    comentario: $non_empty_fields["comentario"],
+    fecha: $non_empty_fields["fecha"],
+    hora: $non_empty_fields["hora"]
+  );
+
+  $result = $comentario_pelicula->insertComentarioPelicula();
+}
+
+$message = Model::OPERATION_INFO[$result];
+
+if ($result === 1) {
+  Controller::redirectView(
+    view_path: $view_path,
+    message: $message
+
+  );
+
+  // Si publicamos el comentario, regresar el JSON.
+  if (Controller::isMethodPost()) {
+    return $comentario_pelicula->returnJson();
+  }
+
+  return;
+}
+
+Controller::redirectView(
+  view_path: $view_path,
+  error: $message
+
+);
