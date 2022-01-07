@@ -58,8 +58,9 @@
 
 .movie-details__synopsis {
   overflow-y: auto;
-  height: 8em;
+  max-height: 8em;
   text-align: left;
+  height: auto;
 }
 .movie-details__title {
 

@@ -93,6 +93,7 @@ $baseHtmlHead = new BaseHtmlHead(
         $textarea_placeholder = "Inicia sesión para comentar.";
         $profile_picture = "";
         $btn_classes = "comments__form__btn btn";
+        $disabled = "";
         // El formulario depende de si el usuario ha iniciado sesión o no.
         if (
           Login::isUserLoggedIn()
@@ -108,7 +109,8 @@ $baseHtmlHead = new BaseHtmlHead(
             FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "comentario-pelicula.php";
           $textarea_placeholder = "Agrega un comentario.";
         } else {
-          $btn_classes .= " disabled";
+          $disabled = "disabled";
+          $btn_classes .= " {$disabled}";
         }
         ?>
         <form action="<?php echo $action; ?>" method="POST" class="comments__form">
@@ -120,7 +122,7 @@ $baseHtmlHead = new BaseHtmlHead(
             ";
           ?>
 
-          <textarea placeholder="<?php echo $textarea_placeholder; ?>" name="nuevo-comentario" id="nuevo-comentario" rows="5"></textarea>
+          <textarea <?php echo $disabled; ?> placeholder="<?php echo $textarea_placeholder; ?>" name="nuevo-comentario" id="nuevo-comentario" rows="5"></textarea>
           <footer class="comments__form__buttons">
             <?php
             if ($logged_in) {
@@ -133,7 +135,7 @@ $baseHtmlHead = new BaseHtmlHead(
             }
             ?>
 
-            <button type="submit" value="Publicar" class="<?php echo $btn_classes; ?>">
+            <button <?php echo $disabled; ?> type="submit" value="Publicar" class="<?php echo $btn_classes; ?>">
               Publicar
             </button>
           </footer>

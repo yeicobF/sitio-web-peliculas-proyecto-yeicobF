@@ -101,10 +101,12 @@ class ComentarioPelicula extends Controller
 
     $user_details_url = URL_PAGE["detalles-perfil"] . "?id=" . $user->_id;
     $avatar_classes = "";
+    $are_details_from_logged_user = false;
     // Ver si los detalles del comentario son los del usuario con sesión
     // iniciada.
     if (Usuario::areDetailsFromLoggedUser($user)) {
       $avatar_classes = "own-avatar";
+      $are_details_from_logged_user = true;
     }
 
     // Obtener los likes y dislikes del comentario.
@@ -140,14 +142,34 @@ class ComentarioPelicula extends Controller
         Esto no será un formulario, sino que, se regirá por el id del 
         comentario. 
         -->
-        <form name="comment-likes" class="" action="" method="post">
-          <button class="comments__interaction__button" type="button"><i class="fas fa-thumbs-up"></i></button>
-          <data value="2">2</data>
-        </form>
-        <form name="comment-dislikes" class="" action="" method="post">
-          <button class="comments__interaction__button selected" type="button"><i class="fas fa-thumbs-down"></i></button>
-          <data value="4">4</data>
-        </form>
+        <section class="comments__interaction__info">
+
+          <div class="comments__interaction__likes">
+            <button class="comments__interaction__button" type="button"><i class="fas fa-thumbs-up"></i></button>
+            <data value="2">2</data>
+          </div>
+
+          <div class="comments__interaction__likes">
+            <button class="comments__interaction__button selected" type="button"><i class="fas fa-thumbs-down"></i></button>
+            <data value="4">4</data>
+          </div>
+        </section>
+        <?php
+        // Si el comentario es del usuario con sesión iniciada, mostrar botón
+        // para eliminar.
+        if ($are_details_from_logged_user) {
+        ?>
+          <form action="<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "comentario-pelicula.php"; ?>" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="id" value="<?php echo $movie_comment->id; ?>">
+
+            <button type="submit" class="fa-btn--danger">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </form>
+        <?php
+        }
+        ?>
       </footer>
     </article>
 <?php

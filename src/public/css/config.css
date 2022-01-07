@@ -7,6 +7,7 @@
   line-height: 1.5;
   /* Transición para las fuentes cuando cambian de tamaño. */
   transition: font-size 50ms cubic-bezier(0.39, 0.58, 0.57, 1);
+  /* outline: solid 1px red; */
 }
 
 :root {
@@ -113,6 +114,23 @@ body :is(.h1, .h2, .h3, .h4, .h5, .h6) {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(7.9px);
   -webkit-backdrop-filter: blur(7.9px);
+}
+
+input.fa-btn--danger,
+a.fa-btn--danger,
+button.fa-btn--danger,
+.fa-btn--danger {
+  background-color: transparent;
+  color: var(--color-crimson);
+  cursor: pointer;
+  transition: all 50ms ease-in-out;
+}
+
+.fa-btn--danger:hover,
+.fa-btn--danger:active,
+.fa-btn--danger:focus-within,
+.fa-btn--danger:focus-visible {
+  color: var(--color-danger-darked);
 }
 
 /* Esto se ve muy mal, pero bueno. */
