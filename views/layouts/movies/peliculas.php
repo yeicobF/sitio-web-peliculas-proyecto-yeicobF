@@ -4,7 +4,7 @@ require_once FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"] . "pelicula.php";
 ?>
 
 <section class="row">
-  <?php Controllers\Pelicula::getEveryMovie(); ?>
+  <?php Controllers\Pelicula::renderEveryMovie(); ?>
   <!-- Póster de películas. -->
   <!-- <figure class="movie-poster   col-6 col-sm-4">
       <div class="movie-poster__year-image">

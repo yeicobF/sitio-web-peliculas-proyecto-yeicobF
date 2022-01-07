@@ -1,7 +1,7 @@
 *,
 *::before,
 *::after {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   /* Para fuente en móvil. */
   /* font-size: 14px; */
   line-height: 1.5;
@@ -15,16 +15,16 @@
   Colores generados en coolors.co: 
   https://coolors.co/e3d7ff-afa2ff-f8f9fa-0d6efd-17a2b8-c97c5d-0c0f0a-d7263d-870058-23022e 
   */
-  --color-dark-purple: #23022E;
+  --color-dark-purple: #23022e;
   --color-lavender-blue: #e3d7ff;
-  --color-maximum-blue-purple: #AFA2FF;
+  --color-maximum-blue-purple: #afa2ff;
   /* --color-cultured: #F8F9FA; */
   /* --color-blue-crayola: #0D6EFD; */
   /* --color-pacific-blue: #17a2b8; */
   --color-copper-crayola: #c97c5d;
   --color-rich-black-fogra-39: #0c0f0a;
-  --color-purple: #555BFF;
-  --color-mint: #22D2A0;
+  --color-purple: #555bff;
+  --color-mint: #22d2a0;
   --color-crimson: #d7263d;
   --color-pansy-purple: #870058;
 }
@@ -82,7 +82,7 @@ body :is(.h1, .h2, .h3, .h4, .h5, .h6) {
 .btn {
   /* flex-basis: 40%; */
   font-weight: 600;
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
 
   /* align-items: center;
   display: flex;
@@ -107,6 +107,12 @@ body :is(.h1, .h2, .h3, .h4, .h5, .h6) {
   /* align-content: stretch; */
   /* flex-wrap: nowrap; */
   /* flex-direction: row; */
+}
+
+.pretty-shadow {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7.9px);
+  -webkit-backdrop-filter: blur(7.9px);
 }
 
 @media (min-width: 768px) {

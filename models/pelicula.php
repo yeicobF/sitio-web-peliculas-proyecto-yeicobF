@@ -73,7 +73,7 @@ class Pelicula extends Model
     $this->id = $id;
     $this->nombre_es_mx = $nombre_es_mx;
     $this->poster = $poster;
-    
+
     $this->actores = $actores;
     $this->directores = $directores;
     $this->generos = $generos;
@@ -123,7 +123,7 @@ class Pelicula extends Model
       ],
     ];
 
-    return parent::getRecordLike(
+    return parent::getRecordsLike(
       table: self::TABLE_NAME,
       where_clause_names: [
         "nombre_original",
@@ -140,12 +140,18 @@ class Pelicula extends Model
 
   public static function getMovie(int $id): array | null
   {
-    return parent::getRecord(
+    $db_movie = parent::getRecords(
       table: self::TABLE_NAME,
       where_clause_names: ["id"],
       where_clause_values: [$id],
       pdo_params: self::PDO_PARAMS
-    )[0];
+    );
+
+    if (array_key_exists(0, $db_movie) && $db_movie[0] !== null) {
+      return $db_movie[0];
+    }
+    
+    return null;
   }
   public static function getEveryMovie()
   {
@@ -154,7 +160,7 @@ class Pelicula extends Model
 
   public static function getMoviesByGenre($genre)
   {
-    return parent::getRecordLike(
+    return parent::getRecordsLike(
       table: self::TABLE_NAME,
       where_clause_names: ["generos"],
       where_clause_values: [$genre],
@@ -170,17 +176,14 @@ class Pelicula extends Model
 
   public static function getBestMovies()
   {
-    // return parent::getRecord(
-    //   table: self::TABLE_NAME,
-    //   where_clause_names: ["id"],
-    //   where_clause_values: [$id],
-    //   pdo_params: self::PDO_PARAMS
+    // return parent::getRecords( table: self::TABLE_NAME, where_clause_names:
+    //   ["id"], where_clause_values: [$id], pdo_params: self::PDO_PARAMS
     // );
   }
 
   /**
    * Actualizar una película.
-   * 
+   *
    * Esta función se llama desde una instancia con el ID del pelicula a
    * actualizar, pero con sus nuevos datos.
    *

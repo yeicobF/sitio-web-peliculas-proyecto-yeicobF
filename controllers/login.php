@@ -8,7 +8,6 @@ require_once __DIR__ . "/../libs/model.php";
 require_once __DIR__ . "/usuario.php";
 
 use Libs\Controller;
-use Controllers\Usuario;
 use Model;
 use Usuario as ModelUsuario;
 
@@ -59,7 +58,6 @@ class Login extends Controller
 // ) {
 //   return;
 // }
-// Si nos encontramos en una view, no hacer el proceso.
 if (
   Controller::isCurrentFileView()
   || Controller::isCurrentFileAnotherController("login")

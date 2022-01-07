@@ -49,7 +49,7 @@ Model::initDbConnection();
 
 /* --------------------------------- DELETE --------------------------------- */
 
-// $usuario_db = Model::getRecord(
+// $usuario_db = Model::getRecords(
 //   table: Usuario::TABLE_NAME,
 //   where_clause: [
 //     "name" => "id",
@@ -106,7 +106,7 @@ Model::initDbConnection();
 
 // echo var_dump(Model::getEveryRecord(Usuario::TABLE_NAME));
 
-$usuario_db = Model::getRecord(
+$usuario_db = Model::getRecords(
   table: Usuario::TABLE_NAME,
   where_clause_names: [
     "id",
@@ -134,7 +134,7 @@ $usuario->_nombres .= "Jesús";
 echo "<br><br>";
 echo $usuario->updateInfo() . "<br><br>";
 
-$usuario_db = Model::getRecord(
+$usuario_db = Model::getRecords(
   table: Usuario::TABLE_NAME,
   where_clause_names: [
     "id",

@@ -37,7 +37,7 @@ class Pelicula extends Controller
    */
   public static $current_movie;
 
-  public static function getMinimalDetailsMovie(ModelPelicula $movie)
+  public static function renderMinimalDetailsMovie(ModelPelicula $movie)
   {
     $url_id = "?id={$movie->id}";
     $edit_url = URL_PAGE["editar-pelicula"] . $url_id;
@@ -68,8 +68,8 @@ class Pelicula extends Controller
 
       ?>
       <div class="movie-poster__year-image">
-        <a rel="noopener noreferrer" href="<?php echo $details_url; ?>" class="">
-          <?php self::getPoster($movie) ?>
+        <a rel="noopener noreferrer" href="<?php echo $details_url; ?>" class="pretty-shadow">
+          <?php self::renderPoster($movie) ?>
         </a>
         <time datetime="<?php echo $movie->release_year; ?>" class="movie-poster__year">
           <?php echo $movie->release_year; ?>
@@ -82,12 +82,12 @@ class Pelicula extends Controller
     <?php
   }
 
-  public static function getEveryMovie()
+  public static function renderEveryMovie()
   {
     $db_movies = ModelPelicula::getEveryMovie();
 
     if ($db_movies === null) {
-      echo "<h3>No se encontraron películas</h3>";
+      echo "<h3>No hay películas en la base de datos</h3>";
       return;
     }
 
@@ -106,11 +106,11 @@ class Pelicula extends Controller
         poster: $db_movie["poster"],
       );
 
-      self::getMinimalDetailsMovie($movie);
+      self::renderMinimalDetailsMovie($movie);
     }
   }
 
-  public static function getBestMovies()
+  public static function renderBestMovies()
   {
   }
 
@@ -124,7 +124,7 @@ class Pelicula extends Controller
    * @param ModelPelicula $movie
    * @return void
    */
-  public static function getPoster(
+  public static function renderPoster(
     $movie,
     string $poster_classes = ""
   ) {
@@ -132,7 +132,7 @@ class Pelicula extends Controller
     if (!empty($movie->poster)) {
       $poster = Controller::getEncodedImage($movie->poster);
     ?>
-      <img src="data:image/jpeg; base64, <?php echo $poster; ?>" alt="<?php echo $movie->nombre_original; ?>" class="movie-poster__img <?php echo $poster_classes; ?>">
+      <img src="data:image/jpeg; base64, <?php echo $poster; ?>" alt="<?php echo $movie->nombre_original; ?>" class="movie-poster__img pretty-shadow <?php echo $poster_classes; ?>">
     <?php
       return;
     }
@@ -141,14 +141,14 @@ class Pelicula extends Controller
     <!-- 
     Si no hay poster, poner un fondo y un ícono que lo indique.
     -->
-    <span class="fa-stack movie-poster__img movie__no-poster <?php echo $poster_classes; ?>">
+    <span class="fa-stack movie-poster__img movie__no-poster pretty-shadow <?php echo $poster_classes; ?>">
       <i class="fa-solid fa-border-none"></i>
       <p>No poster</p>
     </span>
   <?php
   }
 
-  public static function getDetailedMovie(ModelPelicula $movie)
+  public static function renderDetailedMovie(ModelPelicula $movie)
   {
     $time = $movie->getSplitTime();
     $horas = $time["horas"];
@@ -165,7 +165,7 @@ class Pelicula extends Controller
     <section class="movie-details__poster col-12 col-sm-4">
 
       <?php
-      self::getPoster($movie, "movie-details__img");
+      self::renderPoster($movie, "movie-details__img");
 
       if (Usuario::isAdmin()) {
       ?>
@@ -282,9 +282,9 @@ if (
 
   // Solo se pide el ID en la vista de detalles.
   if (Controller::containsSpecificViewPath("detalles-pelicula/index.php")) {
-    Pelicula::getDetailedMovie(Pelicula::$current_movie);
+    Pelicula::renderDetailedMovie(Pelicula::$current_movie);
   }
-  return;
+  return Pelicula::$current_movie->returnJson();
 }
 
 if (

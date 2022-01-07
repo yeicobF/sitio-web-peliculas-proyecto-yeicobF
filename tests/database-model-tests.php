@@ -63,13 +63,13 @@ $where_clause = [
 
 /* -------------------------------- NUEVO GET ------------------------------- */
 // echo var_dump(Model::getEveryRecord(Usuario::TABLE_NAME)) . "<br><br>";
-// echo var_dump(Model::getRecord(
+// echo var_dump(Model::getRecords(
 //   Usuario::TABLE_NAME,
 //   $where_clause,
 //   Usuario::PDO_PARAMS
 // )) . "<br><br>";
 // 
-// echo var_dump(Model::getRecord(
+// echo var_dump(Model::getRecords(
 //   Usuario::TABLE_NAME,
 //   array(
 //     "name" => "nombres",
@@ -95,7 +95,7 @@ $where_clause_values = [
   "juárez"
 ];
 
-echo "SELECT LIKE" . var_dump(Model::getRecordLike(
+echo "SELECT LIKE" . var_dump(Model::getRecordsLike(
   Usuario::TABLE_NAME,
   $where_clause_names,
   $where_clause_values,
@@ -103,7 +103,7 @@ echo "SELECT LIKE" . var_dump(Model::getRecordLike(
   Usuario::PDO_PARAMS
 )) . "<br><br>";
 
-// echo "SELECT LIKE Ja% false true" . var_dump(Model::getRecordLike(
+// echo "SELECT LIKE Ja% false true" . var_dump(Model::getRecordsLike(
 //   Usuario::TABLE_NAME,
 //   array(
 //     "name" => "nombres",
@@ -115,7 +115,7 @@ echo "SELECT LIKE" . var_dump(Model::getRecordLike(
 //   ],
 //   Usuario::PDO_PARAMS
 // )) . "<br><br>";
-// echo "SELECT LIKE %vier true false" . var_dump(Model::getRecordLike(
+// echo "SELECT LIKE %vier true false" . var_dump(Model::getRecordsLike(
 //   Usuario::TABLE_NAME,
 //   array(
 //     "name" => "nombres",
@@ -128,7 +128,7 @@ echo "SELECT LIKE" . var_dump(Model::getRecordLike(
 //   Usuario::PDO_PARAMS
 // )) . "<br><br>";
 // 
-// echo "SELECT LIKE F Javier false false" . var_dump(Model::getRecordLike(
+// echo "SELECT LIKE F Javier false false" . var_dump(Model::getRecordsLike(
 //   Usuario::TABLE_NAME,
 //   array(
 //     "name" => "nombres",
