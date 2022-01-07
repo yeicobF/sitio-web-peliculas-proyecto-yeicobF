@@ -16,10 +16,10 @@
         <?php
 
         if (Login::isUserLoggedIn()) {
-          $avatar_url = URL_PAGE["detalles-perfil"];
+          $avatar_url = URL_PAGE["detalles-perfil"] . "?id=" . $_SESSION["id"];
           // $avatar_url = "{URL_PAGE["editar-perfil"]}?id={$_SESSION["id"]}";
 
-          $username_alt = $_SESSION["username"];
+          $username_alt = "Detalles de usuario - " . $_SESSION["username"];
         ?>
           <input type='hidden' name='_method' value='DELETE'>
           <!-- button.btn.btn-light#login-button -->
@@ -31,7 +31,11 @@
             <!-- <img src="http://localhost:8012/fdw-2021-2022-a/proyecto-yeicobF/src/public/assets/img/../avatar/1.jpg" alt="<?php echo $username_alt; ?>" class="circle-avatar"> -->
 
             <?php
-            Usuario::getFotoPerfil();
+            Usuario::renderFotoPerfil(
+              usuario_id: $_SESSION["id"],
+              username: $_SESSION["username"],
+              foto_perfil: $_SESSION["foto_perfil"]
+            );
             ?>
             <h2 class="session-buttons__user-info__username">
               <?php

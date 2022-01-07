@@ -61,12 +61,20 @@ if (
   && is_numeric($_GET["id"])
 ) {
   $current_movie = Pelicula::getMovie($_GET["id"]);
+
+  if ($current_movie === null) {
+    Libs\Controller::redirectView(
+      "peliculas/index.php",
+      error: "Película no existente."
+    );
+  }
+
   $current_movie_name = $current_movie["nombre_original"];
 
   // Símbolo ">"
   $chevron_right =
     "<i class='fas fa-chevron-right navbar__current-movie__icon'></i>";
-  
+
   // Leyenda que se muestra dependiendo si nos encontramos en los detalles o en
   // la edición de detalles de película.
   $legend = "Detalles";
@@ -75,7 +83,7 @@ if (
   // El nombre de la película solo se mostrará en resoluciones menores en el
   // navbar.
   $p_movie = "<p class='navbar__current-movie__name'>{$current_movie_name}</p>";
-  
+
   // Inicializamos aquí, ya que, en el if puede cambiar, pero si no entra, queda
   // este valor.
   $nav_pelicula_max_767 = $p_movie;
@@ -108,9 +116,9 @@ if (
    *
    * Así evitamos más condicionales, aprovechando estos parámetros.
    */
-  $nav_pelicula .= 
+  $nav_pelicula .=
     $chevron_right
-    . $nav_pelicula_min_768 
+    . $nav_pelicula_min_768
     . $nav_pelicula_max_767;
 }
 ?>

@@ -482,3 +482,147 @@ Stack trace:
 [05-Jan-2022 11:17:25 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 36
 [05-Jan-2022 11:19:11 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 36
 [05-Jan-2022 20:14:02 Europe/Berlin] PHP Warning:  Undefined variable $agregar_pelicula_action in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\editar.php on line 69
+[06-Jan-2022 00:21:09 Europe/Berlin] PHP Warning:  Undefined variable $agregar_pelicula_action in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\editar.php on line 71
+[06-Jan-2022 00:22:23 Europe/Berlin] PHP Warning:  Undefined variable $agregar_pelicula_action in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\editar.php on line 71
+[06-Jan-2022 01:36:08 Europe/Berlin] PHP Warning:  Undefined array key 0 in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php on line 148
+[06-Jan-2022 01:36:08 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\layouts\navbar.php on line 64
+[06-Jan-2022 01:36:08 Europe/Berlin] PHP Warning:  Undefined array key 0 in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php on line 148
+[06-Jan-2022 01:36:08 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php:54) in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 174
+[06-Jan-2022 01:36:28 Europe/Berlin] PHP Warning:  Undefined array key 0 in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php on line 148
+[06-Jan-2022 01:36:28 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\layouts\navbar.php on line 64
+[06-Jan-2022 01:36:28 Europe/Berlin] PHP Warning:  Undefined array key 0 in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php on line 148
+[06-Jan-2022 01:36:28 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php:54) in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 174
+[06-Jan-2022 01:46:02 Europe/Berlin] PHP Warning:  Undefined array key 0 in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php on line 150
+[06-Jan-2022 01:46:02 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\layouts\navbar.php on line 64
+[06-Jan-2022 01:46:02 Europe/Berlin] PHP Warning:  Undefined array key 0 in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php on line 150
+[06-Jan-2022 01:46:02 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php:54) in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 174
+[06-Jan-2022 01:46:23 Europe/Berlin] PHP Warning:  Undefined array key 0 in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php on line 150
+[06-Jan-2022 01:46:23 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\layouts\navbar.php on line 64
+[06-Jan-2022 01:46:23 Europe/Berlin] PHP Warning:  Undefined array key 0 in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php on line 150
+[06-Jan-2022 01:46:23 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php:54) in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 174
+[06-Jan-2022 01:47:05 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\layouts\navbar.php on line 64
+[06-Jan-2022 01:47:05 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php:54) in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 174
+[06-Jan-2022 01:55:27 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php:57) in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 174
+[06-Jan-2022 01:55:27 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\layouts\navbar.php on line 72
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "nombre_original" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 270
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "duracion" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 271
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "release_year" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 272
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "restriccion_edad" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 273
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "resumen_trama" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 274
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "actores" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 275
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "directores" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 276
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "generos" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 277
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 278
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "nombre_es_mx" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 279
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Warning:  Undefined array key "poster" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 280
+[06-Jan-2022 19:27:38 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Pelicula::__construct(): Argument #1 ($nombre_original) must be of type string, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 280 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php:55
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(280): Pelicula->__construct(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php(23): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php on line 55
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "nombre_original" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 270
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "duracion" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 271
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "release_year" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 272
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "restriccion_edad" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 273
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "resumen_trama" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 274
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "actores" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 275
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "directores" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 276
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "generos" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 277
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 278
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "nombre_es_mx" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 279
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Warning:  Undefined array key "poster" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 280
+[06-Jan-2022 19:27:55 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Pelicula::__construct(): Argument #1 ($nombre_original) must be of type string, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 280 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php:55
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(280): Pelicula->__construct(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php(23): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\pelicula.php on line 55
+[06-Jan-2022 20:54:38 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Controllers\Usuario::renderFotoPerfil(): Argument #3 ($foto_perfil) must be of type string, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\layouts\navbar\session-buttons.php on line 37 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php:70
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\layouts\navbar\session-buttons.php(37): Controllers\Usuario::renderFotoPerfil(26, 'normal', NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\layouts\navbar.php(158): require_once('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\index.php(51): include('C:\\xampp\\htdocs...')
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 70
+[06-Jan-2022 21:48:14 Europe/Berlin] PHP Warning:  Undefined variable $id in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 336
+[06-Jan-2022 21:48:14 Europe/Berlin] PHP Warning:  Undefined array key "" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 336
+[06-Jan-2022 21:48:14 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Usuario::getById(): Argument #1 ($id) must be of type int, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 336 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php:172
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(336): Usuario::getById(NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php(8): require_once('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(18): include_once('C:\\xampp\\htdocs...')
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php on line 172
+[06-Jan-2022 21:48:51 Europe/Berlin] PHP Warning:  Undefined variable $user in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 347
+[06-Jan-2022 21:48:51 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 347
+[06-Jan-2022 21:48:51 Europe/Berlin] PHP Warning:  Undefined variable $user in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 348
+[06-Jan-2022 21:48:51 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 348
+[06-Jan-2022 21:48:51 Europe/Berlin] PHP Warning:  Undefined variable $user in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 349
+[06-Jan-2022 21:48:51 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 349
+[06-Jan-2022 21:48:51 Europe/Berlin] PHP Warning:  Undefined variable $user in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 350
+[06-Jan-2022 21:48:51 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 350
+[06-Jan-2022 21:48:51 Europe/Berlin] PHP Warning:  Undefined variable $user in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 351
+[06-Jan-2022 21:48:51 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 351
+[06-Jan-2022 21:48:51 Europe/Berlin] PHP Warning:  Undefined variable $user in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 352
+[06-Jan-2022 21:48:51 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 352
+[06-Jan-2022 21:48:51 Europe/Berlin] PHP Warning:  Undefined variable $user in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 353
+[06-Jan-2022 21:48:51 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 353
+[06-Jan-2022 21:48:51 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Usuario::__construct(): Argument #1 ($nombres) must be of type string, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 353 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php:80
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(353): Usuario->__construct(NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\login.php(8): require_once('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(18): include_once('C:\\xampp\\htdocs...')
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php on line 80
+[06-Jan-2022 22:25:33 Europe/Berlin] PHP Fatal error:  Cannot declare class Controllers\Usuario, because the name is already in use in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 16
+[06-Jan-2022 22:27:36 Europe/Berlin] PHP Fatal error:  Cannot declare class Controllers\Usuario, because the name is already in use in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 16
+[06-Jan-2022 22:46:11 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php:442
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php(178): Model::getRecords('usuario', Array, Array, Array)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(306): Usuario::getById(26)
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(63): Controllers\Usuario::getRequest()
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php on line 442
+[06-Jan-2022 22:48:37 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php:442
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php(178): Model::getRecords('usuario', Array, Array, Array)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(306): Usuario::getById(26)
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(63): Controllers\Usuario::getRequest()
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php on line 442
+[06-Jan-2022 22:51:09 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php:442
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php(178): Model::getRecords('usuario', Array, Array, Array)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(306): Usuario::getById(26)
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(63): Controllers\Usuario::getRequest()
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php on line 442
+[07-Jan-2022 00:12:29 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 385
+[07-Jan-2022 00:12:29 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Controllers\Usuario::getCurrentUserData(): Argument #1 ($id) must be of type int, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 385 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php:114
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(385): Controllers\Usuario::getCurrentUserData(NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(15): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 114
+[07-Jan-2022 00:12:47 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 385
+[07-Jan-2022 00:12:47 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Controllers\Usuario::getCurrentUserData(): Argument #1 ($id) must be of type int, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 385 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php:114
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(385): Controllers\Usuario::getCurrentUserData(NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(15): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 114
+[07-Jan-2022 00:13:39 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 373
+[07-Jan-2022 00:13:39 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Controllers\Usuario::getCurrentUserData(): Argument #1 ($id) must be of type int, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 373 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php:114
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(373): Controllers\Usuario::getCurrentUserData(NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(15): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 114
+[07-Jan-2022 00:14:23 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 376
+[07-Jan-2022 00:14:23 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Controllers\Usuario::getCurrentUserData(): Argument #1 ($id) must be of type int, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 376 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php:114
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(376): Controllers\Usuario::getCurrentUserData(NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(15): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 114

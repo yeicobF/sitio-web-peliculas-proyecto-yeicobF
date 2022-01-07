@@ -274,6 +274,39 @@ class Controller
   }
 
   /**
+   * Revisar si el controlador fue incluido después de otro controlador.
+   * 
+   * Esto puede parecer confuso, pero es porque en ocasiones se incluye un
+   * controlador en otro controlador y termina haciendo su procedimiento antes
+   * de lo deseado.
+   * 
+   * Esto permitirá revisar que no se incluyó otro controlador antes de este
+   * archivo y que se evite su ejecución.
+   *
+   * @return bool
+   */
+  public static function wasControllerIncludedAfterController(string $controller_name)
+  {
+    $include_history = get_included_files();
+
+    /**
+     * Array con los controladores sin incluir el que se envió.
+     */
+    $controllers_without_sent = array_filter(
+      $include_history,
+      // https://stackoverflow.com/a/10712844/13562806
+      // PHP array_filter with arguments
+      function ($include_element) use ($controller_name) {
+        return str_contains($include_element, "controllers\\") && !str_contains($include_element, $controller_name);
+      }
+    );
+
+    // Si el arreglo tiene más de 0 elementos, entonces encontró otros
+    // controladores.
+    return count($controllers_without_sent) > 0;
+  }
+
+  /**
    * Si no se trata de Post o el método no existe, redirigir al login. Así
    * evitamos que se entre desde la URL y que se envíen métodos inexistentes.
    *

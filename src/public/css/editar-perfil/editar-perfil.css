@@ -20,7 +20,14 @@
   /* padding: 0; */
 }
 
+.profile-details__figure * {
+  font-family: "Noto Sans JP", sans-serif;
+}
 
+.profile-details__role {
+  font-weight: 500;
+  text-decoration: underline wavy var(--color-crimson);
+}
 
 .edit-profile__figure,
 .profile-details__figure {
@@ -89,14 +96,13 @@
 
 /* -------------------------------------------------------------------------- */
 
-
-.edit-profile__username {
+.edit-profile__username,
+.profile-details__username {
   font-weight: 500;
-  text-decoration-line: underline;
-  text-decoration-style: wavy;
-  text-decoration-color: var(--color-maximum-blue-purple);
+  text-decoration: underline wavy var(--color-maximum-blue-purple);
   text-decoration-skip-ink: none;
 }
+
 
 
 /* -------------------------------------------------------------------------- */
@@ -110,7 +116,8 @@
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 575px) {
+
   .edit-profile__form hgroup {
     margin: 1em 0 0.5em;
   }

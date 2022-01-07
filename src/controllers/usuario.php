@@ -59,30 +59,36 @@ class Usuario extends Controller
   }
 
   /**
-   * Obtenemos foto de perfil del usuario.
+   * Obtenemos foto de perfil del usuario especificado.
    * 
    * Si no hay foto, es decir, que es null, regresar una genérica.
+   * 
+   * Esta función sirve para obtener la foto de perfil de cualquier usuario.
    *
    * @return void
    */
-  public static function getFotoPerfil()
-  {
-    // echo var_dump($_SESSION);
-    $foto_perfil = "";
+  public static function renderFotoPerfil(
+    int $usuario_id,
+    string $username,
+    ?string $foto_perfil
+  ) {
+    $has_foto_perfil = false;
+    $encoded_image = "";
 
-    if (!empty($_SESSION["foto_perfil"])) {
-      $foto_perfil = Controller::getEncodedImage($_SESSION["foto_perfil"]);
+    if (strlen($foto_perfil) > 0 && $foto_perfil !== null) {
+      $encoded_image = Controller::getEncodedImage($foto_perfil);
+      $has_foto_perfil = true;
     }
 
-    $username = $_SESSION["username"];
-    $alt = "Detalles de usuario - {$username}";
+    $alt = "Foto de perfil de usuario - {$username}";
     $detalles_perfil_url =
       FOLDERS_WITH_LOCALHOST["VIEWS"]
-      . "user/index.php?id={$_SESSION["id"]}";
+      . "user/index.php?id={$usuario_id}";
     // . "user/index.php?id={$_SESSION["id"]}";
-    if (!empty($foto_perfil)) {
+
+    if ($has_foto_perfil) {
 ?>
-      <img src='data:image/jpeg; base64, <?php echo $foto_perfil; ?>' alt='<?php echo $alt; ?>' class='circle-avatar profile-picture'>
+      <img src='data:image/jpeg; base64, <?php echo $encoded_image; ?>' alt='<?php echo $alt; ?>' class='circle-avatar profile-picture'>
     <?php
       return;
     }
@@ -96,7 +102,7 @@ class Usuario extends Controller
       <i class="fa-stack-2x fa-solid fa-circle circle-avatar profile-picture__circle"></i>
       <i class="fa-stack-1x fa-solid fa-user-astronaut fa-inverse profile-picture__icon"></i>
     </span>
-<?php
+  <?php
   }
 
   /**
@@ -107,7 +113,7 @@ class Usuario extends Controller
    */
   public static function getCurrentUserData(int $id): array
   {
-    return Model::getRecord(
+    return Model::getRecords(
       table: ModelUsuario::TABLE_NAME,
       where_clause_names: ["id"],
       where_clause_values: [$id],
@@ -168,6 +174,166 @@ class Usuario extends Controller
     }
   }
 
+  /**
+   * Revisar si los detalles del usuario son del que ha iniciado sesión.
+   *
+   * @param ModelUsuario $user Usuario de quien se han obtenido los detalles.
+   * @return bool
+   */
+  public static function areDetailsFromLoggedUser(ModelUsuario $user): bool
+  {
+    if (Login::isUserLoggedIn()) {
+      // Existe el ID del usuario que inició sesión y es el mismo de los
+      // detalles.
+      return
+        Controller::idExists(false, $_SESSION)
+        && $_SESSION["id"] === $user->_id;
+    }
+    return false;
+  }
+
+  public static function renderUserDetails(ModelUsuario $user)
+  {
+    // Ver si el perfil del usuario es el mismo que el del que tiene la sesión
+    // iniciada. 
+    //
+    // De esta forma, le podemos mostrar los botones de edición de perfil.
+    $are_details_from_logged_user = self::areDetailsFromLoggedUser($user);
+
+    // Si el perfil de  usuario es el mismo que inició sesión y es
+    // administrador. 
+    $is_user_admin = false;
+
+    // Ver si el usuario es admin.
+    if (
+      $are_details_from_logged_user
+      && mb_strtolower(
+        $user->getRolAsString(),
+        INTERNAL_ENCODING
+      ) === "administrador"
+    ) {
+      $is_user_admin = true;
+    }
+
+  ?>
+    <main class="profile-details">
+      <h1 class="profile-details__title">
+        Detalles de perfil
+      </h1>
+      <figure class="profile-details__figure row">
+        <!-- <figcaption>
+          <h2 class="edit-profile__title">Nombre del usuario</h2>
+        </figcaption> -->
+        <!-- <img src="<?php echo IMG_FOLDER; ?>../avatar/1.jpg" alt="Username" class="circle-avatar"> -->
+
+
+        <div class="profile-details__img col-12 col-sm-6 col-md-4">
+          <?php
+          Usuario::renderFotoPerfil(
+            usuario_id: $user->_id,
+            username: $user->_username,
+            foto_perfil: $user->_foto_perfil
+          );
+          ?>
+        </div>
+        <figcaption class="profile-details__figcaption col-12 col-sm-6  col-md-8">
+          <hgroup class="profile-details__figcaption__header">
+            <h2 class="profile-details__name">
+              <?php
+              echo "{$user->_nombres} {$user->_apellidos}";
+              ?>
+            </h2>
+            <?php
+            // Si el usuario es administrador, mostrar su rol.
+            if ($is_user_admin) {
+            ?>
+              <h3 class="profile-details__role">Administrador</h3>
+            <?php
+            }
+            ?>
+            <h4 class="profile-details__username edit-profile__username">
+              <?php echo $user->_username; ?>
+            </h4>
+
+          </hgroup>
+
+          <!-- Mostrar botones solo si se trata del dueño de la cuenta. -->
+          <?php
+          if ($are_details_from_logged_user) {
+          ?>
+            <form action="<?php echo CONTROLLERS_FOLDER . "usuario.php"; ?>" method="POST" enctype="multipart/form-data" class="profile-details__buttons">
+              <!-- <input type="hidden" name="_method" value="DELETE"> -->
+              <a href="<?php echo URL_PAGE["editar-perfil"]; ?>" class="btn btn-primary">
+                Editar perfil
+              </a>
+              <button name="_method" value="DELETE" title="Eliminar cuenta" class="btn btn-danger" type="submit">
+                Eliminar cuenta
+              </button>
+            </form>
+          <?php
+          }
+          ?>
+        </figcaption>
+      </figure>
+
+    </main>
+<?php
+  }
+
+  /**
+   * Ejecutar los procedimientos de la petición GET.
+   * 
+   * Lo pongo en la función y no en el archivo, ya que, en el navbar se hace un
+   * require_once de este controlador, por lo que, al incluirlo en la página que
+   * lo necesito, me da una excepción porque la clase ya se definió (cuando se
+   * llamó en el navbar), por lo que, no puedo volver a llamar a este archivo.
+   * 
+   * Así que, la mejor opción que encontré es esta función, aunque tenga que
+   * hacer el llamado manual. Al menos resolvería el problema.
+   * 
+   * Seguramente hay una mejor solución.
+   *
+   * @return bool
+   */
+  public static function getRequest()
+  {
+    Controller::startSession();
+    Model::initDbConnection();
+
+    // Mostrar detalles de usuario.
+    if (
+      str_contains(
+        $_SERVER["SCRIPT_FILENAME"],
+        "user/index.php"
+      )
+      && Controller::getKeyExist("id")
+      && is_numeric($_GET["id"])
+    ) {
+      $db_user = ModelUsuario::getById($_GET["id"]);
+
+      if ($db_user === null) {
+        Controller::redirectView(
+          view_path: "index.php",
+          error: "No se encontró el usuario."
+        );
+        return false;
+      }
+
+      $user = new ModelUsuario(
+        nombres: $db_user["nombres"],
+        apellidos: $db_user["apellidos"],
+        username: $db_user["username"],
+        password: $db_user["password"],
+        rol: $db_user["rol"],
+        id: $db_user["id"],
+        foto_perfil: $db_user["foto_perfil"]
+      );
+
+      Usuario::renderUserDetails($user);
+    }
+    return true;
+  }
+
   public static function getUsername()
   {
     return $_SESSION["username"];
@@ -190,6 +356,13 @@ class Usuario extends Controller
   }
 }
 
+if (
+  Controller::isCurrentFileAnotherController("usuario")
+  // || Controller::wasControllerIncludedAfterController("usuario")
+) {
+  return;
+}
+
 Controller::startSession();
 Model::initDbConnection();
 
@@ -201,26 +374,22 @@ $message = "";
 // actualizados.
 if (
   Controller::isGet()
-  && (str_contains(
+  && Controller::idExists()
+  && array_key_exists("id", $_SESSION)
+  && is_numeric($_SESSION["id"])
+) {
+  Usuario::updateSessionValues(Usuario::getCurrentUserData($_SESSION["id"]));
+
+  if (str_contains(
     $_SERVER["SCRIPT_FILENAME"],
     "editar-perfil/index.php"
-  )
-    || str_contains(
-      $_SERVER["SCRIPT_FILENAME"],
-      "user/index.php"
-    )
-  )
-) {
-  // No obtener datos de usuario y redirigir si no ha iniciado sesión.
-  Login::redirectIfUserNotLoggedIn("login/index.php");
-  Usuario::updateSessionValues(Usuario::getCurrentUserData($_SESSION["id"]));
-  return;
+  )) {
+    // No obtener datos de usuario y redirigir si no ha iniciado sesión.
+    Login::redirectIfUserNotLoggedIn("login/index.php");
+  }
 }
 
-if (
-  Controller::isCurrentFileView()
-  || Controller::isCurrentFileAnotherController("usuario")
-) {
+if (Controller::isCurrentFileView()) {
   return;
 }
 
@@ -264,13 +433,17 @@ if (Controller::isMethodPost()) {
     return;
   }
 
+  $foto_perfil = array_key_exists("foto_perfil", $non_empty_fields)
+    ? $non_empty_fields["foto_perfil"]
+    : null;
+
   $user = new ModelUsuario(
     nombres: $non_empty_fields["nombres"],
     apellidos: $non_empty_fields["apellidos"],
     username: $non_empty_fields["username"],
     password: $non_empty_fields["password"],
     rol: "normal",
-    foto_perfil: $non_empty_fields["foto_perfil"],
+    foto_perfil: $foto_perfil,
   );
 
   $result = $user->insertUsuario();

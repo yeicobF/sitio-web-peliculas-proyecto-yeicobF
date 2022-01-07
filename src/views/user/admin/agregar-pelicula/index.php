@@ -88,7 +88,7 @@ $baseHtmlHead = new BaseHtmlHead(
         <section class="col-12 col-lg-4">
           <label for="directores">Directores</label>
           <div class="form__input__container">
-            <input required autocomplete="off" type="text" name="directores" placeholder="Ingresa el nombre en español">
+            <input required autocomplete="off" type="text" name="directores" placeholder="Ingresa a los directores">
             <i class="form__input__icon fas fa-user"></i>
           </div>
         </section>
@@ -96,14 +96,14 @@ $baseHtmlHead = new BaseHtmlHead(
         <section class="col-12 col-lg-4">
           <label for="actores">Actores</label>
           <div class="form__input__container">
-            <input required autocomplete="off" type="text" name="actores" placeholder="Ingresa el nombre en español">
+            <input required autocomplete="off" type="text" name="actores" placeholder="Ingresa a los actores">
             <i class="form__input__icon fas fa-user"></i>
           </div>
         </section>
         <section class="col-12 col-lg-4">
           <label for="generos">Géneros</label>
           <div class="form__input__container">
-            <input required autocomplete="off" type="text" name="generos" placeholder="Ingresa el nombre en español">
+            <input required autocomplete="off" type="text" name="generos" placeholder="Ingresa los géneros">
             <i class="form__input__icon fas fa-info"></i>
           </div>
         </section>
@@ -112,7 +112,7 @@ $baseHtmlHead = new BaseHtmlHead(
 
         <section class="col-12 col-sm-4 col-md-6 col-xl-12">
           <label for="poster">Póster</label>
-          <input class="form__input__picture" type="file" name="poster" class="form-control">
+          <input class="form__input__picture" type="file" name="poster" class="form-control" placeholder="Póster de la película">
         </section>
         <section class="col-12 col-sm-4 col-md-6 col-xl-4">
           <label for="restriccion_edad">Clasificación de edad</label>
@@ -147,7 +147,7 @@ $baseHtmlHead = new BaseHtmlHead(
       </div>
       <section class="col-12">
         <label for="resumen_trama">Sinopsis</label>
-        <textarea class="form__text-input" name="resumen_trama" id="" cols="" rows=""></textarea>
+        <textarea class="form__text-input" name="resumen_trama" id="" cols="" rows="" placeholder="Ingresa la sinopsis de la trama"></textarea>
       </section>
 
       <section class="form__buttons add-movie__buttons">

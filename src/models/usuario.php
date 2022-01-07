@@ -132,6 +132,19 @@ class Usuario extends Model
   }
 
   /**
+   * Devolver el rol, pero en cadena ("administrador" | "normal").
+   *
+   * @return string
+   */
+  public function getRolAsString()
+  {
+    // Invertimos llave y valor del arreglo para que el número sea la llave y
+    // acceder con mayor facilidad.
+    $roles = array_flip(self::ROLES_ENUM_INDEX);
+    return $roles[$this->_rol];
+  }
+
+  /**
    * Obtener arreglo con el nombre y valor de cada atributo del objeto.
    *
    * Implementación distinta a la de `Model`, ya que, en `Model` se obtienen los
@@ -155,6 +168,22 @@ class Usuario extends Model
 
   /* --------------------------------- QUERIES --------------------------------
   */
+
+  public static function getById(int $id)
+  {
+    $db_usuario = parent::getRecords(
+      table: self::TABLE_NAME,
+      where_clause_names: ["id"],
+      where_clause_values: [$id],
+      pdo_params: self::PDO_PARAMS
+    );
+
+    if (array_key_exists(0, $db_usuario) && $db_usuario[0] !== null) {
+      return $db_usuario[0];
+    }
+
+    return null;
+  }
 
   /**
    * Inserción de un nuevo elemento.
