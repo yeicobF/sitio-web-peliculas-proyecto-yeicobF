@@ -68,7 +68,7 @@ class Pelicula extends Controller
 
       ?>
       <div class="movie-poster__year-image">
-        <a rel="noopener noreferrer" href="<?php echo $details_url; ?>" class="">
+        <a rel="noopener noreferrer" href="<?php echo $details_url; ?>" class="pretty-shadow">
           <?php self::renderPoster($movie) ?>
         </a>
         <time datetime="<?php echo $movie->release_year; ?>" class="movie-poster__year">
@@ -132,7 +132,7 @@ class Pelicula extends Controller
     if (!empty($movie->poster)) {
       $poster = Controller::getEncodedImage($movie->poster);
     ?>
-      <img src="data:image/jpeg; base64, <?php echo $poster; ?>" alt="<?php echo $movie->nombre_original; ?>" class="movie-poster__img <?php echo $poster_classes; ?>">
+      <img src="data:image/jpeg; base64, <?php echo $poster; ?>" alt="<?php echo $movie->nombre_original; ?>" class="movie-poster__img pretty-shadow <?php echo $poster_classes; ?>">
     <?php
       return;
     }
@@ -141,7 +141,7 @@ class Pelicula extends Controller
     <!-- 
     Si no hay poster, poner un fondo y un ícono que lo indique.
     -->
-    <span class="fa-stack movie-poster__img movie__no-poster <?php echo $poster_classes; ?>">
+    <span class="fa-stack movie-poster__img movie__no-poster pretty-shadow <?php echo $poster_classes; ?>">
       <i class="fa-solid fa-border-none"></i>
       <p>No poster</p>
     </span>

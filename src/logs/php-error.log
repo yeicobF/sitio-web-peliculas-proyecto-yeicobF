@@ -598,3 +598,31 @@ Stack trace:
 #2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(63): Controllers\Usuario::getRequest()
 #3 {main}
   thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php on line 442
+[07-Jan-2022 00:12:29 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 385
+[07-Jan-2022 00:12:29 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Controllers\Usuario::getCurrentUserData(): Argument #1 ($id) must be of type int, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 385 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php:114
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(385): Controllers\Usuario::getCurrentUserData(NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(15): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 114
+[07-Jan-2022 00:12:47 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 385
+[07-Jan-2022 00:12:47 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Controllers\Usuario::getCurrentUserData(): Argument #1 ($id) must be of type int, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 385 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php:114
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(385): Controllers\Usuario::getCurrentUserData(NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(15): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 114
+[07-Jan-2022 00:13:39 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 373
+[07-Jan-2022 00:13:39 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Controllers\Usuario::getCurrentUserData(): Argument #1 ($id) must be of type int, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 373 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php:114
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(373): Controllers\Usuario::getCurrentUserData(NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(15): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 114
+[07-Jan-2022 00:14:23 Europe/Berlin] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 376
+[07-Jan-2022 00:14:23 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Controllers\Usuario::getCurrentUserData(): Argument #1 ($id) must be of type int, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 376 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php:114
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(376): Controllers\Usuario::getCurrentUserData(NULL)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(15): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 114

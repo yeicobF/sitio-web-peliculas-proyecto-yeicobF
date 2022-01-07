@@ -207,8 +207,10 @@ class Usuario extends Controller
     // Ver si el usuario es admin.
     if (
       $are_details_from_logged_user
-      && array_key_exists("rol", $_SESSION)
-      && $_SESSION["rol"] === ModelUsuario::ROLES_ENUM_INDEX["administrador"]
+      && mb_strtolower(
+        $user->getRolAsString(),
+        INTERNAL_ENCODING
+      ) === "administrador"
     ) {
       $is_user_admin = true;
     }
@@ -225,7 +227,7 @@ class Usuario extends Controller
         <!-- <img src="<?php echo IMG_FOLDER; ?>../avatar/1.jpg" alt="Username" class="circle-avatar"> -->
 
 
-        <div class="col-12 col-sm-6 col-md-4">
+        <div class="profile-details__img col-12 col-sm-6 col-md-4">
           <?php
           Usuario::renderFotoPerfil(
             usuario_id: $user->_id,
@@ -235,35 +237,36 @@ class Usuario extends Controller
           ?>
         </div>
         <figcaption class="profile-details__figcaption col-12 col-sm-6  col-md-8">
-          <header class="profile-details__figcaption__header">
-            <h2>
+          <hgroup class="profile-details__figcaption__header">
+            <h2 class="profile-details__name">
               <?php
               echo "{$user->_nombres} {$user->_apellidos}";
               ?>
             </h2>
-            <h3 class="profile-details__username edit-profile__username">
-              <?php echo $user->_username; ?>
-            </h3>
             <?php
             // Si el usuario es administrador, mostrar su rol.
             if ($is_user_admin) {
             ?>
-              <h4>Administrador</h4>
+              <h3 class="profile-details__role">Administrador</h3>
             <?php
             }
             ?>
-          </header>
+            <h4 class="profile-details__username edit-profile__username">
+              <?php echo $user->_username; ?>
+            </h4>
+
+          </hgroup>
 
           <!-- Mostrar botones solo si se trata del dueño de la cuenta. -->
           <?php
           if ($are_details_from_logged_user) {
           ?>
-            <form action="<?php echo CONTROLLERS_FOLDER . "usuario.php"; ?>" method="POST" enctype="multipart/form-data" class="">
+            <form action="<?php echo CONTROLLERS_FOLDER . "usuario.php"; ?>" method="POST" enctype="multipart/form-data" class="profile-details__buttons">
               <!-- <input type="hidden" name="_method" value="DELETE"> -->
-              <a href="<?php echo URL_PAGE["editar-perfil"]; ?>" class="btn btn-primary btn-fit-content">
+              <a href="<?php echo URL_PAGE["editar-perfil"]; ?>" class="btn btn-primary">
                 Editar perfil
               </a>
-              <button name="_method" value="DELETE" title="Eliminar cuenta" class="btn btn-danger form__button" type="submit">
+              <button name="_method" value="DELETE" title="Eliminar cuenta" class="btn btn-danger" type="submit">
                 Eliminar cuenta
               </button>
             </form>
@@ -369,20 +372,20 @@ $message = "";
 
 // Obtener los datos del usuario actual, ya que, estos pudieron haber sido
 // actualizados.
-if (Controller::isGet()) {
-  if (
-    str_contains(
-      $_SERVER["SCRIPT_FILENAME"],
-      "editar-perfil/index.php"
-    )
-    || str_contains(
-      $_SERVER["SCRIPT_FILENAME"],
-      "user/index.php"
-    )
-  ) {
+if (
+  Controller::isGet()
+  && Controller::idExists()
+  && array_key_exists("id", $_SESSION)
+  && is_numeric($_SESSION["id"])
+) {
+  Usuario::updateSessionValues(Usuario::getCurrentUserData($_SESSION["id"]));
+
+  if (str_contains(
+    $_SERVER["SCRIPT_FILENAME"],
+    "editar-perfil/index.php"
+  )) {
     // No obtener datos de usuario y redirigir si no ha iniciado sesión.
     Login::redirectIfUserNotLoggedIn("login/index.php");
-    Usuario::updateSessionValues(Usuario::getCurrentUserData($_SESSION["id"]));
   }
 }
 
