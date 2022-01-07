@@ -19,9 +19,51 @@ use Libs\Controller;
 use Controllers\Usuario;
 use Controllers\Pelicula;
 use Controllers\Login;
+use View;
 
 class ComentarioPelicula extends Controller
 {
+  /**
+   * Obtener el tiempo que ha pasado desde la hora actual.
+   *
+   * De hecho, esto podría hacerlo inicialmente aquí para mostrar el tiempo que
+   * ha pasado inicialmente, pero con JavaScript seguir actualizando el tiempo
+   * que ha concurrido.
+   *
+   * > En StackOverflow encontré respuestas que me podrían ser de ayuda:
+   * https://stackoverflow.com/a/5092038/13562806
+   *
+   * ## Formato del tiempo en MySQL
+   *
+   * En la tabla de MySQL se guardan los datos como:
+   *
+   * - `fecha`: 2022-01-05
+   * - `hora`: 13:19:30
+   *
+   * ## Condiciones
+   *
+   * El tiempo que ha pasado dependerá de ciertas condiciones:
+   *
+   * - Si no ha pasado más de un minuto, regresar: "Hace un momento".
+   * - Si ha pasado más de un minuto, mostrar el número de minutos.
+   * - Si han pasado más de 60 minutos, mostrar el número de horas.
+   * - Si han pasado más de 24 horas, mostrar el número de días.
+   * - Si han pasado más de 31 días, mostrar el número de meses que han pasado.
+   *
+   * - Si han pasado más de 12 meses, mostrar el número de años y meses que han
+   *   pasado.
+   *   - Si no ha pasado ningún mes en dichos años, solo mostrar el año.
+   *
+   * @param string $date Fecha en el siguiente formato: `YYYY-MM-DD`, ejemplo:
+   * `2022-01-05`.
+   * @param string $time Hora en formato de 24 horas con el siguiente formato:
+   * `HH:MM:SS`, ejemplo: `13:19:30`.
+   * @return string
+   */
+  public static function getTimeElapsed(string $date, string $time)
+  {
+  }
+
   /**
    * Renderizar todos los comentarios de una película.
    *
@@ -29,43 +71,238 @@ class ComentarioPelicula extends Controller
    * botón para eliminar el comentario.
    *
    * @param array<ModelComentarioPelicula> $movie_comments
-   * @return void
+   * @return bool Se insertó la información correctamente o no.
    */
   public static function renderMovieComment(
-    ModelComentarioPelicula $movie_comments
+    ModelComentarioPelicula $movie_comment
   ) {
-    
+    // Obtener el tiempo que ha transcurrido desde la publicación del
+    // comentario.
+
+    // Obtener el usuario de quien escribió el comentario.
+    $db_user = ModelUsuario::getById($movie_comment->usuario_id);
+
+    /**
+     * El usuario no existe, por lo que, hay que indicar que este comentario no
+     * se agregó.
+     */
+    if ($db_user === null) {
+      return false;
+    }
+
+    $user = new ModelUsuario(
+      nombres: $db_user["nombres"],
+      apellidos: $db_user["apellidos"],
+      username: $db_user["username"],
+      password: $db_user["password"],
+      rol: $db_user["rol"],
+      id: $db_user["id"],
+      foto_perfil: $db_user["foto_perfil"]
+    );
+
+    $user_details_url = URL_PAGE["detalles-perfil"] . "?id=" . $user->_id;
+    $avatar_classes = "";
+    $are_details_from_logged_user = false;
+    // Ver si los detalles del comentario son los del usuario con sesión
+    // iniciada.
+    if (Usuario::areDetailsFromLoggedUser($user)) {
+      $avatar_classes = "own-avatar";
+      $are_details_from_logged_user = true;
+    }
+
+    // Obtener los likes y dislikes del comentario.
 ?>
     <article class="comments__posted">
       <figure class="comments__details">
-        <img src="<?php echo IMG_FOLDER; ?>../avatar/1.jpg" alt="Username" class="circle-avatar">
+        <a href="<?php echo $user_details_url; ?>">
+          <?php
+          Usuario::renderFotoPerfil(
+            $user->_id,
+            $user->_username,
+            $user->_foto_perfil,
+            $avatar_classes
+          );
+          ?>
+        </a>
         <figcaption class="comments__details__info">
-          <h3 class="comments__details__title">Username Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic ad numquam natus quaerat maiores vitae voluptatem. Voluptates perspiciatis sequi delectus, illum adipisci earum modi, error, ad totam eos praesentium hic?</h3>
-          <time class="comments__details__time-ago" datetime="PT3H">Hace 3 horas</time>
+          <h3 class="comments__details__title">
+            <?php echo $user->_username; ?>
+          </h3>
+          <time class="comments__details__time-ago" datetime="PT3H" id="time-ago">
+            Hace 3 horas
+          </time>
         </figcaption>
       </figure>
       <main class="comments__text">
         <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus accusantium officiis deserunt cum temporibus iure in sed alias a corporis?
+          <?php echo $movie_comment->comentario; ?>
         </p>
       </main>
       <footer class="comments__interaction">
-        <form name="comment-likes" class="" action="" method="post">
-          <button class="comments__interaction__button" type="button"><i class="fas fa-thumbs-up"></i></button>
-          <data value="2">2</data>
-        </form>
-        <form name="comment-dislikes" class="" action="" method="post">
-          <button class="comments__interaction__button selected" type="button"><i class="fas fa-thumbs-down"></i></button>
-          <data value="4">4</data>
-        </form>
+        <!-- 
+        Esto no será un formulario, sino que, se regirá por el id del 
+        comentario. 
+        -->
+        <section class="comments__interaction__info">
+
+          <div class="comments__interaction__likes">
+            <button class="comments__interaction__button" type="button"><i class="fas fa-thumbs-up"></i></button>
+            <data value="2">2</data>
+          </div>
+
+          <div class="comments__interaction__likes">
+            <button class="comments__interaction__button selected" type="button"><i class="fas fa-thumbs-down"></i></button>
+            <data value="4">4</data>
+          </div>
+        </section>
+        <?php
+        // Si el comentario es del usuario con sesión iniciada, mostrar botón
+        // para eliminar.
+        if ($are_details_from_logged_user) {
+        ?>
+          <form action="<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "comentario-pelicula.php"; ?>" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="id" value="<?php echo $movie_comment->id; ?>">
+
+            <button type="submit" class="fa-btn--danger">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </form>
+        <?php
+        }
+        ?>
       </footer>
     </article>
 <?php
   }
 
+  /**
+   * Renderizar todos los comentarios de una película.
+   *
+   * @param array<ModelComentarioPelicula> $db_comments
+   * @return void
+   */
   public static function renderEveryMovieComment(
-    int $pelicula_id
-  ) {
-    $db_comments = ModelComentarioPelicula::getEveryMovieComment($pelicula_id);
+    array $db_comments
+  ): void {
+    foreach ($db_comments as $db_comment) {
+      $movie_comment = new ModelComentarioPelicula(
+        id: $db_comment["id"],
+        pelicula_id: $db_comment["pelicula_id"],
+        usuario_id: $db_comment["usuario_id"],
+        comentario: $db_comment["comentario"],
+        fecha: $db_comment["fecha"],
+        hora: $db_comment["hora"],
+      );
+
+      self::renderMovieComment($movie_comment);
+    }
   }
 }
+
+Controller::startSession();
+Model::initDbConnection();
+
+if (
+  Controller::isGet()
+  && Controller::getKeyExist("id")
+  && is_numeric($_GET["id"])
+) {
+  $db_comments = ModelComentarioPelicula::getEveryMovieComment($_GET["id"]);
+
+  if ($db_comments === null) {
+    return false;
+  }
+
+  ComentarioPelicula::renderEveryMovieComment($db_comments);
+
+  return true;
+}
+
+if (
+  Controller::isCurrentFileView()
+  || Controller::isCurrentFileAnotherController("comentario-pelicula")
+) {
+  return;
+}
+
+/* ---------------- NO ES GET, ENTONCES TENDRÍA QUE SER POST ---------------- */
+Controller::redirectIfNonExistentPostMethod("peliculas/index.php");
+
+$view_path = "peliculas/index.php";
+// Campos del formulario.
+$form_fields = $_POST;
+unset($form_fields["_method"]);
+
+$non_empty_fields = Controller::getNonEmptyFormFields(
+  $form_fields
+);
+
+// Hay que agregar la fecha y hora nosotros.
+// 
+$non_empty_fields["fecha"] = Model::getCurrentDate();
+$non_empty_fields["hora"] = Model::getCurrentTime();
+
+
+if (
+  array_key_exists("pelicula_id", $non_empty_fields)
+  && is_numeric($non_empty_fields["pelicula_id"])
+) {
+  $view_path = "peliculas/detalles-pelicula/index.php?id={$non_empty_fields["pelicula_id"]}";
+}
+
+// El usuario no puede hacer ningún procedimiento POST si no ha iniciado sesión.
+if (!Login::isUserLoggedIn()) {
+  Controller::redirectView(
+    view_path: $view_path,
+    error: "No has iniciado sesión."
+  );
+}
+
+if (Controller::isMethodPost()) {
+
+  // Revisar que todos los campos menos "fecha_nacimiento" tienen datos.
+  if (!Controller::areRequiredFieldsFilled(
+    ModelComentarioPelicula::REQUIRED_FIELDS,
+    $non_empty_fields
+  )) {
+    Controller::redirectView(
+      view_path: $view_path,
+      error: "No se enviaron los datos correctamente."
+    );
+    return;
+  }
+
+  $comentario_pelicula = new ModelComentarioPelicula(
+    pelicula_id: $non_empty_fields["pelicula_id"],
+    usuario_id: $non_empty_fields["usuario_id"],
+    comentario: $non_empty_fields["comentario"],
+    fecha: $non_empty_fields["fecha"],
+    hora: $non_empty_fields["hora"]
+  );
+
+  $result = $comentario_pelicula->insertComentarioPelicula();
+}
+
+$message = Model::OPERATION_INFO[$result];
+
+if ($result === 1) {
+  Controller::redirectView(
+    view_path: $view_path,
+    message: $message
+
+  );
+
+  // Si publicamos el comentario, regresar el JSON.
+  if (Controller::isMethodPost()) {
+    return $comentario_pelicula->returnJson();
+  }
+
+  return;
+}
+
+Controller::redirectView(
+  view_path: $view_path,
+  error: $message
+
+);

@@ -24,7 +24,8 @@
   font-weight: 600;
 }
 
-.session-buttons .circle-avatar {
+.session-buttons .circle-avatar,
+.comment_details .circle-avatar {
   height: 2em;
 }
 

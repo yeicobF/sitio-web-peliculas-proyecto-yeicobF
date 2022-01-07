@@ -70,7 +70,8 @@ class Usuario extends Controller
   public static function renderFotoPerfil(
     int $usuario_id,
     string $username,
-    ?string $foto_perfil
+    ?string $foto_perfil,
+    string $additional_classes = ""
   ) {
     $has_foto_perfil = false;
     $encoded_image = "";
@@ -88,7 +89,7 @@ class Usuario extends Controller
 
     if ($has_foto_perfil) {
 ?>
-      <img src='data:image/jpeg; base64, <?php echo $encoded_image; ?>' alt='<?php echo $alt; ?>' class='circle-avatar profile-picture'>
+      <img src='data:image/jpeg; base64, <?php echo $encoded_image; ?>' alt='<?php echo $alt; ?>' class='circle-avatar profile-picture <?php echo $additional_classes; ?>'>
     <?php
       return;
     }
