@@ -163,6 +163,7 @@ class ComentarioPelicula extends Controller
           <form action="<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "comentario-pelicula.php"; ?>" method="POST">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="id" value="<?php echo $movie_comment->id; ?>">
+            <input type="hidden" name="pelicula_id" value="<?php echo $movie_comment->pelicula_id; ?>">
 
             <button type="submit" class="fa-btn--danger">
               <i class="fa-solid fa-trash"></i>
@@ -282,6 +283,10 @@ if (Controller::isMethodPost()) {
   );
 
   $result = $comentario_pelicula->insertComentarioPelicula();
+}
+
+if (Controller::isMethodDelete()) {
+  $result = ModelComentarioPelicula::delete($non_empty_fields["id"]);
 }
 
 $message = Model::OPERATION_INFO[$result];

@@ -85,7 +85,7 @@ class ComentarioPelicula extends Model
     );
   }
 
-  public function delete(int $id): int
+  public static function delete(int $id): int
   {
     return parent::deleteRecord(
       table: self::TABLE_NAME,
