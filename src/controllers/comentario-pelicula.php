@@ -26,9 +26,15 @@ class ComentarioPelicula extends Controller
   /**
    * Obtener el tiempo que ha pasado desde la hora actual.
    *
+   * - Converting timestamp to time ago in PHP e.g 1 day ago, 2 days ago...:
+   *   https://stackoverflow.com/a/18602474/13562806
+   * 
+   * ## Solución con JavaScript
+   * 
    * De hecho, esto podría hacerlo inicialmente aquí para mostrar el tiempo que
    * ha pasado inicialmente, pero con JavaScript seguir actualizando el tiempo
    * que ha concurrido.
+   *
    *
    * > En StackOverflow encontré respuestas que me podrían ser de ayuda:
    * https://stackoverflow.com/a/5092038/13562806
@@ -44,7 +50,7 @@ class ComentarioPelicula extends Controller
    *
    * El tiempo que ha pasado dependerá de ciertas condiciones:
    *
-   * - Si no ha pasado más de un minuto, regresar: "Hace un momento".
+   * - Si no ha pasado menos de un minuto, regresar: "Hace un momento".
    * - Si ha pasado más de un minuto, mostrar el número de minutos.
    * - Si han pasado más de 60 minutos, mostrar el número de horas.
    * - Si han pasado más de 24 horas, mostrar el número de días.
@@ -62,6 +68,9 @@ class ComentarioPelicula extends Controller
    */
   public static function getTimeElapsed(string $date, string $time)
   {
+
+    // Revisar desde lo mayor a lo menor, así hacemos early returns.
+
   }
 
   /**

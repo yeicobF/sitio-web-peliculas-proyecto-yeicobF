@@ -116,6 +116,14 @@ body :is(.h1, .h2, .h3, .h4, .h5, .h6) {
   -webkit-backdrop-filter: blur(7.9px);
 }
 
+/* Quiero que la navbar siempre se vea. */
+.navbar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
 input.fa-btn--danger,
 a.fa-btn--danger,
 button.fa-btn--danger,
