@@ -626,3 +626,8 @@ Stack trace:
 #1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(15): include_once('C:\\xampp\\htdocs...')
 #2 {main}
   thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 114
+[07-Jan-2022 22:12:21 Europe/Berlin] PHP Warning:  Array to string conversion in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 647
+[07-Jan-2022 22:12:21 Europe/Berlin] PHP Warning:  Array to string conversion in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 647
+[07-Jan-2022 22:12:21 Europe/Berlin] PHP Warning:  Array to string conversion in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 647
+[07-Jan-2022 22:12:21 Europe/Berlin] PHP Warning:  Array to string conversion in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 647
+[07-Jan-2022 22:12:21 Europe/Berlin] PHP Warning:  Array to string conversion in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 647

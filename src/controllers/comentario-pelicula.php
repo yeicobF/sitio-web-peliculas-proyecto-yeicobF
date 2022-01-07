@@ -23,55 +23,7 @@ use View;
 
 class ComentarioPelicula extends Controller
 {
-  /**
-   * Obtener el tiempo que ha pasado desde la hora actual.
-   *
-   * - Converting timestamp to time ago in PHP e.g 1 day ago, 2 days ago...:
-   *   https://stackoverflow.com/a/18602474/13562806
-   * 
-   * ## Solución con JavaScript
-   * 
-   * De hecho, esto podría hacerlo inicialmente aquí para mostrar el tiempo que
-   * ha pasado inicialmente, pero con JavaScript seguir actualizando el tiempo
-   * que ha concurrido.
-   *
-   *
-   * > En StackOverflow encontré respuestas que me podrían ser de ayuda:
-   * https://stackoverflow.com/a/5092038/13562806
-   *
-   * ## Formato del tiempo en MySQL
-   *
-   * En la tabla de MySQL se guardan los datos como:
-   *
-   * - `fecha`: 2022-01-05
-   * - `hora`: 13:19:30
-   *
-   * ## Condiciones
-   *
-   * El tiempo que ha pasado dependerá de ciertas condiciones:
-   *
-   * - Si no ha pasado menos de un minuto, regresar: "Hace un momento".
-   * - Si ha pasado más de un minuto, mostrar el número de minutos.
-   * - Si han pasado más de 60 minutos, mostrar el número de horas.
-   * - Si han pasado más de 24 horas, mostrar el número de días.
-   * - Si han pasado más de 31 días, mostrar el número de meses que han pasado.
-   *
-   * - Si han pasado más de 12 meses, mostrar el número de años y meses que han
-   *   pasado.
-   *   - Si no ha pasado ningún mes en dichos años, solo mostrar el año.
-   *
-   * @param string $date Fecha en el siguiente formato: `YYYY-MM-DD`, ejemplo:
-   * `2022-01-05`.
-   * @param string $time Hora en formato de 24 horas con el siguiente formato:
-   * `HH:MM:SS`, ejemplo: `13:19:30`.
-   * @return string
-   */
-  public static function getTimeElapsed(string $date, string $time)
-  {
 
-    // Revisar desde lo mayor a lo menor, así hacemos early returns.
-
-  }
 
   /**
    * Renderizar todos los comentarios de una película.
@@ -87,6 +39,10 @@ class ComentarioPelicula extends Controller
   ) {
     // Obtener el tiempo que ha transcurrido desde la publicación del
     // comentario.
+    $time_ago = Controller::getTimeElapsed(
+      $movie_comment->fecha,
+      $movie_comment->hora
+    );
 
     // Obtener el usuario de quien escribió el comentario.
     $db_user = ModelUsuario::getById($movie_comment->usuario_id);
@@ -121,7 +77,7 @@ class ComentarioPelicula extends Controller
 
     // Obtener los likes y dislikes del comentario.
 ?>
-    <article class="comments__posted">
+    <article class="comments__posted pretty-shadow">
       <figure class="comments__details">
         <a href="<?php echo $user_details_url; ?>">
           <?php
@@ -137,8 +93,12 @@ class ComentarioPelicula extends Controller
           <h3 class="comments__details__title">
             <?php echo $user->_username; ?>
           </h3>
-          <time class="comments__details__time-ago" datetime="PT3H" id="time-ago">
-            Hace 3 horas
+          <!-- 
+            El datetime lo podría obtener con una función o en la misma del timeago, pero por ahora no lo haré. 
+          -->
+          <!-- <time class="comments__details__time-ago" datetime="PT3H" id="time-ago"> -->
+          <time class="comments__details__time-ago" datetime="" id="time-ago">
+            <?php echo $time_ago; ?>
           </time>
         </figcaption>
       </figure>

@@ -113,7 +113,7 @@ $baseHtmlHead = new BaseHtmlHead(
           $btn_classes .= " {$disabled}";
         }
         ?>
-        <form action="<?php echo $action; ?>" method="POST" class="comments__form">
+        <form action="<?php echo $action; ?>" method="POST" class="comments__form pretty-shadow">
           <?php
           echo "
             {$post_method}
@@ -149,7 +149,7 @@ $baseHtmlHead = new BaseHtmlHead(
         ?>
 
         <?php
-        include $path . VIEWS . "components/posted-comment.php";
+        // include $path . VIEWS . "components/posted-comment.php";
         ?>
       </section>
       <aside class="best-movies-container col-12 col-md-4">

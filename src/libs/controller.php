@@ -2,6 +2,9 @@
 
 namespace Libs;
 
+use DateTime;
+use DateTimeZone;
+
 require_once __DIR__ . "/../config/config.php";
 
 class Controller
@@ -275,11 +278,11 @@ class Controller
 
   /**
    * Revisar si el controlador fue incluido después de otro controlador.
-   * 
+   *
    * Esto puede parecer confuso, pero es porque en ocasiones se incluye un
    * controlador en otro controlador y termina haciendo su procedimiento antes
    * de lo deseado.
-   * 
+   *
    * Esto permitirá revisar que no se incluyó otro controlador antes de este
    * archivo y que se evite su ejecución.
    *
@@ -294,8 +297,8 @@ class Controller
      */
     $controllers_without_sent = array_filter(
       $include_history,
-      // https://stackoverflow.com/a/10712844/13562806
-      // PHP array_filter with arguments
+      // https://stackoverflow.com/a/10712844/13562806 PHP array_filter with
+      // arguments
       function ($include_element) use ($controller_name) {
         return str_contains($include_element, "controllers\\") && !str_contains($include_element, $controller_name);
       }
@@ -496,6 +499,170 @@ class Controller
 <?php
     }
   }
+
+  /**
+   * Obtener el tiempo que ha pasado desde la hora actual.
+   *
+   * - Converting timestamp to time ago in PHP e.g 1 day ago, 2 days ago...:
+   *   https://stackoverflow.com/a/18602474/13562806
+   *
+   * ## Solución con JavaScript
+   *
+   * De hecho, esto podría hacerlo inicialmente aquí para mostrar el tiempo que
+   * ha pasado inicialmente, pero con JavaScript seguir actualizando el tiempo
+   * que ha concurrido.
+   *
+   *
+   * > En StackOverflow encontré respuestas que me podrían ser de ayuda:
+   * https://stackoverflow.com/a/5092038/13562806
+   *
+   * ## Formato del tiempo en MySQL
+   *
+   * En la tabla de MySQL se guardan los datos como:
+   *
+   * - `fecha`: 2022-01-05
+   * - `hora`: 13:19:30
+   *
+   * ## Condiciones
+   *
+   * El tiempo que ha pasado dependerá de ciertas condiciones:
+   *
+   * - Si no ha pasado menos de un minuto, regresar: "Hace un momento".
+   * - Si ha pasado más de un minuto, mostrar el número de minutos.
+   * - Si han pasado más de 60 minutos, mostrar el número de horas.
+   * - Si han pasado más de 24 horas, mostrar el número de días.
+   * - Si han pasado más de 31 días, mostrar el número de meses que han pasado.
+   *
+   * - Si han pasado más de 12 meses, mostrar el número de años y meses que han
+   *   pasado.
+   *   - Si no ha pasado ningún mes en dichos años, solo mostrar el año.
+   *
+   * ## Fuentes
+   *
+   * - PHP Date and Time Recipes:
+   *   https://css-tricks.com/php-date-and-time-recipes/
+   *
+   * - Converting timestamp to time ago in PHP e.g 1 day ago, 2 days ago...:
+   *   https://stackoverflow.com/a/18602474/13562806
+   *
+   * @param string $date Fecha en el siguiente formato: `YYYY-MM-DD`, ejemplo:
+   * `2022-01-05`.
+   * @param string $time Hora en formato de 24 horas con el siguiente formato:
+   * `HH:MM:SS`, ejemplo: `13:19:30`.
+   * @return string
+   */
+  public static function getTimeElapsed(
+    string $date,
+    string $time,
+    string $defaultTimeZone = DEFAULT_TIME_ZONE_STRING
+  ) {
+    $date_time_zone = new DateTimeZone(DEFAULT_TIME_ZONE_STRING);
+
+    // Obtener el tiempo actual.
+    $now = new DateTime(
+      timezone: $date_time_zone
+    );
+
+    // "2022-01-05 13:19:30"
+    $given_date_string = "{$date} {$time}";
+    // Objeto con fecha obtenida por los parámetros.
+    $given_date = new DateTime(
+      $given_date_string,
+      timezone: $date_time_zone
+    );
+
+    // Diferencia entre tiempo actual y fecha dada.
+    $date_interval = $now->diff($given_date);
+
+    /**
+     * DateInterval::$invert
+     *
+     * Is 1 if the interval is inverted and 0 otherwise
+     */
+    if (!$date_interval->invert) {
+      // Si el tiempo dato no es menor al actual (sería raro), regresar null.
+      return null;
+    }
+
+    // Número de semanas, ya que, no es una propiedad default del objeto.
+    $date_interval->w = floor($date_interval->d / 7);
+
+    $time_format = [
+      'y' => 'año',
+      'm' => 'mes',
+      'w' => 'semana',
+      'd' => 'día',
+      'h' => 'hora',
+      'i' => 'minuto',
+      's' => 'segundo',
+    ];
+
+    // Arreglo en donde, guardaremos los valores que encontremos de
+    // $time_format.
+    $time_ago = [];
+
+    // Recorrer los tiempos y ver cuáles encontramos.
+    foreach ($time_format as $type => $format) {
+
+      // Si no existe una diferencia de tiempo en el tipo actual (y, m, w, ...)
+      if (!$date_interval->$type) {
+        continue;
+      }
+
+      // Concatenamos: Valor del tipo actual + nombre del tipo + agregar "s"
+      // si es mayor a 1 el valor.
+      $time_ago[$type] =
+        "{$date_interval->$type} {$format}";
+
+      // El valor es mayor a 1, hay que convertir el formato a plural.
+      if ($date_interval->$type > 1) {
+        // Por mes"e"s -> meses
+        if ($type === "m") {
+          $time_ago[$type] .= "e";
+        }
+        $time_ago[$type] .= "s";
+      }
+    }
+
+    /**
+     * Revisar desde lo mayor a lo menor, así hacemos early returns. 
+     * 
+     * Este lo ponemos en una condicional distinta porque no solo iría el año,
+     * sino que, también puede llevar el mes. 
+     */
+    if (array_key_exists("y", $time_ago) && $time_ago["y"] > 0) {
+      $string = "Hace {$time_ago["y"]}";
+
+      // Si existe el mes, concatenarlo.
+      if (array_key_exists("m", $time_ago) && $time_ago["m"] > 0) {
+        $string .= ", {$time_ago["m"]}";
+      }
+
+      return $string;
+    }
+
+    /**
+     * Los demás valores van solos, es decir, no se concatenan con algo más, por
+     * lo que, con regresar la primera posición del arreglo está bien. 
+     * 
+     * - Si hay más de un elemento en el arreglo, regresar solo el primer tiempo
+     *   y convertimos a cadena con implode():
+     * 
+     *   "Hace 1 mes | semana | minuto | segundo"
+     * 
+     * - Si no hay elementos, significa que acaba de ser agregado.
+     * 
+     * Basado en: https://stackoverflow.com/a/18602474/13562806
+     * 
+     * Si quisiera todos los elementos concatenados:
+     *   implode(", ", $time_ago) -> "1 día, 2 horas, 54 minutos, 37 segundos"
+     */
+    return
+      count($time_ago) > 0
+      ? "Hace " . implode(array_slice($time_ago, 0, 1))
+      : "Hace un momento";
+  }
+
   // /**
   //  * Hacer un `return` que detendrá el proceso si el archivo actual es una
   //  * vista.

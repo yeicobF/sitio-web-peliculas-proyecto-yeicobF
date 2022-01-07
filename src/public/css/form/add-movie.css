@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: row;
   height: 100%;
+  gap: .2em;
 }
 
 .form__movie__cast {

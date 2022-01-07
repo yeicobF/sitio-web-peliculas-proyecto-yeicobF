@@ -112,8 +112,6 @@ body :is(.h1, .h2, .h3, .h4, .h5, .h6) {
 
 .pretty-shadow {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(7.9px);
-  -webkit-backdrop-filter: blur(7.9px);
 }
 
 /* Quiero que la navbar siempre se vea. */
