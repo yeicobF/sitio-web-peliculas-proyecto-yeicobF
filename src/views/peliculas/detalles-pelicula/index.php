@@ -174,8 +174,7 @@ $baseHtmlHead = new BaseHtmlHead(
       ?>;
 
     const controllerUrl = "<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "like-comentario.php"; ?>";
-    const publishCommen
-    tBtn = document.getElementById("publish-comment-btn");
+    const publishCommentBtn = document.getElementById("publish-comment-btn");
 
 
     const commentForm = document.getElementById("comment-form");
@@ -250,7 +249,6 @@ $baseHtmlHead = new BaseHtmlHead(
       let currentInteraction = clickedButton.getAttribute("name");
       let method = "";
       let isMethodSelected = false;
-      let userInteraction = Object.hasOwn(dbLikeComentario, "user_interaction");
 
       /**
        * Obtener datos de la BD, no del DOM, por si fueron actualizados y el DOM
@@ -262,12 +260,18 @@ $baseHtmlHead = new BaseHtmlHead(
       await getData(getUrl)
         .then((responseData) => {
           dbLikeComentario = responseData;
-          console.log(dbLikeComentario);
+          console.log("get response: ", dbLikeComentario);
         })
         .catch((error) => {
           console.log(`error: ${error}`);
           return;
         });
+
+      let userInteraction =
+        dbLikeComentario === null ?
+        false :
+        Object.hasOwn(dbLikeComentario, "user_interaction");
+
 
       // Si no hay interacción actualmente, hacer inserción.
       if (!userInteraction) {
@@ -315,7 +319,15 @@ $baseHtmlHead = new BaseHtmlHead(
       // }
 
       // https://stackoverflow.com/a/69374442/13562806
-      await sendData(controllerUrl, Object.fromEntries(formData));
+      await sendData(controllerUrl, Object.fromEntries(formData))
+        .then((responseData) => {
+          dbLikeComentario = responseData;
+          console.log("post response: ", dbLikeComentario);
+        })
+        .catch((error) => {
+          console.log(`error: ${error}`);
+          return;
+        });
     });
   </script>
 </body>

@@ -13,6 +13,7 @@
  */
 const sendHttpRequest = (method, url, data) => {
   const promise = new Promise((resolve, reject) => {
+    console.log("request method", method);
     const xhr = new XMLHttpRequest();
     xhr.open(method, url);
 

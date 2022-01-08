@@ -64,6 +64,53 @@ class LikeComentario extends Controller
 
     return false;
   }
+
+  /**
+   * Obtener las interacciones actuales de un comentario.
+   * 
+   * Se devuelve el número actual de likes y dislikes, y si el id del usuario
+   * existe, se indica si tiene alguna interacción con el comentario.
+   *
+   * @param array $comment_interactions_data
+   * @param array $db_comment_interactions
+   * @return array ["likes", "dislikes", "user-interaction"]
+   */
+  public static function fetchCurrentCommentInteractions(
+
+    array $comment_interactions_data,
+    array $db_comment_interactions
+  ) {
+    $usuario_id_exists =
+      array_key_exists(
+        "usuario_id",
+        $comment_interactions_data
+      ) && is_numeric($comment_interactions_data["usuario_id"]);
+
+
+    $comment_interactions = LikeComentario::getInteractionsNumber(
+      $db_comment_interactions
+    );
+
+    $user_interaction = null;
+    // Si se envía el ID del usuario, hay que obtener su interacción actual.
+    if ($usuario_id_exists) {
+      $user_interaction = LikeComentario::getUserInteractionWithComment(
+        $db_comment_interactions,
+        Usuario::getId()
+      );
+    }
+
+    // Resultados del estado del comentario.
+    // $likes = $comment_interactions["likes"];
+    // $dislikes = $comment_interactions["dislikes"];
+    $results = $comment_interactions;
+
+    if ($user_interaction !== false && strlen($user_interaction) > 0) {
+      $results["user_interaction"] = $user_interaction;
+    }
+
+    return $results;
+  }
 }
 
 Controller::startSession();
@@ -78,7 +125,6 @@ if (
 
 $error = ["error" => ""];
 $view_path = "peliculas/index.php";
-
 // Para recibir JSON como post, no lo podemos hacer en $_POST porque ese es un
 // arreglo y no una cadena.
 // Fuente: https://www.geeksforgeeks.org/how-to-receive-json-post-with-php/
@@ -100,10 +146,24 @@ if (Controller::isGet()) {
       $_GET
     ) && is_numeric($_GET["comentario_pelicula_id"]);
 
+  if (!$comentario_pelicula_id_exists) {
+    $error["error"] = "No se especificaron los datos esperados.";
+    echo json_encode($error);
+    return;
+  }
+
   // Obtener los likes y dislikes del comentario.
   $db_interactions = ModelLikeComentario::getInteractionsComentario(
     $_GET["comentario_pelicula_id"]
   );
+
+  echo json_encode(
+    LikeComentario::fetchCurrentCommentInteractions(
+      $_GET,
+      $db_interactions
+    )
+  );
+  return;
 }
 
 if (
@@ -165,46 +225,14 @@ if (Controller::isMethodPut($post)) {
 // las interacciones del comentario.
 if (
   is_array($result)
-  || is_array($db_interactions)
 ) {
-  if ($db_interactions === null) {
-    $db_interactions = $result;
-  }
-
-  $usuario_id_exists =
-    array_key_exists(
-      "usuario_id",
-      $_GET
-    ) && is_numeric($_GET["usuario_id"]);
-
-  if (!$comentario_pelicula_id_exists) {
-    $error["error"] = "No se especificaron los datos esperados.";
-    echo json_encode($error);
-    return;
-  }
-  $comment_interactions = LikeComentario::getInteractionsNumber(
-    $db_interactions
+  echo json_encode(
+    LikeComentario::fetchCurrentCommentInteractions(
+      $non_empty_fields,
+      $result
+    )
   );
 
-  $user_interaction = null;
-  // Si se envía el ID del usuario, hay que obtener su interacción actual.
-  if ($usuario_id_exists) {
-    $user_interaction = LikeComentario::getUserInteractionWithComment(
-      $db_interactions,
-      Usuario::getId()
-    );
-  }
-
-  $likes = $comment_interactions["likes"];
-  $dislikes = $comment_interactions["dislikes"];
-  // Resultados del estado del comentario.
-  $results = $comment_interactions;
-
-  if ($user_interaction !== false && strlen($user_interaction) > 0) {
-    $results["user_interaction"] = $user_interaction;
-  }
-
-  echo json_encode($results);
   return;
 }
 
