@@ -113,7 +113,7 @@ $baseHtmlHead = new BaseHtmlHead(
           $btn_classes .= " {$disabled}";
         }
         ?>
-        <form action="<?php echo $action; ?>" method="POST" class="comments__form pretty-shadow">
+        <form id="comment-form" action="<?php echo $action; ?>" method="POST" class="comments__form pretty-shadow">
           <?php
           echo "
             {$post_method}
@@ -135,7 +135,7 @@ $baseHtmlHead = new BaseHtmlHead(
             }
             ?>
 
-            <button <?php echo $disabled; ?> type="submit" value="Publicar" class="<?php echo $btn_classes; ?>">
+            <button <?php echo $disabled; ?> id="publish-comment-btn" type="button" value="Publicar" class="<?php echo $btn_classes; ?>">
               Publicar
             </button>
           </footer>
@@ -160,12 +160,28 @@ $baseHtmlHead = new BaseHtmlHead(
     </div>
   </div>
 
-
-
-
   <?php
   include $path . LAYOUTS . "footer.php";
   ?>
+  <!-- <script defer src="<?php /* echo FOLDERS_WITH_LOCALHOST["JS"] . "xml-http-request.js"; */ ?>" type="module"></script> -->
+  <script defer>
+    const postUrl = "<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "comentario-pelicula.php"; ?>";
+    const publishCommentBtn = document.getElementById("publish-comment-btn");
+    const commentForm = document.getElementById("comment-form");
+    let formData;
+
+    // Al dar click, llamar al método POST.
+    publishCommentBtn.addEventListener("click", () => {
+      // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
+      formData = new FormData(commentForm);
+      for (var key of formData.keys()) {
+        console.log(key);
+      }
+      for (var value of formData.values()) {
+        console.log(value);
+      }
+    });
+  </script>
 </body>
 
 </html>
