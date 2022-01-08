@@ -215,6 +215,11 @@
   transition: color 5ms ease-in;
 }
 
+.comments__interaction__button.disabled,
+.comments__interaction__button.disabled:hover {
+  background-color: transparent;
+}
+
 .comments__interaction__button:hover {
   color: var(--color-crimson);
 }
