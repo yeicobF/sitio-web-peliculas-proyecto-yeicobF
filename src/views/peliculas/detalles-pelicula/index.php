@@ -135,7 +135,7 @@ $baseHtmlHead = new BaseHtmlHead(
             }
             ?>
 
-            <button <?php echo $disabled; ?> id="publish-comment-btn" type="button" value="Publicar" class="<?php echo $btn_classes; ?>">
+            <button <?php echo $disabled; ?> id="publish-comment-btn" type="submit" value="Publicar" class="<?php echo $btn_classes; ?>">
               Publicar
             </button>
           </footer>

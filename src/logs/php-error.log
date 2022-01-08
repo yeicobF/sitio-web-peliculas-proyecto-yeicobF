@@ -649,3 +649,10 @@ Stack trace:
 #1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(24): Usuario::getById(11)
 #2 {main}
   thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php on line 445
+[08-Jan-2022 02:13:04 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class "Controllers\LikeComentario" not found in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\comentario-pelicula.php:79
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\comentario-pelicula.php(227): Controllers\ComentarioPelicula::renderMovieComment(Object(ComentarioPelicula))
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\comentario-pelicula.php(246): Controllers\ComentarioPelicula::renderEveryMovieComment(Array)
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php(148): require_once('C:\\xampp\\htdocs...')
+#3 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\comentario-pelicula.php on line 79

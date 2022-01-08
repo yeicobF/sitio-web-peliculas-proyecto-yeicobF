@@ -212,6 +212,11 @@
 .comments__interaction__button {
   background-color: transparent;
   cursor: pointer;
+  transition: color 5ms ease-in;
+}
+
+.comments__interaction__button:hover {
+  color: var(--color-crimson);
 }
 
 /* -------------------------------------------------------------------------- */

@@ -8,12 +8,15 @@ require_once __DIR__ . "/../libs/model.php";
 require_once __DIR__ . "/../models/pelicula.php";
 require_once __DIR__ . "/../models/usuario.php";
 require_once __DIR__ . "/../models/comentario-pelicula.php";
+require_once __DIR__ . "/../models/like-comentario.php";
 require_once __DIR__ . "/usuario.php";
 require_once __DIR__ . "/pelicula.php";
+require_once __DIR__ . "/like-comentario.php";
 
 use Pelicula as ModelPelicula;
 use Usuario as ModelUsuario;
 use ComentarioPelicula as ModelComentarioPelicula;
+use LikeComentario as ModelLikeComentario;
 use Model as Model;
 use Libs\Controller;
 use Controllers\Usuario;
@@ -23,8 +26,6 @@ use View;
 
 class ComentarioPelicula extends Controller
 {
-
-
   /**
    * Renderizar todos los comentarios de una película.
    *
@@ -49,12 +50,19 @@ class ComentarioPelicula extends Controller
 
     // Obtener el usuario de quien escribió el comentario.
     $db_user = ModelUsuario::getById($movie_comment->usuario_id);
+    // Obtener los likes y dislikes del comentario.
+    $db_interactions = ModelLikeComentario::getInteractionsComentario(
+      $movie_comment->id,
+    );
 
     /**
      * El usuario no existe, por lo que, hay que indicar que este comentario no
      * se agregó.
      */
-    if ($db_user === null) {
+    if (
+      $db_user === null
+      || $db_interactions === null
+    ) {
       return false;
     }
 
@@ -67,6 +75,33 @@ class ComentarioPelicula extends Controller
       id: $db_user["id"],
       foto_perfil: $db_user["foto_perfil"]
     );
+
+    $comment_interactions = LikeComentario::getInteractionsNumber($db_interactions);
+    $likes = $comment_interactions["likes"];
+    $dislikes = $comment_interactions["dislikes"];
+
+    /**
+     * Revisar interacción si el usuario ha iniciado sesión.
+     */
+    $user_interaction = false;
+    /**
+     * Clase para agregar selected si el usuario tuvo interacción.
+     */
+    $user_like = $user_dislike = "";
+
+    if (Login::isUserLoggedIn()) {
+      $user_interaction = LikeComentario::getUserInteractionWithComment(
+        $db_interactions,
+        Usuario::getId()
+      );
+
+      if ($user_interaction === "like") {
+        $user_like = "selected";
+      }
+      if ($user_interaction === "dislike") {
+        $user_dislike = "selected";
+      }
+    }
 
     $user_details_url = URL_PAGE["detalles-perfil"] . "?id=" . $user->_id;
     $avatar_classes = "";
@@ -81,7 +116,7 @@ class ComentarioPelicula extends Controller
       $are_details_from_logged_user = true;
     }
 
-    // Obtener los likes y dislikes del comentario.
+
 ?>
     <article class="comments__posted pretty-shadow">
       <figure class="comments__details">
@@ -132,13 +167,17 @@ class ComentarioPelicula extends Controller
         <section class="comments__interaction__info">
 
           <div class="comments__interaction__likes">
-            <button class="comments__interaction__button" type="button"><i class="fas fa-thumbs-up"></i></button>
-            <data value="2">2</data>
+            <button class="comments__interaction__button <?php echo $user_like; ?>" type="button" title="like" name="like" value="<?php echo $user_like; ?>">
+              <i class="fas fa-thumbs-up"></i>
+            </button>
+            <data value="<?php echo $likes; ?>"><?php echo $likes; ?></data>
           </div>
 
           <div class="comments__interaction__likes">
-            <button class="comments__interaction__button selected" type="button"><i class="fas fa-thumbs-down"></i></button>
-            <data value="4">4</data>
+            <button class="comments__interaction__button <?php echo $user_dislike; ?>" type="button" title="dislike" name="dislike" value="<?php echo $user_dislike; ?>">
+              <i class="fas fa-thumbs-down"></i>
+            </button>
+            <data value="<?php echo $dislikes; ?>"><?php echo $dislikes; ?></data>
           </div>
         </section>
         <?php
