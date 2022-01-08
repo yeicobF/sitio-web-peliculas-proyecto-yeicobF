@@ -19,16 +19,16 @@
 }
 
 .footer__elements li {
-  font-size: .85em;
+  font-size: 0.85em;
   font-weight: 500;
   color: white;
   text-align: center;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 650px) {
   .footer__elements {
     flex-direction: column;
-    gap: .2em;
+    gap: 0.2em;
     /* font-size: .8em; */
     /* font-weight: 500; */
   }

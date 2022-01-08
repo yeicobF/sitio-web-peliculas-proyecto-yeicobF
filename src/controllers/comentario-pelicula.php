@@ -8,12 +8,15 @@ require_once __DIR__ . "/../libs/model.php";
 require_once __DIR__ . "/../models/pelicula.php";
 require_once __DIR__ . "/../models/usuario.php";
 require_once __DIR__ . "/../models/comentario-pelicula.php";
+require_once __DIR__ . "/../models/like-comentario.php";
 require_once __DIR__ . "/usuario.php";
 require_once __DIR__ . "/pelicula.php";
+require_once __DIR__ . "/like-comentario.php";
 
 use Pelicula as ModelPelicula;
 use Usuario as ModelUsuario;
 use ComentarioPelicula as ModelComentarioPelicula;
+use LikeComentario as ModelLikeComentario;
 use Model as Model;
 use Libs\Controller;
 use Controllers\Usuario;
@@ -23,47 +26,6 @@ use View;
 
 class ComentarioPelicula extends Controller
 {
-  /**
-   * Obtener el tiempo que ha pasado desde la hora actual.
-   *
-   * De hecho, esto podría hacerlo inicialmente aquí para mostrar el tiempo que
-   * ha pasado inicialmente, pero con JavaScript seguir actualizando el tiempo
-   * que ha concurrido.
-   *
-   * > En StackOverflow encontré respuestas que me podrían ser de ayuda:
-   * https://stackoverflow.com/a/5092038/13562806
-   *
-   * ## Formato del tiempo en MySQL
-   *
-   * En la tabla de MySQL se guardan los datos como:
-   *
-   * - `fecha`: 2022-01-05
-   * - `hora`: 13:19:30
-   *
-   * ## Condiciones
-   *
-   * El tiempo que ha pasado dependerá de ciertas condiciones:
-   *
-   * - Si no ha pasado más de un minuto, regresar: "Hace un momento".
-   * - Si ha pasado más de un minuto, mostrar el número de minutos.
-   * - Si han pasado más de 60 minutos, mostrar el número de horas.
-   * - Si han pasado más de 24 horas, mostrar el número de días.
-   * - Si han pasado más de 31 días, mostrar el número de meses que han pasado.
-   *
-   * - Si han pasado más de 12 meses, mostrar el número de años y meses que han
-   *   pasado.
-   *   - Si no ha pasado ningún mes en dichos años, solo mostrar el año.
-   *
-   * @param string $date Fecha en el siguiente formato: `YYYY-MM-DD`, ejemplo:
-   * `2022-01-05`.
-   * @param string $time Hora en formato de 24 horas con el siguiente formato:
-   * `HH:MM:SS`, ejemplo: `13:19:30`.
-   * @return string
-   */
-  public static function getTimeElapsed(string $date, string $time)
-  {
-  }
-
   /**
    * Renderizar todos los comentarios de una película.
    *
@@ -78,15 +40,29 @@ class ComentarioPelicula extends Controller
   ) {
     // Obtener el tiempo que ha transcurrido desde la publicación del
     // comentario.
+    $time_ago = Controller::getTimeElapsed(
+      $movie_comment->fecha,
+      $movie_comment->hora
+    );
+    // Obtener la fecha con propio formato.
+    $date = Controller::getDateAsOwnFormat($movie_comment->fecha);
+    $time = Controller::getTimeAsOwnFormat($movie_comment->hora);
 
     // Obtener el usuario de quien escribió el comentario.
     $db_user = ModelUsuario::getById($movie_comment->usuario_id);
+    // Obtener los likes y dislikes del comentario.
+    $db_interactions = ModelLikeComentario::getInteractionsComentario(
+      $movie_comment->id,
+    );
 
     /**
      * El usuario no existe, por lo que, hay que indicar que este comentario no
      * se agregó.
      */
-    if ($db_user === null) {
+    if (
+      $db_user === null
+      || $db_interactions === null
+    ) {
       return false;
     }
 
@@ -100,9 +76,39 @@ class ComentarioPelicula extends Controller
       foto_perfil: $db_user["foto_perfil"]
     );
 
+    $comment_interactions = LikeComentario::getInteractionsNumber($db_interactions);
+    $likes = $comment_interactions["likes"];
+    $dislikes = $comment_interactions["dislikes"];
+
+    /**
+     * Revisar interacción si el usuario ha iniciado sesión.
+     */
+    $user_interaction = false;
+    /**
+     * Clase para agregar selected si el usuario tuvo interacción.
+     */
+    $user_like = $user_dislike = "";
+
+    if (Login::isUserLoggedIn()) {
+      $user_interaction = LikeComentario::getUserInteractionWithComment(
+        $db_interactions,
+        Usuario::getId()
+      );
+
+      if ($user_interaction === "like") {
+        $user_like = "selected";
+      }
+      if ($user_interaction === "dislike") {
+        $user_dislike = "selected";
+      }
+    }
+
     $user_details_url = URL_PAGE["detalles-perfil"] . "?id=" . $user->_id;
     $avatar_classes = "";
     $are_details_from_logged_user = false;
+    // El administrador podrá borrar comentarios.
+    $is_user_admin = Usuario::isAdmin();
+
     // Ver si los detalles del comentario son los del usuario con sesión
     // iniciada.
     if (Usuario::areDetailsFromLoggedUser($user)) {
@@ -110,9 +116,9 @@ class ComentarioPelicula extends Controller
       $are_details_from_logged_user = true;
     }
 
-    // Obtener los likes y dislikes del comentario.
+
 ?>
-    <article class="comments__posted">
+    <article class="comments__posted pretty-shadow">
       <figure class="comments__details">
         <a href="<?php echo $user_details_url; ?>">
           <?php
@@ -128,9 +134,24 @@ class ComentarioPelicula extends Controller
           <h3 class="comments__details__title">
             <?php echo $user->_username; ?>
           </h3>
-          <time class="comments__details__time-ago" datetime="PT3H" id="time-ago">
-            Hace 3 horas
-          </time>
+          <!-- 
+            El datetime lo podría obtener con una función o en la misma del timeago, pero por ahora no lo haré. 
+          -->
+          <!-- <time class="comments__details__time-ago" datetime="PT3H" id="time-ago"> -->
+          <div class="comments__details__time">
+            <time class="comments__details__time-ago" datetime="" id="time-ago">
+              <?php echo $time_ago; ?>
+            </time>
+            <!-- https://unicode-table.com/es/00B7/ -->
+            <span class="comments__details__date vertical-line"></span>
+            <time class="comments__details__date" datetime="">
+              <?php echo $date; ?>
+            </time>
+            <span class="comments__details__hour vertical-line"></span>
+            <time class="comments__details__hour" datetime="">
+              <?php echo $time; ?>
+            </time>
+          </div>
         </figcaption>
       </figure>
       <main class="comments__text">
@@ -146,25 +167,33 @@ class ComentarioPelicula extends Controller
         <section class="comments__interaction__info">
 
           <div class="comments__interaction__likes">
-            <button class="comments__interaction__button" type="button"><i class="fas fa-thumbs-up"></i></button>
-            <data value="2">2</data>
+            <button class="comments__interaction__button <?php echo $user_like; ?>" type="button" title="like" name="like" value="<?php echo $user_like; ?>">
+              <i class="fas fa-thumbs-up"></i>
+            </button>
+            <data value="<?php echo $likes; ?>"><?php echo $likes; ?></data>
           </div>
 
           <div class="comments__interaction__likes">
-            <button class="comments__interaction__button selected" type="button"><i class="fas fa-thumbs-down"></i></button>
-            <data value="4">4</data>
+            <button class="comments__interaction__button <?php echo $user_dislike; ?>" type="button" title="dislike" name="dislike" value="<?php echo $user_dislike; ?>">
+              <i class="fas fa-thumbs-down"></i>
+            </button>
+            <data value="<?php echo $dislikes; ?>"><?php echo $dislikes; ?></data>
           </div>
         </section>
         <?php
         // Si el comentario es del usuario con sesión iniciada, mostrar botón
         // para eliminar.
-        if ($are_details_from_logged_user) {
+        if (
+          $are_details_from_logged_user
+          || $is_user_admin
+        ) {
         ?>
           <form action="<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "comentario-pelicula.php"; ?>" method="POST">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="id" value="<?php echo $movie_comment->id; ?>">
+            <input type="hidden" name="pelicula_id" value="<?php echo $movie_comment->pelicula_id; ?>">
 
-            <button type="submit" class="fa-btn--danger">
+            <button type="submit" class="fa-btn--danger" id="delete-comentario-pelicula">
               <i class="fa-solid fa-trash"></i>
             </button>
           </form>
@@ -284,6 +313,10 @@ if (Controller::isMethodPost()) {
   $result = $comentario_pelicula->insertComentarioPelicula();
 }
 
+if (Controller::isMethodDelete()) {
+  $result = ModelComentarioPelicula::delete($non_empty_fields["id"]);
+}
+
 $message = Model::OPERATION_INFO[$result];
 
 if ($result === 1) {
@@ -296,6 +329,9 @@ if ($result === 1) {
   // Si publicamos el comentario, regresar el JSON.
   if (Controller::isMethodPost()) {
     return $comentario_pelicula->returnJson();
+  }
+  if (Controller::isMethodDelete()) {
+    return $result;
   }
 
   return;

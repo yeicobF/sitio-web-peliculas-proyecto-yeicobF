@@ -28,11 +28,10 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  row-gap: .5em;
+  row-gap: 0.5em;
   align-items: flex-start;
   align-content: flex-start;
 }
-
 
 .best-movies-container__title {
   font-size: 1em;
@@ -61,13 +60,13 @@
   height: 100%;
   padding: 1em 0;
   text-align: left;
-  font-size: .8rem;
+  font-size: 0.8rem;
   display: flex;
   flex-direction: column;
   /* justify-content: flex-start; */
   padding-bottom: 1em;
-  row-gap: .2em;
-  padding-top: .1em;
+  row-gap: 0.2em;
+  padding-top: 0.1em;
 }
 .best-movies__details-list .movie-poster__title {
   text-align: left;
@@ -77,8 +76,7 @@
 }
 
 .best-movies__details-list li,
-.best-movies__details-list li *
-{
+.best-movies__details-list li * {
   /* font-size: 1.3em; */
   max-lines: 3;
   word-break: break-word;
@@ -101,7 +99,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   column-gap: 1.5em;
-  row-gap: .5em;
+  row-gap: 0.5em;
 }
 
 /* ------------------------------ MOVIE POSTER ------------------------------ */
@@ -109,10 +107,10 @@
 .movie-poster {
   display: flex;
   flex-direction: column;
-  padding: .75em;
+  padding: 0.75em;
   /* width: 100%; */
-  font-size: .8em;
-  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.8em;
+  font-family: "Noto Sans JP", sans-serif;
   position: relative;
 }
 
@@ -125,7 +123,7 @@
 .movie__no-poster {
   /* From https://css.glass */
   font-size: 3.5em;
-  padding: .3em;
+  padding: 0.3em;
   color: crimson;
   flex-direction: column;
   background: rgba(201, 126, 235, 0.14);
@@ -134,11 +132,13 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  backdrop-filter: blur(7.9px);
+  -webkit-backdrop-filter: blur(7.9px);
 }
 
 .movie__no-poster p {
   text-align: center;
-  font-size: .4em;
+  font-size: 0.4em;
   font-weight: 700;
 }
 
@@ -150,19 +150,18 @@
 
 .movie-poster__year-image .movie__no-poster {
   justify-content: center;
-
 }
 
 /* ------------------------ BOTONES DE ADMINISTRADOR ------------------------ */
 .movie-poster__admin-buttons {
   position: absolute;
   /* width: 100%; */
-  padding: .6em;
+  padding: 0.6em;
   display: flex;
   flex-direction: row;
   z-index: 1;
   flex-wrap: wrap;
-  gap: .4em;
+  gap: 0.4em;
   /* top: 0px; */
 }
 
@@ -177,7 +176,7 @@
 
 .movie-poster__year-image {
   position: relative;
-  font-size: .8em;
+  font-size: 0.8em;
   height: min-content;
   padding: 0;
 }
@@ -198,7 +197,7 @@
 }
 
 .movie-poster__title {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
   font-size: 1.1em;
   text-align: center;
   font-weight: 600;
@@ -236,13 +235,12 @@
 }
 @media (min-width: 375px) and (max-width: 767px) {
   .best-movies-container__title {
-
   }
   .movie-poster__year {
     font-size: 1.2em;
   }
   .best-movies-container .movie-poster__year {
-    bottom: .5em;
+    bottom: 0.5em;
     right: 1.5em;
   }
   .best-movies__details-list .movie-poster__title {
@@ -256,8 +254,7 @@
   }
 
   .best-movies__details-list li
-  /* .best-movies__details-list li *  */
-  {
+  /* .best-movies__details-list li *  */ {
     font-size: 1.5em;
   }
 }

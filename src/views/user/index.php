@@ -1,5 +1,9 @@
 <?php
 
+use Usuario as GlobalUsuario;
+use Controllers\Usuario;
+use Libs\Controller;
+
 $path = "{$_SERVER["DOCUMENT_ROOT"]}/";
 
 include_once $path
@@ -11,13 +15,30 @@ include_once
   . "base-html-head.php";
 
 include_once
+  FOLDERS_WITH_DOCUMENT_ROOT["LIBS"]
+  . "controller.php";
+include_once
+  FOLDERS_WITH_DOCUMENT_ROOT["MODELS"]
+  . "usuario.php";
+
+Controller::startSession();
+Model::initDbConnection();
+$db_user = GlobalUsuario::getById($_GET["id"]);
+
+if ($db_user === null) {
+  Controller::redirectView(
+    view_path: "index.php",
+    error: "No se encontró el usuario."
+  );
+  return false;
+}
+
+include_once
   FOLDERS_WITH_DOCUMENT_ROOT["CONTROLLERS"]
   . "usuario.php";
 
-use Controllers\Usuario;
-
 $baseHtmlHead = new BaseHtmlHead(
-  _pageName: "Detalles de perfil",
+  _pageName: "Detalles de perfil - {$db_user["username"]}",
   _includeOwnFramework: true,
   _includeFontAwesome: true
 );

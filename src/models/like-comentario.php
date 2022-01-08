@@ -2,8 +2,10 @@
 
 include_once __DIR__ . "/../libs/model.php";
 
+/**
+ * Likes o dislikes de un comentario.
+ */
 class LikeComentario extends Model
-
 {
   public int $comentario_pelicula_id;
   public int $usuario_id;
@@ -40,38 +42,26 @@ class LikeComentario extends Model
     $this->setTipo($tipo);
   }
 
-  public static function getLikeComentario(
+  /**
+   * Obtener likes y dislikes de un comentario.
+   *
+   * @param integer $comentario_pelicula_id
+   * @param integer $usuario_id
+   * @return array
+   */
+  public static function getInteractionsComentario(
     int $comentario_pelicula_id,
-    int $usuario_id
   ): array {
-    try {
-      $where_clauses = [
+    return parent::getRecords(
+      table: self::TABLE_NAME,
+      where_clause_names: [
         "comentario_pelicula_id",
-        "usuario_id"
-      ];
-
-      $query_select = parent::createSelectQuery(
-        self::TABLE_NAME,
-        $where_clauses
-      );
-
-      $query = self::$db_connection->prepare($query_select);
-
-      $query->execute(
-        parent::bindWhereClauses(
-          where_clauses: $where_clauses,
-          values: [
-            $comentario_pelicula_id,
-            $usuario_id
-          ]
-        )
-      );
-
-      return self::getFetchedRecords($query);
-    } catch (PDOException $e) {
-      error_log("Error en la query - {$e}");
-      exit();
-    }
+      ],
+      where_clause_values: [
+        $comentario_pelicula_id,
+      ],
+      pdo_params: self::PDO_PARAMS
+    );
   }
 
   /**
@@ -88,6 +78,19 @@ class LikeComentario extends Model
   }
 
   /**
+   * Devolver el la interacción como cadena.
+   *
+   * @return string "like" | "dislike"
+   */
+  public function getTipoAsString()
+  {
+    // Invertimos llave y valor del arreglo para que el número sea la llave y
+    // acceder con mayor facilidad.
+    $tipos = array_flip(self::TIPO_ENUM_INDEX);
+    return $tipos[$this->tipo];
+  }
+
+  /**
    * Actualizar like o dislike de comentario.
    * 
    * Se eliminará el valor actual y se pondrá el que fue seleccionado (valor
@@ -100,7 +103,10 @@ class LikeComentario extends Model
     $new_tipo = $this->tipo <= 1 ? 2 : 1;
 
     // Borramos el registro actual.
-    $this->delete();
+    $this->delete(
+      $this->comentario_pelicula_id,
+      $this->usuario_id,
+    );
 
     // Instanciamos con nuevo tipo.
     $new_state  = new LikeComentario(
@@ -113,17 +119,19 @@ class LikeComentario extends Model
     return $new_state->insertLikeComentario();
   }
 
-  public function delete(): int
-  {
+  public static function delete(
+    int $comentario_pelicula_id,
+    int $usuario_id
+  ): int {
     return parent::deleteRecord(
       table: self::TABLE_NAME,
-      where_clauses: [
+      where_clause_names: [
         "comentario_pelicula_id",
         "usuario_id"
       ],
-      values: [
-        $this->comentario_pelicula_id,
-        $this->usuario_id,
+      where_clause_values: [
+        $comentario_pelicula_id,
+        $usuario_id,
       ],
       pdo_params: self::PDO_PARAMS
     );
