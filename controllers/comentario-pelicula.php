@@ -88,8 +88,12 @@ class ComentarioPelicula extends Controller
      * Clase para agregar selected si el usuario tuvo interacción.
      */
     $user_like = $user_dislike = "";
+    // Botones deshabilitados si el usuario no ha iniciado sesión.
+    $disabled = "disabled";
 
     if (Login::isUserLoggedIn()) {
+      $disabled = "";
+
       $user_interaction = LikeComentario::getUserInteractionWithComment(
         $db_interactions,
         Usuario::getId()
@@ -137,9 +141,9 @@ class ComentarioPelicula extends Controller
           <!-- 
             El datetime lo podría obtener con una función o en la misma del timeago, pero por ahora no lo haré. 
           -->
-          <!-- <time class="comments__details__time-ago" datetime="PT3H" id="time-ago"> -->
+          <!-- <time class="comments__details__time-ago" datetime="PT3H"> -->
           <div class="comments__details__time">
-            <time class="comments__details__time-ago" datetime="" id="time-ago">
+            <time class="comments__details__time-ago" datetime="">
               <?php echo $time_ago; ?>
             </time>
             <!-- https://unicode-table.com/es/00B7/ -->
@@ -164,22 +168,30 @@ class ComentarioPelicula extends Controller
         Esto no será un formulario, sino que, se regirá por el id del 
         comentario. 
         -->
-        <section class="comments__interaction__info">
+        <form class="comments__interaction__info" method="POST">
+          <input type="hidden" name="comentario_pelicula_id" value="<?php echo $movie_comment->id; ?>">
+          <?php
+          if (Login::isUserLoggedIn()) {
+          ?>
+            <input type="hidden" name="usuario_id" value="<?php echo Usuario::getId(); ?>">
+          <?php
+          }
+          ?>
 
           <div class="comments__interaction__likes">
-            <button class="comments__interaction__button <?php echo $user_like; ?>" type="button" title="like" name="like" value="<?php echo $user_like; ?>">
+            <button class="comments__interaction__button <?php echo "{$user_like} {$disabled}"; ?>" type="button" title="like" name="like" value="<?php echo $user_like; ?>">
               <i class="fas fa-thumbs-up"></i>
             </button>
             <data value="<?php echo $likes; ?>"><?php echo $likes; ?></data>
           </div>
 
           <div class="comments__interaction__likes">
-            <button class="comments__interaction__button <?php echo $user_dislike; ?>" type="button" title="dislike" name="dislike" value="<?php echo $user_dislike; ?>">
+            <button class="comments__interaction__button <?php echo "{$user_dislike} {$disabled}"; ?>" type="button" title="dislike" name="dislike" value="<?php echo $user_dislike; ?>">
               <i class="fas fa-thumbs-down"></i>
             </button>
             <data value="<?php echo $dislikes; ?>"><?php echo $dislikes; ?></data>
           </div>
-        </section>
+        </form>
         <?php
         // Si el comentario es del usuario con sesión iniciada, mostrar botón
         // para eliminar.

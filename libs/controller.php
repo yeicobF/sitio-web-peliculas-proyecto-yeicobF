@@ -62,26 +62,39 @@ class Controller
   {
     return $_POST[$name];
   }
-  public static function getMethod()
+  public static function getMethod(array $post = null)
   {
-    if (isset($_POST["_method"])) {
-      return $_POST["_method"];
+    if ($post === null) {
+      $post = $_POST;
+    }
+
+    if (array_key_exists("_method", $post)) {
+      return $post["_method"];
     }
     return false;
   }
 
-  public static function isMethodDelete()
+  public static function isMethodDelete(array $post = null)
   {
-    return self::getMethod() === "DELETE";
+    if ($post === null) {
+      $post = $_POST;
+    }
+    return self::getMethod($post) === "DELETE";
   }
 
-  public static function isMethodPost()
+  public static function isMethodPost(array $post = null)
   {
-    return self::getMethod() === "POST";
+    if ($post === null) {
+      $post = $_POST;
+    }
+    return self::getMethod($post) === "POST";
   }
-  public static function isMethodPut()
+  public static function isMethodPut(array $post = null)
   {
-    return self::getMethod() === "PUT";
+    if ($post === null) {
+      $post = $_POST;
+    }
+    return self::getMethod($post) === "PUT";
   }
 
   /**
@@ -89,18 +102,25 @@ class Controller
    *
    * Si no es POST, PUT o DELETE, no existe.
    *
+   * @param array $post Arreglo pos en donde se revisará si existe el método.
+   * Esto es porque no siempre se hará uso del arreglo `$_POST`, sino que, puede
+   * haber casos en donde se cree un arreglo a partir de un POST recibido como
+   * JSON, el cual, no se guarda directamente en `$_POST`.
    * @return boolean
    */
-  public static function isMethodExistent()
+  public static function isMethodExistent(array $post = null)
   {
+    if ($post === null) {
+      $post = $_POST;
+    }
     if (
-      isset($_POST["_method"])
-      && !empty($_POST["_method"])
+      isset($post["_method"])
+      && !empty($post["_method"])
     ) {
       return
-        $_POST["_method"] !== "POST"
-        || $_POST["_method"] !== "PUT"
-        || $_POST["_method"] !== "DELETE";
+        $post["_method"] !== "POST"
+        || $post["_method"] !== "PUT"
+        || $post["_method"] !== "DELETE";
     }
     return false;
   }
@@ -317,11 +337,15 @@ class Controller
    * @return void
    */
   public static function redirectIfNonExistentPostMethod(
-    string $view_path = "index.php"
+    string $view_path = "index.php",
+    array $post = null
   ) {
+    if ($post === null) {
+      $post = $_POST;
+    }
     if (
-      !Controller::isPost()
-      || !Controller::isMethodExistent()
+      !Controller::isPost($post)
+      || !Controller::isMethodExistent($post)
       // && !str_contains( $_SERVER["SCRIPT_FILENAME"], "login/"
       // )
       // && !str_contains( $_SERVER["SCRIPT_FILENAME"], "views/"
