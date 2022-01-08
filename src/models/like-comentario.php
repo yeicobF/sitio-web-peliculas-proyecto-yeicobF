@@ -32,10 +32,10 @@ class LikeComentario extends Model
 
 
   const UNIQUE_ATTRIBUTES = [
-    "fk" => [
-      "comentario_pelicula_id",
-      "usuario_id",
-    ]
+    // "fk" => [
+    //   "comentario_pelicula_id",
+    //   "usuario_id",
+    // ]
   ];
 
   public function __construct(
@@ -128,7 +128,7 @@ class LikeComentario extends Model
       $this->setTipo($new_tipo);
     }
 
-    return $result;;
+    return $result;
   }
 
   public static function delete(

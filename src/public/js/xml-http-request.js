@@ -36,14 +36,16 @@ const sendHttpRequest = (method, url, data) => {
       reject("Algo salió mal.");
     };
 
+    console.log(data);
     xhr.send(JSON.stringify(data));
   });
   return promise;
 };
 
-const getData = () => {
-  sendHttpRequest("GET", "https://reqres.in/api/users").then((responseData) => {
+const getData = (url) => {
+  sendHttpRequest("GET", url).then((responseData) => {
     console.log(responseData);
+    return responseData;
   });
 };
 
@@ -54,8 +56,10 @@ const sendData = (url, data) => {
   sendHttpRequest("POST", url, data)
     .then((responseData) => {
       console.log(responseData);
+      return responseData;
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };

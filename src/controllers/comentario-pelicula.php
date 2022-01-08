@@ -169,11 +169,11 @@ class ComentarioPelicula extends Controller
         comentario. 
         -->
         <form class="comments__interaction__info" method="POST">
-          <input type="hidden" name="comentario_pelicula_id" value="<? echo $movie_comment->id; ?>">
+          <input type="hidden" name="comentario_pelicula_id" value="<?php echo $movie_comment->id; ?>">
           <?php
           if (Login::isUserLoggedIn()) {
           ?>
-            <input type="hidden" name="usuario_id" value="<? echo Usuario::getId(); ?>">
+            <input type="hidden" name="usuario_id" value="<?php echo Usuario::getId(); ?>">
           <?php
           }
           ?>

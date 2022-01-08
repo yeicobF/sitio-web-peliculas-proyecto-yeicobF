@@ -168,7 +168,7 @@ $baseHtmlHead = new BaseHtmlHead(
     // Hay que saber si el usuario ha iniciado sesión.
     const isUserLoggedIn = <?php echo Login::isUserLoggedIn() && Controller::idExists(false, $_SESSION); ?>
 
-    const postUrl = "<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "comentario-pelicula.php"; ?>";
+    const postUrl = "<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "like-comentario.php"; ?>";
     const publishCommentBtn = document.getElementById("publish-comment-btn");
 
 
@@ -236,7 +236,7 @@ $baseHtmlHead = new BaseHtmlHead(
 
       // console.log("likeBtn", likeBtn);
       // console.log("dislikeBtn", dislikeBtn);
-      // console.log("form", form);
+      console.log("form", form);
       // console.table("interactions", interactions);
 
       // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
@@ -291,6 +291,17 @@ $baseHtmlHead = new BaseHtmlHead(
       }
 
       formData.set("_method", method);
+      formData.set("tipo", currentInteraction);
+
+      // Display the keys
+      // for (var key of formData.keys()) {
+      //   console.log(key);
+      // }
+      // for (var value of formData.values()) {
+      //   console.log(value);
+      // }
+
+      sendData(postUrl, Object.fromEntries(formData));
     });
   </script>
 </body>

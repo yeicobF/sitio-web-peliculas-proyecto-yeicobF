@@ -4,6 +4,7 @@ namespace Controllers;
 
 require_once __DIR__ . "/../config/config.php";
 require_once __DIR__ . "/../libs/controller.php";
+require_once __DIR__ . "/../models/like-comentario.php";
 require_once __DIR__ . "/usuario.php";
 
 use Libs\Controller;
@@ -105,7 +106,8 @@ if (Controller::isGet()) {
     ) && is_numeric($_GET["usuario_id"]);
 
   if (!$comentario_pelicula_id_exists) {
-    return "No se especificaron los datos esperados.";
+    echo "No se especificaron los datos esperados.";
+    return;
   }
 
   // Obtener los likes y dislikes del comentario.
@@ -135,18 +137,20 @@ if (Controller::isGet()) {
     array_push($results, $user_interaction);
   }
 
-  return json_encode($results);
+  echo json_encode($results);
 }
 
 if (
   !Controller::isPost($post)
   || !Controller::isMethodExistent($post)
 ) {
-  return "No se envió un método POST válido.";
+  echo "No se envió un método POST válido.";
+  return;
 }
 // El usuario no puede hacer ningún procedimiento POST si no ha iniciado sesión.
 if (!Login::isUserLoggedIn()) {
-  return "No has iniciado sesión.";
+  echo "No has iniciado sesión.";
+  return;
 }
 
 $non_empty_fields = Controller::getNonEmptyFormFields(
@@ -165,7 +169,8 @@ if (Controller::isMethodPost($post)) {
     ModelLikeComentario::REQUIRED_FIELDS,
     $non_empty_fields
   )) {
-    return "No se enviaron los datos correctamente.";
+    echo "No se enviaron los datos correctamente.";
+    return;
   }
 
   $result = $interaccion_comentario->insertLikeComentario();
@@ -185,7 +190,11 @@ if (Controller::isMethodPut($post)) {
 $message = Model::OPERATION_INFO[$result];
 
 if ($result === 1) {
-  return $interaccion_comentario->returnJson();
+  // https://www.php.net/manual/es/function.http-response-code.php
+  http_response_code(200);
+  // Solo puedo regresar JSON en AJAX.
+  echo $interaccion_comentario->returnJson();
+  return;
 }
 
-return $message;
+echo $message;
