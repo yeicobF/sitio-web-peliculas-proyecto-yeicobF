@@ -663,6 +663,66 @@ class Controller
       : "Hace un momento";
   }
 
+  /**
+   * Obtener la fecha en nuestro propio formato, no el de la BD.
+   *
+   * @param string $date Fecha en formato `YYYY-MM-DD`.
+   * @return string Fecha en nuestro formato, ejemplo: `20 / enero / 2022`
+   */
+  public static function getDateAsOwnFormat(
+    string $date,
+    string $date_format = "Y-m-d"
+  ) {
+    $provided_date = DateTime::createFromFormat($date_format, $date);
+    // https://www.php.net/manual/en/datetime.format.php
+    $own_format_date = $provided_date->format("j/m/Y");
+    $split_date = explode("/", $own_format_date);
+    $months = [
+      "01" => "enero",
+      "02" => "febrero",
+      "03" => "marzo",
+      "04" => "abril",
+      "05" => "mayo",
+      "06" => "junio",
+      "07" => "julio",
+      "08" => "agosto",
+      "09" => "septiembre",
+      "10" => "octubre",
+      "11" => "noviembre",
+      "12" => "diciembre",
+    ];
+
+    // Si no existe el mes, no regresar nada.
+    if (!array_key_exists($split_date[1], $months)) {
+      return null;
+    }
+
+    $split_date[1] = $months[$split_date[1]];
+
+    return implode(" de ", $split_date);
+  }
+
+  /**
+   * Obtener fecha con nuestro formato: "h:i A".
+   *
+   *  https://www.php.net/manual/en/datetime.format.php
+   *
+   *  Ejemplo de este formato "h:i A": 03:45 AM
+   *
+   * @param string $time
+   * @param string $time_format
+   * @return void
+   */
+  public static function getTimeAsOwnFormat(
+    string $time,
+    string $time_format = "H:i:s"
+  ) {
+    $provided_time = DateTime::createFromFormat($time_format, $time);
+    // https://www.php.net/manual/en/datetime.format.php
+    // Ejemplo de este formato "h:i A": 03:45 AM
+    return $provided_time->format("h:i A");
+  }
+
   // /**
   //  * Hacer un `return` que detendrá el proceso si el archivo actual es una
   //  * vista.

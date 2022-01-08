@@ -43,6 +43,9 @@ class ComentarioPelicula extends Controller
       $movie_comment->fecha,
       $movie_comment->hora
     );
+    // Obtener la fecha con propio formato.
+    $date = Controller::getDateAsOwnFormat($movie_comment->fecha);
+    $time = Controller::getTimeAsOwnFormat($movie_comment->hora);
 
     // Obtener el usuario de quien escribió el comentario.
     $db_user = ModelUsuario::getById($movie_comment->usuario_id);
@@ -97,9 +100,20 @@ class ComentarioPelicula extends Controller
             El datetime lo podría obtener con una función o en la misma del timeago, pero por ahora no lo haré. 
           -->
           <!-- <time class="comments__details__time-ago" datetime="PT3H" id="time-ago"> -->
-          <time class="comments__details__time-ago" datetime="" id="time-ago">
-            <?php echo $time_ago; ?>
-          </time>
+          <div class="comments__details__time">
+            <time class="comments__details__time-ago" datetime="" id="time-ago">
+              <?php echo $time_ago; ?>
+            </time>
+            <!-- https://unicode-table.com/es/00B7/ -->
+            <span class="comments__details__date vertical-line"></span>
+            <time class="comments__details__date" datetime="">
+              <?php echo $date; ?>
+            </time>
+            <span class="comments__details__hour vertical-line"></span>
+            <time class="comments__details__hour" datetime="">
+              <?php echo $time; ?>
+            </time>
+          </div>
         </figcaption>
       </figure>
       <main class="comments__text">
