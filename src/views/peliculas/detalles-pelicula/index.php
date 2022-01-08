@@ -166,7 +166,12 @@ $baseHtmlHead = new BaseHtmlHead(
   <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "xml-http-request.js"; ?>"></script>
   <script defer>
     // Hay que saber si el usuario ha iniciado sesión.
-    const isUserLoggedIn = <?php echo Login::isUserLoggedIn() && Controller::idExists(false, $_SESSION); ?>
+
+    const isUserLoggedIn =
+      <?php
+      // json_encode porque si aquí da false, no se guarda nada en JS.
+      echo json_encode(Login::isUserLoggedIn() && Controller::idExists(false, $_SESSION));
+      ?>;
 
     const postUrl = "<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "like-comentario.php"; ?>";
     const publishCommentBtn = document.getElementById("publish-comment-btn");

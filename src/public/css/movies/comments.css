@@ -216,6 +216,12 @@
 }
 
 .comments__interaction__button.disabled,
+.comments__interaction__button.disabled:disabled,
+.comments__interaction__button.disabled:active,
+.comments__interaction__button.disabled:focus,
+.comments__interaction__button.disabled:focus-within,
+.comments__interaction__button.disabled:focus-visible,
+.comments__interaction__button.disabled:enabled,
 .comments__interaction__button.disabled:hover {
   background-color: transparent;
 }
