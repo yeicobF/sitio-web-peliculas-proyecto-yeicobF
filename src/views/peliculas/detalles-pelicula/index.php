@@ -173,7 +173,7 @@ $baseHtmlHead = new BaseHtmlHead(
       echo json_encode(Login::isUserLoggedIn() && Controller::idExists(false, $_SESSION));
       ?>;
 
-    const postUrl = "<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "like-comentario.php"; ?>";
+    const actionUrl = "<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "like-comentario.php"; ?>";
     const publishCommentBtn = document.getElementById("publish-comment-btn");
 
 
@@ -190,7 +190,7 @@ $baseHtmlHead = new BaseHtmlHead(
     let formData;
 
     // Al dar click, llamar al método POST.
-    commentsContainer.addEventListener("click", (event) => {
+    commentsContainer.addEventListener("click", async (event) => {
       // Evitar que se recargue la página.
       event.preventDefault();
 
@@ -221,11 +221,13 @@ $baseHtmlHead = new BaseHtmlHead(
       // Si no es botón aún puede ser el hijo.
       if (!isButton && !isSon) return;
 
+      const userId = <?php echo Usuario::getId(); ?>;
+
       // console.log("hola");
 
       // Obtener el formulario padre.
       let form = target.closest(`form.${interactionFormClass}`);
-      // Obtener botones de like y dislike.
+
       let likeBtn = form.querySelector(
         `button.${interactionBtnClass}[name="like"]`
       );
@@ -248,15 +250,37 @@ $baseHtmlHead = new BaseHtmlHead(
       // Obtener todos los campos del formulario.
       formData = new FormData(form);
 
-      button = target;
+      let comentarioPeliculaId = formData.get("comentario_pelicula_id");
+
+      let getUrl = `${actionUrl}?comentario_pelicula_id=${comentarioPeliculaId}&usuario_id=${userId}`;
+      let dbLikeComentario;
+      /**
+       * Obtener datos de la BD, no del DOM, por si fueron actualizados y el DOM
+       * no. Obtener botones de like y dislike.
+       *
+       * https://stackoverflow.com/a/37534034/13562806
+       * How to return data from promise [duplicate]
+       */
+      await getData(getUrl)
+        .then((responseData) => {
+          dbLikeComentario = responseData
+          console.log(dbLikeComentario);
+        })
+        .catch((error) => {
+          console.log(`error: ${error}`);
+          return;
+        });
+      console.log(dbLikeComentario);
+
+      clickedButton = target;
       if (isSon) {
-        button = target.closest(
+        clickedButton = target.closest(
           `button.${interactionBtnClass}`
         );
       }
 
       // Obtener botón al que dimos click para comparar con su interacción.
-      currentInteraction = button.getAttribute("name");
+      currentInteraction = clickedButton.getAttribute("name");
       method = "";
       // Ya se determinó el método o no.
       // isMethodDetermined = false;
@@ -270,10 +294,10 @@ $baseHtmlHead = new BaseHtmlHead(
        * seleccionado el dislike o viceversa.
        */
       if (
-        (button.getAttribute("name") === "dislike" &&
+        (currentInteraction === "dislike" &&
           interactions.like === "selected"
         ) ||
-        (button.getAttribute("name") === "like" &&
+        (currentInteraction === "like" &&
           interactions.dislike === "selected"
         )
       ) {
@@ -286,12 +310,13 @@ $baseHtmlHead = new BaseHtmlHead(
 
       // Si el comentario ya tiene interacción, eliminarla.
       // La interacción ya está seleccionada, por lo que hay que actualizar.
-      if (button.getAttribute("value") === "selected") {
+      if (clickedButton.getAttribute("value") === "selected") {
         console.log("DELETE");
         method = "DELETE";
       }
 
       // Si no tiene interacción, agregarla.
+      // https://stackoverflow.com/a/57895292/13562806
       if (!Object.values(interactions).includes("selected")) {
         console.log("POST");
         method = "POST";
@@ -308,7 +333,8 @@ $baseHtmlHead = new BaseHtmlHead(
       //   console.log(value);
       // }
 
-      sendData(postUrl, Object.fromEntries(formData));
+      // https://stackoverflow.com/a/69374442/13562806
+      await sendData(actionUrl, Object.fromEntries(formData));
     });
   </script>
 </body>

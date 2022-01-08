@@ -33,7 +33,7 @@ const sendHttpRequest = (method, url, data) => {
     };
 
     xhr.onerror = () => {
-      reject("Algo salió mal.");
+      reject(new Error("Algo salió mal."));
     };
 
     console.log(data);
@@ -42,22 +42,42 @@ const sendHttpRequest = (method, url, data) => {
   return promise;
 };
 
-const getData = (url) => {
-  sendHttpRequest("GET", url).then((responseData) => {
-    console.log(responseData);
-    return responseData;
-  });
+/**
+ * Realiza un get de forma asíncrona, pero esperando el resultado.
+ *
+ * Esto permite que, se obtengan los datos antes de seguir con alguna otra
+ * operación. Podría ser que en algún caso no querramos esperar, pero por el
+ * momento ásí cumple con las funcionalidades del proyecto.
+ * @param {string} url Url del método.
+ * @returns Promesa
+ */
+const getData = async (url) => {
+  // El .then lo hacemos en donde llamemos a la función para poder ejecutar los
+  // siguientes pasos.
+  return await sendHttpRequest("GET", url);
+
+  // return await sendHttpRequest("GET", url)
+  //   .then((responseData) => {
+  //     console.log(responseData);
+  //     return responseData;
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 };
 
 /**
  * Enviar datos mediante POST.
  */
-const sendData = (url, data) => {
-  sendHttpRequest("POST", url, data)
-    .then((responseData) => {
-      console.log(responseData);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+const sendData = async (url, data) => {
+  return await sendHttpRequest("POST", url, data);
+
+  // sendHttpRequest("POST", url, data)
+  //   .then((responseData) => {
+  //     console.log(responseData);
+  //     return responseData;
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 };

@@ -134,10 +134,11 @@ if (Controller::isGet()) {
   $results = $comment_interactions;
 
   if ($user_interaction !== false && strlen($user_interaction) > 0) {
-    array_push($results, $user_interaction);
+    $results["user-interaction"] = $user_interaction;
   }
 
   echo json_encode($results);
+  return;
 }
 
 if (
