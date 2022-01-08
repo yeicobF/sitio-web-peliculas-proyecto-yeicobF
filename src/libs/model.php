@@ -200,7 +200,7 @@ class Model
         if (
           array_key_exists($name, $param_values)
           && $param_values[$name] !== null
-          ) {
+        ) {
           $encountered_params++;
         } else {
           // Eliminar el elemento que no se encontró.
@@ -581,14 +581,18 @@ class Model
    * @param array $unique_attributes Arreglo asociativo que contiene los nombres
    * de los atributos únicos. Esto ayudará a revisar si los registros ya son
    * existentes o no.
-   * @return int Un resultado de si se hizo la inserción o no.
+   * @param bool $get_fetched_records Bandera para indicar si queremos obtener
+   * los registros en lugar de un mensaje.
+   * @return int | array Un resultado de si se hizo la inserción o no | arreglo
+   * con estado de la tabla.
    */
   public static function insertRecord(
     $table,
     array $param_values,
     array $pdo_params,
     array $unique_attributes,
-  ): int {
+    bool $get_fetched_records = false
+  ): int | array {
     try {
       // Si se intenta insertar valores con algún campo único ya existente,
       // indicarlo.
@@ -616,6 +620,12 @@ class Model
       // por el momento, dejaré así.
       $query->execute($param_names_and_values);
 
+      if (
+        $get_fetched_records &&
+        $query->rowCount() > 0
+      ) {
+        return self::getFetchedRecords($query);
+      }
 
       // Si no hay filas, devolver false, indicando que no se hizo la inserción.
       return $query->rowCount() > 0;
@@ -659,8 +669,11 @@ class Model
    * @param string $table
    * @param array $param_values Array con nombre y valor.
    * @param array $where_clause Where en donde se actualizará.
-   * @param array $pdo_params
-   * @return boolean Se actualizó o no.
+   * @param array $pdo_params   
+   * @param bool $get_fetched_records Bandera para indicar si queremos obtener
+   * los registros en lugar de un mensaje.
+   * @return int | array Un resultado de si se hizo la inserción o no | arreglo
+   * con estado de la tabla.
    */
   public static function updateRecord(
     string $table,
@@ -668,8 +681,9 @@ class Model
     array $where_clause_names,
     array $where_clause_values,
     array $unique_attributes,
-    array $pdo_params
-  ): int {
+    array $pdo_params,
+    bool $get_fetched_records = false
+  ): int | array {
     // El récord (registro) no existe.
     if (!self::recordExists(
       $table,
@@ -719,6 +733,14 @@ class Model
 
       $query->execute($params);
 
+      if (
+        $get_fetched_records &&
+        $query->rowCount() > 0
+      ) {
+        return self::getFetchedRecords($query);
+      }
+
+      // Si no hay filas, devolver false, indicando que no se hizo la inserción.
       return $query->rowCount() > 0;
     } catch (PDOException $e) {
       error_log("Error en la query - {$e}");
@@ -772,14 +794,18 @@ class Model
    * @param array $where_clauses Arreglo con los nombres de las where clauses.
    * @param array $values Arreglo con los valores.
    * @param array $pdo_params
-   * @return int
+   * @param bool $get_fetched_records Bandera para indicar si queremos obtener
+   * los registros en lugar de un mensaje.
+   * @return int | array Un resultado de si se hizo la inserción o no | arreglo
+   * con estado de la tabla.
    */
   public static function deleteRecord(
     string $table,
     array $where_clause_names,
     array $where_clause_values,
-    array $pdo_params
-  ): int {
+    array $pdo_params,
+    bool $get_fetched_records = false
+  ): int | array {
     // El récord (registro) no existe.
     if (!self::recordExists(
       $table,
@@ -799,6 +825,14 @@ class Model
         self::bindWhereClauses($where_clause_names, $where_clause_values)
       );
 
+      if (
+        $get_fetched_records &&
+        $query->rowCount() > 0
+      ) {
+        return self::getFetchedRecords($query);
+      }
+
+      // Si no hay filas, devolver false, indicando que no se hizo la inserción.
       return $query->rowCount() > 0;
     } catch (PDOException $e) {
       error_log("Error en la query - {$e}");

@@ -76,7 +76,7 @@ if (
   return;
 }
 
-
+$error = ["error" => ""];
 $view_path = "peliculas/index.php";
 
 // Para recibir JSON como post, no lo podemos hacer en $_POST porque ese es un
@@ -99,6 +99,78 @@ if (Controller::isGet()) {
       "comentario_pelicula_id",
       $_GET
     ) && is_numeric($_GET["comentario_pelicula_id"]);
+
+  // Obtener los likes y dislikes del comentario.
+  $db_interactions = ModelLikeComentario::getInteractionsComentario(
+    $_GET["comentario_pelicula_id"]
+  );
+}
+
+if (
+  !Controller::isPost($post)
+  || !Controller::isMethodExistent($post)
+) {
+  $error["error"] = "No se envió un método POST válido.";
+}
+// El usuario no puede hacer ningún procedimiento POST si no ha iniciado sesión.
+if (!Login::isUserLoggedIn()) {
+  $error["error"] = "No has iniciado sesión.";
+}
+
+if (strlen($error["error"]) > 0) {
+  echo json_encode($error);
+  return;
+}
+
+$non_empty_fields = Controller::getNonEmptyFormFields(
+  $post
+);
+unset($non_empty_fields["_method"]);
+
+if (Controller::isMethodDelete($post)) {
+  $result = ModelLikeComentario::delete(
+    $non_empty_fields["comentario_pelicula_id"],
+    $non_empty_fields["usuario_id"],
+  );
+}
+
+if (
+  (Controller::isMethodPost($post) || Controller::isMethodPut($post))
+  &&
+  !Controller::areRequiredFieldsFilled(
+    ModelLikeComentario::REQUIRED_FIELDS,
+    $non_empty_fields
+  )
+) {
+  $error["error"] = "No se enviaron los datos correctamente.";
+  echo json_encode($error);
+  return;
+}
+
+$interaccion_comentario = new ModelLikeComentario(
+  comentario_pelicula_id: $non_empty_fields["comentario_pelicula_id"],
+  usuario_id: $non_empty_fields["usuario_id"],
+  tipo: $non_empty_fields["tipo"]
+);
+
+if (Controller::isMethodPost($post)) {
+  $result = $interaccion_comentario->insertLikeComentario();
+}
+
+if (Controller::isMethodPut($post)) {
+  $result = $interaccion_comentario->update();
+}
+
+// Todos los métodos harán este procedimiento para obtener el estado actual de
+// las interacciones del comentario.
+if (
+  is_array($result)
+  || is_array($db_interactions)
+) {
+  if ($db_interactions === null) {
+    $db_interactions = $result;
+  }
+
   $usuario_id_exists =
     array_key_exists(
       "usuario_id",
@@ -106,15 +178,10 @@ if (Controller::isGet()) {
     ) && is_numeric($_GET["usuario_id"]);
 
   if (!$comentario_pelicula_id_exists) {
-    echo "No se especificaron los datos esperados.";
+    $error["error"] = "No se especificaron los datos esperados.";
+    echo json_encode($error);
     return;
   }
-
-  // Obtener los likes y dislikes del comentario.
-  $db_interactions = ModelLikeComentario::getInteractionsComentario(
-    $_GET["comentario_pelicula_id"]
-  );
-
   $comment_interactions = LikeComentario::getInteractionsNumber(
     $db_interactions
   );
@@ -134,58 +201,11 @@ if (Controller::isGet()) {
   $results = $comment_interactions;
 
   if ($user_interaction !== false && strlen($user_interaction) > 0) {
-    $results["user-interaction"] = $user_interaction;
+    $results["user_interaction"] = $user_interaction;
   }
 
   echo json_encode($results);
   return;
-}
-
-if (
-  !Controller::isPost($post)
-  || !Controller::isMethodExistent($post)
-) {
-  echo "No se envió un método POST válido.";
-  return;
-}
-// El usuario no puede hacer ningún procedimiento POST si no ha iniciado sesión.
-if (!Login::isUserLoggedIn()) {
-  echo "No has iniciado sesión.";
-  return;
-}
-
-$non_empty_fields = Controller::getNonEmptyFormFields(
-  $post
-);
-unset($non_empty_fields["_method"]);
-
-$interaccion_comentario = new ModelLikeComentario(
-  comentario_pelicula_id: $non_empty_fields["comentario_pelicula_id"],
-  usuario_id: $non_empty_fields["usuario_id"],
-  tipo: $non_empty_fields["tipo"]
-);
-
-if (Controller::isMethodPost($post)) {
-  if (!Controller::areRequiredFieldsFilled(
-    ModelLikeComentario::REQUIRED_FIELDS,
-    $non_empty_fields
-  )) {
-    echo "No se enviaron los datos correctamente.";
-    return;
-  }
-
-  $result = $interaccion_comentario->insertLikeComentario();
-}
-
-if (Controller::isMethodDelete($post)) {
-  $result = ModelLikeComentario::delete(
-    $non_empty_fields["comentario_pelicula_id"],
-    $non_empty_fields["usuario_id"],
-  );
-}
-
-if (Controller::isMethodPut($post)) {
-  $result = $interaccion_comentario->update();
 }
 
 $message = Model::OPERATION_INFO[$result];
@@ -198,4 +218,6 @@ if ($result === 1) {
   return;
 }
 
-echo $message;
+$error["error"] = $message;
+echo json_encode($error);
+return;

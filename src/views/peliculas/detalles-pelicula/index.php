@@ -173,8 +173,9 @@ $baseHtmlHead = new BaseHtmlHead(
       echo json_encode(Login::isUserLoggedIn() && Controller::idExists(false, $_SESSION));
       ?>;
 
-    const actionUrl = "<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "like-comentario.php"; ?>";
-    const publishCommentBtn = document.getElementById("publish-comment-btn");
+    const controllerUrl = "<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "like-comentario.php"; ?>";
+    const publishCommen
+    tBtn = document.getElementById("publish-comment-btn");
 
 
     const commentForm = document.getElementById("comment-form");
@@ -223,11 +224,8 @@ $baseHtmlHead = new BaseHtmlHead(
 
       const userId = <?php echo Usuario::getId(); ?>;
 
-      // console.log("hola");
-
       // Obtener el formulario padre.
       let form = target.closest(`form.${interactionFormClass}`);
-
       let likeBtn = form.querySelector(
         `button.${interactionBtnClass}[name="like"]`
       );
@@ -235,25 +233,25 @@ $baseHtmlHead = new BaseHtmlHead(
         `button.${interactionBtnClass}[name="dislike"]`
       );
 
-      let interactions = {
-        // La interacción sería "selected".
-        like: likeBtn.getAttribute("value"),
-        dislike: dislikeBtn.getAttribute("value"),
-      };
-
-      // console.log("likeBtn", likeBtn);
-      // console.log("dislikeBtn", dislikeBtn);
       console.log("form", form);
-      // console.table("interactions", interactions);
 
       // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
       // Obtener todos los campos del formulario.
       formData = new FormData(form);
-
       let comentarioPeliculaId = formData.get("comentario_pelicula_id");
-
-      let getUrl = `${actionUrl}?comentario_pelicula_id=${comentarioPeliculaId}&usuario_id=${userId}`;
+      let getUrl = `${controllerUrl}?comentario_pelicula_id=${comentarioPeliculaId}&usuario_id=${userId}`;
       let dbLikeComentario;
+      let clickedButton = isSon ?
+        target.closest(
+          `button.${interactionBtnClass}`
+        ) :
+        target;
+      // Obtener botón al que dimos click para comparar con su interacción.
+      let currentInteraction = clickedButton.getAttribute("name");
+      let method = "";
+      let isMethodSelected = false;
+      let userInteraction = Object.hasOwn(dbLikeComentario, "user_interaction");
+
       /**
        * Obtener datos de la BD, no del DOM, por si fueron actualizados y el DOM
        * no. Obtener botones de like y dislike.
@@ -263,65 +261,48 @@ $baseHtmlHead = new BaseHtmlHead(
        */
       await getData(getUrl)
         .then((responseData) => {
-          dbLikeComentario = responseData
+          dbLikeComentario = responseData;
           console.log(dbLikeComentario);
         })
         .catch((error) => {
           console.log(`error: ${error}`);
           return;
         });
-      console.log(dbLikeComentario);
 
-      clickedButton = target;
-      if (isSon) {
-        clickedButton = target.closest(
-          `button.${interactionBtnClass}`
-        );
-      }
-
-      // Obtener botón al que dimos click para comparar con su interacción.
-      currentInteraction = clickedButton.getAttribute("name");
-      method = "";
-      // Ya se determinó el método o no.
-      // isMethodDetermined = false;
-
-      /** 
-       * Si tiene interacción en el botón hermano, eliminarla y agregar la
-       * actual. 
-       *
-       * Me imagino que hay una mejor forma de revisar con un find o algo así,
-       * pero por el momento voy a revisar si el botón es like, pero está
-       * seleccionado el dislike o viceversa.
-       */
-      if (
-        (currentInteraction === "dislike" &&
-          interactions.like === "selected"
-        ) ||
-        (currentInteraction === "like" &&
-          interactions.dislike === "selected"
-        )
-      ) {
-        console.log("PUT");
-        // La actualización la hace automáticamente su respectivo método.
-        method = "PUT";
-        // La interacción actual es la contraria al botón que presionamos.
-        currentInteraction = currentInteraction === "like" ? "dislike" : "like";
-      }
-
-      // Si el comentario ya tiene interacción, eliminarla.
-      // La interacción ya está seleccionada, por lo que hay que actualizar.
-      if (clickedButton.getAttribute("value") === "selected") {
-        console.log("DELETE");
-        method = "DELETE";
-      }
-
-      // Si no tiene interacción, agregarla.
-      // https://stackoverflow.com/a/57895292/13562806
-      if (!Object.values(interactions).includes("selected")) {
-        console.log("POST");
+      // Si no hay interacción actualmente, hacer inserción.
+      if (!userInteraction) {
         method = "POST";
+        isMethodSelected = true;
       }
 
+      /**
+       * Si no se ha seleccionado método, elegirlo ahora. No puede ser PUT y
+       * DELETE al mismo tiempo. 
+       */
+      if (!isMethodSelected) {
+        /** 
+         * Ya que obtuvimos la interacción actual del comentario y el usuario, ver
+         * si esta existe con el usuario actual, y si, el botón presionado es
+         * distinto al de la interacción de la BD, hacer PUT.
+         * 
+         * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
+         */
+        if (dbLikeComentario.user_interaction !== currentInteraction) {
+          // La actualización la hace automáticamente su respectivo método.
+          method = "PUT";
+          // La interacción actual es la contraria al botón que presionamos.
+          currentInteraction = dbLikeComentario.user_interaction;
+        }
+
+        // Si el comentario ya tiene interacción, eliminarla.
+        // La interacción ya está seleccionada, por lo que hay que actualizar.
+        if (dbLikeComentario.user_interaction === currentInteraction) {
+          method = "DELETE";
+        }
+      }
+
+      console.log("method", method);
+      console.log("currentInteraction", currentInteraction);
       formData.set("_method", method);
       formData.set("tipo", currentInteraction);
 
@@ -334,7 +315,7 @@ $baseHtmlHead = new BaseHtmlHead(
       // }
 
       // https://stackoverflow.com/a/69374442/13562806
-      await sendData(actionUrl, Object.fromEntries(formData));
+      await sendData(controllerUrl, Object.fromEntries(formData));
     });
   </script>
 </body>

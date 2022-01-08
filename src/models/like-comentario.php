@@ -73,13 +73,14 @@ class LikeComentario extends Model
   /**
    * Inserción de un nuevo elemento.
    */
-  public function insertLikeComentario(): int
+  public function insertLikeComentario(): int | array
   {
     return parent::insertRecord(
       self::TABLE_NAME,
       $this->getParamValues(),
       self::PDO_PARAMS,
-      self::UNIQUE_ATTRIBUTES
+      self::UNIQUE_ATTRIBUTES,
+      get_fetched_records: true
     );
   }
 
@@ -124,7 +125,10 @@ class LikeComentario extends Model
     // Insertamos el nuevo comentario con el nuevo tipo.
     $result = $new_state->insertLikeComentario();
 
-    if ($result === 1) {
+    if (
+      $result === 1
+      || is_array($result)
+    ) {
       $this->setTipo($new_tipo);
     }
 
@@ -134,7 +138,12 @@ class LikeComentario extends Model
   public static function delete(
     int $comentario_pelicula_id,
     int $usuario_id
-  ): int {
+  ): int | array {
+    if (
+      !is_numeric($comentario_pelicula_id)
+      || !is_numeric($usuario_id)
+    ) return 0;
+
     return parent::deleteRecord(
       table: self::TABLE_NAME,
       where_clause_names: [
@@ -145,7 +154,8 @@ class LikeComentario extends Model
         $comentario_pelicula_id,
         $usuario_id,
       ],
-      pdo_params: self::PDO_PARAMS
+      pdo_params: self::PDO_PARAMS,
+      get_fetched_records: true
     );
   }
 
