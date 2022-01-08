@@ -150,7 +150,7 @@ encontraren la documentación oficial de MySQL:
     FOREIGN KEY (pelicula_id) REFERENCES pelicula(id),
     FOREIGN KEY (usuario_id) REFERENCES usuario(id)
   );
-  ```
+-  ```
 
 #### Screenshots
 

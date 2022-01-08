@@ -122,7 +122,7 @@ $baseHtmlHead = new BaseHtmlHead(
             ";
           ?>
 
-          <textarea <?php echo $disabled; ?> placeholder="<?php echo $textarea_placeholder; ?>" name="comentario" id="nuevo-comentario" rows="5"></textarea>
+          <textarea required <?php echo $disabled; ?> placeholder="<?php echo $textarea_placeholder; ?>" name="comentario" id="nuevo-comentario" rows="5"></textarea>
           <footer class="comments__form__buttons">
             <?php
             if ($logged_in) {
@@ -165,22 +165,52 @@ $baseHtmlHead = new BaseHtmlHead(
   ?>
   <!-- <script defer src="<?php /* echo FOLDERS_WITH_LOCALHOST["JS"] . "xml-http-request.js"; */ ?>" type="module"></script> -->
   <script defer>
+    // Hay que saber si el usuario ha iniciado sesión.
+    const isUserLoggedIn = <?php echo Login::isUserLoggedIn() && Controller::idExists(false, $_SESSION); ?>
+
     const postUrl = "<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "comentario-pelicula.php"; ?>";
     const publishCommentBtn = document.getElementById("publish-comment-btn");
+    // Así obtenemos todos los padres que contienen los botones de like y
+    // dislike y no los tenemos que obtener de forma individual. Utilizamos
+    // propagación de eventos.
+    const commentInteractionContainers = document.getElementsByClassName("comments__interaction__likes");
+    const interactionBtnClass = "comments__interaction__button";
+
     const commentForm = document.getElementById("comment-form");
+    const interactionFormClass = "comments__interaction__info";
     let formData;
 
     // Al dar click, llamar al método POST.
-    publishCommentBtn.addEventListener("click", () => {
+    commentInteractionContainers.addEventListener("click", (event) => {
+      // Evitar que se recargue la página.
+      event.preventDefault();
+
+      let target = event.target;
+
+      // Si no se trata del botón, regresar.
+      if (
+        !target ||
+        target.tagName !== BUTTON ||
+        !target.classList.contains(interactionBtnClass) ||
+        !isUserLoggedIn
+      ) return;
+
+      // Obtener el formulario padre.
+      let form = target.closest(interactionFormClass);
+
       // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
-      formData = new FormData(commentForm);
-      for (var key of formData.keys()) {
-        console.log(key);
-      }
-      for (var value of formData.values()) {
-        console.log(value);
-      }
-    });
+      // Obtener todos los campos del formulario.
+      formData = new FormData(form);
+
+      
+
+      // Si el comentario ya tiene interacción, eliminarla.
+
+      // Si tiene interacción en el botón hermano, eliminarla y agregar la
+      // actual.
+
+      // Si no tiene interacción, agregarla.
+    })
   </script>
 </body>
 

@@ -12,7 +12,6 @@ use LikeComentario as ModelLikeComentario;
 
 class LikeComentario extends Controller
 {
-
   /**
    * Obtener el número de likes y dislikes de un comentario.
    *
