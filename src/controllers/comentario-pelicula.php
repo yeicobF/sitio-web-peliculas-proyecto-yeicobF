@@ -71,6 +71,9 @@ class ComentarioPelicula extends Controller
     $user_details_url = URL_PAGE["detalles-perfil"] . "?id=" . $user->_id;
     $avatar_classes = "";
     $are_details_from_logged_user = false;
+    // El administrador podrá borrar comentarios.
+    $is_user_admin = Usuario::isAdmin();
+
     // Ver si los detalles del comentario son los del usuario con sesión
     // iniciada.
     if (Usuario::areDetailsFromLoggedUser($user)) {
@@ -141,7 +144,10 @@ class ComentarioPelicula extends Controller
         <?php
         // Si el comentario es del usuario con sesión iniciada, mostrar botón
         // para eliminar.
-        if ($are_details_from_logged_user) {
+        if (
+          $are_details_from_logged_user
+          || $is_user_admin
+        ) {
         ?>
           <form action="<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "comentario-pelicula.php"; ?>" method="POST">
             <input type="hidden" name="_method" value="DELETE">

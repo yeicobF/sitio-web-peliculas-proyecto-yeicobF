@@ -631,3 +631,21 @@ Stack trace:
 [07-Jan-2022 22:12:21 Europe/Berlin] PHP Warning:  Array to string conversion in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 647
 [07-Jan-2022 22:12:21 Europe/Berlin] PHP Warning:  Array to string conversion in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 647
 [07-Jan-2022 22:12:21 Europe/Berlin] PHP Warning:  Array to string conversion in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 647
+[07-Jan-2022 20:48:08 America/Mexico_City] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php:57) in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 177
+[07-Jan-2022 20:48:08 America/Mexico_City] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\layouts\navbar.php on line 72
+[07-Jan-2022 20:48:08 America/Mexico_City] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php:57) in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 177
+[07-Jan-2022 21:13:51 America/Mexico_City] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php:42) in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\controller.php on line 177
+[07-Jan-2022 21:19:03 America/Mexico_City] PHP Warning:  include_once(C:/xampp/htdocs/fdw-2021-2022-a/proyecto-yeicobF/src/libs/controllers.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php on line 19
+[07-Jan-2022 21:19:03 America/Mexico_City] PHP Warning:  include_once(): Failed opening 'C:/xampp/htdocs/fdw-2021-2022-a/proyecto-yeicobF/src/libs/controllers.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php on line 19
+[07-Jan-2022 21:19:03 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php:445
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php(178): Model::getRecords('usuario', Array, Array, Array)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(24): Usuario::getById(11)
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php on line 445
+[07-Jan-2022 21:19:19 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php:445
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\usuario.php(178): Model::getRecords('usuario', Array, Array, Array)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\user\index.php(24): Usuario::getById(11)
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\libs\model.php on line 445
