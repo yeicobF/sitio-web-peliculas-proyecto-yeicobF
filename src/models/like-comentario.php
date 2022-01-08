@@ -13,6 +13,12 @@ class LikeComentario extends Model
 
   const TABLE_NAME = "like_comentario";
 
+  const REQUIRED_FIELDS = [
+    "comentario_pelicula_id",
+    "usuario_id",
+    "tipo",
+  ];
+
   const PDO_PARAMS = [
     "comentario_pelicula_id" => PDO::PARAM_INT,
     "usuario_id" => PDO::PARAM_INT,
@@ -109,14 +115,20 @@ class LikeComentario extends Model
     );
 
     // Instanciamos con nuevo tipo.
-    $new_state  = new LikeComentario(
+    $new_state = new LikeComentario(
       $this->comentario_pelicula_id,
       $this->usuario_id,
       $new_tipo
     );
 
     // Insertamos el nuevo comentario con el nuevo tipo.
-    return $new_state->insertLikeComentario();
+    $result = $new_state->insertLikeComentario();
+
+    if ($result === 1) {
+      $this->setTipo($new_tipo);
+    }
+
+    return $result;;
   }
 
   public static function delete(
