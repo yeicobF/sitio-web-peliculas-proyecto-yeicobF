@@ -13,7 +13,7 @@
  */
 const sendHttpRequest = (method, url, data) => {
   const promise = new Promise((resolve, reject) => {
-    console.log("request method", method);
+    // console.log("request method", method);
     const xhr = new XMLHttpRequest();
     xhr.open(method, url);
 
@@ -21,6 +21,7 @@ const sendHttpRequest = (method, url, data) => {
 
     if (data) {
       xhr.setRequestHeader("Content-Type", "application/json");
+      // console.log(data);
     }
 
     xhr.onload = () => {
@@ -37,7 +38,6 @@ const sendHttpRequest = (method, url, data) => {
       reject(new Error("Algo salió mal."));
     };
 
-    console.log(data);
     xhr.send(JSON.stringify(data));
   });
   return promise;

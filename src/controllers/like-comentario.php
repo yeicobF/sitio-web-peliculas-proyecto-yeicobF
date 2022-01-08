@@ -221,28 +221,13 @@ if (Controller::isMethodPut($post)) {
   $result = $interaccion_comentario->update();
 }
 
-// Todos los métodos harán este procedimiento para obtener el estado actual de
-// las interacciones del comentario.
-if (
-  is_array($result)
-) {
-  echo json_encode(
-    LikeComentario::fetchCurrentCommentInteractions(
-      $non_empty_fields,
-      $result
-    )
-  );
-
-  return;
-}
-
 $message = Model::OPERATION_INFO[$result];
 
 if ($result === 1) {
   // https://www.php.net/manual/es/function.http-response-code.php
   http_response_code(200);
   // Solo puedo regresar JSON en AJAX.
-  echo $interaccion_comentario->returnJson();
+  echo json_encode(["message" => $message]);
   return;
 }
 

@@ -232,10 +232,10 @@ $baseHtmlHead = new BaseHtmlHead(
         `button.${interactionBtnClass}[name="dislike"]`
       );
 
-      console.log("form", form);
-
+      
       // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
       // Obtener todos los campos del formulario.
+      // console.log("form", form);
       formData = new FormData(form);
       let comentarioPeliculaId = formData.get("comentario_pelicula_id");
       let getUrl = `${controllerUrl}?comentario_pelicula_id=${comentarioPeliculaId}&usuario_id=${userId}`;
@@ -284,6 +284,14 @@ $baseHtmlHead = new BaseHtmlHead(
        * DELETE al mismo tiempo. 
        */
       if (!isMethodSelected) {
+        console.log("dbLikeComentario.user_interaction", dbLikeComentario.user_interaction);
+        console.log("currentInteraction", currentInteraction);
+        // Si el comentario ya tiene interacción, eliminarla.
+        // La interacción ya está seleccionada, por lo que hay que actualizar.
+        if (dbLikeComentario.user_interaction === currentInteraction) {
+          method = "DELETE";
+        }
+
         /** 
          * Ya que obtuvimos la interacción actual del comentario y el usuario, ver
          * si esta existe con el usuario actual, y si, el botón presionado es
@@ -296,12 +304,6 @@ $baseHtmlHead = new BaseHtmlHead(
           method = "PUT";
           // La interacción actual es la contraria al botón que presionamos.
           currentInteraction = dbLikeComentario.user_interaction;
-        }
-
-        // Si el comentario ya tiene interacción, eliminarla.
-        // La interacción ya está seleccionada, por lo que hay que actualizar.
-        if (dbLikeComentario.user_interaction === currentInteraction) {
-          method = "DELETE";
         }
       }
 
@@ -323,6 +325,16 @@ $baseHtmlHead = new BaseHtmlHead(
         .then((responseData) => {
           dbLikeComentario = responseData;
           console.log("post response: ", dbLikeComentario);
+        })
+        .catch((error) => {
+          console.log(`error: ${error}`);
+          return;
+        });
+
+      await getData(getUrl)
+        .then((responseData) => {
+          dbLikeComentario = responseData;
+          console.log("datos actualizados - get response: ", dbLikeComentario);
         })
         .catch((error) => {
           console.log(`error: ${error}`);
