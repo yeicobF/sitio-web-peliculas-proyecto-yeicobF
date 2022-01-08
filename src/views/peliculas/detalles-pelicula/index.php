@@ -201,22 +201,22 @@ $baseHtmlHead = new BaseHtmlHead(
       let isButton = target.tagName === "BUTTON" &&
         target.classList.contains(`${interactionBtnClass}`);
 
-      console.log("target", target);
-      console.log("target.tagName", target.tagName);
-      console.log("target.classList", target.classList);
-      console.log("isUserLoggedIn", isUserLoggedIn);
-      console.log("isSon", isSon);
-      console.log("isButton", isButton);
+      // console.log("target", target);
+      // console.log("target.tagName", target.tagName);
+      // console.log("target.classList", target.classList);
+      // console.log("isUserLoggedIn", isUserLoggedIn);
+      // console.log("isSon", isSon);
+      // console.log("isButton", isButton);
 
       // Si no se trata del botón, regresar.
-      console.log("!target || !isUserLoggedIn", !target || !isUserLoggedIn);
-      console.log("!isButton && !isSon", !isButton && !isSon);
+      // console.log("!target || !isUserLoggedIn", !target || !isUserLoggedIn);
+      // console.log("!isButton && !isSon", !isButton && !isSon);
       if (!target || !isUserLoggedIn) return;
 
       // Si no es botón aún puede ser el hijo.
       if (!isButton && !isSon) return;
 
-      console.log("hola");
+      // console.log("hola");
 
       // Obtener el formulario padre.
       let form = target.closest(`form.${interactionFormClass}`);
@@ -227,26 +227,70 @@ $baseHtmlHead = new BaseHtmlHead(
       let dislikeBtn = form.querySelector(
         `button.${interactionBtnClass}[name="dislike"]`
       );
+
       let interactions = {
+        // La interacción sería "selected".
         like: likeBtn.getAttribute("value"),
         dislike: dislikeBtn.getAttribute("value"),
       };
 
-      console.log("likeBtn", likeBtn);
-      console.log("dislikeBtn", dislikeBtn);
-      console.log("form", form);
-      console.table("interactions", interactions);
+      // console.log("likeBtn", likeBtn);
+      // console.log("dislikeBtn", dislikeBtn);
+      // console.log("form", form);
+      // console.table("interactions", interactions);
 
       // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
       // Obtener todos los campos del formulario.
       formData = new FormData(form);
 
-      // Si el comentario ya tiene interacción, eliminarla.
+      button = target;
+      if (isSon) {
+        button = target.closest(
+          `button.${interactionBtnClass}`
+        );
+      }
 
-      // Si tiene interacción en el botón hermano, eliminarla y agregar la
-      // actual.
+      // Obtener botón al que dimos click para comparar con su interacción.
+      currentInteraction = button.getAttribute("name");
+      method = "";
+      // Ya se determinó el método o no.
+      // isMethodDetermined = false;
+
+      /** 
+       * Si tiene interacción en el botón hermano, eliminarla y agregar la
+       * actual. 
+       *
+       * Me imagino que hay una mejor forma de revisar con un find o algo así,
+       * pero por el momento voy a revisar si el botón es like, pero está
+       * seleccionado el dislike o viceversa.
+       */
+      if (
+        (button.getAttribute("name") === "dislike" &&
+          interactions.like === "selected"
+        ) ||
+        (button.getAttribute("name") === "like" &&
+          interactions.dislike === "selected"
+        )
+      ) {
+        console.log("PUT");
+        // La actualización la hace automáticamente su respectivo método.
+        method = "PUT";
+      }
+
+      // Si el comentario ya tiene interacción, eliminarla.
+      // La interacción ya está seleccionada, por lo que hay que actualizar.
+      if (button.getAttribute("value") === "selected") {
+        console.log("DELETE");
+        method = "DELETE";
+      }
 
       // Si no tiene interacción, agregarla.
+      if (!Object.values(interactions).includes("selected")) {
+        console.log("POST");
+        method = "POST";
+      }
+
+      formData.set("_method", method);
     });
   </script>
 </body>
