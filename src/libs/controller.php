@@ -62,26 +62,39 @@ class Controller
   {
     return $_POST[$name];
   }
-  public static function getMethod(array $post = $_POST)
+  public static function getMethod(array $post = null)
   {
-    if (isset($post["_method"])) {
+    if ($post === null) {
+      $post = $_POST;
+    }
+
+    if (array_key_exists("_method", $post)) {
       return $post["_method"];
     }
     return false;
   }
 
-  public static function isMethodDelete(array $post = $_POST)
+  public static function isMethodDelete(array $post = null)
   {
-    return self::getMethod() === "DELETE";
+    if ($post === null) {
+      $post = $_POST;
+    }
+    return self::getMethod($post) === "DELETE";
   }
 
-  public static function isMethodPost(array $post = $_POST)
+  public static function isMethodPost(array $post = null)
   {
-    return self::getMethod() === "POST";
+    if ($post === null) {
+      $post = $_POST;
+    }
+    return self::getMethod($post) === "POST";
   }
-  public static function isMethodPut(array $post = $_POST)
+  public static function isMethodPut(array $post = null)
   {
-    return self::getMethod() === "PUT";
+    if ($post === null) {
+      $post = $_POST;
+    }
+    return self::getMethod($post) === "PUT";
   }
 
   /**
@@ -95,8 +108,11 @@ class Controller
    * JSON, el cual, no se guarda directamente en `$_POST`.
    * @return boolean
    */
-  public static function isMethodExistent(array $post = $_POST)
+  public static function isMethodExistent(array $post = null)
   {
+    if ($post === null) {
+      $post = $_POST;
+    }
     if (
       isset($post["_method"])
       && !empty($post["_method"])
@@ -322,8 +338,11 @@ class Controller
    */
   public static function redirectIfNonExistentPostMethod(
     string $view_path = "index.php",
-    array $post = $_POST
+    array $post = null
   ) {
+    if ($post === null) {
+      $post = $_POST;
+    }
     if (
       !Controller::isPost($post)
       || !Controller::isMethodExistent($post)

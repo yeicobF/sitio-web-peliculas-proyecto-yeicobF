@@ -11,7 +11,7 @@
  * @param {object} data Datos a enviar.
  * @returns Promesa, por lo que es una solicitud asíncrona.
  */
-export const sendHttpRequest = (method, url, data) => {
+const sendHttpRequest = (method, url, data) => {
   const promise = new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open(method, url);
@@ -41,10 +41,16 @@ export const sendHttpRequest = (method, url, data) => {
   return promise;
 };
 
+const getData = () => {
+  sendHttpRequest("GET", "https://reqres.in/api/users").then((responseData) => {
+    console.log(responseData);
+  });
+};
+
 /**
  * Enviar datos mediante POST.
  */
-export const sendData = (url, data) => {
+const sendData = (url, data) => {
   sendHttpRequest("POST", url, data)
     .then((responseData) => {
       console.log(responseData);

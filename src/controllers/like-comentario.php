@@ -131,7 +131,7 @@ if (Controller::isGet()) {
   // Resultados del estado del comentario.
   $results = $comment_interactions;
 
-  if (strlen($user_interaction) > 0) {
+  if ($user_interaction !== false && strlen($user_interaction) > 0) {
     array_push($results, $user_interaction);
   }
 

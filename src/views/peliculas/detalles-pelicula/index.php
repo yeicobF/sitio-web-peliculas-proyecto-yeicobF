@@ -163,7 +163,7 @@ $baseHtmlHead = new BaseHtmlHead(
   <?php
   include $path . LAYOUTS . "footer.php";
   ?>
-  <!-- <script defer src="<?php /* echo FOLDERS_WITH_LOCALHOST["JS"] . "xml-http-request.js"; */ ?>" type="module"></script> -->
+  <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "xml-http-request.js"; ?>"></script>
   <script defer>
     // Hay que saber si el usuario ha iniciado sesión.
     const isUserLoggedIn = <?php echo Login::isUserLoggedIn() && Controller::idExists(false, $_SESSION); ?>
