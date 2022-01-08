@@ -80,7 +80,7 @@ $baseHtmlHead = new BaseHtmlHead(
 
     </main>
     <div class="row">
-      <section class="comments__container col-12 col-md-8">
+      <section class="comments__container col-12 col-md-8" id="comments-container">
         <h2>Comentarios</h2>
         <?php
         $logged_in = false;
@@ -170,39 +170,76 @@ $baseHtmlHead = new BaseHtmlHead(
 
     const postUrl = "<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "comentario-pelicula.php"; ?>";
     const publishCommentBtn = document.getElementById("publish-comment-btn");
+
+
+    const commentForm = document.getElementById("comment-form");
+    const interactionBtnClass = "comments__interaction__button";
+    const interactionFormClass = "comments__interaction__info";
+    const commentsContainerId = "comments-container";
+
     // Así obtenemos todos los padres que contienen los botones de like y
     // dislike y no los tenemos que obtener de forma individual. Utilizamos
     // propagación de eventos.
-    const commentInteractionContainers = document.getElementsByClassName("comments__interaction__likes");
-    const interactionBtnClass = "comments__interaction__button";
+    const commentsContainer = document.getElementById(commentsContainerId);
 
-    const commentForm = document.getElementById("comment-form");
-    const interactionFormClass = "comments__interaction__info";
     let formData;
 
     // Al dar click, llamar al método POST.
-    commentInteractionContainers.addEventListener("click", (event) => {
+    commentsContainer.addEventListener("click", (event) => {
       // Evitar que se recargue la página.
       event.preventDefault();
 
       let target = event.target;
+      // Como los botones son SVG, pueden ser hijos del botón, pero también
+      // click.
+      let isSon = target
+        .closest(
+          `button.${interactionBtnClass}`
+        ) === null ?
+        false :
+        true;
+      let isButton = target.tagName === "BUTTON" &&
+        target.classList.contains(`${interactionBtnClass}`);
+
+      console.log("target", target);
+      console.log("target.tagName", target.tagName);
+      console.log("target.classList", target.classList);
+      console.log("isUserLoggedIn", isUserLoggedIn);
+      console.log("isSon", isSon);
+      console.log("isButton", isButton);
 
       // Si no se trata del botón, regresar.
-      if (
-        !target ||
-        target.tagName !== BUTTON ||
-        !target.classList.contains(interactionBtnClass) ||
-        !isUserLoggedIn
-      ) return;
+      console.log("!target || !isUserLoggedIn", !target || !isUserLoggedIn);
+      console.log("!isButton && !isSon", !isButton && !isSon);
+      if (!target || !isUserLoggedIn) return;
+
+      // Si no es botón aún puede ser el hijo.
+      if (!isButton && !isSon) return;
+
+      console.log("hola");
 
       // Obtener el formulario padre.
-      let form = target.closest(interactionFormClass);
+      let form = target.closest(`form.${interactionFormClass}`);
+      // Obtener botones de like y dislike.
+      let likeBtn = form.querySelector(
+        `button.${interactionBtnClass}[name="like"]`
+      );
+      let dislikeBtn = form.querySelector(
+        `button.${interactionBtnClass}[name="dislike"]`
+      );
+      let interactions = {
+        like: likeBtn.getAttribute("value"),
+        dislike: dislikeBtn.getAttribute("value"),
+      };
+
+      console.log("likeBtn", likeBtn);
+      console.log("dislikeBtn", dislikeBtn);
+      console.log("form", form);
+      console.table("interactions", interactions);
 
       // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
       // Obtener todos los campos del formulario.
       formData = new FormData(form);
-
-      
 
       // Si el comentario ya tiene interacción, eliminarla.
 
@@ -210,7 +247,7 @@ $baseHtmlHead = new BaseHtmlHead(
       // actual.
 
       // Si no tiene interacción, agregarla.
-    })
+    });
   </script>
 </body>
 
