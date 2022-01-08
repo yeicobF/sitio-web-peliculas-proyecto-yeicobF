@@ -275,6 +275,8 @@ $baseHtmlHead = new BaseHtmlHead(
         console.log("PUT");
         // La actualización la hace automáticamente su respectivo método.
         method = "PUT";
+        // La interacción actual es la contraria al botón que presionamos.
+        currentInteraction = currentInteraction === "like" ? "dislike" : "like";
       }
 
       // Si el comentario ya tiene interacción, eliminarla.
