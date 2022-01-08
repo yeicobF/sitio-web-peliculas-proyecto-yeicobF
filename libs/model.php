@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . "/../config/config.php";
+
 class Model
 {
   /**
@@ -8,7 +10,6 @@ class Model
    * @var PDO
    */
   public static $db_connection;
-  const DEFAULT_TIME_ZONE = 'America/Mexico_City';
 
   /**
    * Posibles errores de la BD. Esto ayudaría a la gestión de los mismos para
@@ -80,7 +81,7 @@ class Model
    * @return string
    */
   public static function getCurrentTime(
-    string $defaultTimeZone = self::DEFAULT_TIME_ZONE
+    string $defaultTimeZone = DEFAULT_TIME_ZONE_STRING
   ): string {
     if (date_default_timezone_get() != $defaultTimeZone) {
       date_default_timezone_set($defaultTimeZone);
@@ -106,7 +107,7 @@ class Model
    * @return string
    */
   public static function getCurrentDate(
-    string $defaultTimeZone = self::DEFAULT_TIME_ZONE
+    string $defaultTimeZone = DEFAULT_TIME_ZONE_STRING
   ): string {
     if (date_default_timezone_get() != $defaultTimeZone) {
       date_default_timezone_set($defaultTimeZone);

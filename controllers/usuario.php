@@ -203,7 +203,7 @@ class Usuario extends Controller
 
     // Si el perfil de  usuario es el mismo que inició sesión y es
     // administrador. 
-    $is_user_admin = false;
+    $is_logged_user_admin = false;
 
     // Ver si el usuario es admin.
     if (
@@ -213,7 +213,7 @@ class Usuario extends Controller
         INTERNAL_ENCODING
       ) === "administrador"
     ) {
-      $is_user_admin = true;
+      $is_logged_user_admin = true;
     }
 
   ?>
@@ -246,7 +246,7 @@ class Usuario extends Controller
             </h2>
             <?php
             // Si el usuario es administrador, mostrar su rol.
-            if ($is_user_admin) {
+            if ($is_logged_user_admin) {
             ?>
               <h3 class="profile-details__role">Administrador</h3>
             <?php
@@ -258,21 +258,45 @@ class Usuario extends Controller
 
           </hgroup>
 
-          <!-- Mostrar botones solo si se trata del dueño de la cuenta. -->
+          <!-- 
+            Agregar el formulario si el usuario es dueño de la cuenta o el administrador. 
+          -->
           <?php
-          if ($are_details_from_logged_user) {
+          if (
+            $are_details_from_logged_user
+            || Usuario::isAdmin()
+          ) {
           ?>
             <form action="<?php echo CONTROLLERS_FOLDER . "usuario.php"; ?>" method="POST" enctype="multipart/form-data" class="profile-details__buttons">
-              <!-- <input type="hidden" name="_method" value="DELETE"> -->
-              <a href="<?php echo URL_PAGE["editar-perfil"]; ?>" class="btn btn-primary">
-                Editar perfil
-              </a>
-              <button name="_method" value="DELETE" title="Eliminar cuenta" class="btn btn-danger" type="submit">
-                Eliminar cuenta
-              </button>
+              <input type="hidden" name="id" value="<?php echo $user->_id; ?>">
+              <?php
+              // El perfil es del usuario registrado.
+              if ($are_details_from_logged_user) {
+              ?>
+                <!-- <input type="hidden" name="_method" value="DELETE"> -->
+                <a href="<?php echo URL_PAGE["editar-perfil"]; ?>" class="btn btn-primary">
+                  Editar perfil
+                </a>
+
+              <?php
+              }
+              // El administrador podrá eliminar cuentas, al igual que el dueño
+              // del perfil podrá borrar la suya.
+              if (
+                $are_details_from_logged_user
+                || Usuario::isAdmin()
+              ) {
+              ?>
+                <button name="_method" value="DELETE" title="Eliminar cuenta" class="btn btn-danger" type="submit">
+                  Eliminar cuenta
+                </button>
+              <?php
+              }
+              ?>
             </form>
           <?php
           }
+
           ?>
         </figcaption>
       </figure>
@@ -373,6 +397,10 @@ $message = "";
 
 // Obtener los datos del usuario actual, ya que, estos pudieron haber sido
 // actualizados.
+// 
+// Se podría agregar que, en lugar del ID de sesión se recibiera el ID del
+// usuario, para que sea más dinámico a poder editar otros perfiles si el
+// administrador tuviera la posibilidad.
 if (
   Controller::isGet()
   && Controller::idExists()
@@ -398,15 +426,6 @@ Controller::redirectIfNonExistentPostMethod("login/index.php");
 
 // echo var_dump($_POST);
 
-/* ------------------------- ELIMINACIÓN DE USUARIO ------------------------- */
-if (Controller::isMethodDelete()) {
-  $result = ModelUsuario::delete(Usuario::getId());
-
-  if ($result === 1) {
-    session_destroy();
-  }
-}
-
 // Campos del formulario.
 $form_fields = $_POST;
 unset($form_fields["_method"]);
@@ -419,6 +438,27 @@ if (Controller::fileExists("foto_perfil")) {
 $non_empty_fields = Controller::getNonEmptyFormFields(
   $form_fields
 );
+
+/* ------------------------- ELIMINACIÓN DE USUARIO ------------------------- */
+if (
+  Controller::isMethodDelete()
+  && Controller::idExists(false, $non_empty_fields)
+) {
+  // Solo poder eliminar si el usuario es administrador o el usuario es dueño de
+  // la cuenta a eliminar.
+  if (
+    Usuario::isAdmin()
+    || $non_empty_fields["id"] === Usuario::getId()
+  ) {
+    $result = ModelUsuario::delete($non_empty_fields["id"]);
+  }
+  if (
+    $result === 1
+    && $non_empty_fields["id"] === Usuario::getId()
+  ) {
+    session_destroy();
+  }
+}
 
 /* ------------------------------ NUEVO USUARIO ----------------------------- */
 if (Controller::isMethodPost()) {

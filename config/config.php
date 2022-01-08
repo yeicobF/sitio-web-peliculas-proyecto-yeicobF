@@ -16,6 +16,17 @@ define("DOCUMENT_ROOT", "{$_SERVER["DOCUMENT_ROOT"]}/");
 define("LOCALHOST_URL", "http://localhost:8012/");
 define("BARE_PROJECT_FOLDER_DIR", "fdw-2021-2022-a/proyecto-yeicobF/");
 define("INTERNAL_ENCODING", "UTF-8");
+define("DEFAULT_TIME_ZONE_STRING", "America/Mexico_City");
+
+
+/**
+ * Establecemos la zona horaria.
+ */
+if (
+  date_default_timezone_get() != DEFAULT_TIME_ZONE_STRING
+) {
+  date_default_timezone_set(DEFAULT_TIME_ZONE_STRING);
+}
 
 /* ----------------------------------- SRC ---------------------------------- */
 define("SRC", BARE_PROJECT_FOLDER_DIR . "src/");
