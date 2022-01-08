@@ -191,8 +191,7 @@ $baseHtmlHead = new BaseHtmlHead(
 
     // Al dar click, llamar al método POST.
     commentsContainer.addEventListener("click", async (event) => {
-      // Evitar que se recargue la página.
-      event.preventDefault();
+
 
       let target = event.target;
       // Como los botones son SVG, pueden ser hijos del botón, pero también
@@ -220,7 +219,8 @@ $baseHtmlHead = new BaseHtmlHead(
 
       // Si no es botón aún puede ser el hijo.
       if (!isButton && !isSon) return;
-
+      // Evitar que se recargue la página si se presiona el botón.
+      event.preventDefault();
       const userId = <?php echo Usuario::getId(); ?>;
 
       // Obtener el formulario padre.
@@ -232,7 +232,7 @@ $baseHtmlHead = new BaseHtmlHead(
         `button.${interactionBtnClass}[name="dislike"]`
       );
 
-      
+
       // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
       // Obtener todos los campos del formulario.
       // console.log("form", form);
