@@ -162,9 +162,13 @@ a.disabled,
 button.disabled,
 input.disabled,
 a.disabled,
-button.disabled {
+button.disabled,
+.disabled::placeholder {
   background-color: lightgray;
   color: darkgray;
+  cursor: not-allowed;
+  outline-color: lightgray;
+  border-color: lightgray;
 }
 
 @media (min-height: 600px) {

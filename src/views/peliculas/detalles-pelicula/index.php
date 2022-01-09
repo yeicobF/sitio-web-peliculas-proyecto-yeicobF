@@ -122,7 +122,7 @@ $baseHtmlHead = new BaseHtmlHead(
             ";
           ?>
 
-          <textarea required <?php echo $disabled; ?> placeholder="<?php echo $textarea_placeholder; ?>" name="comentario" id="nuevo-comentario" rows="5"></textarea>
+          <textarea required <?php echo $disabled; ?> class="<?php echo $disabled; ?>" placeholder="<?php echo $textarea_placeholder; ?>" name="comentario" id="nuevo-comentario" rows="5"></textarea>
           <footer class="comments__form__buttons">
             <?php
             if ($logged_in) {

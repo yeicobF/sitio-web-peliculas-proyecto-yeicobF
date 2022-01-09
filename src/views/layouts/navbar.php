@@ -127,7 +127,7 @@ if (
     Un nav, que podrías ser un div, pero ayuda en cuanto a la metadata, 
     indicando que se trata de una navbar.
   -->
-<nav class="navbar">
+  <nav class="navbar pretty-shadow">
   <a rel="noopener noreferrer" href="<?php echo URL_PAGE["inicio"]; ?>" class="navbar-brand">
     <!-- https://developer.mozilla.org/es/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images -->
     <img src="<?php echo FOLDERS_WITH_LOCALHOST["PAGE_LOGO"]; ?>" alt="Colección de películas" srcset="" sizes="" class="logo">

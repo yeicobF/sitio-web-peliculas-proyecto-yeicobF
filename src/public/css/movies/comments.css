@@ -35,6 +35,10 @@
   border-color: var(--color-lavender-blue);
 }
 
+.comments__form textarea.disabled {
+  /* background-color: rgb(218, 218, 218); */
+}
+
 .comments__form textarea:focus-visible {
   border-color: var(--color-maximum-blue-purple);
   outline: var(--color-purple) solid 0px;
