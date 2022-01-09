@@ -274,42 +274,10 @@ $baseHtmlHead = new BaseHtmlHead(
         .then(dbCommentInteraction => {
           console.log("get response: ", dbCommentInteraction);
 
-          let userInteraction =
-            dbCommentInteraction === null ?
-            false :
-            Object.hasOwn(dbCommentInteraction, "user_interaction");
-
-          // Si no hay interacción actualmente, hacer inserción.
-          if (userInteraction) {
-            /**
-             * Si no se ha seleccionado método, elegirlo ahora. No puede ser PUT y
-             * DELETE al mismo tiempo. 
-             */
-            console.log("dbCommentInteraction.user_interaction", dbCommentInteraction.user_interaction);
-            console.log("currentInteraction", currentInteraction);
-            // Si el comentario ya tiene interacción, eliminarla. La interacción ya
-            // está seleccionada, por lo que hay que actualizar.
-            if (dbCommentInteraction.user_interaction === currentInteraction) {
-              method = "DELETE";
-            }
-
-            /** 
-             * Ya que obtuvimos la interacción actual del comentario y el usuario,
-             * ver si esta existe con el usuario actual, y si, el botón presionado
-             * es distinto al de la interacción de la BD, hacer PUT.
-             *
-             * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
-             */
-            if (dbCommentInteraction.user_interaction !== currentInteraction) {
-              // La actualización la hace automáticamente su respectivo método.
-              method = "PUT";
-
-              // La interacción actual es la contraria al botón que presionamos.
-              currentInteraction = dbCommentInteraction.user_interaction;
-            }
-          } else {
-            method = "POST";
-          }
+          [method, currentInteraction] = getCurrentInteractionMethod({
+            dbCommentInteraction,
+            currentInteraction
+          });
 
           console.log("method", method);
           console.log("currentInteraction", currentInteraction);
@@ -343,31 +311,16 @@ $baseHtmlHead = new BaseHtmlHead(
         })
         .then((lastGet) => {
           dbCommentInteraction = lastGet;
-
           console.log(
             "datos actualizados - get response: ", dbCommentInteraction
           );
-          Object.values(buttons).forEach((value) => {
-            console.log("buttons:", value);
-            value.classList.remove(selectedClass);
-          });
-          for (const [interaction, value] of Object.entries(dbCommentInteraction)) {
-            console.table(interaction, value);
-            if (interaction === "user_interaction") {
-              buttons[value].classList.add(selectedClass);
-              continue;
-            }
-            interactionData[interaction].value = value;
-            // https://attacomsian.com/blog/javascript-update-element-text
-            interactionData[interaction].textContent = value;
-          }
 
-          // updateCommentInteractions({
-          //   selectedClass,
-          //   dbCommentInteraction,
-          //   buttons,
-          //   interactionData
-          // });
+          updateCommentInteractions(
+            selectedClass,
+            dbCommentInteraction,
+            buttons,
+            interactionData
+          );
         })
         .catch(
           (error) => {
