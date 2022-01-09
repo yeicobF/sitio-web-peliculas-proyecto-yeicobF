@@ -207,11 +207,6 @@ $baseHtmlHead = new BaseHtmlHead(
       let isButton = target.tagName === "BUTTON" &&
         target.classList.contains(`${interactionBtnClass}`);
 
-      // console.log("target", target); console.log("target.tagName",
-      // target.tagName); console.log("target.classList", target.classList);
-      // console.log("isUserLoggedIn", isUserLoggedIn); console.log("isSon",
-      // isSon); console.log("isButton", isButton);
-
       // Si no se trata del botón, regresar. console.log("!target ||
       // !isUserLoggedIn", !target || !isUserLoggedIn); console.log("!isButton
       // && !isSon", !isButton && !isSon);
@@ -248,7 +243,7 @@ $baseHtmlHead = new BaseHtmlHead(
       let comentarioPeliculaId = formData.get("comentario_pelicula_id");
       let getUrl = `${controllerUrl}?comentario_pelicula_id=${comentarioPeliculaId}&usuario_id=${userId}`;
       // console.log(getUrl);
-      let dbLikeComentario;
+      let dbCommentInteraction;
       let clickedButton = isSon ?
         target.closest(
           `button.${interactionBtnClass}`
@@ -263,93 +258,100 @@ $baseHtmlHead = new BaseHtmlHead(
       clickedButton.classList.add(selectedClass);
 
       /**
+       * https://www.youtube.com/watch?v=41VfSbuYBP0&ab_channel=midulive
+       *
+       * async/await ¿Qué problemas puede dar y cómo te ayuda Promise.all y
+       * Promise.allSettled? (JavaScript)
+       */
+      /**
        * Obtener datos de la BD, no del DOM, por si fueron actualizados y el DOM
        * no. Obtener botones de like y dislike.
        *
        * https://stackoverflow.com/a/37534034/13562806 How to return data from
        * promise [duplicate]
        */
-      await getData(getUrl)
-        .then((responseData) => {
-          dbLikeComentario = responseData;
-          console.log("get response: ", dbLikeComentario);
+      getData(getUrl)
+        .then(dbCommentInteraction => {
+          console.log("get response: ", dbCommentInteraction);
+
+          let userInteraction =
+            dbCommentInteraction === null ?
+            false :
+            Object.hasOwn(dbCommentInteraction, "user_interaction");
+
+          // Si no hay interacción actualmente, hacer inserción.
+          if (userInteraction) {
+            /**
+             * Si no se ha seleccionado método, elegirlo ahora. No puede ser PUT y
+             * DELETE al mismo tiempo. 
+             */
+            console.log("dbCommentInteraction.user_interaction", dbCommentInteraction.user_interaction);
+            console.log("currentInteraction", currentInteraction);
+            // Si el comentario ya tiene interacción, eliminarla. La interacción ya
+            // está seleccionada, por lo que hay que actualizar.
+            if (dbCommentInteraction.user_interaction === currentInteraction) {
+              method = "DELETE";
+            }
+
+            /** 
+             * Ya que obtuvimos la interacción actual del comentario y el usuario,
+             * ver si esta existe con el usuario actual, y si, el botón presionado
+             * es distinto al de la interacción de la BD, hacer PUT.
+             *
+             * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
+             */
+            if (dbCommentInteraction.user_interaction !== currentInteraction) {
+              // La actualización la hace automáticamente su respectivo método.
+              method = "PUT";
+
+              // La interacción actual es la contraria al botón que presionamos.
+              currentInteraction = dbCommentInteraction.user_interaction;
+            }
+          } else {
+            method = "POST";
+          }
+
+          console.log("method", method);
+          console.log("currentInteraction", currentInteraction);
+          formData.set("_method", method);
+          formData.set("tipo", currentInteraction);
+
+          // https://stackoverflow.com/a/69374442/13562806
+          /**
+           * Las promesas van anidadas, ya que, para hacer el post primero hay
+           * que obtener los datos actuales, y luego de hacer el post, hay que
+           * obtener los nuevos datos, que es lo único que se regresa para
+           * manejar en el then del get inicial.
+           * 
+           * Este return sendData en realidad devuelve la respuesta que recibe
+           * el último getData anidado.
+           * 
+           * Si no hacemos return de sendData, pero sí de getData, se realizará
+           * el then del primer get aunque no se haya resuelto la promesa del
+           * último getData.
+           * 
+           * Una fuente que me ayudó:
+           * - How to make promise.all wait for nested promise.all?
+           * - https://stackoverflow.com/questions/36545464/how-to-make-promise-all-wait-for-nested-promise-all
+           */
+          return sendData(controllerUrl, Object.fromEntries(formData))
+            .then((response) => {
+              console.log("post response: ", response);
+              return getData(getUrl)
+                .then(console.log("ultimo get"));
+            });
         })
-        .catch((error) => {
-          console.log(`error: ${error}`);
-          return;
-        });
+        .then((lastGet) => {
+          dbCommentInteraction = lastGet;
 
-      let userInteraction =
-        dbLikeComentario === null ?
-        false :
-        Object.hasOwn(dbLikeComentario, "user_interaction");
-
-
-      // Si no hay interacción actualmente, hacer inserción.
-      if (userInteraction) {
-        /**
-         * Si no se ha seleccionado método, elegirlo ahora. No puede ser PUT y
-         * DELETE al mismo tiempo. 
-         */
-        console.log("dbLikeComentario.user_interaction", dbLikeComentario.user_interaction);
-        console.log("currentInteraction", currentInteraction);
-        // Si el comentario ya tiene interacción, eliminarla. La interacción ya
-        // está seleccionada, por lo que hay que actualizar.
-        if (dbLikeComentario.user_interaction === currentInteraction) {
-          method = "DELETE";
-        }
-
-        /** 
-         * Ya que obtuvimos la interacción actual del comentario y el usuario,
-         * ver si esta existe con el usuario actual, y si, el botón presionado
-         * es distinto al de la interacción de la BD, hacer PUT.
-         *
-         * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
-         */
-        if (dbLikeComentario.user_interaction !== currentInteraction) {
-          // La actualización la hace automáticamente su respectivo método.
-          method = "PUT";
-
-          // La interacción actual es la contraria al botón que presionamos.
-          currentInteraction = dbLikeComentario.user_interaction;
-        }
-      } else {
-        method = "POST";
-      }
-
-
-
-      console.log("method", method);
-      console.log("currentInteraction", currentInteraction);
-      formData.set("_method", method);
-      formData.set("tipo", currentInteraction);
-
-      // Display the keys for (var key of formData.keys()) { console.log(key);
-      // }
-      // for (var value of formData.values()) { console.log(value);
-      // }
-
-      // https://stackoverflow.com/a/69374442/13562806
-      await sendData(controllerUrl, Object.fromEntries(formData))
-        .then((responseData) => {
-          dbLikeComentario = responseData;
-          console.log("post response: ", dbLikeComentario);
-
-        })
-        .catch((error) => {
-          console.log(`error: ${error}`);
-          return;
-        });
-
-      await getData(getUrl)
-        .then((responseData) => {
-          dbLikeComentario = responseData;
-          console.log("datos actualizados - get response: ", dbLikeComentario);
+          console.log(
+            "datos actualizados - get response: ", dbCommentInteraction
+          );
           Object.values(buttons).forEach((value) => {
             console.log("buttons:", value);
             value.classList.remove(selectedClass);
           });
-          for (const [interaction, value] of Object.entries(dbLikeComentario)) {
+          for (const [interaction, value] of Object.entries(dbCommentInteraction)) {
             console.table(interaction, value);
             if (interaction === "user_interaction") {
               buttons[value].classList.add(selectedClass);
@@ -362,17 +364,17 @@ $baseHtmlHead = new BaseHtmlHead(
 
           // updateCommentInteractions({
           //   selectedClass,
-          //   dbLikeComentario,
+          //   dbCommentInteraction,
           //   buttons,
           //   interactionData
           // });
         })
-        .catch((error) => {
-          console.log(`error: ${error}`);
-          return;
-        });
-
-
+        .catch(
+          (error) => {
+            console.table("error:", error);
+            return;
+          }
+        );
     });
   </script>
 </body>
