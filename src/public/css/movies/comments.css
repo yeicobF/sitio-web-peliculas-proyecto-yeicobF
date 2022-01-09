@@ -192,7 +192,7 @@
   display: flex;
   flex-direction: row;
   gap: 1em;
-  font-size: 0.9em;
+  font-size: 0.8em;
   font-weight: 700;
   align-items: baseline;
   justify-content: space-between;
@@ -206,13 +206,15 @@
 .comments__interaction__button.selected {
   color: var(--color-crimson);
   font-weight: 600;
-  font-size: 1em;
+  /* padding: 0; */
+  /* font-size: 1em; */
 }
 
 .comments__interaction__button {
   background-color: transparent;
   cursor: pointer;
   /* transition: none; */
+  padding: 0;
   /* transition: font-size 5ms ease-out; */
   transition: color 5ms ease-in, font-size 0s ease-out;
 }
@@ -236,11 +238,15 @@
 
 .comments__interaction__info {
   display: flex;
-  column-gap: 0.5em;
+  column-gap: .9em;
 }
 
 .comments__interaction__likes {
   font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .3em;
 }
 
 /* -------------------------------------------------------------------------- */

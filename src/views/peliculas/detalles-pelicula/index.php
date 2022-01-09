@@ -164,6 +164,7 @@ $baseHtmlHead = new BaseHtmlHead(
   include $path . LAYOUTS . "footer.php";
   ?>
   <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "xml-http-request.js"; ?>"></script>
+  <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "comment-interactions.js"; ?>"></script>
   <script defer>
     // Hay que saber si el usuario ha iniciado sesión.
 
@@ -206,16 +207,14 @@ $baseHtmlHead = new BaseHtmlHead(
       let isButton = target.tagName === "BUTTON" &&
         target.classList.contains(`${interactionBtnClass}`);
 
-      // console.log("target", target);
-      // console.log("target.tagName", target.tagName);
-      // console.log("target.classList", target.classList);
-      // console.log("isUserLoggedIn", isUserLoggedIn);
-      // console.log("isSon", isSon);
-      // console.log("isButton", isButton);
+      // console.log("target", target); console.log("target.tagName",
+      // target.tagName); console.log("target.classList", target.classList);
+      // console.log("isUserLoggedIn", isUserLoggedIn); console.log("isSon",
+      // isSon); console.log("isButton", isButton);
 
-      // Si no se trata del botón, regresar.
-      // console.log("!target || !isUserLoggedIn", !target || !isUserLoggedIn);
-      // console.log("!isButton && !isSon", !isButton && !isSon);
+      // Si no se trata del botón, regresar. console.log("!target ||
+      // !isUserLoggedIn", !target || !isUserLoggedIn); console.log("!isButton
+      // && !isSon", !isButton && !isSon);
       if (!target || !isUserLoggedIn) return;
 
       // Si no es botón aún puede ser el hijo.
@@ -244,8 +243,7 @@ $baseHtmlHead = new BaseHtmlHead(
       }
 
       // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
-      // Obtener todos los campos del formulario.
-      // console.log("form", form);
+      // Obtener todos los campos del formulario. console.log("form", form);
       formData = new FormData(form);
       let comentarioPeliculaId = formData.get("comentario_pelicula_id");
       let getUrl = `${controllerUrl}?comentario_pelicula_id=${comentarioPeliculaId}&usuario_id=${userId}`;
@@ -259,14 +257,13 @@ $baseHtmlHead = new BaseHtmlHead(
       // Obtener botón al que dimos click para comparar con su interacción.
       let currentInteraction = clickedButton.getAttribute("name");
       let method = "";
-      let isMethodSelected = false;
 
       /**
        * Obtener datos de la BD, no del DOM, por si fueron actualizados y el DOM
        * no. Obtener botones de like y dislike.
        *
-       * https://stackoverflow.com/a/37534034/13562806
-       * How to return data from promise [duplicate]
+       * https://stackoverflow.com/a/37534034/13562806 How to return data from
+       * promise [duplicate]
        */
       await getData(getUrl)
         .then((responseData) => {
@@ -285,68 +282,47 @@ $baseHtmlHead = new BaseHtmlHead(
 
 
       // Si no hay interacción actualmente, hacer inserción.
-      if (!userInteraction) {
-        method = "POST";
-        isMethodSelected = true;
-      }
-
-      /**
-       * Si no se ha seleccionado método, elegirlo ahora. No puede ser PUT y
-       * DELETE al mismo tiempo. 
-       */
-      if (!isMethodSelected) {
+      if (userInteraction) {
+        /**
+         * Si no se ha seleccionado método, elegirlo ahora. No puede ser PUT y
+         * DELETE al mismo tiempo. 
+         */
         console.log("dbLikeComentario.user_interaction", dbLikeComentario.user_interaction);
         console.log("currentInteraction", currentInteraction);
-        // Si el comentario ya tiene interacción, eliminarla.
-        // La interacción ya está seleccionada, por lo que hay que actualizar.
+        // Si el comentario ya tiene interacción, eliminarla. La interacción ya
+        // está seleccionada, por lo que hay que actualizar.
         if (dbLikeComentario.user_interaction === currentInteraction) {
           method = "DELETE";
-          clickedButton.classList.remove(selectedClass);
-          clickedButton.value = "";
         }
 
         /** 
-         * Ya que obtuvimos la interacción actual del comentario y el usuario, ver
-         * si esta existe con el usuario actual, y si, el botón presionado es
-         * distinto al de la interacción de la BD, hacer PUT.
-         * 
+         * Ya que obtuvimos la interacción actual del comentario y el usuario,
+         * ver si esta existe con el usuario actual, y si, el botón presionado
+         * es distinto al de la interacción de la BD, hacer PUT.
+         *
          * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
          */
         if (dbLikeComentario.user_interaction !== currentInteraction) {
           // La actualización la hace automáticamente su respectivo método.
           method = "PUT";
-          console.log(
-            "buttons[dbLikeComentario.user_interaction]",
-            buttons[dbLikeComentario.user_interaction]
-          );
-          buttons[dbLikeComentario.user_interaction]
-            .classList.remove(selectedClass);
-          buttons[dbLikeComentario.user_interaction]
-            .setAttribute("value", "");
 
           // La interacción actual es la contraria al botón que presionamos.
           currentInteraction = dbLikeComentario.user_interaction;
         }
+      } else {
+        method = "POST";
       }
 
-      if (method === "POST" || method === "PUT") {
-        console.log("holaa");
-        console.log("method", method);
-        clickedButton.classList.add(selectedClass);
-        clickedButton.setAttribute("value", "selected");
-      }
+
 
       console.log("method", method);
       console.log("currentInteraction", currentInteraction);
       formData.set("_method", method);
       formData.set("tipo", currentInteraction);
 
-      // Display the keys
-      // for (var key of formData.keys()) {
-      //   console.log(key);
+      // Display the keys for (var key of formData.keys()) { console.log(key);
       // }
-      // for (var value of formData.values()) {
-      //   console.log(value);
+      // for (var value of formData.values()) { console.log(value);
       // }
 
       // https://stackoverflow.com/a/69374442/13562806
@@ -354,6 +330,9 @@ $baseHtmlHead = new BaseHtmlHead(
         .then((responseData) => {
           dbLikeComentario = responseData;
           console.log("post response: ", dbLikeComentario);
+          // Indicar que se dio click al botón, aunque después se obtendrá el
+          // estado de la base de datos.
+          clickedButton.classList.add(selectedClass);
         })
         .catch((error) => {
           console.log(`error: ${error}`);
@@ -364,18 +343,34 @@ $baseHtmlHead = new BaseHtmlHead(
         .then((responseData) => {
           dbLikeComentario = responseData;
           console.log("datos actualizados - get response: ", dbLikeComentario);
+          Object.values(buttons).forEach((value) => {
+            console.log("buttons:", value);
+            value.classList.remove(selectedClass);
+          });
+          for (const [interaction, value] of Object.entries(dbLikeComentario)) {
+            console.table(interaction, value);
+            if (interaction === "user_interaction") {
+              buttons[value].classList.add(selectedClass);
+              continue;
+            }
+            interactionData[interaction].value = value;
+            // https://attacomsian.com/blog/javascript-update-element-text
+            interactionData[interaction].textContent = value;
+          }
+
+          // updateCommentInteractions({
+          //   selectedClass,
+          //   dbLikeComentario,
+          //   buttons,
+          //   interactionData
+          // });
         })
         .catch((error) => {
           console.log(`error: ${error}`);
           return;
         });
 
-      interactionData.likes.setAttribute("value", dbLikeComentario.likes);
-      // https://attacomsian.com/blog/javascript-update-element-text
-      interactionData.likes.textContent = dbLikeComentario.likes;
 
-      interactionData.dislikes.setAttribute("value", dbLikeComentario.dislikes);
-      interactionData.dislikes.textContent = dbLikeComentario.dislikes;
     });
   </script>
 </body>
