@@ -181,6 +181,7 @@ $baseHtmlHead = new BaseHtmlHead(
     const interactionBtnClass = "comments__interaction__button";
     const interactionFormClass = "comments__interaction__info";
     const commentsContainerId = "comments-container";
+    const selectedClass = "selected";
 
     // Así obtenemos todos los padres que contienen los botones de like y
     // dislike y no los tenemos que obtener de forma individual. Utilizamos
@@ -225,13 +226,22 @@ $baseHtmlHead = new BaseHtmlHead(
 
       // Obtener el formulario padre.
       let form = target.closest(`form.${interactionFormClass}`);
-      let likeBtn = form.querySelector(
-        `button.${interactionBtnClass}[name="like"]`
-      );
-      let dislikeBtn = form.querySelector(
-        `button.${interactionBtnClass}[name="dislike"]`
-      );
-
+      const buttons = {
+        like: form.querySelector(
+          `button.${interactionBtnClass}[name="like"]`
+        ),
+        dislike: form.querySelector(
+          `button.${interactionBtnClass}[name="dislike"]`
+        ),
+      }
+      const interactionData = {
+        likes: form.querySelector(
+          `data[title="likes-number"]`
+        ),
+        dislikes: form.querySelector(
+          `data[title="dislikes-number"]`
+        ),
+      }
 
       // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
       // Obtener todos los campos del formulario.
@@ -239,6 +249,7 @@ $baseHtmlHead = new BaseHtmlHead(
       formData = new FormData(form);
       let comentarioPeliculaId = formData.get("comentario_pelicula_id");
       let getUrl = `${controllerUrl}?comentario_pelicula_id=${comentarioPeliculaId}&usuario_id=${userId}`;
+      // console.log(getUrl);
       let dbLikeComentario;
       let clickedButton = isSon ?
         target.closest(
@@ -290,6 +301,8 @@ $baseHtmlHead = new BaseHtmlHead(
         // La interacción ya está seleccionada, por lo que hay que actualizar.
         if (dbLikeComentario.user_interaction === currentInteraction) {
           method = "DELETE";
+          clickedButton.classList.remove(selectedClass);
+          clickedButton.value = "";
         }
 
         /** 
@@ -302,9 +315,25 @@ $baseHtmlHead = new BaseHtmlHead(
         if (dbLikeComentario.user_interaction !== currentInteraction) {
           // La actualización la hace automáticamente su respectivo método.
           method = "PUT";
+          console.log(
+            "buttons[dbLikeComentario.user_interaction]",
+            buttons[dbLikeComentario.user_interaction]
+          );
+          buttons[dbLikeComentario.user_interaction]
+            .classList.remove(selectedClass);
+          buttons[dbLikeComentario.user_interaction]
+            .setAttribute("value", "");
+
           // La interacción actual es la contraria al botón que presionamos.
           currentInteraction = dbLikeComentario.user_interaction;
         }
+      }
+
+      if (method === "POST" || method === "PUT") {
+        console.log("holaa");
+        console.log("method", method);
+        clickedButton.classList.add(selectedClass);
+        clickedButton.setAttribute("value", "selected");
       }
 
       console.log("method", method);
@@ -340,6 +369,13 @@ $baseHtmlHead = new BaseHtmlHead(
           console.log(`error: ${error}`);
           return;
         });
+
+      interactionData.likes.setAttribute("value", dbLikeComentario.likes);
+      // https://attacomsian.com/blog/javascript-update-element-text
+      interactionData.likes.textContent = dbLikeComentario.likes;
+
+      interactionData.dislikes.setAttribute("value", dbLikeComentario.dislikes);
+      interactionData.dislikes.textContent = dbLikeComentario.dislikes;
     });
   </script>
 </body>

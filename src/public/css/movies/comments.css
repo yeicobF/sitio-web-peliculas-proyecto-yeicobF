@@ -212,7 +212,9 @@
 .comments__interaction__button {
   background-color: transparent;
   cursor: pointer;
-  transition: color 5ms ease-in;
+  /* transition: none; */
+  /* transition: font-size 5ms ease-out; */
+  transition: color 5ms ease-in, font-size 0s ease-out;
 }
 
 .comments__interaction__button.disabled,

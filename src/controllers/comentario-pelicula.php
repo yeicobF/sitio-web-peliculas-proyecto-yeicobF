@@ -182,14 +182,14 @@ class ComentarioPelicula extends Controller
             <button class="comments__interaction__button <?php echo "{$user_like} {$disabled}"; ?>" type="button" title="like" name="like" value="<?php echo $user_like; ?>">
               <i class="fas fa-thumbs-up"></i>
             </button>
-            <data value="<?php echo $likes; ?>"><?php echo $likes; ?></data>
+            <data title="likes-number" value="<?php echo $likes; ?>"><?php echo $likes; ?></data>
           </div>
 
           <div class="comments__interaction__likes">
             <button class="comments__interaction__button <?php echo "{$user_dislike} {$disabled}"; ?>" type="button" title="dislike" name="dislike" value="<?php echo $user_dislike; ?>">
               <i class="fas fa-thumbs-down"></i>
             </button>
-            <data value="<?php echo $dislikes; ?>"><?php echo $dislikes; ?></data>
+            <data title="dislikes-number" value="<?php echo $dislikes; ?>"><?php echo $dislikes; ?></data>
           </div>
         </form>
         <?php
