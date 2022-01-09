@@ -258,6 +258,10 @@ $baseHtmlHead = new BaseHtmlHead(
       let currentInteraction = clickedButton.getAttribute("name");
       let method = "";
 
+      // Indicar que se dio click al botón, aunque después se obtendrá el
+      // estado de la base de datos.
+      clickedButton.classList.add(selectedClass);
+
       /**
        * Obtener datos de la BD, no del DOM, por si fueron actualizados y el DOM
        * no. Obtener botones de like y dislike.
@@ -330,9 +334,7 @@ $baseHtmlHead = new BaseHtmlHead(
         .then((responseData) => {
           dbLikeComentario = responseData;
           console.log("post response: ", dbLikeComentario);
-          // Indicar que se dio click al botón, aunque después se obtendrá el
-          // estado de la base de datos.
-          clickedButton.classList.add(selectedClass);
+
         })
         .catch((error) => {
           console.log(`error: ${error}`);
