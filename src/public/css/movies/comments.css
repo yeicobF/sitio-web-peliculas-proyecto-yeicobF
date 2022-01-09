@@ -71,19 +71,49 @@
   gap: 1em;
 }
 
+.comments__details > a:focus-visible {
+  outline: none;
+}
+
 .comments__container .circle-avatar.own-avatar {
   /* border-color: var(--color-mint); */
   outline: solid 2px var(--color-mint);
   /* box-shadow: 0px 0px 5px 1px var(--color-mint); */
   /* border: none; */
 }
+/* .comments__container .circle-avatar.own-avatar:hover,
+.comments__container .circle-avatar.own-avatar:focus,
+.comments__container .circle-avatar.own-avatar:focus-visible,
+.comments__container .circle-avatar.own-avatar:focus-within {
+  outline-color: var(--color-mint);
+  cursor: none;
+} */
 
-.comments__container .circle-avatar {
+.comments__details :not(span).circle-avatar {
   /* 
   No agregar más píxeles a la pantalla. Sobre todo evitamos problemas con el SVG
   de Font Awesome. 
   */
   outline: solid 2px var(--color-lavender-blue);
+}
+
+.comments__container svg.circle-avatar.profile-picture__circle {
+  /* 
+  Esto ya que, con el de Font Awesome, si está activo, al hacer hover y demás en
+  los hijos, no se activa. 
+  */
+  /* pointer-events: none; */
+}
+
+.comments__details :not(own-avatar).circle-avatar:hover,
+.comments__details :not(own-avatar).circle-avatar:focus,
+.comments__details :not(own-avatar).circle-avatar:focus-visible,
+.comments__details :not(own-avatar).circle-avatar:focus-within {
+  outline-color: var(--color-purple);
+  cursor: pointer;
+}
+.comments__container svg.circle-avatar.profile-picture__circle * {
+  /* pointer-events: auto; */
 }
 
 .comments__form__btn {
@@ -238,7 +268,7 @@
 
 .comments__interaction__info {
   display: flex;
-  column-gap: .9em;
+  column-gap: 0.9em;
 }
 
 .comments__interaction__likes {
@@ -246,7 +276,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: .3em;
+  gap: 0.3em;
 }
 
 /* -------------------------------------------------------------------------- */
