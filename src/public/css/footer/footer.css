@@ -25,7 +25,7 @@
   text-align: center;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 665px) {
   .footer__elements {
     flex-direction: column;
     gap: 0.2em;

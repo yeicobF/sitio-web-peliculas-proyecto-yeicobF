@@ -124,7 +124,10 @@ class LikeComentario extends Model
     // Insertamos el nuevo comentario con el nuevo tipo.
     $result = $new_state->insertLikeComentario();
 
-    if ($result === 1) {
+    if (
+      $result === 1
+      || is_array($result)
+    ) {
       $this->setTipo($new_tipo);
     }
 
@@ -135,6 +138,11 @@ class LikeComentario extends Model
     int $comentario_pelicula_id,
     int $usuario_id
   ): int {
+    if (
+      !is_numeric($comentario_pelicula_id)
+      || !is_numeric($usuario_id)
+    ) return 0;
+
     return parent::deleteRecord(
       table: self::TABLE_NAME,
       where_clause_names: [

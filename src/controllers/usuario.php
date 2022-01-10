@@ -100,7 +100,7 @@ class Usuario extends Controller
     ícono para simular una foto de perfil circular con el ícono en medio.
     -->
     <span class="fa-stack circle-avatar profile-picture">
-      <i class="fa-stack-2x fa-solid fa-circle circle-avatar profile-picture__circle"></i>
+      <i class="fa-stack-2x fa-solid fa-circle circle-avatar profile-picture__circle <?php echo $additional_classes; ?>"></i>
       <i class="fa-stack-1x fa-solid fa-user-astronaut fa-inverse profile-picture__icon"></i>
     </span>
   <?php

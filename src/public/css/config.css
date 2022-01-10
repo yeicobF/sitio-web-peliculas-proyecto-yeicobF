@@ -114,14 +114,6 @@ body :is(.h1, .h2, .h3, .h4, .h5, .h6) {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Quiero que la navbar siempre se vea. */
-.navbar {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 2;
-}
-
 input.fa-btn--danger,
 a.fa-btn--danger,
 button.fa-btn--danger,
@@ -170,12 +162,26 @@ a.disabled,
 button.disabled,
 input.disabled,
 a.disabled,
-button.disabled {
+button.disabled,
+.disabled::placeholder {
   background-color: lightgray;
   color: darkgray;
+  cursor: not-allowed;
+  outline-color: lightgray;
+  border-color: lightgray;
 }
 
-@media (min-width: 768px) {
+@media (min-height: 600px) {
+  /*
+  Quiero que la navbar siempre se vea, pero si el alto es pequeño, no se va a
+  poder visualizar todo el contenido del menú. 
+  */
+  .navbar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
   /* * {
     font-size: 16px;
   } */
