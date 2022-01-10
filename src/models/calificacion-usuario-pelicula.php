@@ -7,7 +7,7 @@ class CalificacionUsuarioPelicula extends Model
 {
   public int $pelicula_id;
   public int $usuario_id;
-  public float | null $numero_estrellas;
+  public float $numero_estrellas;
 
   const TABLE_NAME = "calificacion_usuario_pelicula";
 
@@ -23,20 +23,70 @@ class CalificacionUsuarioPelicula extends Model
   ];
 
   const UNIQUE_ATTRIBUTES = [
-    "fk" => [
-      "pelicula_id",
-      "usuario_id",
-    ]
+    // "fk" => [
+    //   "pelicula_id",
+    //   "usuario_id",
+    // ]
   ];
 
   public function __construct(
     int $pelicula_id,
     int $usuario_id,
-    float $numero_estrellas = null
+    float $numero_estrellas
   ) {
     $this->pelicula_id = $pelicula_id;
     $this->usuario_id = $usuario_id;
-    $this->numero_estrellas = $numero_estrellas;
+    $this->setNumeroEstrellas($numero_estrellas);
+  }
+
+  /**
+   * Establecer el número de estrellas.
+   * 
+   * - Si se envía un valor mayor a 5, se le dan 5 estrellas. 
+   * - Si se envía un valor menor a 0, se le da 0. 
+   * - Los números solo pueden ir de .5 en .5, no hay decimales intermedios.
+   *
+   * https://www.kavoir.com/2012/10/php-round-to-the-nearest-0-5-1-0-1-5-2-0-2-5-etc.html
+   * https://www.php.net/manual/es/function.round.php
+   * 
+   * @param float $numero_estrellas
+   * @return void
+   */
+  public function setNumeroEstrellas(float $numero_estrellas)
+  {
+    if ($numero_estrellas > 5) {
+      $this->numero_estrellas = 5;
+    }
+    if ($numero_estrellas < 0) {
+      $this->numero_estrellas = 5;
+    }
+    /**
+     * Returns the rounded value of val to specified precision (number of digits
+     * after the decimal point).
+     *
+     * https://www.php.net/manual/es/function.round.php
+     *
+     * - echo round(3.4);         // 3 
+     * - echo round(3.5);         // 4
+     */
+    $this->numero_estrellas = round(
+      num: $numero_estrellas * 2,
+      mode: PHP_ROUND_HALF_UP
+    );
+  }
+
+  public static function getCalificacionesPelicula(int $pelicula_id)
+  {
+    return parent::getRecords(
+      table: self::TABLE_NAME,
+      where_clause_names: [
+        "pelicula_id"
+      ],
+      where_clause_values: [
+        $pelicula_id
+      ],
+      pdo_params: self::PDO_PARAMS
+    );
   }
 
   public static function getCalificacionUsuarioPelicula(
@@ -82,11 +132,6 @@ class CalificacionUsuarioPelicula extends Model
    */
   public function update($numero_estrellas): int
   {
-    // No poder agregar más o menos estrellas de las posibles.
-    if ($numero_estrellas > 5 || $numero_estrellas < 0) {
-      return 0;
-    }
-
     // Instanciamos con nuevo numero_estrellas.
     $new_state  = new CalificacionUsuarioPelicula(
       $this->pelicula_id,
@@ -114,17 +159,19 @@ class CalificacionUsuarioPelicula extends Model
     );
   }
 
-  public function delete(): bool
-  {
+  public function delete(
+    int $pelicula_id,
+    int $usuario_id
+  ): bool {
     return parent::deleteRecord(
       table: self::TABLE_NAME,
-      where_clauses: [
+      where_clause_names: [
         "pelicula_id",
         "usuario_id"
       ],
-      values: [
-        $this->pelicula_id,
-        $this->usuario_id,
+      where_clause_values: [
+        $pelicula_id,
+        $usuario_id,
       ],
       pdo_params: self::PDO_PARAMS
     );

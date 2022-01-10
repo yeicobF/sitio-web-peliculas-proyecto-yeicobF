@@ -6,12 +6,16 @@ require_once __DIR__ . "/../config/config.php";
 require_once __DIR__ . "/../libs/controller.php";
 require_once __DIR__ . "/../libs/model.php";
 require_once __DIR__ . "/../models/pelicula.php";
+require_once __DIR__ . "/../models/calificacion-usuario-pelicula.php";
 require_once __DIR__ . "/usuario.php";
+require_once __DIR__ . "/calificacion-usuario-pelicula.php";
 
 use Pelicula as ModelPelicula;
+use CalificacionUsuarioPelicula as ModelCalificacionUsuarioPelicula;
 use Model as Model;
 use Libs\Controller;
 use Controllers\Usuario;
+use Controllers\CalificacionUsuarioPelicula;
 
 /**
  * Hay 3 posibilidades para el GET:
@@ -148,6 +152,33 @@ class Pelicula extends Controller
   <?php
   }
 
+  public static function renderMovieStars(
+    ModelPelicula $movie
+  ) {
+    $db_movie_stars =
+      ModelCalificacionUsuarioPelicula::getCalificacionesPelicula(
+        $movie->id
+      );
+
+    $reviews_number = CalificacionUsuarioPelicula::getNumberOfReviews(
+      $db_movie_stars
+    );
+    $average_movie_stars = CalificacionUsuarioPelicula::getAverageMovieStars(
+      $db_movie_stars
+    );
+
+    $user_movie_review = false;
+    if (Login::isUserLoggedIn()) {
+      $user_movie_review =
+        ModelCalificacionUsuarioPelicula::getCalificacionUsuarioPelicula(
+          $movie->id,
+          Usuario::getId()
+        );
+    }
+
+    
+  }
+
   public static function renderDetailedMovie(ModelPelicula $movie)
   {
     $time = $movie->getSplitTime();
@@ -206,6 +237,9 @@ class Pelicula extends Controller
         <data value="<?php echo $movie->restriccion_edad; ?>" class="movie-details__age-rating">
           Clasificación: <?php echo $movie->restriccion_edad; ?>
         </data>
+      </section>
+      <section class="movie-details__info">
+
       </section>
       <p class="movie-details__synopsis">
         <?php echo $movie->resumen_trama; ?>
