@@ -59,10 +59,6 @@ $baseHtmlHead = new BaseHtmlHead(
   <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>footer/footer.css">
   <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>form/form.css">
 
-  <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "xml-http-request.js"; ?>"></script>
-  <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "comment-interactions.js"; ?>"></script>
-  <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "get.js"; ?>"></script>
-
   <?php
   echo $baseHtmlHead->getTitle();
   ?>
@@ -166,49 +162,55 @@ $baseHtmlHead = new BaseHtmlHead(
 
   <?php
   include $path . LAYOUTS . "footer.php";
+  if (Login::isUserLoggedIn() && Controller::idExists(false, $_SESSION)) {
   ?>
-  <script defer>
-    // Hay que saber si el usuario ha iniciado sesión.
+    <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "xml-http-request.js"; ?>"></script>
+    <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "comment-interactions.js"; ?>"></script>
+    <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "get.js"; ?>"></script>
+    <script defer>
+      // Hay que saber si el usuario ha iniciado sesión.
 
-    const isUserLoggedIn =
-      <?php
-      // json_encode porque si aquí da false, no se guarda nada en JS.
-      echo json_encode(Login::isUserLoggedIn() && Controller::idExists(false, $_SESSION));
-      ?>;
+      const isUserLoggedIn =
+        <?php
+        // json_encode porque si aquí da false, no se guarda nada en JS.
+        echo json_encode(Login::isUserLoggedIn() && Controller::idExists(false, $_SESSION));
+        ?>;
+      const userId = <?php echo Usuario::getId(); ?>;
 
-    const controllerUrl = "<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "like-comentario.php"; ?>";
-    const publishCommentBtn = document.getElementById("publish-comment-btn");
-    const commentForm = document.getElementById("comment-form");
-    const interactionBtnClass = "comments__interaction__button";
-    const interactionFormClass = "comments__interaction__info";
-    const commentsContainerId = "comments-container";
-    const selectedClass = "selected";
-    const userId = <?php echo Usuario::getId(); ?>;
+      const controllerUrl = "<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "like-comentario.php"; ?>";
+      const publishCommentBtn = document.getElementById("publish-comment-btn");
+      const commentForm = document.getElementById("comment-form");
+      const interactionBtnClass = "comments__interaction__button";
+      const interactionFormClass = "comments__interaction__info";
+      const commentsContainerId = "comments-container";
+      const selectedClass = "selected";
 
-    /** 
-     *
-     * Contenedor de todos los comentarios.
-     *
-     *
-     * Así obtenemos todos los padres que contienen los botones de like y
-     * dislike y no los tenemos que obtener de forma individual. 
-     *
-     * Utilizamos propagación de eventos. 
-     */
-    const commentsContainer = document.getElementById(commentsContainerId);
-    const interactionForms = document.querySelectorAll(`form.${interactionFormClass}`);
-
-    commentsContainer.addEventListener("click", (event) => {
-      postCommentInteraction({
-        event,
-        isUserLoggedIn,
-        userId,
-        controllerUrl,
-        interactionFormClass,
-        interactionBtnClass,
+      /** 
+       *
+       * Contenedor de todos los comentarios.
+       *
+       *
+       * Así obtenemos todos los padres que contienen los botones de like y
+       * dislike y no los tenemos que obtener de forma individual. 
+       *
+       * Utilizamos propagación de eventos. 
+       */
+      const commentsContainer = document.getElementById(commentsContainerId);
+      const interactionForms = document.querySelectorAll(`form.${interactionFormClass}`);
+      commentsContainer.addEventListener("click", (event) => {
+        postCommentInteraction({
+          event,
+          isUserLoggedIn,
+          userId,
+          controllerUrl,
+          interactionFormClass,
+          interactionBtnClass,
+        });
       });
-    });
-  </script>
+    </script>
+  <?php
+  }
+  ?>
 </body>
 
 </html>

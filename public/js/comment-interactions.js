@@ -240,7 +240,8 @@ const postCommentInteraction = ({
    */
   getData(getUrl)
     .then((dbCommentInteraction) => {
-      console.log("get response: ", dbCommentInteraction);
+      console.log("get response: ");
+      console.table(dbCommentInteraction);
 
       [method, currentInteraction] = getCurrentInteractionMethod({
         dbCommentInteraction,
@@ -279,7 +280,8 @@ const postCommentInteraction = ({
     })
     .then((lastGet) => {
       dbCommentInteraction = lastGet;
-      console.log("datos actualizados - get response: ", dbCommentInteraction);
+      console.log("datos actualizados - get response: ");
+      console.table(dbCommentInteraction);
       updateCommentInteractions(
         selectedClass,
         dbCommentInteraction,
