@@ -207,8 +207,82 @@ $baseHtmlHead = new BaseHtmlHead(
           interactionBtnClass,
         });
 
-        /* -------------------------- CALIFICACIÓN PELÍCULA ------------------------- */
       });
+
+      /* -------------------------- CALIFICACIÓN PELÍCULA ------------------------- */
+
+      const starsForm = document.getElementById("movie-stars-form");
+
+      if (starsForm !== undefined || starsForm !== null) {
+
+        const controllers = {
+          calificacionUsuarioPelicula: "<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "calificacion-usuario-pelicula.php"; ?>",
+        };
+        const starsClasses = {
+          userSelection: "movie-details__stars--active--user-review",
+          averageSelection: "movie-details__stars--active--every-review",
+          star: "movie-details__stars__one-complete",
+        };
+
+        starsForm.addEventListener("click", (event) => {
+          const target = event.target;
+          console.log("target", target);
+          console.log("target.tagName", target.tagName);
+
+          const isButton = target.tagName === "svg" &&
+            target.classList.contains(starsClasses.star);
+          const isSon = !(target.closest(`svg.${starsClasses.star}`) === null);
+          console.log("isButton", isButton);
+          console.log("isSon", isSon);
+          console.log(
+            "target.closest(`svg.${starsClasses.star}`)",
+            target.closest(`svg.${starsClasses.star}`)
+          );
+
+          // Si el usuario no está registrado o el target no existe.
+          if (!target || !isUserLoggedIn) return;
+          // Si no es botón aún puede ser el hijo.
+          if (!isButton && !isSon) return;
+
+          const starsFormData = new FormData(starsForm);
+          const peliculaId = starsFormData.get("pelicula_id");
+          const queryParams = {
+            pelicula_id: peliculaId,
+            usuario_id: userId,
+          };
+
+          // const getUrl = `${controllerUrl}?comentario_pelicula_id=${comentarioPeliculaId}&usuario_id=${userId}`;
+          const getUrl = appendGetParamsToUrl({
+            url: controllers.calificacionUsuarioPelicula,
+            paramsObj: queryParams,
+          });
+
+          let clickedButton = isSon ?
+            target.closest(`svg.${starsClasses.star}`) :
+            target;
+          const clickedButtonBeginningState = clickedButton;
+
+          // Estrellas seleccionadas.
+          let starsNumber = clickedButton.dataset.star;
+          console.log(starsNumber);
+
+          clickedButton.classList.add(starsClasses.userSelection);
+
+
+          getData(getUrl)
+            .then((response) => {
+              console.log("firstGet response", response);
+
+              starsFormData.set("_method", method);
+              starsFormData.set("numero_estrellas", starsNumber);
+            })
+            .catch((error) => {
+              console.table("error:", error);
+              // Si ocurre un error, regresar el botón del click al estado anterior.
+              clickedButton = clickedButtonBeginningState;
+            });
+        });
+      }
     </script>
   <?php
   }
