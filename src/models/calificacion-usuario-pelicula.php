@@ -89,24 +89,41 @@ class CalificacionUsuarioPelicula extends Model
     );
   }
 
+  /**
+   * Obtener la calificación de un usuario en una película.
+   * 
+   * 
+   *
+   * @param integer $pelicula_id
+   * @param integer $usuario_id
+   * @return float | bool Si la ha calificado, regresa float con la
+   * calificación, si no, regresa false.
+   */
   public static function getCalificacionUsuarioPelicula(
     int $pelicula_id,
     int $usuario_id
-  ): array|null {
+  ): float | null {
     $where_clauses = [
       "pelicula_id",
       "usuario_id"
     ];
 
-    return parent::getRecords(
-      table: self::TABLE_NAME,
-      where_clause_names: $where_clauses,
-      where_clause_values: [
-        $pelicula_id,
-        $usuario_id
-      ],
-      pdo_params: self::PDO_PARAMS
-    );
+    $db_records =
+      parent::getRecords(
+        table: self::TABLE_NAME,
+        where_clause_names: $where_clauses,
+        where_clause_values: [
+          $pelicula_id,
+          $usuario_id
+        ],
+        pdo_params: self::PDO_PARAMS
+      );
+
+    if (array_key_exists(0, $db_records)) {
+      return $db_records[0]["numero_estrellas"];
+    }
+
+    return null;
   }
 
   /**

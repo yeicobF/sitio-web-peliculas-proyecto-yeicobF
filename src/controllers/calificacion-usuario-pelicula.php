@@ -44,8 +44,8 @@ class CalificacionUsuarioPelicula extends Controller
       $total_stars += $movie_review["numero_estrellas"];
     }
 
-    $stars_average = $total_stars / 5;
-    
+    $stars_average = $total_stars / count($db_movie_reviews);
+
     return $stars_average;
 
     // https://www.kavoir.com/2012/10/php-round-to-the-nearest-0-5-1-0-1-5-2-0-2-5-etc.html
@@ -98,4 +98,3 @@ $post = json_decode(
   json: $json_post,
   associative: true
 );
-

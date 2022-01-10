@@ -152,7 +152,26 @@ class Pelicula extends Controller
   <?php
   }
 
-  public static function renderMovieStars(
+  /**
+   * Renderizar estrellas de una película.
+   *
+   * @param float $average_movie_stars
+   * @param float $user_movie_review
+   * @return void
+   */
+  private static function renderMovieStars(
+    float $average_movie_stars = null,
+    float $user_movie_review = null
+  ) {
+  }
+
+  /**
+   * Renderizar detalles en cuanto a las estrellas de una película.
+   *
+   * @param ModelPelicula $movie
+   * @return void
+   */
+  public static function renderMovieStarsDetails(
     ModelPelicula $movie
   ) {
     $db_movie_stars =
@@ -163,11 +182,15 @@ class Pelicula extends Controller
     $reviews_number = CalificacionUsuarioPelicula::getNumberOfReviews(
       $db_movie_stars
     );
-    $average_movie_stars = CalificacionUsuarioPelicula::getAverageMovieStars(
-      $db_movie_stars
-    );
 
-    $user_movie_review = false;
+    $average_movie_stars = null;
+    if ($reviews_number > 0) {
+      $average_movie_stars = CalificacionUsuarioPelicula::getAverageMovieStars(
+        $db_movie_stars
+      );
+    }
+
+    $user_movie_review = null;
     if (Login::isUserLoggedIn()) {
       $user_movie_review =
         ModelCalificacionUsuarioPelicula::getCalificacionUsuarioPelicula(
@@ -176,7 +199,55 @@ class Pelicula extends Controller
         );
     }
 
-    
+    $reviews_number_text =
+      "(Por {$reviews_number} usuario"
+      . ($reviews_number > 1 ? "s" : "")
+      . ")";
+
+  ?>
+    <section class="movie-details__stars-container">
+      <main class="movie-details__info">
+        <header class="movie-details__stars">
+          <?php
+          self::renderMovieStars(
+            $average_movie_stars,
+            $user_movie_review
+          );
+          ?>
+        </header>
+        <footer class="movie-details__stars__every-user-average">
+          <?php
+          if ($reviews_number === 0) {
+          ?>
+            Ningún usuario ha calificado la película.
+          <?php
+          } else {
+          ?>
+            <data title="user-review" value="<?php echo $average_movie_stars; ?>"><?php echo $average_movie_stars; ?>/5 estrellas</data>
+            <p><?php echo $reviews_number_text; ?></p>
+          <?php
+          }
+          ?>
+        </footer>
+      </main>
+      <footer class="movie-details__user-stars">
+        <?php
+        if (Login::isUserLoggedIn()) {
+          if ($user_movie_review === null) {
+        ?>
+            Aún no has calificado la película.
+          <?php
+          } else {
+          ?>
+            <p>Tu calificación: </p>
+            <data title="user-review" value="<?php echo $user_movie_review; ?>"><?php echo $user_movie_review; ?>/5</data>
+        <?php
+          }
+        }
+        ?>
+      </footer>
+    </section>
+  <?php
   }
 
   public static function renderDetailedMovie(ModelPelicula $movie)
@@ -238,9 +309,9 @@ class Pelicula extends Controller
           Clasificación: <?php echo $movie->restriccion_edad; ?>
         </data>
       </section>
-      <section class="movie-details__info">
-
-      </section>
+      <?php
+      self::renderMovieStarsDetails($movie);
+      ?>
       <p class="movie-details__synopsis">
         <?php echo $movie->resumen_trama; ?>
       </p>
