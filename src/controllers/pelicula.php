@@ -168,7 +168,7 @@ class Pelicula extends Controller
    * @param float $user_movie_review
    * @return void
    */
-  private static function renderMovieStars(
+  private static function renderMovieStarsInHalves(
     float $average_movie_stars = null,
     float $user_movie_review = null
   ) {
@@ -215,7 +215,7 @@ class Pelicula extends Controller
         $movie->id
       );
 
-    $reviews_number = CalificacionUsuarioPelicula::getNumberOfReviews(
+    $reviews_number = CalificacionUsuarioPelicula::getReviewsNumber(
       $db_movie_stars
     );
 
@@ -242,15 +242,37 @@ class Pelicula extends Controller
 
     ?>
     <section class="movie-details__stars-container">
-      <!-- Contenedor de todas las estrellas. -->
-      <header class="movie-details__stars__all">
-        <?php
-        self::renderMovieStars(
-          $average_movie_stars,
-          $user_movie_review
-        );
-        ?>
-      </header>
+      <?php
+      if (!Login::isUserLoggedIn()) {
+      ?>
+        <header class="movie-details__stars__all">
+          <?php
+          self::renderMovieStarsInHalves(
+            $average_movie_stars,
+            $user_movie_review
+          );
+          ?>
+        </header>
+      <?php
+      } else {
+      ?>
+
+        <!-- Contenedor de todas las estrellas. -->
+        <form id="movie-stars-form" class="movie-details__stars__all" action="" method="POST">
+          <input type="hidden" name="pelicula_id" value="<?php echo $movie->id; ?>">
+          <input type="hidden" name="usuario_id" value="<?php echo Usuario::getId(); ?>">
+
+          <?php
+          self::renderMovieStarsInHalves(
+            $average_movie_stars,
+            $user_movie_review
+          );
+          ?>
+        </form>
+      <?php
+      }
+      ?>
+
       <footer>
         <ul class="movie-details__stars__users-reviews-info">
 

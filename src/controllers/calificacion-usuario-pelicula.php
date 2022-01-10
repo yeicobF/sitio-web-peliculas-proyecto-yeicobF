@@ -25,7 +25,7 @@ class CalificacionUsuarioPelicula extends Controller
    *
    * @return int
    */
-  public static function getNumberOfReviews(
+  public static function getReviewsNumber(
     array $db_movie_reviews
   ) {
     return count($db_movie_reviews);
@@ -72,6 +72,22 @@ class CalificacionUsuarioPelicula extends Controller
 
     return false;
   }
+
+  public static function fetchCurrentMovieStarsData(
+    $db_movie_reviews,
+    $usuario_id = null,
+  ) {
+
+    $results = [
+      "average_movie_stars" => self::getAverageMovieStars($db_movie_reviews),
+      "reviews_number" => self::getReviewsNumber($db_movie_reviews)
+    ];
+
+    if ($usuario_id !== null && is_numeric($usuario_id)) {
+      $results["user_movie_stars"] = self::getUserMovieStars($db_movie_reviews, $usuario_id);
+    }
+    return $results;
+  }
 }
 
 Controller::startSession();
@@ -83,6 +99,41 @@ if (
 ) {
   return;
 }
+
+
+
+if (Controller::isGet()) {
+  $pelicula_id_exists =
+    Controller::getKeyExist("pelicula_id")
+    && is_numeric("pelicula_id");
+
+  if (!$pelicula_id_exists) {
+    $error["error"] = "No se especificaron los datos esperados.";
+    echo json_encode($error);
+    return;
+  }
+
+  $db_movie_reviews =
+    ModelCalificacionUsuarioPelicula::getCalificacionesPelicula(
+      $_GET["comentario_pelicula_id"]
+    );
+
+  $usuario_id = null;
+
+  if (array_key_exists("usuario_id", $_GET) && is_numeric($usuario_id)) {
+    $usuario_id = $_GET["usuario_id"];
+  }
+
+  echo json_encode(
+    CalificacionUsuarioPelicula::fetchCurrentMovieStarsData(
+      $db_movie_reviews,
+      $usuario_id
+    )
+  );
+  return;
+}
+
+/* ---------------------------------- POST ---------------------------------- */
 
 $error = ["error" => ""];
 $view_path = "peliculas/index.php";
@@ -98,3 +149,83 @@ $post = json_decode(
   json: $json_post,
   associative: true
 );
+
+if (
+  !Controller::isPost($post)
+  || !Controller::isMethodExistent($post)
+) {
+  $error["error"] = "No se envió un método POST válido.";
+}
+
+// El usuario no puede hacer ningún procedimiento POST si no ha iniciado sesión.
+if (!Login::isUserLoggedIn()) {
+  $error["error"] = "No has iniciado sesión.";
+}
+
+if (strlen($error["error"]) > 0) {
+  echo json_encode($error);
+  return;
+}
+
+
+$non_empty_fields = Controller::getNonEmptyFormFields(
+  $post
+);
+unset($non_empty_fields["_method"]);
+
+if (Controller::isMethodDelete($post)) {
+  if (!Controller::areRequiredFieldsFilled(
+    ModelCalificacionUsuarioPelicula::REQUIRED_DELETION_FIELDS,
+    $non_empty_fields
+  )) {
+    $error["error"] = "No se enviaron los datos correctamente.";
+    echo json_encode($error);
+    return;
+  }
+
+  $result = ModelCalificacionUsuarioPelicula::delete(
+    $non_empty_fields["pelicula_id"],
+    $non_empty_fields["usuario_id"],
+  );
+}
+
+if (
+  (Controller::isMethodPost($post) || Controller::isMethodPut($post))
+  &&
+  !Controller::areRequiredFieldsFilled(
+    ModelCalificacionUsuarioPelicula::REQUIRED_FIELDS,
+    $non_empty_fields
+  )
+) {
+  $error["error"] = "No se enviaron los datos correctamente.";
+  echo json_encode($error);
+  return;
+}
+
+$db_movie_reviews = new ModelCalificacionUsuarioPelicula(
+  pelicula_id: $non_empty_fields["pelicula_id"],
+  usuario_id: $non_empty_fields["usuario_id"],
+  numero_estrellas: $non_empty_fields["numero_estrellas"]
+);
+
+if (Controller::isMethodPost($post)) {
+  $result = $db_movie_reviews->insertCalificacionUsuarioPelicula();
+}
+
+if (Controller::isMethodPut($post)) {
+  $result = $db_movie_reviews->update();
+}
+
+$message = Model::OPERATION_INFO[$result];
+
+if ($result === 1) {
+  // https://www.php.net/manual/es/function.http-response-code.php
+  http_response_code(200);
+  // Solo puedo regresar JSON en AJAX.
+  echo json_encode(["message" => $message]);
+  return;
+}
+
+$error["error"] = $message;
+echo json_encode($error);
+return;

@@ -76,7 +76,6 @@ class LikeComentario extends Controller
    * @return array ["likes", "dislikes", "user-interaction"]
    */
   public static function fetchCurrentCommentInteractions(
-
     array $comment_interactions_data,
     array $db_comment_interactions
   ) {

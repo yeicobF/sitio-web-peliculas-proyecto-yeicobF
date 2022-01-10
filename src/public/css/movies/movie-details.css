@@ -165,7 +165,7 @@
 .movie-details__stars-container {
   display: flex;
   flex-direction: column;
-  row-gap: .6em;
+  row-gap: 0.6em;
 }
 
 .movie-details__stars-details {
@@ -192,10 +192,8 @@
 .movie-details__stars__all {
   display: flex;
   gap: 0.3em;
-  font-size: .8em;
+  font-size: 0.8em;
 }
-
-
 
 /* Solo 1 estrella, pero en un contenedor, estarán 2 mitades. */
 .movie-details__stars__one-complete {
@@ -203,8 +201,11 @@
   gap: 0;
   justify-content: center;
   align-items: center;
+  color: #d9d8d4;
+}
+
+form.movie-details__stars__one-complete {
   cursor: pointer;
-  color: #D9D8D4;
 }
 
 /* 
@@ -229,7 +230,7 @@ Paleta de colores: https://coolors.co/f6efdb-f7ff0a-ffe100
 
 .movie-details__stars--active--user-review {
   /* color: #ffe100; */
-  color: #DDC616;
+  color: #ddc616;
 }
 
 /* -------------------------------------------------------------------------- */

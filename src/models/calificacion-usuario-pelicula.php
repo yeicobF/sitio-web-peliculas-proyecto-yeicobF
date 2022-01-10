@@ -11,6 +11,18 @@ class CalificacionUsuarioPelicula extends Model
 
   const TABLE_NAME = "calificacion_usuario_pelicula";
 
+  const REQUIRED_DELETION_FIELDS = [
+    "pelicula_id",
+    "usuario_id",
+  ];
+
+
+  const REQUIRED_FIELDS = [
+    "pelicula_id",
+    "usuario_id",
+    "numero_estrellas",
+  ];
+
   const PDO_PARAMS = [
     "pelicula_id" => PDO::PARAM_INT,
     "usuario_id" => PDO::PARAM_INT,
@@ -147,13 +159,13 @@ class CalificacionUsuarioPelicula extends Model
    *
    * @return boolean
    */
-  public function update($numero_estrellas): int
+  public function update(): int
   {
     // Instanciamos con nuevo numero_estrellas.
     $new_state  = new CalificacionUsuarioPelicula(
       $this->pelicula_id,
       $this->usuario_id,
-      $numero_estrellas
+      $this->numero_estrellas
     );
     $param_values = $new_state->getParamValues();
     unset($param_values["pelicula_id"]);
@@ -176,7 +188,7 @@ class CalificacionUsuarioPelicula extends Model
     );
   }
 
-  public function delete(
+  public static function delete(
     int $pelicula_id,
     int $usuario_id
   ): bool {
