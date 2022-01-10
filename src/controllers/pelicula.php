@@ -200,13 +200,13 @@ class Pelicula extends Controller
     }
 
     $reviews_number_text =
-      "(Por {$reviews_number} usuario"
+      "(por {$reviews_number} usuario"
       . ($reviews_number > 1 ? "s" : "")
       . ")";
 
   ?>
     <section class="movie-details__stars-container">
-      <main class="movie-details__info">
+      <main class="movie-details__stars-details">
         <header class="movie-details__stars">
           <?php
           self::renderMovieStars(
@@ -223,8 +223,9 @@ class Pelicula extends Controller
           <?php
           } else {
           ?>
-            <data title="user-review" value="<?php echo $average_movie_stars; ?>"><?php echo $average_movie_stars; ?>/5 estrellas</data>
-            <p><?php echo $reviews_number_text; ?></p>
+            <p>Calificación: </p>
+            <data title="user-review" value="<?php echo $average_movie_stars; ?>"><?php echo $average_movie_stars; ?>/5</data>
+            <p> estrellas <?php echo $reviews_number_text; ?></p>
           <?php
           }
           ?>
@@ -241,6 +242,7 @@ class Pelicula extends Controller
           ?>
             <p>Tu calificación: </p>
             <data title="user-review" value="<?php echo $user_movie_review; ?>"><?php echo $user_movie_review; ?>/5</data>
+            <p> estrellas</p>
         <?php
           }
         }

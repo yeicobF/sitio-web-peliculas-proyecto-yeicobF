@@ -146,6 +146,39 @@
 /* -------------------------------------------------------------------------- */
 /* -------------------------------- ESTRELLAS ------------------------------- */
 
+.movie-details__stars-container * {
+  gap: 0.3em;
+}
+
+.movie-details__stars-container p {
+  /* font-weight: 600; */
+}
+.movie-details__stars-container data {
+  /* font-weight: 600; */
+  color: var(--color-crimson);
+}
+.movie-details__stars-container footer {
+  font-weight: 900;
+  font-size: .9em;
+}
+
+.movie-details__stars-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-details__stars-details {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.movie-details__stars__every-user-average,
+.movie-details__user-stars {
+  display: flex;
+  flex-direction: row;
+}
+
 /* -------------------------------------------------------------------------- */
 
 @media (max-width: 768px) {
