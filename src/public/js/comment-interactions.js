@@ -158,7 +158,7 @@ const getInteractionElements = ({ interactionForm }) => {
   return [buttons, interactionData];
 };
 
-const postCommentInteraction = async ({
+const postCommentInteraction = ({
   event,
   isUserLoggedIn,
   userId,
@@ -208,7 +208,7 @@ const postCommentInteraction = async ({
    * - Si el elemento actual es el hijo del botón, obtenemos el botón como tal.
    * - Si no, lo obtenemos del elemento actual.
    */
-  const clickedButton = isSon
+  let clickedButton = isSon
     ? target.closest(`button.${interactionBtnClass}`)
     : target;
   /**
@@ -218,7 +218,7 @@ const postCommentInteraction = async ({
   const clickedButtonBeginningState = clickedButton;
   /** Obtener botón al que dimos click para comparar con su interacción. */
   let currentInteraction = clickedButton.getAttribute("name");
-
+  let dbCommentInteraction;
   /**
    * Indicar que se dio click al botón, aunque después se obtendrá el estado de
    * la base de datos.
@@ -280,7 +280,6 @@ const postCommentInteraction = async ({
     .then((lastGet) => {
       dbCommentInteraction = lastGet;
       console.log("datos actualizados - get response: ", dbCommentInteraction);
-
       updateCommentInteractions(
         selectedClass,
         dbCommentInteraction,

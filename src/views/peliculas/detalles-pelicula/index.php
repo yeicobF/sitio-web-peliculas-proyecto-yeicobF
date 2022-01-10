@@ -62,7 +62,7 @@ $baseHtmlHead = new BaseHtmlHead(
   <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "xml-http-request.js"; ?>"></script>
   <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "comment-interactions.js"; ?>"></script>
   <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "get.js"; ?>"></script>
-  
+
   <?php
   echo $baseHtmlHead->getTitle();
   ?>
@@ -178,25 +178,28 @@ $baseHtmlHead = new BaseHtmlHead(
 
     const controllerUrl = "<?php echo FOLDERS_WITH_LOCALHOST["CONTROLLERS"] . "like-comentario.php"; ?>";
     const publishCommentBtn = document.getElementById("publish-comment-btn");
-
-
     const commentForm = document.getElementById("comment-form");
     const interactionBtnClass = "comments__interaction__button";
     const interactionFormClass = "comments__interaction__info";
     const commentsContainerId = "comments-container";
     const selectedClass = "selected";
-
-    // Así obtenemos todos los padres que contienen los botones de like y
-    // dislike y no los tenemos que obtener de forma individual. Utilizamos
-    // propagación de eventos.
-    const commentsContainer = document.getElementById(commentsContainerId);
-
-    let formData;
     const userId = <?php echo Usuario::getId(); ?>;
 
-    // Al dar click, llamar al método POST.
-    commentsContainer.addEventListener("click", async (event) => {
-      await postCommentInteraction({
+    /** 
+     *
+     * Contenedor de todos los comentarios.
+     *
+     *
+     * Así obtenemos todos los padres que contienen los botones de like y
+     * dislike y no los tenemos que obtener de forma individual. 
+     *
+     * Utilizamos propagación de eventos. 
+     */
+    const commentsContainer = document.getElementById(commentsContainerId);
+    const interactionForms = document.querySelectorAll(`form.${interactionFormClass}`);
+
+    commentsContainer.addEventListener("click", (event) => {
+      postCommentInteraction({
         event,
         isUserLoggedIn,
         userId,
