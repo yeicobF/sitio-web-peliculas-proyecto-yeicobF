@@ -24,6 +24,15 @@ const getCurrentInteractionMethod = ({
   // Si no hay interacción actualmente, hacer inserción.
   if (!Object.hasOwn(dbCommentInteraction, "user_interaction")) {
     method = "POST";
+    /**
+     * Devolvemos el método y la interacción actual.
+     *
+     * No dejar pasar, ya que, si no existe la propiedad, el currentInteraction
+     * es diferente del dbCommentInteraction.user_interaction, ya que, el
+     * primero sí existe, pero el segundo es undefined, por lo que, son
+     * diferentes.
+     */
+    return [method, currentInteraction];
   }
   // Si el comentario ya tiene interacción, eliminarla. La interacción ya
   // está seleccionada, por lo que hay que actualizar.
