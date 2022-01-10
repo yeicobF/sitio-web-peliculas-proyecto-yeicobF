@@ -159,24 +159,66 @@
 }
 .movie-details__stars-container footer {
   font-weight: 900;
-  font-size: .9em;
+  font-size: 0.9em;
 }
 
 .movie-details__stars-container {
   display: flex;
   flex-direction: column;
+  row-gap: .6em;
 }
 
 .movie-details__stars-details {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: flex-start;
   flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.movie-details__stars__users-reviews-info {
+  padding: 0;
+  margin: 0;
 }
 
 .movie-details__stars__every-user-average,
 .movie-details__user-stars {
   display: flex;
   flex-direction: row;
+}
+
+/* Contenedor de todas las estrellas. */
+.movie-details__stars__all {
+  display: flex;
+  gap: 0.3em;
+  font-size: .8em;
+}
+
+
+
+/* Solo 1 estrella, pero en un contenedor, estarán 2 mitades. */
+.movie-details__stars__one-complete {
+  /* display: flex; */
+  gap: 0;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #D9D8D4;
+}
+
+/* 
+Paleta de colores: https://coolors.co/f6efdb-f7ff0a-ffe100
+*/
+.movie-details__stars--not-active {
+  color: #f6efdb;
+}
+
+.movie-details__stars--active--every-review {
+  color: #f7ff0a;
+}
+
+.movie-details__stars--active--user-review {
+  color: #ffe100;
 }
 
 /* -------------------------------------------------------------------------- */

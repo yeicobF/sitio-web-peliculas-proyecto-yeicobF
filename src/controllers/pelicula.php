@@ -149,11 +149,20 @@ class Pelicula extends Controller
       <i class="fa-solid fa-border-none"></i>
       <p>No poster</p>
     </span>
-  <?php
+    <?php
   }
 
   /**
    * Renderizar estrellas de una película.
+   *
+   * Se crean mitades de estrellas, pero una en orientación original y otra
+   * invertida. Esto se logra con ciertas clases de font-awesome, que, en este
+   * caso se ocupará: 
+   *
+   * `fa-flip-horizontal`
+   *
+   * Fuente:
+   * https://fontawesome.com/v5.15/how-to-use/on-the-web/styling/rotating-icons
    *
    * @param float $average_movie_stars
    * @param float $user_movie_review
@@ -163,6 +172,25 @@ class Pelicula extends Controller
     float $average_movie_stars = null,
     float $user_movie_review = null
   ) {
+    $half_star = "fas fa-star-half";
+    $flip_horizontal = "fa-flip-horizontal";
+    $icon_class = "";
+
+    // 10 medias estrellas (2 por estrella).
+    for ($i = 0, $current_star = 0.5; $i < (5 * 2); $i++, $current_star += .5) {
+      if ($i % 2 === 0) {
+    ?>
+        <div class="movie-details__stars__one-complete fa-stack">
+          <i data-star="<?php echo $current_star; ?>" class="<?php echo $half_star; ?>  fa-stack-2x"></i>
+        <?php
+        // Si no es par, invertimos.
+      } else {
+        ?>
+          <i data-star="<?php echo $current_star; ?>" class="<?php echo "{$half_star} {$flip_horizontal}"; ?>  fa-stack-2x"></i>
+        </div>
+    <?php
+      }
+    }
   }
 
   /**
@@ -204,50 +232,55 @@ class Pelicula extends Controller
       . ($reviews_number > 1 ? "s" : "")
       . ")";
 
-  ?>
+    ?>
     <section class="movie-details__stars-container">
-      <main class="movie-details__stars-details">
-        <header class="movie-details__stars">
-          <?php
-          self::renderMovieStars(
-            $average_movie_stars,
-            $user_movie_review
-          );
-          ?>
-        </header>
-        <footer class="movie-details__stars__every-user-average">
-          <?php
-          if ($reviews_number === 0) {
-          ?>
-            Ningún usuario ha calificado la película.
-          <?php
-          } else {
-          ?>
-            <p>Calificación: </p>
-            <data title="user-review" value="<?php echo $average_movie_stars; ?>"><?php echo $average_movie_stars; ?>/5</data>
-            <p> estrellas <?php echo $reviews_number_text; ?></p>
-          <?php
-          }
-          ?>
-        </footer>
-      </main>
-      <footer class="movie-details__user-stars">
+      <!-- Contenedor de todas las estrellas. -->
+      <header class="movie-details__stars__all">
         <?php
-        if (Login::isUserLoggedIn()) {
-          if ($user_movie_review === null) {
+        self::renderMovieStars(
+          $average_movie_stars,
+          $user_movie_review
+        );
         ?>
-            Aún no has calificado la película.
-          <?php
-          } else {
-          ?>
-            <p>Tu calificación: </p>
-            <data title="user-review" value="<?php echo $user_movie_review; ?>"><?php echo $user_movie_review; ?>/5</data>
-            <p> estrellas</p>
-        <?php
-          }
-        }
-        ?>
+      </header>
+      <footer>
+        <ul class="movie-details__stars__users-reviews-info">
+
+          <li class="movie-details__stars__every-user-average">
+            <?php
+            if ($reviews_number === 0) {
+            ?>
+              Ningún usuario ha calificado la película.
+            <?php
+            } else {
+            ?>
+              <p>Calificación: </p>
+              <data title="user-review" value="<?php echo $average_movie_stars; ?>"><?php echo $average_movie_stars; ?>/5</data>
+              <p> estrellas <?php echo $reviews_number_text; ?></p>
+            <?php
+            }
+            ?>
+          </li>
+          <li class="movie-details__user-stars">
+            <?php
+            if (Login::isUserLoggedIn()) {
+              if ($user_movie_review === null) {
+            ?>
+                Aún no has calificado la película.
+              <?php
+              } else {
+              ?>
+                <p>Tu calificación: </p>
+                <data title="user-review" value="<?php echo $user_movie_review; ?>"><?php echo $user_movie_review; ?>/5</data>
+                <p> estrellas</p>
+            <?php
+              }
+            }
+            ?>
+          </li>
+        </ul>
       </footer>
+
     </section>
   <?php
   }
