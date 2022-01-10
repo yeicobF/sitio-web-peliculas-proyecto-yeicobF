@@ -96,3 +96,192 @@ const updateCommentInteractions = (
     interactionData[interaction].textContent = value;
   }
 };
+
+/**
+ * El elemento es un botón de interacción.
+ * @param {} target Elemento del DOM obtenido de un evento.
+ * @param {string} interactionButtonClass Clase del botón con el que se puede
+ * interactuar.
+ * @returns {bool} El objeto es un botón de interacción o no.
+ */
+const isInteractionButton = ({ target, interactionButtonClass }) => {
+  return (
+    target.tagName === "BUTTON" &&
+    target.classList.contains(`${interactionButtonClass}`)
+  );
+};
+
+/**
+ * El elemento es hijo de un botón de interacción.
+ *
+ * Se utiliza el el método closest, el cual, obtiene el elemento padre más
+ * cercano al elemento actual. Buscamos que exista un padre que sea un botón con
+ * la clase que indica la interacción.
+ *
+ * Esto significaría que se trata de un elemento hijo de un botón, tal como un
+ * SVG dentro o cualquier otro elemento.
+ * @param {} target Elemento del DOM obtenido de un evento.
+ * @param {string} interactionButtonClass Clase del botón con el que se puede
+ * interactuar.
+ * @returns {bool} El elemento es hijo de un botón de interacción o no.
+ */
+const isSonOfButton = ({ target, interactionButtonClass }) => {
+  return !(target.closest(`button.${interactionBtnClass}`) === null);
+};
+
+const getInteractionElements = ({ interactionForm }) => {
+  /* Botones en donde se da tanto like como dislike. */
+  const buttons = {
+    like: interactionForm.querySelector(
+      `button.${interactionBtnClass}[name="like"]`,
+    ),
+    dislike: interactionForm.querySelector(
+      `button.${interactionBtnClass}[name="dislike"]`,
+    ),
+  };
+
+  /* Elementos que guardan los datos numéricos de las interacciones. */
+  const interactionData = {
+    likes: interactionForm.querySelector(`data[title="likes-number"]`),
+    dislikes: interactionForm.querySelector(`data[title="dislikes-number"]`),
+  };
+
+  return [buttons, interactionData];
+};
+
+const postCommentInteraction = async ({
+  event,
+  isUserLoggedIn,
+  userId,
+  controllerUrl,
+  interactionFormClass,
+  interactionBtnClass,
+}) => {
+  const target = event.target;
+  const isSon = isSonOfButton({ target, interactionBtnClass });
+  const isButton = isInteractionButton({ target, interactionBtnClass });
+
+  // Si el usuario no está registrado o el target no existe.
+  if (!target || !isUserLoggedIn) return;
+  // Si no es botón aún puede ser el hijo.
+  if (!isButton && !isSon) return;
+
+  // Evitar que se recargue la página si se presiona el botón.
+  event.preventDefault();
+
+  /**
+   * Formulario padre en donde se encuentran los datos del comentario.
+   */
+  const form = target.closest(`form.${interactionFormClass}`);
+  /**
+   * https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
+   *
+   * Obtener todos los campos del formulario.
+   */
+  const formData = new FormData(form);
+  [buttons, interactionData] = getInteractionElements({
+    interactionForm: form,
+  });
+  const comentarioPeliculaId = formData.get("comentario_pelicula_id");
+  const queryParams = {
+    comentario_pelicula_id: comentarioPeliculaId,
+    usuario_id: userId,
+  };
+  // const getUrl = `${controllerUrl}?comentario_pelicula_id=${comentarioPeliculaId}&usuario_id=${userId}`;
+  const getUrl = appendGetParamsToUrl({
+    url: controllerUrl,
+    paramsObj: queryParams,
+  });
+
+  /**
+   * Botón al que se dio click.
+   *
+   * - Si el elemento actual es el hijo del botón, obtenemos el botón como tal.
+   * - Si no, lo obtenemos del elemento actual.
+   */
+  const clickedButton = isSon
+    ? target.closest(`button.${interactionBtnClass}`)
+    : target;
+  /**
+   * Inicializamos el estado inicial del botón, por si ocurre un fallo en la
+   * operación, devolverlo al estado inicial.
+   */
+  const clickedButtonBeginningState = clickedButton;
+  /** Obtener botón al que dimos click para comparar con su interacción. */
+  let currentInteraction = clickedButton.getAttribute("name");
+
+  /**
+   * Indicar que se dio click al botón, aunque después se obtendrá el estado de
+   * la base de datos.
+   */
+  clickedButton.classList.add(selectedClass);
+
+  /**
+   * https://www.youtube.com/watch?v=41VfSbuYBP0&ab_channel=midulive
+   *
+   * async/await ¿Qué problemas puede dar y cómo te ayuda Promise.all y
+   * Promise.allSettled? (JavaScript)
+   */
+  /**
+   * Obtener datos de la BD, no del DOM, por si fueron actualizados y el DOM
+   * no. Obtener botones de like y dislike.
+   *
+   * https://stackoverflow.com/a/37534034/13562806 How to return data from
+   * promise [duplicate]
+   */
+  getData(getUrl)
+    .then((dbCommentInteraction) => {
+      console.log("get response: ", dbCommentInteraction);
+
+      [method, currentInteraction] = getCurrentInteractionMethod({
+        dbCommentInteraction,
+        currentInteraction,
+      });
+
+      // console.log("method", method);
+      // console.log("currentInteraction", currentInteraction);
+      formData.set("_method", method);
+      formData.set("tipo", currentInteraction);
+
+      // https://stackoverflow.com/a/69374442/13562806
+      /**
+       * Las promesas van anidadas, ya que, para hacer el post primero hay
+       * que obtener los datos actuales, y luego de hacer el post, hay que
+       * obtener los nuevos datos, que es lo único que se regresa para
+       * manejar en el then del get inicial.
+       *
+       * Este return sendData en realidad devuelve la respuesta que recibe
+       * el último getData anidado.
+       *
+       * Si no hacemos return de sendData, pero sí de getData, se realizará
+       * el then del primer get aunque no se haya resuelto la promesa del
+       * último getData.
+       *
+       * Una fuente que me ayudó:
+       * - How to make promise.all wait for nested promise.all?
+       * - https://stackoverflow.com/questions/36545464/how-to-make-promise-all-wait-for-nested-promise-all
+       */
+      return sendData(controllerUrl, Object.fromEntries(formData)).then(
+        (response) => {
+          console.log("post response: ", response);
+          return getData(getUrl);
+        },
+      );
+    })
+    .then((lastGet) => {
+      dbCommentInteraction = lastGet;
+      console.log("datos actualizados - get response: ", dbCommentInteraction);
+
+      updateCommentInteractions(
+        selectedClass,
+        dbCommentInteraction,
+        buttons,
+        interactionData,
+      );
+    })
+    .catch((error) => {
+      console.table("error:", error);
+      // Si ocurre un error, regresar el botón del click al estado anterior.
+      clickedButton = clickedButtonBeginningState;
+    });
+};

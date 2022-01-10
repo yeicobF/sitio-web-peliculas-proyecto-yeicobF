@@ -59,6 +59,10 @@ $baseHtmlHead = new BaseHtmlHead(
   <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>footer/footer.css">
   <link rel="stylesheet" href="<?php echo CSS_FOLDER; ?>form/form.css">
 
+  <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "xml-http-request.js"; ?>"></script>
+  <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "comment-interactions.js"; ?>"></script>
+  <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "get.js"; ?>"></script>
+  
   <?php
   echo $baseHtmlHead->getTitle();
   ?>
@@ -163,8 +167,6 @@ $baseHtmlHead = new BaseHtmlHead(
   <?php
   include $path . LAYOUTS . "footer.php";
   ?>
-  <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "xml-http-request.js"; ?>"></script>
-  <script defer src="<?php echo FOLDERS_WITH_LOCALHOST["JS"] . "comment-interactions.js"; ?>"></script>
   <script defer>
     // Hay que saber si el usuario ha iniciado sesión.
 
@@ -190,144 +192,18 @@ $baseHtmlHead = new BaseHtmlHead(
     const commentsContainer = document.getElementById(commentsContainerId);
 
     let formData;
+    const userId = <?php echo Usuario::getId(); ?>;
 
     // Al dar click, llamar al método POST.
     commentsContainer.addEventListener("click", async (event) => {
-
-
-      let target = event.target;
-      // Como los botones son SVG, pueden ser hijos del botón, pero también
-      // click.
-      let isSon = target
-        .closest(
-          `button.${interactionBtnClass}`
-        ) === null ?
-        false :
-        true;
-      let isButton = target.tagName === "BUTTON" &&
-        target.classList.contains(`${interactionBtnClass}`);
-
-      // Si no se trata del botón, regresar. console.log("!target ||
-      // !isUserLoggedIn", !target || !isUserLoggedIn); console.log("!isButton
-      // && !isSon", !isButton && !isSon);
-      if (!target || !isUserLoggedIn) return;
-
-      // Si no es botón aún puede ser el hijo.
-      if (!isButton && !isSon) return;
-      // Evitar que se recargue la página si se presiona el botón.
-      event.preventDefault();
-      const userId = <?php echo Usuario::getId(); ?>;
-
-      // Obtener el formulario padre.
-      let form = target.closest(`form.${interactionFormClass}`);
-      const buttons = {
-        like: form.querySelector(
-          `button.${interactionBtnClass}[name="like"]`
-        ),
-        dislike: form.querySelector(
-          `button.${interactionBtnClass}[name="dislike"]`
-        ),
-      }
-      const interactionData = {
-        likes: form.querySelector(
-          `data[title="likes-number"]`
-        ),
-        dislikes: form.querySelector(
-          `data[title="dislikes-number"]`
-        ),
-      }
-
-      // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
-      // Obtener todos los campos del formulario. console.log("form", form);
-      formData = new FormData(form);
-      let comentarioPeliculaId = formData.get("comentario_pelicula_id");
-      let getUrl = `${controllerUrl}?comentario_pelicula_id=${comentarioPeliculaId}&usuario_id=${userId}`;
-      // console.log(getUrl);
-      let dbCommentInteraction;
-      let clickedButton = isSon ?
-        target.closest(
-          `button.${interactionBtnClass}`
-        ) :
-        target;
-      // Obtener botón al que dimos click para comparar con su interacción.
-      let currentInteraction = clickedButton.getAttribute("name");
-      let method = "";
-
-      // Indicar que se dio click al botón, aunque después se obtendrá el
-      // estado de la base de datos.
-      clickedButton.classList.add(selectedClass);
-
-      /**
-       * https://www.youtube.com/watch?v=41VfSbuYBP0&ab_channel=midulive
-       *
-       * async/await ¿Qué problemas puede dar y cómo te ayuda Promise.all y
-       * Promise.allSettled? (JavaScript)
-       */
-      /**
-       * Obtener datos de la BD, no del DOM, por si fueron actualizados y el DOM
-       * no. Obtener botones de like y dislike.
-       *
-       * https://stackoverflow.com/a/37534034/13562806 How to return data from
-       * promise [duplicate]
-       */
-      getData(getUrl)
-        .then(dbCommentInteraction => {
-          console.log("get response: ", dbCommentInteraction);
-
-          [method, currentInteraction] = getCurrentInteractionMethod({
-            dbCommentInteraction,
-            currentInteraction
-          });
-
-          console.log("method", method);
-          console.log("currentInteraction", currentInteraction);
-          formData.set("_method", method);
-          formData.set("tipo", currentInteraction);
-
-          // https://stackoverflow.com/a/69374442/13562806
-          /**
-           * Las promesas van anidadas, ya que, para hacer el post primero hay
-           * que obtener los datos actuales, y luego de hacer el post, hay que
-           * obtener los nuevos datos, que es lo único que se regresa para
-           * manejar en el then del get inicial.
-           * 
-           * Este return sendData en realidad devuelve la respuesta que recibe
-           * el último getData anidado.
-           * 
-           * Si no hacemos return de sendData, pero sí de getData, se realizará
-           * el then del primer get aunque no se haya resuelto la promesa del
-           * último getData.
-           * 
-           * Una fuente que me ayudó:
-           * - How to make promise.all wait for nested promise.all?
-           * - https://stackoverflow.com/questions/36545464/how-to-make-promise-all-wait-for-nested-promise-all
-           */
-          return sendData(controllerUrl, Object.fromEntries(formData))
-            .then((response) => {
-              console.log("post response: ", response);
-              return getData(getUrl)
-                .then(console.log("ultimo get"));
-            });
-        })
-        .then((lastGet) => {
-          dbCommentInteraction = lastGet;
-          console.log(
-            "datos actualizados - get response: ", dbCommentInteraction
-          );
-
-          updateCommentInteractions(
-            selectedClass,
-            dbCommentInteraction,
-            buttons,
-            interactionData
-          );
-        })
-        .catch(
-          (error) => {
-            console.table("error:", error);
-            return;
-          }
-        );
+      await postCommentInteraction({
+        event,
+        isUserLoggedIn,
+        userId,
+        controllerUrl,
+        interactionFormClass,
+        interactionBtnClass,
+      });
     });
   </script>
 </body>
