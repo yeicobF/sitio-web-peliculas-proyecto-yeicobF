@@ -174,19 +174,27 @@ class Pelicula extends Controller
   ) {
     $half_star = "fas fa-star-half";
     $flip_horizontal = "fa-flip-horizontal";
-    $icon_class = "";
+    $active_class = "";
 
     // 10 medias estrellas (2 por estrella).
     for ($i = 0, $current_star = 0.5; $i < (5 * 2); $i++, $current_star += .5) {
+      $active_class = $half_star;
+      if ($user_movie_review >= $current_star) {
+        $active_class .= " movie-details__stars--active--user-review";
+      } else {
+        if ($average_movie_stars >= $current_star) {
+          $active_class .= " movie-details__stars--active--every-review";
+        }
+      }
       if ($i % 2 === 0) {
     ?>
         <div class="movie-details__stars__one-complete fa-stack">
-          <i data-star="<?php echo $current_star; ?>" class="<?php echo $half_star; ?>  fa-stack-2x"></i>
+          <i data-star="<?php echo $current_star; ?>" class="<?php echo $active_class; ?>  fa-stack-2x"></i>
         <?php
         // Si no es par, invertimos.
       } else {
         ?>
-          <i data-star="<?php echo $current_star; ?>" class="<?php echo "{$half_star} {$flip_horizontal}"; ?>  fa-stack-2x"></i>
+          <i data-star="<?php echo $current_star; ?>" class="<?php echo "{$active_class} {$flip_horizontal}"; ?>  fa-stack-2x"></i>
         </div>
     <?php
       }
@@ -257,6 +265,7 @@ class Pelicula extends Controller
               <p>Calificación: </p>
               <data title="user-review" value="<?php echo $average_movie_stars; ?>"><?php echo $average_movie_stars; ?>/5</data>
               <p> estrellas <?php echo $reviews_number_text; ?></p>
+              <span class="circle movie-details__stars--active--every-review"></span>
             <?php
             }
             ?>
@@ -273,6 +282,8 @@ class Pelicula extends Controller
                 <p>Tu calificación: </p>
                 <data title="user-review" value="<?php echo $user_movie_review; ?>"><?php echo $user_movie_review; ?>/5</data>
                 <p> estrellas</p>
+                <span class="circle movie-details__stars--active--user-review"></span>
+
             <?php
               }
             }

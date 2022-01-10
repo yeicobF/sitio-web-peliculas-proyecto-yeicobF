@@ -184,6 +184,7 @@
 .movie-details__stars__every-user-average,
 .movie-details__user-stars {
   display: flex;
+  align-items: center;
   flex-direction: row;
 }
 
@@ -213,12 +214,22 @@ Paleta de colores: https://coolors.co/f6efdb-f7ff0a-ffe100
   color: #f6efdb;
 }
 
+.circle {
+  height: 1em;
+  background-color: currentColor;
+  width: 1em;
+  /* display: table-column; */
+  border-radius: 50%;
+  /* line-height: 1.5; */
+}
+
 .movie-details__stars--active--every-review {
   color: #f7ff0a;
 }
 
 .movie-details__stars--active--user-review {
-  color: #ffe100;
+  /* color: #ffe100; */
+  color: #DDC616;
 }
 
 /* -------------------------------------------------------------------------- */
