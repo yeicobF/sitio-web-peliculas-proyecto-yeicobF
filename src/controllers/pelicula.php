@@ -303,12 +303,12 @@ class Pelicula extends Controller
         <time datetime="<?php echo $movie->release_year; ?>" class="movie-details__year"><?php echo $movie->release_year; ?></time>
         <!-- Calificaciones de la película. -->
         <!-- Hay que obtenerlas de otra tabla y promediarlas. -->
-        <data value="4.5" class="movie-details__user-rating">4.5/5</data>
         <time datetime="<?php echo "PT{$horas}H{$minutos}M{$segundos}S"; ?>"><?php echo $display_time; ?></time>
-        <data value="<?php echo $movie->restriccion_edad; ?>" class="movie-details__age-rating">
-          Clasificación: <?php echo $movie->restriccion_edad; ?>
-        </data>
       </section>
+      <data value="<?php echo $movie->restriccion_edad; ?>" class="movie-details__age-rating">
+        <h3>Clasificación: </h3>
+        <p><?php echo $movie->restriccion_edad; ?></p>
+      </data>
       <?php
       self::renderMovieStarsDetails($movie);
       ?>

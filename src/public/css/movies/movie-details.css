@@ -1,7 +1,7 @@
 .movie-details__poster {
   display: flex;
   flex-direction: column;
-  gap: .5em;
+  gap: 0.5em;
   padding-bottom: 1em;
 }
 
@@ -23,7 +23,7 @@
 
 .movie-details {
   display: flex;
-  gap: 1em;
+  gap: 0.8em;
   flex-wrap: wrap;
   flex-direction: column;
 }
@@ -40,7 +40,7 @@
 .movie-details__info {
   display: flex;
   justify-content: flex-start;
-  gap: .3em;
+  gap: 0.3em;
   flex-wrap: wrap;
   align-items: self-start;
   position: relative;
@@ -51,10 +51,41 @@
   background-color: var(--color-pansy-purple);
   color: white;
   font-weight: 400;
-  padding: 0 .3em;
+  padding: 0 0.3em;
   text-align: center;
-  border-radius: .2em;
+  border-radius: 0.2em;
 }
+
+/* -------------------------------------------------------------------------- */
+
+.movie-details__age-rating {
+  display: flex;
+  /* line-height: 2em; */
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.4em;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.movie-details__age-rating > h3 {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  font-size: inherit;
+  font-weight: 700;
+}
+.movie-details__age-rating > p {
+  overflow: hidden;
+  width: auto;
+  /* line-break: anywhere; */
+  word-break: break-word;
+  white-space: break-spaces;
+  text-overflow: ellipsis;
+}
+
+/* -------------------------------------------------------------------------- */
 
 .movie-details__synopsis {
   overflow-y: auto;
@@ -63,7 +94,7 @@
   height: auto;
 }
 .movie-details__title {
-
+  line-break: loose;
 }
 
 .movie-details__cast {
@@ -104,13 +135,18 @@
 }
 
 .movie-details__cast__member {
-  font-size: .9em;
+  font-size: 0.9em;
 }
 
 /* Agregar un punto y coma después de cada elemento. */
 .movie-details__cast__member::after {
   content: ";";
 }
+
+/* -------------------------------------------------------------------------- */
+/* -------------------------------- ESTRELLAS ------------------------------- */
+
+/* -------------------------------------------------------------------------- */
 
 @media (max-width: 768px) {
   .movie-details__cast__type {
@@ -126,7 +162,7 @@
   .fill-height-flex {
     gap: 1em;
   }
-  .movie-details__img.movie__no-poster  {
+  .movie-details__img.movie__no-poster {
     aspect-ratio: 16/9;
   }
 }
@@ -141,6 +177,6 @@
     display: flex;
     flex: 1;
     align-items: center;
-    justify-content: center
+    justify-content: center;
   }
 }
