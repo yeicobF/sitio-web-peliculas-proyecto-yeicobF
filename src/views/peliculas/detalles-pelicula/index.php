@@ -223,8 +223,13 @@ $baseHtmlHead = new BaseHtmlHead(
           averageSelection: "movie-details__stars--active--every-review",
           star: "movie-details__stars__one-complete",
         };
+        // const starsList = starsForm.querySelectorAll(`svg.${starsClasses.star}`);
+        // const stars = [...starsList];
+        // console.log(stars);
 
-        starsForm.addEventListener("click", (event) => {
+        const stars = document.getElementsByClassName(starsClasses.star);
+
+        starsForm.addEventListener("click", async (event) => {
           const target = event.target;
           console.log("target", target);
           console.log("target.tagName", target.tagName);
@@ -269,11 +274,19 @@ $baseHtmlHead = new BaseHtmlHead(
           clickedButton.classList.add(starsClasses.userSelection);
 
 
-          getData(getUrl)
+          await getData(getUrl)
             .then((response) => {
               console.log("firstGet response", response);
 
-              starsFormData.set("_method", method);
+              console.log("stars");
+              // Quitamos estilos a estrellas.
+              for (let i = 0; i < stars.length; i++) {
+                stars[i].classList.remove(starsClasses.userSelection);
+                stars[i].classList.remove(starsClasses.averageSelection);
+                console.log("staars i", stars[i]);
+              }
+
+              // starsFormData.set("_method", method);
               starsFormData.set("numero_estrellas", starsNumber);
             })
             .catch((error) => {

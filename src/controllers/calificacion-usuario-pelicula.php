@@ -5,6 +5,7 @@ namespace Controllers;
 require_once __DIR__ . "/../config/config.php";
 require_once __DIR__ . "/../libs/controller.php";
 require_once __DIR__ . "/../models/like-comentario.php";
+require_once __DIR__ . "/../models/calificacion-usuario-pelicula.php";
 require_once __DIR__ . "/usuario.php";
 
 use Libs\Controller;
@@ -95,7 +96,9 @@ Model::initDbConnection();
 
 if (
   Controller::isCurrentFileView()
-  || Controller::isCurrentFileAnotherController("like-comentario")
+  || Controller::isCurrentFileAnotherController(
+    "calificacion-usuario-pelicula"
+  )
 ) {
   return;
 }
@@ -105,7 +108,7 @@ if (
 if (Controller::isGet()) {
   $pelicula_id_exists =
     Controller::getKeyExist("pelicula_id")
-    && is_numeric("pelicula_id");
+    && is_numeric($_GET["pelicula_id"]);
 
   if (!$pelicula_id_exists) {
     $error["error"] = "No se especificaron los datos esperados.";
@@ -115,12 +118,12 @@ if (Controller::isGet()) {
 
   $db_movie_reviews =
     ModelCalificacionUsuarioPelicula::getCalificacionesPelicula(
-      $_GET["comentario_pelicula_id"]
+      $_GET["pelicula_id"]
     );
 
   $usuario_id = null;
 
-  if (array_key_exists("usuario_id", $_GET) && is_numeric($usuario_id)) {
+  if (array_key_exists("usuario_id", $_GET) && $_GET["usuario_id"]) {
     $usuario_id = $_GET["usuario_id"];
   }
 
