@@ -196,8 +196,29 @@ class Pelicula extends Controller
         ?>
           <i data-star="<?php echo $current_star; ?>" class="<?php echo "{$active_class} {$flip_horizontal}"; ?>  fa-stack-2x"></i>
         </div>
-    <?php
+      <?php
       }
+    }
+  }
+
+  private static function renderFullMovieStars(
+    float $average_movie_stars = null,
+    float $user_movie_review = null
+  ) {
+    $star = "fas fa-star";
+
+    // 10 medias estrellas (2 por estrella).
+    for ($i = 1; $i <= 5; $i++) {
+      $active_class = $star . " movie-details__stars__one-complete";
+      if ($user_movie_review >= $i) {
+        $active_class .= " movie-details__stars--active--user-review";
+      } else {
+        if ($average_movie_stars >= $i) {
+          $active_class .= " movie-details__stars--active--every-review";
+        }
+      } ?>
+      <i data-star="<?php echo $i; ?>" class="<?php echo $active_class; ?>"></i>
+    <?php
     }
   }
 
@@ -263,7 +284,7 @@ class Pelicula extends Controller
           <input type="hidden" name="usuario_id" value="<?php echo Usuario::getId(); ?>">
 
           <?php
-          self::renderMovieStarsInHalves(
+          self::renderFullMovieStars(
             $average_movie_stars,
             $user_movie_review
           );

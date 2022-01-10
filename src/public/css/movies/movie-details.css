@@ -192,7 +192,7 @@
 .movie-details__stars__all {
   display: flex;
   gap: 0.3em;
-  font-size: 0.8em;
+  font-size: 1em;
 }
 
 /* Solo 1 estrella, pero en un contenedor, estarán 2 mitades. */
@@ -204,7 +204,7 @@
   color: #d9d8d4;
 }
 
-form.movie-details__stars__one-complete {
+form .movie-details__stars__one-complete {
   cursor: pointer;
 }
 

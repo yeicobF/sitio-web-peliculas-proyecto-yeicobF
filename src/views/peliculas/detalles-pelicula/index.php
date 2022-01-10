@@ -206,6 +206,8 @@ $baseHtmlHead = new BaseHtmlHead(
           interactionFormClass,
           interactionBtnClass,
         });
+
+        /* -------------------------- CALIFICACIÓN PELÍCULA ------------------------- */
       });
     </script>
   <?php
