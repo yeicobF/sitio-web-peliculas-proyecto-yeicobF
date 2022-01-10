@@ -35,6 +35,10 @@
   border-color: var(--color-lavender-blue);
 }
 
+.comments__form textarea.disabled {
+  /* background-color: rgb(218, 218, 218); */
+}
+
 .comments__form textarea:focus-visible {
   border-color: var(--color-maximum-blue-purple);
   outline: var(--color-purple) solid 0px;
@@ -42,7 +46,7 @@
 
 .comments__form,
 .comments__posted {
-  padding: 0.5em;
+  padding: .8em;
 }
 
 .comments__form,
@@ -64,11 +68,16 @@
 
 .comments__form__buttons {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   border: none;
   gap: 1em;
+}
+
+.comments__details > a:focus-visible {
+  outline: none;
 }
 
 .comments__container .circle-avatar.own-avatar {
@@ -77,13 +86,39 @@
   /* box-shadow: 0px 0px 5px 1px var(--color-mint); */
   /* border: none; */
 }
+/* .comments__container .circle-avatar.own-avatar:hover,
+.comments__container .circle-avatar.own-avatar:focus,
+.comments__container .circle-avatar.own-avatar:focus-visible,
+.comments__container .circle-avatar.own-avatar:focus-within {
+  outline-color: var(--color-mint);
+  cursor: none;
+} */
 
-.comments__container .circle-avatar {
+.comments__details :not(span).circle-avatar {
   /* 
   No agregar más píxeles a la pantalla. Sobre todo evitamos problemas con el SVG
   de Font Awesome. 
   */
   outline: solid 2px var(--color-lavender-blue);
+}
+
+.comments__container svg.circle-avatar.profile-picture__circle {
+  /* 
+  Esto ya que, con el de Font Awesome, si está activo, al hacer hover y demás en
+  los hijos, no se activa. 
+  */
+  /* pointer-events: none; */
+}
+
+.comments__details :not(own-avatar).circle-avatar:hover,
+.comments__details :not(own-avatar).circle-avatar:focus,
+.comments__details :not(own-avatar).circle-avatar:focus-visible,
+.comments__details :not(own-avatar).circle-avatar:focus-within {
+  outline-color: var(--color-purple);
+  cursor: pointer;
+}
+.comments__container svg.circle-avatar.profile-picture__circle * {
+  /* pointer-events: auto; */
 }
 
 .comments__form__btn {
@@ -190,9 +225,10 @@
 
 .comments__interaction {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   gap: 1em;
-  font-size: 0.9em;
+  font-size: 0.8em;
   font-weight: 700;
   align-items: baseline;
   justify-content: space-between;
@@ -206,16 +242,26 @@
 .comments__interaction__button.selected {
   color: var(--color-crimson);
   font-weight: 600;
-  font-size: 1em;
+  /* padding: 0; */
+  /* font-size: 1em; */
 }
 
 .comments__interaction__button {
   background-color: transparent;
   cursor: pointer;
-  transition: color 5ms ease-in;
+  /* transition: none; */
+  padding: 0;
+  /* transition: font-size 5ms ease-out; */
+  transition: color 5ms ease-in, font-size 0s ease-out;
 }
 
 .comments__interaction__button.disabled,
+.comments__interaction__button.disabled:disabled,
+.comments__interaction__button.disabled:active,
+.comments__interaction__button.disabled:focus,
+.comments__interaction__button.disabled:focus-within,
+.comments__interaction__button.disabled:focus-visible,
+.comments__interaction__button.disabled:enabled,
 .comments__interaction__button.disabled:hover {
   background-color: transparent;
 }
@@ -228,11 +274,15 @@
 
 .comments__interaction__info {
   display: flex;
-  column-gap: 0.5em;
+  column-gap: 0.9em;
 }
 
 .comments__interaction__likes {
   font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3em;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -241,6 +291,12 @@
   .comments__form {
     padding: 1em;
   }
+}
+@media (max-width: 576px) {
+  /* .comments__text,
+  .comments__interaction {
+    padding: 0 1em;
+  } */
 }
 
 @media (max-width: 465px) {

@@ -64,6 +64,53 @@ class LikeComentario extends Controller
 
     return false;
   }
+
+  /**
+   * Obtener las interacciones actuales de un comentario.
+   * 
+   * Se devuelve el número actual de likes y dislikes, y si el id del usuario
+   * existe, se indica si tiene alguna interacción con el comentario.
+   *
+   * @param array $comment_interactions_data
+   * @param array $db_comment_interactions
+   * @return array ["likes", "dislikes", "user-interaction"]
+   */
+  public static function fetchCurrentCommentInteractions(
+
+    array $comment_interactions_data,
+    array $db_comment_interactions
+  ) {
+    $usuario_id_exists =
+      array_key_exists(
+        "usuario_id",
+        $comment_interactions_data
+      ) && is_numeric($comment_interactions_data["usuario_id"]);
+
+
+    $comment_interactions = LikeComentario::getInteractionsNumber(
+      $db_comment_interactions
+    );
+
+    $user_interaction = null;
+    // Si se envía el ID del usuario, hay que obtener su interacción actual.
+    if ($usuario_id_exists) {
+      $user_interaction = LikeComentario::getUserInteractionWithComment(
+        $db_comment_interactions,
+        Usuario::getId()
+      );
+    }
+
+    // Resultados del estado del comentario.
+    // $likes = $comment_interactions["likes"];
+    // $dislikes = $comment_interactions["dislikes"];
+    $results = $comment_interactions;
+
+    if ($user_interaction !== false && strlen($user_interaction) > 0) {
+      $results["user_interaction"] = $user_interaction;
+    }
+
+    return $results;
+  }
 }
 
 Controller::startSession();
@@ -76,9 +123,8 @@ if (
   return;
 }
 
-
+$error = ["error" => ""];
 $view_path = "peliculas/index.php";
-
 // Para recibir JSON como post, no lo podemos hacer en $_POST porque ese es un
 // arreglo y no una cadena.
 // Fuente: https://www.geeksforgeeks.org/how-to-receive-json-post-with-php/
@@ -99,14 +145,10 @@ if (Controller::isGet()) {
       "comentario_pelicula_id",
       $_GET
     ) && is_numeric($_GET["comentario_pelicula_id"]);
-  $usuario_id_exists =
-    array_key_exists(
-      "usuario_id",
-      $_GET
-    ) && is_numeric($_GET["usuario_id"]);
 
   if (!$comentario_pelicula_id_exists) {
-    echo "No se especificaron los datos esperados.";
+    $error["error"] = "No se especificaron los datos esperados.";
+    echo json_encode($error);
     return;
   }
 
@@ -115,41 +157,28 @@ if (Controller::isGet()) {
     $_GET["comentario_pelicula_id"]
   );
 
-  $comment_interactions = LikeComentario::getInteractionsNumber(
-    $db_interactions
+  echo json_encode(
+    LikeComentario::fetchCurrentCommentInteractions(
+      $_GET,
+      $db_interactions
+    )
   );
-
-  $user_interaction = null;
-  // Si se envía el ID del usuario, hay que obtener su interacción actual.
-  if ($usuario_id_exists) {
-    $user_interaction = LikeComentario::getUserInteractionWithComment(
-      $db_interactions,
-      Usuario::getId()
-    );
-  }
-
-  $likes = $comment_interactions["likes"];
-  $dislikes = $comment_interactions["dislikes"];
-  // Resultados del estado del comentario.
-  $results = $comment_interactions;
-
-  if ($user_interaction !== false && strlen($user_interaction) > 0) {
-    array_push($results, $user_interaction);
-  }
-
-  echo json_encode($results);
+  return;
 }
 
 if (
   !Controller::isPost($post)
   || !Controller::isMethodExistent($post)
 ) {
-  echo "No se envió un método POST válido.";
-  return;
+  $error["error"] = "No se envió un método POST válido.";
 }
 // El usuario no puede hacer ningún procedimiento POST si no ha iniciado sesión.
 if (!Login::isUserLoggedIn()) {
-  echo "No has iniciado sesión.";
+  $error["error"] = "No has iniciado sesión.";
+}
+
+if (strlen($error["error"]) > 0) {
+  echo json_encode($error);
   return;
 }
 
@@ -158,6 +187,26 @@ $non_empty_fields = Controller::getNonEmptyFormFields(
 );
 unset($non_empty_fields["_method"]);
 
+if (Controller::isMethodDelete($post)) {
+  $result = ModelLikeComentario::delete(
+    $non_empty_fields["comentario_pelicula_id"],
+    $non_empty_fields["usuario_id"],
+  );
+}
+
+if (
+  (Controller::isMethodPost($post) || Controller::isMethodPut($post))
+  &&
+  !Controller::areRequiredFieldsFilled(
+    ModelLikeComentario::REQUIRED_FIELDS,
+    $non_empty_fields
+  )
+) {
+  $error["error"] = "No se enviaron los datos correctamente.";
+  echo json_encode($error);
+  return;
+}
+
 $interaccion_comentario = new ModelLikeComentario(
   comentario_pelicula_id: $non_empty_fields["comentario_pelicula_id"],
   usuario_id: $non_empty_fields["usuario_id"],
@@ -165,22 +214,7 @@ $interaccion_comentario = new ModelLikeComentario(
 );
 
 if (Controller::isMethodPost($post)) {
-  if (!Controller::areRequiredFieldsFilled(
-    ModelLikeComentario::REQUIRED_FIELDS,
-    $non_empty_fields
-  )) {
-    echo "No se enviaron los datos correctamente.";
-    return;
-  }
-
   $result = $interaccion_comentario->insertLikeComentario();
-}
-
-if (Controller::isMethodDelete($post)) {
-  $result = ModelLikeComentario::delete(
-    $non_empty_fields["comentario_pelicula_id"],
-    $non_empty_fields["usuario_id"],
-  );
 }
 
 if (Controller::isMethodPut($post)) {
@@ -193,8 +227,10 @@ if ($result === 1) {
   // https://www.php.net/manual/es/function.http-response-code.php
   http_response_code(200);
   // Solo puedo regresar JSON en AJAX.
-  echo $interaccion_comentario->returnJson();
+  echo json_encode(["message" => $message]);
   return;
 }
 
-echo $message;
+$error["error"] = $message;
+echo json_encode($error);
+return;
