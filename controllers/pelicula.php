@@ -6,12 +6,16 @@ require_once __DIR__ . "/../config/config.php";
 require_once __DIR__ . "/../libs/controller.php";
 require_once __DIR__ . "/../libs/model.php";
 require_once __DIR__ . "/../models/pelicula.php";
+require_once __DIR__ . "/../models/calificacion-usuario-pelicula.php";
 require_once __DIR__ . "/usuario.php";
+require_once __DIR__ . "/calificacion-usuario-pelicula.php";
 
 use Pelicula as ModelPelicula;
+use CalificacionUsuarioPelicula as ModelCalificacionUsuarioPelicula;
 use Model as Model;
 use Libs\Controller;
 use Controllers\Usuario;
+use Controllers\CalificacionUsuarioPelicula;
 
 /**
  * Hay 3 posibilidades para el GET:
@@ -145,6 +149,193 @@ class Pelicula extends Controller
       <i class="fa-solid fa-border-none"></i>
       <p>No poster</p>
     </span>
+    <?php
+  }
+
+  /**
+   * Renderizar estrellas de una película.
+   *
+   * Se crean mitades de estrellas, pero una en orientación original y otra
+   * invertida. Esto se logra con ciertas clases de font-awesome, que, en este
+   * caso se ocupará: 
+   *
+   * `fa-flip-horizontal`
+   *
+   * Fuente:
+   * https://fontawesome.com/v5.15/how-to-use/on-the-web/styling/rotating-icons
+   *
+   * @param float $average_movie_stars
+   * @param float $user_movie_review
+   * @return void
+   */
+  private static function renderMovieStarsInHalves(
+    float $average_movie_stars = null,
+    float $user_movie_review = null
+  ) {
+    $half_star = "fas fa-star-half";
+    $flip_horizontal = "fa-flip-horizontal";
+    $active_class = "";
+
+    // 10 medias estrellas (2 por estrella).
+    for ($i = 0, $current_star = 0.5; $i < (5 * 2); $i++, $current_star += .5) {
+      $active_class = $half_star;
+      if ($user_movie_review >= $current_star) {
+        $active_class .= " movie-details__stars--active--user-review";
+      } else {
+        if ($average_movie_stars >= $current_star) {
+          $active_class .= " movie-details__stars--active--every-review";
+        }
+      }
+      if ($i % 2 === 0) {
+    ?>
+        <div class="movie-details__stars__one-complete fa-stack">
+          <i data-star="<?php echo $current_star; ?>" class="<?php echo $active_class; ?>  fa-stack-2x"></i>
+        <?php
+        // Si no es par, invertimos.
+      } else {
+        ?>
+          <i data-star="<?php echo $current_star; ?>" class="<?php echo "{$active_class} {$flip_horizontal}"; ?>  fa-stack-2x"></i>
+        </div>
+      <?php
+      }
+    }
+  }
+
+  private static function renderFullMovieStars(
+    float $average_movie_stars = null,
+    float $user_movie_review = null
+  ) {
+    $star = "fas fa-star";
+
+    // 10 medias estrellas (2 por estrella).
+    for ($i = 1; $i <= 5; $i++) {
+      $active_class = $star . " movie-details__stars__one-complete";
+      if ($user_movie_review >= $i) {
+        $active_class .= " movie-details__stars--active--user-review";
+      } else {
+        if ($average_movie_stars >= $i) {
+          $active_class .= " movie-details__stars--active--every-review";
+        }
+      } ?>
+      <i data-star="<?php echo $i; ?>" class="<?php echo $active_class; ?>"></i>
+    <?php
+    }
+  }
+
+  /**
+   * Renderizar detalles en cuanto a las estrellas de una película.
+   *
+   * @param ModelPelicula $movie
+   * @return void
+   */
+  public static function renderMovieStarsDetails(
+    ModelPelicula $movie
+  ) {
+    $db_movie_stars =
+      ModelCalificacionUsuarioPelicula::getCalificacionesPelicula(
+        $movie->id
+      );
+
+    $reviews_number = CalificacionUsuarioPelicula::getReviewsNumber(
+      $db_movie_stars
+    );
+
+    $average_movie_stars = null;
+    if ($reviews_number > 0) {
+      $average_movie_stars = CalificacionUsuarioPelicula::getAverageMovieStars(
+        $db_movie_stars
+      );
+    }
+
+    $user_movie_review = null;
+    if (Login::isUserLoggedIn()) {
+      $user_movie_review =
+        ModelCalificacionUsuarioPelicula::getCalificacionUsuarioPelicula(
+          $movie->id,
+          Usuario::getId()
+        );
+    }
+
+    $reviews_number_text =
+      "(por {$reviews_number} usuario"
+      . ($reviews_number > 1 ? "s" : "")
+      . ")";
+
+    ?>
+    <section class="movie-details__stars-container">
+      <?php
+      if (!Login::isUserLoggedIn()) {
+      ?>
+        <header class="movie-details__stars__all">
+          <?php
+          self::renderMovieStarsInHalves(
+            $average_movie_stars,
+            $user_movie_review
+          );
+          ?>
+        </header>
+      <?php
+      } else {
+      ?>
+
+        <!-- Contenedor de todas las estrellas. -->
+        <form id="movie-stars-form" class="movie-details__stars__all" action="" method="POST">
+          <input type="hidden" name="pelicula_id" value="<?php echo $movie->id; ?>">
+          <input type="hidden" name="usuario_id" value="<?php echo Usuario::getId(); ?>">
+
+          <?php
+          self::renderFullMovieStars(
+            $average_movie_stars,
+            $user_movie_review
+          );
+          ?>
+        </form>
+      <?php
+      }
+      ?>
+
+      <footer>
+        <ul class="movie-details__stars__users-reviews-info">
+
+          <li class="movie-details__stars__every-user-average">
+            <?php
+            if ($reviews_number === 0) {
+            ?>
+              Ningún usuario ha calificado la película.
+            <?php
+            } else {
+            ?>
+              <p>Calificación: </p>
+              <data title="user-review" value="<?php echo $average_movie_stars; ?>"><?php echo $average_movie_stars; ?>/5</data>
+              <p> estrellas <?php echo $reviews_number_text; ?></p>
+              <span class="circle movie-details__stars--active--every-review"></span>
+            <?php
+            }
+            ?>
+          </li>
+          <li class="movie-details__user-stars">
+            <?php
+            if (Login::isUserLoggedIn()) {
+              if ($user_movie_review === null) {
+            ?>
+                Aún no has calificado la película.
+              <?php
+              } else {
+              ?>
+                <p>Tu calificación: </p>
+                <data title="user-review" value="<?php echo $user_movie_review; ?>"><?php echo $user_movie_review; ?>/5</data>
+                <p> estrellas</p>
+                <span class="circle movie-details__stars--active--user-review"></span>
+
+            <?php
+              }
+            }
+            ?>
+          </li>
+        </ul>
+      </footer>
+
+    </section>
   <?php
   }
 
@@ -201,12 +392,15 @@ class Pelicula extends Controller
         <time datetime="<?php echo $movie->release_year; ?>" class="movie-details__year"><?php echo $movie->release_year; ?></time>
         <!-- Calificaciones de la película. -->
         <!-- Hay que obtenerlas de otra tabla y promediarlas. -->
-        <data value="4.5" class="movie-details__user-rating">4.5/5</data>
         <time datetime="<?php echo "PT{$horas}H{$minutos}M{$segundos}S"; ?>"><?php echo $display_time; ?></time>
-        <data value="<?php echo $movie->restriccion_edad; ?>" class="movie-details__age-rating">
-          Clasificación: <?php echo $movie->restriccion_edad; ?>
-        </data>
       </section>
+      <data value="<?php echo $movie->restriccion_edad; ?>" class="movie-details__age-rating">
+        <h3>Clasificación: </h3>
+        <p><?php echo $movie->restriccion_edad; ?></p>
+      </data>
+      <?php
+      self::renderMovieStarsDetails($movie);
+      ?>
       <p class="movie-details__synopsis">
         <?php echo $movie->resumen_trama; ?>
       </p>

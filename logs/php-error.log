@@ -664,3 +664,59 @@ Stack trace:
 [09-Jan-2022 12:28:52 America/Mexico_City] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 380
 [09-Jan-2022 22:24:14 America/Mexico_City] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 380
 [09-Jan-2022 22:24:33 America/Mexico_City] PHP Warning:  Undefined array key "id" in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 380
+[10-Jan-2022 12:23:26 America/Mexico_City] PHP Fatal error:  Uncaught TypeError: Controllers\Pelicula::renderMovieStars(): Argument #2 ($user_movie_review) must be of type float, array given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 205 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php:162
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(205): Controllers\Pelicula::renderMovieStars(1.7, Array)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(304): Controllers\Pelicula::renderMovieStarsDetails(Object(Pelicula))
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(381): Controllers\Pelicula::renderDetailedMovie(Object(Pelicula))
+#3 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php(78): include_once('C:\\xampp\\htdocs...')
+#4 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 162
+[10-Jan-2022 12:24:58 America/Mexico_City] PHP Fatal error:  Uncaught TypeError: Controllers\Pelicula::renderMovieStars(): Argument #2 ($user_movie_review) must be of type float, array given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 205 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php:162
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(205): Controllers\Pelicula::renderMovieStars(1.7, Array)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(304): Controllers\Pelicula::renderMovieStarsDetails(Object(Pelicula))
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(381): Controllers\Pelicula::renderDetailedMovie(Object(Pelicula))
+#3 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php(78): include_once('C:\\xampp\\htdocs...')
+#4 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 162
+[10-Jan-2022 12:25:32 America/Mexico_City] PHP Fatal error:  Uncaught TypeError: CalificacionUsuarioPelicula::getCalificacionUsuarioPelicula(): Return value must be of type ?array, float returned in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\calificacion-usuario-pelicula.php:113
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(194): CalificacionUsuarioPelicula::getCalificacionUsuarioPelicula(10, 30)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(304): Controllers\Pelicula::renderMovieStarsDetails(Object(Pelicula))
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(381): Controllers\Pelicula::renderDetailedMovie(Object(Pelicula))
+#3 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php(78): include_once('C:\\xampp\\htdocs...')
+#4 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\calificacion-usuario-pelicula.php on line 113
+[10-Jan-2022 12:35:56 America/Mexico_City] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\calificacion-usuario-pelicula.php:47
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(186): Controllers\CalificacionUsuarioPelicula::getAverageMovieStars(Array)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(304): Controllers\Pelicula::renderMovieStarsDetails(Object(Pelicula))
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(381): Controllers\Pelicula::renderDetailedMovie(Object(Pelicula))
+#3 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php(78): include_once('C:\\xampp\\htdocs...')
+#4 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\calificacion-usuario-pelicula.php on line 47
+[10-Jan-2022 12:35:59 America/Mexico_City] PHP Warning:  Undefined variable $average_movie_stars in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 206
+[10-Jan-2022 12:35:59 America/Mexico_City] PHP Fatal error:  Uncaught TypeError: Controllers\Pelicula::renderMovieStars(): Argument #1 ($average_movie_stars) must be of type float, null given, called in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 207 and defined in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php:162
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(207): Controllers\Pelicula::renderMovieStars(NULL, false)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(306): Controllers\Pelicula::renderMovieStarsDetails(Object(Pelicula))
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(383): Controllers\Pelicula::renderDetailedMovie(Object(Pelicula))
+#3 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php(78): include_once('C:\\xampp\\htdocs...')
+#4 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php on line 162
+[10-Jan-2022 12:42:24 America/Mexico_City] PHP Fatal error:  Uncaught TypeError: CalificacionUsuarioPelicula::getCalificacionUsuarioPelicula(): Return value must be of type float, null returned in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\calificacion-usuario-pelicula.php:126
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(198): CalificacionUsuarioPelicula::getCalificacionUsuarioPelicula(10, 30)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(308): Controllers\Pelicula::renderMovieStarsDetails(Object(Pelicula))
+#2 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\pelicula.php(385): Controllers\Pelicula::renderDetailedMovie(Object(Pelicula))
+#3 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php(78): include_once('C:\\xampp\\htdocs...')
+#4 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\calificacion-usuario-pelicula.php on line 126
+[10-Jan-2022 18:20:40 America/Mexico_City] PHP Warning:  Undefined array key 0 in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 122
+[10-Jan-2022 18:20:40 America/Mexico_City] PHP Fatal error:  Uncaught TypeError: Controllers\Usuario::getCurrentUserData(): Return value must be of type array, null returned in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php:122
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(410): Controllers\Usuario::getCurrentUserData(30)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php(22): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 122

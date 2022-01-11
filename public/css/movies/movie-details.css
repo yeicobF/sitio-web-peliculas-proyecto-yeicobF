@@ -1,7 +1,7 @@
 .movie-details__poster {
   display: flex;
   flex-direction: column;
-  gap: .5em;
+  gap: 0.5em;
   padding-bottom: 1em;
 }
 
@@ -23,7 +23,7 @@
 
 .movie-details {
   display: flex;
-  gap: 1em;
+  gap: 0.8em;
   flex-wrap: wrap;
   flex-direction: column;
 }
@@ -40,7 +40,7 @@
 .movie-details__info {
   display: flex;
   justify-content: flex-start;
-  gap: .3em;
+  gap: 0.3em;
   flex-wrap: wrap;
   align-items: self-start;
   position: relative;
@@ -51,10 +51,41 @@
   background-color: var(--color-pansy-purple);
   color: white;
   font-weight: 400;
-  padding: 0 .3em;
+  padding: 0 0.3em;
   text-align: center;
-  border-radius: .2em;
+  border-radius: 0.2em;
 }
+
+/* -------------------------------------------------------------------------- */
+
+.movie-details__age-rating {
+  display: flex;
+  /* line-height: 2em; */
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.4em;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.movie-details__age-rating > h3 {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  font-size: inherit;
+  font-weight: 700;
+}
+.movie-details__age-rating > p {
+  overflow: hidden;
+  width: auto;
+  /* line-break: anywhere; */
+  word-break: break-word;
+  white-space: break-spaces;
+  text-overflow: ellipsis;
+}
+
+/* -------------------------------------------------------------------------- */
 
 .movie-details__synopsis {
   overflow-y: auto;
@@ -63,7 +94,7 @@
   height: auto;
 }
 .movie-details__title {
-
+  line-break: loose;
 }
 
 .movie-details__cast {
@@ -104,13 +135,107 @@
 }
 
 .movie-details__cast__member {
-  font-size: .9em;
+  font-size: 0.9em;
 }
 
 /* Agregar un punto y coma después de cada elemento. */
 .movie-details__cast__member::after {
   content: ";";
 }
+
+/* -------------------------------------------------------------------------- */
+/* -------------------------------- ESTRELLAS ------------------------------- */
+
+.movie-details__stars-container * {
+  gap: 0.3em;
+}
+
+.movie-details__stars-container p {
+  /* font-weight: 600; */
+}
+.movie-details__stars-container data {
+  /* font-weight: 600; */
+  color: var(--color-crimson);
+}
+.movie-details__stars-container footer {
+  font-weight: 900;
+  font-size: 0.9em;
+}
+
+.movie-details__stars-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.6em;
+}
+
+.movie-details__stars-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.movie-details__stars__users-reviews-info {
+  padding: 0;
+  margin: 0;
+  /* display: list-item; */
+}
+
+.movie-details__stars__every-user-average,
+.movie-details__user-stars {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* Contenedor de todas las estrellas. */
+.movie-details__stars__all {
+  display: flex;
+  gap: 0.3em;
+  font-size: 1em;
+}
+
+/* Solo 1 estrella, pero en un contenedor, estarán 2 mitades. */
+.movie-details__stars__one-complete {
+  /* display: flex; */
+  gap: 0;
+  justify-content: center;
+  align-items: center;
+  color: #d9d8d4;
+}
+
+form .movie-details__stars__one-complete {
+  cursor: pointer;
+}
+
+/* 
+Paleta de colores: https://coolors.co/f6efdb-f7ff0a-ffe100
+*/
+.movie-details__stars--not-active {
+  color: #f6efdb;
+}
+
+.circle {
+  height: 1em;
+  background-color: currentColor;
+  width: 1em;
+  /* display: table-column; */
+  border-radius: 50%;
+  /* line-height: 1.5; */
+}
+
+.movie-details__stars--active--every-review {
+  color: #f7ff0a;
+}
+
+.movie-details__stars--active--user-review {
+  /* color: #ffe100; */
+  color: #ddc616;
+}
+
+/* -------------------------------------------------------------------------- */
 
 @media (max-width: 768px) {
   .movie-details__cast__type {
@@ -126,7 +251,7 @@
   .fill-height-flex {
     gap: 1em;
   }
-  .movie-details__img.movie__no-poster  {
+  .movie-details__img.movie__no-poster {
     aspect-ratio: 16/9;
   }
 }
@@ -141,6 +266,6 @@
     display: flex;
     flex: 1;
     align-items: center;
-    justify-content: center
+    justify-content: center;
   }
 }
