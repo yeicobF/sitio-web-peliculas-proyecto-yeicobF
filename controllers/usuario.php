@@ -544,7 +544,7 @@ if ($result === 1) {
   if (Controller::isMethodPut()) {
     // Redirigir a los detalles del usuario.
     Controller::redirectView(
-      "user/index.php",
+      "user/index.php?id=" . Usuario::getId(),
       message: $message
     );
     return;

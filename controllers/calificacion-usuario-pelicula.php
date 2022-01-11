@@ -47,7 +47,8 @@ class CalificacionUsuarioPelicula extends Controller
 
     $stars_average = $total_stars / count($db_movie_reviews);
 
-    return $stars_average;
+    return round($stars_average, 1, PHP_ROUND_HALF_DOWN);
+    // return $stars_average;
 
     // https://www.kavoir.com/2012/10/php-round-to-the-nearest-0-5-1-0-1-5-2-0-2-5-etc.html
     // return round($stars_average * 2) / 2;
