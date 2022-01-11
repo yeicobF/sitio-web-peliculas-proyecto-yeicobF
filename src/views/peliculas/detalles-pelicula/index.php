@@ -229,7 +229,7 @@ $baseHtmlHead = new BaseHtmlHead(
 
         const stars = document.getElementsByClassName(starsClasses.star);
 
-        starsForm.addEventListener("click", async (event) => {
+        starsForm.addEventListener("click", (event) => {
           const target = event.target;
           console.log("target", target);
           console.log("target.tagName", target.tagName);
@@ -274,7 +274,7 @@ $baseHtmlHead = new BaseHtmlHead(
           clickedButton.classList.add(starsClasses.userSelection);
 
 
-          await getData(getUrl)
+          getData(getUrl)
             .then((response) => {
               console.log("firstGet response", response);
 
@@ -286,9 +286,53 @@ $baseHtmlHead = new BaseHtmlHead(
                 console.log("staars i", stars[i]);
               }
 
-              // starsFormData.set("_method", method);
+              let isMethodSelected = false;
+              if (!Object.hasOwn(response, "user_movie_stars")) {
+                method = "POST";
+                // starsFormData.set("_method", method);
+              } else {
+                if (response.user_movie_stars !== starsNumber) {
+                  method = "PUT";
+                }
+                if (response.user_movie_stars === starsNumber) {
+                  method = "DELETE";
+                }
+              }
+
               starsFormData.set("numero_estrellas", starsNumber);
+              starsFormData.set("_method", method);
+              console.log("numero_estrellas", starsNumber);
+              console.log("_method", method);
+
+              return sendData(getUrl, Object.fromEntries(starsFormData))
+                .then((response) => {
+                  console.log("post response: ", response);
+                  return getData(getUrl);
+                });
             })
+            .then(
+              (lastGet) => {
+                updatedData = lastGet;
+                console.log("last get - updated data", updatedData);
+                for (let i = 0; i < stars.length; i++) {
+                  if (
+                    updatedData.average_movie_stars >=
+                    (stars[i].dataset.star + 1)
+                  ) {
+                    stars[i].classList.add(starsClasses.averageSelection);
+                  }
+                  if (!Object.hasOwn(updatedData, "user_movie_stars")) {
+                    if (
+                      response.user_movie_stars >=
+                      (stars[i].dataset.star + 1)
+                    ) {
+                      stars[i].classList.remove(starsClasses.averageSelection);
+                      stars[i].classList.add(starsClasses.userSelection);
+                    }
+                  }
+                }
+              }
+            )
             .catch((error) => {
               console.table("error:", error);
               // Si ocurre un error, regresar el botón del click al estado anterior.

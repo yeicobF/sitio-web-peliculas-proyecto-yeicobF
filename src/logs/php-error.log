@@ -713,3 +713,10 @@ Stack trace:
 #3 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php(78): include_once('C:\\xampp\\htdocs...')
 #4 {main}
   thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\models\calificacion-usuario-pelicula.php on line 126
+[10-Jan-2022 18:20:40 America/Mexico_City] PHP Warning:  Undefined array key 0 in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 122
+[10-Jan-2022 18:20:40 America/Mexico_City] PHP Fatal error:  Uncaught TypeError: Controllers\Usuario::getCurrentUserData(): Return value must be of type array, null returned in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php:122
+Stack trace:
+#0 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php(410): Controllers\Usuario::getCurrentUserData(30)
+#1 C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\views\peliculas\detalles-pelicula\index.php(22): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\fdw-2021-2022-a\proyecto-yeicobF\src\controllers\usuario.php on line 122

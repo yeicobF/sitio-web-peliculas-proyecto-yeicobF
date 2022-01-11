@@ -179,6 +179,7 @@
 .movie-details__stars__users-reviews-info {
   padding: 0;
   margin: 0;
+  /* display: list-item; */
 }
 
 .movie-details__stars__every-user-average,
@@ -186,6 +187,7 @@
   display: flex;
   align-items: center;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 /* Contenedor de todas las estrellas. */
