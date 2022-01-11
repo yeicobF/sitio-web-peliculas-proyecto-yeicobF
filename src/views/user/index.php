@@ -23,6 +23,7 @@ include_once
 
 Controller::startSession();
 Model::initDbConnection();
+
 $db_user = GlobalUsuario::getById($_GET["id"]);
 
 if ($db_user === null) {
